@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
+import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
+import { dispatch } from '@ngxs/store';
+import { SetTheme } from '@app/state/app.actions';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +13,18 @@ import { RouterOutlet } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  protected readonly hello = $localize`Привет`;
-  protected readonly title = $localize`qrd-frontend`;
-  protected readonly welcomingText = $localize`Congratulations! Your app is running.`;
+  private readonly prefersDark = inject(PREFERS_DARK_TOKEN);
+  private readonly prefersContrast = inject(PREFERS_CONTRAST_TOKEN);
+  private readonly setTheme = dispatch(SetTheme);
+
+  private readonly colorSchemeEffect = effect(() => {
+    const prefersDark: boolean = this.prefersDark();
+    const prefersContrast: boolean = this.prefersContrast();
+
+    if (prefersContrast) {
+      this.setTheme(prefersDark ? 'dark-hc' : 'light-hc');
+    } else {
+      this.setTheme(prefersDark ? 'dark' : 'light');
+    }
+  });
 }

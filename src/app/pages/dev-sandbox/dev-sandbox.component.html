@@ -1,0 +1,30 @@
+<h1>Typography</h1>
+<div>
+  <flex-block flexAlignItems="center">
+    <h1>H1 Basic</h1>
+    <h2>H2 Basic</h2>
+    <h3>H3 Basic</h3>
+  </flex-block>
+  <p>Paragraph</p>
+  <small>Small</small>
+</div>
+<h2>Buttons</h2>
+<flex-block flexAlignItems="center">
+  <a mat-button>Link</a>
+  <button mat-button>Basic</button>
+  <button mat-raised-button>Basic</button>
+  <button mat-stroked-button>Basic</button>
+  <button mat-flat-button>Basic</button>
+  <button mat-fab>🔝</button>
+  <button mat-mini-fab>☠️</button>
+  <button mat-fab extended>❤️ Basic</button>
+</flex-block>
+
+<flex-block flexAlignItems="center">
+  <button (click)="setTheme('dark')" mat-flat-button>Dark</button>
+  <button (click)="setTheme('dark-mc')" mat-flat-button>Dark MC</button>
+  <button (click)="setTheme('dark-hc')" mat-flat-button>Dark HC</button>
+  <button (click)="setTheme('light')" mat-raised-button>Light</button>
+  <button (click)="setTheme('light-mc')" mat-raised-button>Light MC</button>
+  <button (click)="setTheme('light-hc')" mat-raised-button>Light HC</button>
+</flex-block>

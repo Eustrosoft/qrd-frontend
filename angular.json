@@ -47,9 +47,6 @@
       "i18n": {
         "sourceLocale": "ru",
         "locales": {
-          "ru-RU": {
-            "translation": "src/locale/messages.ru.json"
-          },
           "en-US": {
             "translation": "src/locale/messages.en.json"
           }
@@ -71,11 +68,23 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "output": "/public"
+              },
+              {
+                "input": "src/styles/themes",
+                "glob": "*.css",
+                "output": "/public/themes"
               }
             ],
             "styles": ["src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src"],
+              "sass": {
+                "silenceDeprecations": ["mixed-decls"]
+              }
+            }
           },
           "configurations": {
             "production": {
@@ -119,11 +128,11 @@
             "ru": {
               "localize": ["ru"]
             },
-            "en": {
-              "localize": ["en"]
+            "en-US": {
+              "localize": ["en-US"]
             },
             "all": {
-              "localize": ["ru", "en"]
+              "localize": ["ru", "en-US"]
             }
           },
           "defaultConfiguration": "production"
@@ -141,8 +150,8 @@
             "ru": {
               "buildTarget": "qrd-frontend:build:development,ru"
             },
-            "en": {
-              "buildTarget": "qrd-frontend:build:development,en"
+            "en-US": {
+              "buildTarget": "qrd-frontend:build:development,en-US"
             }
           },
           "defaultConfiguration": "development"

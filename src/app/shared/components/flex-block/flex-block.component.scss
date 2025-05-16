@@ -1,0 +1,9 @@
+:host {
+  gap: var(--flex-gap-size);
+  flex: var(--flex);
+  display: var(--flex-display);
+  align-self: var(--flex-align-self);
+  align-items: var(--flex-align-items);
+  flex-direction: var(--flex-direction);
+  justify-content: var(--flex-justify-content);
+}

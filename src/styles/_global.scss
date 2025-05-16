@@ -1,0 +1,21 @@
+@use 'styles/mixins' as mixins;
+
+h1 {
+  font: var(--mat-sys-headline-large);
+}
+
+h2 {
+  font: var(--mat-sys-headline-medium);
+}
+
+h3 {
+  font: var(--mat-sys-headline-small);
+}
+
+p {
+  font: var(--mat-sys-body-medium);
+}
+
+small {
+  font: var(--mat-sys-body-small);
+}

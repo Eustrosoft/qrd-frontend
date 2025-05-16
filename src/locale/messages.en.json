@@ -1,7 +1,7 @@
 {
-  "locale": "en",
+  "locale": "en-US",
   "translations": {
-    "4284382081011239697": "Привет",
+    "4284382081011239697": "Hello",
     "2633802647072836493": "qrd-frontend",
     "3723554472536079618": "Congratulations! Your app is running."
   }

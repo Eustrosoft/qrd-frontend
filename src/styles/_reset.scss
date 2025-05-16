@@ -1,0 +1,99 @@
+@use 'styles/mixins' as mixins;
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    scroll-behavior: smooth;
+  }
+}
+
+::-webkit-scrollbar {
+  width: mixins.rem(6);
+  height: mixins.rem(6);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--tetriary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 !important;
+  font-family: inherit;
+  line-height: inherit;
+}
+
+p,
+address {
+  margin: 0 !important;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+input,
+textarea {
+  outline: none;
+  font-family: inherit;
+}
+
+textarea {
+  resize: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:visited {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  @include mixins.hover {
+    text-decoration: none;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+input[type='number'] {
+  appearance: textfield;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  appearance: none;
+}
+
+::placeholder {
+  font: inherit;
+  color: inherit;
+}
+
+:disabled {
+  pointer-events: none;
+}

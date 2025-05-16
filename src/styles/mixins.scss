@@ -1,0 +1,21 @@
+@function rem($px, $setImportant: false, $negative: false) {
+  $value: calc($px / 16) + rem;
+
+  @if $setImportant {
+    @return $value + !important;
+  }
+
+  @if $negative {
+    @return -$value;
+  }
+
+  @return $value;
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}

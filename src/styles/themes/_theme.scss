@@ -1,0 +1,131 @@
+@use '@angular/material' as mat;
+@use 'styles/themes/theme-colors' as theme-colors;
+
+$theme: (
+  color: (
+    theme-type: light,
+    primary: theme-colors.$primary-palette,
+    tertiary: theme-colors.$tertiary-palette,
+    use-system-variables: true,
+    system-variables-prefix: sys,
+  ),
+  typography: (
+    plain-family: 'Lato, sans-serif',
+    brand-family: 'Lato, sans-serif',
+    bold-weight: 700,
+    medium-weight: 400,
+    regular-weight: 400,
+    use-system-variables: true,
+    system-variables-prefix: sys,
+  ),
+  density: 0,
+);
+
+@mixin app-theme() {
+  @include mat.button-overrides(
+    (
+      filled-container-shape: 12px,
+      outlined-container-shape: 12px,
+      filled-container-height: 44px,
+      outlined-container-height: 44px,
+      protected-container-height: 44px,
+      text-container-height: 44px,
+    )
+  );
+  @include mat.form-field-overrides(
+    (
+      filled-input-text-color: var(--sys-on-surface),
+      outlined-input-text-color: var(--sys-on-surface),
+    )
+  );
+  @include mat.tooltip-overrides(
+    (
+      container-color: var(--sys-surface),
+      supporting-text-color: var(--sys-on-surface),
+    )
+  );
+  @include mat.select-overrides(
+    (
+      panel-background-color: var(--sys-surface),
+      enabled-trigger-text-color: var(--sys-on-surface),
+      disabled-trigger-text-color: var(--sys-on-surface),
+    )
+  );
+  @include mat.option-overrides(
+    (
+      label-text-color: var(--sys-on-surface-container),
+    )
+  );
+  @include mat.checkbox-density(
+    (
+      density: -5,
+    )
+  );
+  @include mat.fab-overrides(
+    (
+      container-color: var(--tetriary),
+      container-shape: 8px,
+      container-elevation-shadow: none,
+      pressed-container-elevation-shadow: none,
+      hover-container-elevation-shadow: none,
+      focus-container-elevation-shadow: none,
+    )
+  );
+  @include mat.tabs-overrides(
+    (
+      divider-height: 2px,
+      active-label-text-color: var(--sys-on-surface),
+      inactive-label-text-color: var(--primary),
+    )
+  );
+  @include mat.theme(
+    $theme,
+    $overrides: (
+      body-small: 400 0.75rem / 1rem 'Lato, sans-serif',
+      body-small-size: 0.75rem,
+      body-small-line-height: 1rem,
+      body-medium: 400 1rem / 1.5rem 'Lato, sans-serif',
+      body-medium-size: 1rem,
+      body-medium-line-height: 1.5rem,
+      body-large: 400 1rem / 1.5rem 'Lato, sans-serif',
+      body-large-size: 1rem,
+      body-large-line-height: 1.5rem,
+      display-small: 400 1.5rem / 2.25rem 'Lato, sans-serif',
+      display-small-size: 1.5rem,
+      display-small-line-height: 2.25rem,
+      display-medium: 400 1.75rem / 2.5rem 'Lato, sans-serif',
+      display-medium-size: 1.75rem,
+      display-medium-line-height: 2.5rem,
+      display-large: 400 2.25rem / 2.75rem 'Lato, sans-serif',
+      display-large-size: 2.25rem,
+      display-large-line-height: 2.75rem,
+      headline-small: 400 1.5rem / 2.25rem 'Lato, sans-serif',
+      headline-small-size: 1.5rem,
+      headline-small-line-height: 2.25rem,
+      headline-medium: 400 1.75rem / 2.5rem 'Lato, sans-serif',
+      headline-medium-size: 1.75rem,
+      headline-medium-line-height: 2.5rem,
+      headline-large: 400 2.25rem / 2.75rem 'Lato, sans-serif',
+      headline-large-size: 2.25rem,
+      headline-large-line-height: 2.75rem,
+      label-small: 400 0.75rem / 1rem 'Lato, sans-serif',
+      label-small-size: 0.75rem,
+      label-small-line-height: 1rem,
+      label-medium: 400 1rem / 1.5rem 'Lato, sans-serif',
+      label-medium-size: 1rem,
+      label-medium-line-height: 1.5rem,
+      label-large: 400 1rem / 1.5rem 'Lato, sans-serif',
+      label-large-size: 1rem,
+      label-large-line-height: 1.5rem,
+      title-small: 400 0.75rem / 1rem 'Lato, sans-serif',
+      title-small-size: 0.75rem,
+      title-small-line-height: 1rem,
+      title-medium: 400 1rem / 1.5rem 'Lato, sans-serif',
+      title-medium-size: 1rem,
+      title-medium-line-height: 1.5rem,
+      title-large: 400 1rem / 1.5rem 'Lato, sans-serif',
+      title-large-size: 1rem,
+      title-large-line-height: 1.5rem
+    )
+  );
+}

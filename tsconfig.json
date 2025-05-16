@@ -9,6 +9,8 @@
       "@public/*": ["public/*"],
       "@cdk/*": ["app/core/cdk/*"],
       "@core/*": ["app/core/*"],
+      "@ui/*": ["app/ui/*"],
+      "@shared/*": ["app/shared/*"],
       "@environment": ["environments/environment.ts"]
     },
     "noImplicitAny": true,
@@ -34,6 +36,7 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "strictStandalone": true
   }
 }
