@@ -5,6 +5,7 @@ import { dispatch } from '@ngxs/store';
 import { SetTheme } from '@app/state/app.actions';
 import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { PaletteAnimationDirective } from '@core/directives/palette-animation.directive';
 
 @Component({
   selector: 'dev-sandbox',
@@ -20,6 +21,7 @@ import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
     MatLabel,
     MatFormField,
     MatIconButton,
+    PaletteAnimationDirective,
   ],
   templateUrl: './dev-sandbox.component.html',
   styleUrl: './dev-sandbox.component.scss',

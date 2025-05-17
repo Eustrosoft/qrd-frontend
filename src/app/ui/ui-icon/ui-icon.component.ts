@@ -3,7 +3,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { dispatch, Store } from '@ngxs/store';
 import { GetIcon } from '@shared/state/icon-registry.actions';
 import { Icon, IconSvgParams } from '@app/app.models';
-import { CursorType } from '@shared/shared.models';
+import { CursorType, Display, VerticalAlign } from '@shared/shared.models';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { IconRegistryState } from '@shared/state/icon-registry.state';
@@ -16,6 +16,8 @@ import { IconRegistryState } from '@shared/state/icon-registry.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   host: {
+    '[style.display]': 'display()',
+    '[style.vertical-align]': 'verticalAlign()',
     '[style.cursor]': 'cursor()',
     '[style.width]': 'width() + "px"',
     '[style.height]': 'height()  + "px"',
@@ -37,6 +39,8 @@ export class UiIconComponent implements OnInit {
   public readonly height = input<string>('16');
 
   public readonly cursor = input<CursorType>('pointer');
+  public readonly display = input<Display>('inline-flex');
+  public readonly verticalAlign = input<VerticalAlign>('middle');
 
   private readonly svgParams = computed<IconSvgParams>(() => ({ width: this.width(), height: this.height() }));
 

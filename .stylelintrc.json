@@ -1,7 +1,7 @@
 {
   "extends": "stylelint-config-standard-scss",
   "plugins": ["stylelint-order"],
-  "ignoreFiles": ["/*.js", "/*.ts", "/*.html", "/*.css", "**/*.svg", "node_modules/*", "**/material.override.scss"],
+  "ignoreFiles": ["/*.js", "/*.ts", "/*.html", "/*.css", "**/*.svg", "node_modules/*", "**/material.override.scss", "**/animations.scss"],
   "rules": {
     "scss/operator-no-unspaced": null,
     "color-function-notation": "legacy",

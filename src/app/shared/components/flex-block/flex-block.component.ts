@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input, InputSignal } from '@angular/core';
-import { FlexAlignItems, FlexDirection, FlexDisplay, FlexJustifyContent, FlexWrap } from '@shared/shared.models';
+import { Display, FlexAlignItems, FlexDirection, FlexJustifyContent, FlexWrap } from '@shared/shared.models';
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 
 @Component({
@@ -23,7 +23,7 @@ import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 export class FlexBlockComponent {
   private readonly pxToRemPipe: PxToRemPipe = inject(PxToRemPipe);
 
-  public readonly flexDisplay: InputSignal<FlexDisplay> = input<FlexDisplay>('flex');
+  public readonly flexDisplay: InputSignal<Display> = input<Display>('flex');
   public readonly flexDirection: InputSignal<FlexDirection> = input<FlexDirection>('row');
   public readonly gapSize: InputSignal<string> = input('1rem', { transform: (value: string) => this.pxToRemPipe.transform(value) });
   public readonly flexAlignItems: InputSignal<FlexAlignItems> = input<FlexAlignItems>('');
