@@ -5,3 +5,24 @@ export type FlexWrap = 'wrap' | 'wrap-reverse' | 'nowrap';
 export type FlexJustifyContent = 'center' | 'flex-end' | 'flex-start' | 'space-around' | 'space-between' | 'space-evenly' | '';
 export type GridDisplay = 'grid' | 'inline-grid';
 export type GridJustifySelf = 'auto' | 'start' | 'end' | 'center' | 'stretch' | 'left' | 'right';
+export type CursorType =
+  | 'auto'
+  | 'default'
+  | 'none'
+  | 'context-menu'
+  | 'help'
+  | 'pointer'
+  | 'progress'
+  | 'wait'
+  | 'cell'
+  | 'crosshair'
+  | 'vertical-text'
+  | 'alias'
+  | 'copy'
+  | 'no-drop'
+  | 'not-allowed'
+  | 'grab'
+  | 'grabbing'
+  | 'all-scroll'
+  | 'zoom-in'
+  | 'zoom-out';

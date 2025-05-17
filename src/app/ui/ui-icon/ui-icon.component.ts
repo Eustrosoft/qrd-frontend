@@ -1,0 +1,48 @@
+import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit } from '@angular/core';
+import { MatTooltip } from '@angular/material/tooltip';
+import { dispatch, Store } from '@ngxs/store';
+import { GetIcon } from '@shared/state/icon-registry.actions';
+import { Icon, IconSvgParams } from '@app/app.models';
+import { CursorType } from '@shared/shared.models';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs';
+import { IconRegistryState } from '@shared/state/icon-registry.state';
+
+@Component({
+  selector: 'ui-icon',
+  imports: [],
+  template: '',
+  styleUrl: './ui-icon.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  host: {
+    '[style.cursor]': 'cursor()',
+    '[style.width]': 'width() + "px"',
+    '[style.height]': 'height()  + "px"',
+    '[innerHTML]': 'this.iconState()?.iconSvg ?? ""',
+  },
+  hostDirectives: [
+    {
+      directive: MatTooltip,
+      inputs: ['matTooltip: tooltipText', 'matTooltipPosition: tooltipPosition', 'matTooltipClass: tooltipClass'],
+    },
+  ],
+})
+export class UiIconComponent implements OnInit {
+  private readonly store = inject(Store);
+  private readonly getIcon = dispatch(GetIcon);
+
+  public readonly icon = input.required<Icon>();
+  public readonly width = input<string>('16');
+  public readonly height = input<string>('16');
+
+  public readonly cursor = input<CursorType>('pointer');
+
+  private readonly svgParams = computed<IconSvgParams>(() => ({ width: this.width(), height: this.height() }));
+
+  protected readonly iconState = toSignal(toObservable(this.icon).pipe(switchMap((icon) => this.store.select(IconRegistryState.getIcon$(icon, this.svgParams())))));
+
+  public ngOnInit(): void {
+    this.getIcon(this.icon(), this.svgParams());
+  }
+}

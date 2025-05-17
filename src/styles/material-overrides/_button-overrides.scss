@@ -1,0 +1,112 @@
+@use '@angular/material' as mat;
+
+.qrd-button-md {
+  @include mat.button-overrides(
+    (
+      filled-container-shape: 8px,
+      outlined-container-shape: 8px,
+      filled-container-height: 40px,
+      outlined-container-height: 40px,
+      protected-container-height: 40px,
+      text-container-height: 40px,
+    )
+  );
+}
+
+.qrd-button-lg {
+  @include mat.button-overrides(
+    (
+      filled-container-shape: 8px,
+      outlined-container-shape: 8px,
+      filled-container-height: 48px,
+      outlined-container-height: 48px,
+      protected-container-height: 48px,
+      text-container-height: 48px,
+    )
+  );
+}
+
+.qrd-button-xl {
+  @include mat.button-overrides(
+    (
+      filled-container-shape: 8px,
+      outlined-container-shape: 8px,
+      filled-container-height: 56px,
+      outlined-container-height: 56px,
+      protected-container-height: 56px,
+      text-container-height: 56px,
+    )
+  );
+}
+
+.qrd-button-anchor {
+  @include mat.button-overrides(
+    (
+      text-label-text-size: 16px,
+      text-container-height: 24px,
+      text-horizontal-padding: 0,
+      text-hover-state-layer-opacity: 0,
+      text-focus-state-layer-opacity: 0,
+      text-pressed-state-layer-opacity: 0,
+      text-ripple-color: none,
+      text-label-text-transform: none,
+    )
+  );
+}
+
+.qrd-fab-icon-button-sm-circle {
+  @include mat.fab-overrides(
+    (
+      container-color: var(--mat-sys-secondary),
+      container-shape: 999px,
+      container-elevation-shadow: none,
+      pressed-container-elevation-shadow: none,
+      hover-container-elevation-shadow: none,
+      focus-container-elevation-shadow: none,
+    )
+  );
+
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.qrd-fab-icon-button-md-circle {
+  @include mat.fab-overrides(
+    (
+      container-color: var(--mat-sys-secondary),
+      container-shape: 999px,
+      container-elevation-shadow: none,
+      pressed-container-elevation-shadow: none,
+      hover-container-elevation-shadow: none,
+      focus-container-elevation-shadow: none,
+    )
+  );
+
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.qrd-fab-icon-button-lg-circle {
+  @include mat.fab-overrides(
+    (
+      container-color: var(--mat-sys-secondary),
+      container-shape: 999px,
+      container-elevation-shadow: none,
+      pressed-container-elevation-shadow: none,
+      hover-container-elevation-shadow: none,
+      focus-container-elevation-shadow: none,
+    )
+  );
+
+  width: 48px !important;
+  height: 48px !important;
+}
+
+.qrd-icon-button-sm {
+  @include mat.icon-button-overrides(
+    (
+      icon-size: 16px,
+      state-layer-size: 32px,
+    )
+  );
+}

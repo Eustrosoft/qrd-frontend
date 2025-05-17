@@ -24,18 +24,23 @@ $theme: (
 @mixin app-theme() {
   @include mat.button-overrides(
     (
-      filled-container-shape: 12px,
-      outlined-container-shape: 12px,
-      filled-container-height: 44px,
-      outlined-container-height: 44px,
-      protected-container-height: 44px,
-      text-container-height: 44px,
+      filled-container-shape: 8px,
+      outlined-container-shape: 8px,
+      filled-container-height: 48px,
+      outlined-container-height: 48px,
+      protected-container-height: 48px,
+      text-container-height: 48px,
     )
   );
   @include mat.form-field-overrides(
     (
       filled-input-text-color: var(--sys-on-surface),
       outlined-input-text-color: var(--sys-on-surface),
+    )
+  );
+  @include mat.form-field-density(
+    (
+      density: -2,
     )
   );
   @include mat.tooltip-overrides(
@@ -59,16 +64,6 @@ $theme: (
   @include mat.checkbox-density(
     (
       density: -5,
-    )
-  );
-  @include mat.fab-overrides(
-    (
-      container-color: var(--tetriary),
-      container-shape: 8px,
-      container-elevation-shadow: none,
-      pressed-container-elevation-shadow: none,
-      hover-container-elevation-shadow: none,
-      focus-container-elevation-shadow: none,
     )
   );
   @include mat.tabs-overrides(

@@ -1,14 +1,13 @@
 <h1>Typography</h1>
 <div>
-  <flex-block flexAlignItems="center">
-    <h1>H1 Basic</h1>
-    <h2>H2 Basic</h2>
-    <h3>H3 Basic</h3>
-  </flex-block>
+  <h1>H1</h1>
+  <h2>H2</h2>
+  <h3>H3</h3>
   <p>Paragraph</p>
   <small>Small</small>
 </div>
-<h2>Buttons</h2>
+<h1>Buttons</h1>
+
 <flex-block flexAlignItems="center">
   <a mat-button>Link</a>
   <button mat-button>Basic</button>
@@ -21,6 +20,13 @@
 </flex-block>
 
 <flex-block flexAlignItems="center">
+  <a class="qrd-button-anchor" mat-button>Link</a>
+  <button class="qrd-button-md" mat-flat-button>Button MD</button>
+  <button class="qrd-button-lg" mat-flat-button>Button LG</button>
+  <button class="qrd-button-xl" mat-flat-button>Button XL</button>
+</flex-block>
+
+<flex-block flexAlignItems="center">
   <button (click)="setTheme('dark')" mat-flat-button>Dark</button>
   <button (click)="setTheme('dark-mc')" mat-flat-button>Dark MC</button>
   <button (click)="setTheme('dark-hc')" mat-flat-button>Dark HC</button>
@@ -28,3 +34,23 @@
   <button (click)="setTheme('light-mc')" mat-raised-button>Light MC</button>
   <button (click)="setTheme('light-hc')" mat-raised-button>Light HC</button>
 </flex-block>
+
+<h1>Icon Buttons</h1>
+<flex-block flexAlignItems="center">
+  <button class="qrd-fab-icon-button-lg-circle" mat-fab><ui-icon icon="settings" width="24" height="24" /></button>
+  <button class="qrd-fab-icon-button-lg-circle" mat-fab><ui-icon icon="file-search" width="20" height="26" /></button>
+</flex-block>
+<flex-block flexAlignItems="center">
+  <button class="qrd-fab-icon-button-md-circle" mat-fab><ui-icon icon="arrow-left" width="12" height="20" /></button>
+</flex-block>
+<flex-block flexAlignItems="center">
+  <button class="qrd-fab-icon-button-sm-circle" mat-fab><ui-icon icon="arrow-left" width="6" height="20" /></button>
+</flex-block>
+<flex-block flexAlignItems="center">
+  <button class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="arrow-bottom" /></button>
+</flex-block>
+
+<mat-form-field>
+  <mat-label>Fill form field</mat-label>
+  <input matInput placeholder="Placeholder" />
+</mat-form-field>
