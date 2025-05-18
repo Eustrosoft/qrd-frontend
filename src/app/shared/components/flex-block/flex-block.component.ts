@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input, InputSignal } from '@angular/core';
-import { Display, FlexAlignItems, FlexDirection, FlexJustifyContent, FlexWrap } from '@shared/shared.models';
+import { Display, FlexAlignItems, FlexDirection, FlexJustifyContent, FlexWrap, Overflow } from '@shared/shared.models';
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 
 @Component({
@@ -14,10 +14,10 @@ import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
     '[style.--flex-gap-size]': 'gapSize()',
     '[style.--flex-align-items]': 'flexAlignItems()',
     '[style.--flex-justify-content]': 'flexJustifyContent()',
-    '[style.--flex-shorthand]': 'flexShorthand()',
     '[style.--flex]': 'flex()',
     '[style.--flex-align-self]': 'flexAlignSelf()',
     '[style.--flex-wrap]': 'flexWrap()',
+    '[style.--overflow]': 'overflow()',
   },
 })
 export class FlexBlockComponent {
@@ -28,8 +28,8 @@ export class FlexBlockComponent {
   public readonly gapSize: InputSignal<string> = input('1rem', { transform: (value: string) => this.pxToRemPipe.transform(value) });
   public readonly flexAlignItems: InputSignal<FlexAlignItems> = input<FlexAlignItems>('');
   public readonly flexJustifyContent: InputSignal<FlexJustifyContent> = input<FlexJustifyContent>('');
-  public readonly flexShorthand: InputSignal<string> = input<string>('');
   public readonly flex: InputSignal<string | number> = input<string | number>('');
   public readonly flexAlignSelf: InputSignal<FlexAlignItems> = input<FlexAlignItems>('');
   public readonly flexWrap: InputSignal<FlexWrap> = input<FlexWrap>('nowrap');
+  public readonly overflow: InputSignal<Overflow> = input<Overflow>('visible');
 }

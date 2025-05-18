@@ -6,9 +6,9 @@
   <p>Paragraph</p>
   <small>Small</small>
 </div>
-<h1>Buttons</h1>
 
-<flex-block flexAlignItems="center">
+<h1>Buttons</h1>
+<flex-block flexAlignItems="center" flexWrap="wrap">
   <a mat-button>Link</a>
   <button mat-button>Basic</button>
   <button mat-raised-button>Basic</button>
@@ -18,15 +18,13 @@
   <button mat-mini-fab>☠️</button>
   <button mat-fab extended>❤️ Basic</button>
 </flex-block>
-
-<flex-block flexAlignItems="center">
+<flex-block flexAlignItems="center" flexWrap="wrap">
   <a class="qrd-button-anchor" mat-button>Link</a>
   <button class="qrd-button-md" mat-flat-button>Button MD</button>
   <button class="qrd-button-lg" mat-flat-button>Button LG</button>
   <button class="qrd-button-xl" mat-flat-button>Button XL</button>
 </flex-block>
-
-<flex-block flexAlignItems="center">
+<flex-block flexAlignItems="center" flexWrap="wrap">
   <button (click)="setTheme('dark')" mat-flat-button>Dark</button>
   <button (click)="setTheme('dark-mc')" mat-flat-button>Dark MC</button>
   <button (click)="setTheme('dark-hc')" mat-flat-button>Dark HC</button>
@@ -50,7 +48,6 @@
   <button class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="arrow-bottom" display="inline" /></button>
   <button class="qrd-icon-button-sm" mat-icon-button paletteAnimation><ui-icon icon="palette" display="inline" /></button>
 </flex-block>
-
 <mat-form-field>
   <mat-label>Fill form field</mat-label>
   <input matInput placeholder="Placeholder" />

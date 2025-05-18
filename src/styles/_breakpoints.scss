@@ -1,0 +1,19 @@
+$breakpoints: (
+  xsmall: '(max-width: 599.98px)',
+  small: '(min-width: 600px) and (max-width: 959.98px)',
+  medium: '(min-width: 960px) and (max-width: 1279.98px)',
+  large: '(min-width: 1280px) and (max-width: 1919.98px)',
+  xlarge: '(min-width: 1920px)',
+
+  handset: '(max-width: 599.98px) and (orientation: portrait), (max-width: 959.98px) and (orientation: landscape)',
+  tablet: '(min-width: 600px) and (max-width: 839.98px) and (orientation: portrait), (min-width: 960px) and (max-width: 1279.98px) and (orientation: landscape)',
+  web: '(min-width: 840px) and (orientation: portrait), (min-width: 1280px) and (orientation: landscape)',
+
+  handset-portrait: '(max-width: 599.98px) and (orientation: portrait)',
+  tablet-portrait: '(min-width: 600px) and (max-width: 839.98px) and (orientation: portrait)',
+  web-portrait: '(min-width: 840px) and (orientation: portrait)',
+
+  handset-landscape: '(max-width: 959.98px) and (orientation: landscape)',
+  tablet-landscape: '(min-width: 960px) and (max-width: 1279.98px) and (orientation: landscape)',
+  web-landscape: '(min-width: 1280px) and (orientation: landscape)',
+);

@@ -1,6 +1,6 @@
 import { fromEvent, map, Observable, startWith } from 'rxjs';
 import { inject } from '@angular/core';
-import { WINDOW } from '@cdk/tokens/window.token';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 /**
  * Слушает изменения размеров экрана, с помощью `change` event из интерфейса MediaQueryList
@@ -11,10 +11,10 @@ import { WINDOW } from '@cdk/tokens/window.token';
  * `false` - если экран НЕ соответствует @media запросу
  */
 export function matchMediaQueryFactory(query: string): Observable<boolean> {
-  const window: Window = inject(WINDOW);
-  const mediaQuery = window.matchMedia(query);
-  return fromEvent<MediaQueryList>(mediaQuery, 'change').pipe(
-    startWith(mediaQuery),
+  const mediaMatcher = inject(MediaMatcher);
+  const mediaQueryList = mediaMatcher.matchMedia(query);
+  return fromEvent<MediaQueryList>(mediaQueryList, 'change').pipe(
+    startWith(mediaQueryList),
     map((list: MediaQueryList) => list.matches),
   );
 }

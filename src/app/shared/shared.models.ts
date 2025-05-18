@@ -27,3 +27,4 @@ export type CursorType =
   | 'zoom-in'
   | 'zoom-out';
 export type VerticalAlign = 'middle';
+export type Overflow = 'hidden' | 'visible' | 'clip' | 'scroll' | 'auto';
