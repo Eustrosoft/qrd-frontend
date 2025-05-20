@@ -56,6 +56,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "localize": false,
             "outputPath": {
               "base": "dist",
               "browser": ""
@@ -75,6 +76,11 @@
                 "input": "src/styles/themes",
                 "glob": "*.css",
                 "output": "/public/themes"
+              },
+              {
+                "input": "src/locale",
+                "glob": "*.json",
+                "output": "/locale"
               }
             ],
             "styles": ["src/styles.scss"],
@@ -124,15 +130,6 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
-            },
-            "ru": {
-              "localize": ["ru"]
-            },
-            "en-US": {
-              "localize": ["en-US"]
-            },
-            "all": {
-              "localize": ["ru", "en-US"]
             }
           },
           "defaultConfiguration": "production"
@@ -146,12 +143,6 @@
             "development": {
               "buildTarget": "qrd-frontend:build:development",
               "proxyConfig": "proxy.conf.js"
-            },
-            "ru": {
-              "buildTarget": "qrd-frontend:build:development,ru"
-            },
-            "en-US": {
-              "buildTarget": "qrd-frontend:build:development,en-US"
             }
           },
           "defaultConfiguration": "development"
@@ -188,5 +179,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

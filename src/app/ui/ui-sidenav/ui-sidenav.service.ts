@@ -10,7 +10,7 @@ export class UiSidenavService {
   private readonly defaultSidenavConfig: SidenavConfig = {
     inputs: {},
     mode: 'over',
-    autoFocus: 'first-tabbable',
+    autoFocus: false,
     position: 'start',
     width: 'sm',
     hasBackdrop: true,
@@ -75,7 +75,6 @@ export class UiSidenavService {
       onBackdropClick: config.onBackdropClick ?? this.defaultSidenavConfig.onBackdropClick,
     };
     this._sidenavConfig.set(cfg);
-
     this._sidenavCmp.set(cmp);
     this._isOpen.set(true);
   }

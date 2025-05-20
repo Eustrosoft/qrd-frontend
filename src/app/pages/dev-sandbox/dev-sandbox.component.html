@@ -1,4 +1,4 @@
-<h1>Typography</h1>
+<h1 i18n="@@typography">Typography</h1>
 <div>
   <h1>H1</h1>
   <h2>H2</h2>
@@ -7,7 +7,7 @@
   <small>Small</small>
 </div>
 
-<h1>Buttons</h1>
+<h1 i18n="@@buttons">Buttons</h1>
 <flex-block flexAlignItems="center" flexWrap="wrap">
   <a mat-button>Link</a>
   <button mat-button>Basic</button>
@@ -31,6 +31,11 @@
   <button (click)="setTheme('light')" mat-raised-button>Light</button>
   <button (click)="setTheme('light-mc')" mat-raised-button>Light MC</button>
   <button (click)="setTheme('light-hc')" mat-raised-button>Light HC</button>
+</flex-block>
+<flex-block flexAlignItems="center" flexWrap="wrap">
+  <button (click)="setLocale('ru', true)" mat-flat-button>RU Locale</button>
+  <button (click)="setLocale('en-US', true)" mat-flat-button>EN-US Locale</button>
+  <p>{{ now | date: 'short' }}</p>
 </flex-block>
 <flex-block flexAlignItems="center" flexWrap="wrap">
   <button (click)="openSidenavMenu()" mat-flat-button>Open Sidenav Menu</button>

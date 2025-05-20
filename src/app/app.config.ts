@@ -1,8 +1,8 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
 import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
 import { routes } from './app.routes';
 import { AppState } from '@app/state/app.state';
-import { provideStore } from '@ngxs/store';
+import { provideStore, Store } from '@ngxs/store';
 import { environment } from '@environment';
 import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
 import { providePipes } from '@core/providers/pipes.provider';
@@ -30,5 +30,10 @@ export const appConfig: ApplicationConfig = {
     providePipes(),
     provideHttpClient(),
     provideMaterialConfig(),
+    {
+      provide: LOCALE_ID,
+      useFactory: (store: Store): string => store.selectSnapshot(AppState.getLocale$),
+      deps: [Store],
+    },
   ],
 };

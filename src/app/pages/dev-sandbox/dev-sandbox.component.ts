@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/cor
 import { FlexBlockComponent } from '@shared/components/flex-block/flex-block.component';
 import { MatAnchor, MatButton, MatFabButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { dispatch } from '@ngxs/store';
-import { SetTheme } from '@app/state/app.actions';
+import { SetLocale, SetTheme } from '@app/state/app.actions';
 import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { PaletteAnimationDirective } from '@core/directives/palette-animation.directive';
@@ -11,6 +11,7 @@ import { CURRENT_BREAKPOINT } from '@cdk/tokens/current-breakpoint.token';
 import { IS_LANDSCAPE, IS_PORTRAIT } from '@cdk/tokens/screen-orientation.tokens';
 import { IS_LARGE, IS_MEDIUM, IS_SMALL, IS_XLARGE, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'dev-sandbox',
@@ -27,6 +28,7 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
     MatFormField,
     MatIconButton,
     PaletteAnimationDirective,
+    DatePipe,
   ],
   templateUrl: './dev-sandbox.component.html',
   styleUrl: './dev-sandbox.component.scss',
@@ -43,6 +45,7 @@ export class DevSandboxComponent {
   protected readonly isXLarge = inject(IS_XLARGE);
   protected readonly uiSidenavService = inject(UiSidenavService);
   protected readonly setTheme = dispatch(SetTheme);
+  protected readonly setLocale = dispatch(SetLocale);
   protected readonly currBreakpointEffect = effect(() => {
     console.log('currentBreakpoint', this.currentBreakpoint());
   });
@@ -57,6 +60,7 @@ export class DevSandboxComponent {
     console.log('isLarge', this.isLarge());
     console.log('isXLarge', this.isXLarge());
   });
+  protected readonly now = Date.now();
 
   protected openSidenavMenu(): void {
     this.uiSidenavService.open(UiIconComponent, { inputs: { icon: 'arrow-bottom' } });
