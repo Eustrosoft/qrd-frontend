@@ -8,7 +8,7 @@
   flex-direction: column;
 
   main {
-    flex: 1 0 auto;
+    flex: auto;
     margin: 0 auto;
     display: flex;
     padding: mixins.rem(32) mixins.rem(64);

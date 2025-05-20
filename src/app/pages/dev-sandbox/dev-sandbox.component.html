@@ -32,7 +32,9 @@
   <button (click)="setTheme('light-mc')" mat-raised-button>Light MC</button>
   <button (click)="setTheme('light-hc')" mat-raised-button>Light HC</button>
 </flex-block>
-
+<flex-block flexAlignItems="center" flexWrap="wrap">
+  <button (click)="openSidenavMenu()" mat-flat-button>Open Sidenav Menu</button>
+</flex-block>
 <h1>Icon Buttons</h1>
 <flex-block flexAlignItems="center">
   <button class="qrd-fab-icon-button-lg-circle" mat-fab><ui-icon icon="settings" width="24" height="24" /></button>

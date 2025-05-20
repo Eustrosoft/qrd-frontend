@@ -1,0 +1,48 @@
+@use '@angular/material' as mat;
+
+:host {
+  flex: auto;
+  display: flex;
+
+  mat-sidenav-container {
+    flex: auto;
+    display: flex;
+
+    mat-sidenav-content {
+      flex: auto;
+      display: flex;
+    }
+  }
+
+  .width-sm {
+    @include mat.sidenav-overrides(
+      (
+        container-width: 360px,
+      )
+    );
+  }
+
+  .width-md {
+    @include mat.sidenav-overrides(
+      (
+        container-width: 720px,
+      )
+    );
+  }
+
+  .width-lg {
+    @include mat.sidenav-overrides(
+      (
+        container-width: 1080px,
+      )
+    );
+  }
+
+  .width-full {
+    @include mat.sidenav-overrides(
+      (
+        container-width: 100%,
+      )
+    );
+  }
+}

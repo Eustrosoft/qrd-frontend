@@ -10,6 +10,7 @@ import { PaletteAnimationDirective } from '@core/directives/palette-animation.di
 import { CURRENT_BREAKPOINT } from '@cdk/tokens/current-breakpoint.token';
 import { IS_LANDSCAPE, IS_PORTRAIT } from '@cdk/tokens/screen-orientation.tokens';
 import { IS_LARGE, IS_MEDIUM, IS_SMALL, IS_XLARGE, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 
 @Component({
   selector: 'dev-sandbox',
@@ -40,6 +41,7 @@ export class DevSandboxComponent {
   protected readonly isMedium = inject(IS_MEDIUM);
   protected readonly isLarge = inject(IS_LARGE);
   protected readonly isXLarge = inject(IS_XLARGE);
+  protected readonly uiSidenavService = inject(UiSidenavService);
   protected readonly setTheme = dispatch(SetTheme);
   protected readonly currBreakpointEffect = effect(() => {
     console.log('currentBreakpoint', this.currentBreakpoint());
@@ -55,4 +57,8 @@ export class DevSandboxComponent {
     console.log('isLarge', this.isLarge());
     console.log('isXLarge', this.isXLarge());
   });
+
+  protected openSidenavMenu(): void {
+    this.uiSidenavService.open(UiIconComponent, { inputs: { icon: 'arrow-bottom' } });
+  }
 }

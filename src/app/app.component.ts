@@ -4,10 +4,13 @@ import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
 import { dispatch } from '@ngxs/store';
 import { SetTheme } from '@app/state/app.actions';
+import { UiSidenavComponent } from '@ui/ui-sidenav/ui-sidenav.component';
+import { QrdHeaderComponent } from '@shared/components/qrd-header/qrd-header.component';
+import { QrdFooterComponent } from '@shared/components/qrd-footer/qrd-footer.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, UiSidenavComponent, QrdHeaderComponent, QrdFooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
