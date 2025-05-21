@@ -19,15 +19,14 @@
 
 ::-webkit-scrollbar {
   width: mixins.rem(6);
-  height: mixins.rem(6);
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--tetriary);
+  background: var(--mat-sys-surface-container-low);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--secondary);
+  background: var(--mat-sys-secondary-container);
 }
 
 h1,
