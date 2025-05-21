@@ -1,6 +1,6 @@
 import { InjectionToken, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { matchMediaQueryFactory } from '@core/factories/match-media-query.factory';
+import { matchMediaQueryFactory } from '@cdk/factories/match-media-query.factory';
 import { Breakpoints } from '@angular/cdk/layout';
 
 export const IS_XSMALL: InjectionToken<Signal<boolean>> = new InjectionToken('Is Screen Matches Media Query (max-width: 599.98px)', {

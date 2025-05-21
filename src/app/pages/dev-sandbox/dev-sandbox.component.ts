@@ -6,7 +6,7 @@ import { dispatch } from '@ngxs/store';
 import { SetLocale, SetTheme } from '@app/state/app.actions';
 import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
-import { PaletteAnimationDirective } from '@core/directives/palette-animation.directive';
+import { PaletteAnimationDirective } from '@cdk/directives/palette-animation.directive';
 import { CURRENT_BREAKPOINT } from '@cdk/tokens/current-breakpoint.token';
 import { IS_LANDSCAPE, IS_PORTRAIT } from '@cdk/tokens/screen-orientation.tokens';
 import { IS_LARGE, IS_MEDIUM, IS_SMALL, IS_XLARGE, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';

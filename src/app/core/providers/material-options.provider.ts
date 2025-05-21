@@ -1,5 +1,5 @@
 import { Provider } from '@angular/core';
-import { provideMatConfigValue } from '@core/factories/mat-config-provider.factory';
+import { provideMatConfigValue } from '@cdk/factories/mat-config-provider.factory';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { MAT_SELECT_CONFIG } from '@angular/material/select';
