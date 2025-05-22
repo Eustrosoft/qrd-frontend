@@ -1,0 +1,32 @@
+@use '@angular/material' as mat;
+@use 'styles/mixins' as mixins;
+
+.qrd-option-sm {
+  @include mat.option-overrides(
+    (
+      label-text-line-height: 40px,
+    )
+  );
+
+  min-height: mixins.rem(40, true);
+}
+
+.qrd-option-md {
+  @include mat.option-overrides(
+    (
+      label-text-line-height: 48px,
+    )
+  );
+
+  min-height: mixins.rem(48, true);
+}
+
+.qrd-option-lg {
+  @include mat.option-overrides(
+    (
+      label-text-line-height: 56px,
+    )
+  );
+
+  min-height: mixins.rem(56, true);
+}

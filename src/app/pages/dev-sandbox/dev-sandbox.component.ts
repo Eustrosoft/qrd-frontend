@@ -1,17 +1,21 @@
 /* eslint-disable no-console */
-import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, model } from '@angular/core';
 import { FlexBlockComponent } from '@shared/components/flex-block/flex-block.component';
 import { MatAnchor, MatButton, MatFabButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { dispatch } from '@ngxs/store';
 import { SetLocale, SetTheme } from '@app/state/app.actions';
 import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { PaletteAnimationDirective } from '@cdk/directives/palette-animation.directive';
 import { CURRENT_BREAKPOINT } from '@cdk/tokens/current-breakpoint.token';
 import { IS_LANDSCAPE, IS_PORTRAIT } from '@cdk/tokens/screen-orientation.tokens';
 import { IS_LARGE, IS_MEDIUM, IS_SMALL, IS_XLARGE, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { DatePipe } from '@angular/common';
+import { MatOption, MatSelect } from '@angular/material/select';
+import { MatError } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'dev-sandbox',
@@ -29,7 +33,13 @@ import { DatePipe } from '@angular/common';
     MatIconButton,
     PaletteAnimationDirective,
     DatePipe,
+    MatOption,
+    MatSelect,
+    MatError,
+    FormsModule,
+    MatSuffix,
   ],
+  providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
   templateUrl: './dev-sandbox.component.html',
   styleUrl: './dev-sandbox.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -61,6 +71,13 @@ export class DevSandboxComponent {
     console.log('isXLarge', this.isXLarge());
   });
   protected readonly now = Date.now();
+  protected readonly optionList = [
+    { value: null, viewValue: '' },
+    { value: 1, viewValue: 'Steak' },
+    { value: 2, viewValue: 'Pizza' },
+    { value: 3, viewValue: 'Borsch' },
+  ];
+  protected inputFieldModel = model('');
 
   protected openSidenavMenu(): void {
     this.uiSidenavService.open(UiIconComponent, { inputs: { icon: 'arrow-bottom' } });

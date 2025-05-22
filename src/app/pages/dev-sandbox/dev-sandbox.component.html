@@ -1,3 +1,57 @@
+<h1>Form Fields</h1>
+<flex-block flexAlignItems="center">
+  <mat-form-field class="qrd-form-field-sm">
+    <mat-label>Small form field <ui-icon icon="info" width="24" height="24" /></mat-label>
+    <input matInput placeholder="Placeholder" />
+  </mat-form-field>
+  <mat-form-field class="qrd-form-field-md">
+    <mat-label>Medium form field <ui-icon icon="info" width="24" height="24" /></mat-label>
+    <input matInput placeholder="Placeholder" />
+  </mat-form-field>
+  <mat-form-field class="qrd-form-field-lg">
+    <mat-label>
+      <flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center">
+        Large form field <ui-icon icon="info" width="24" height="24" tooltipText="Tooltip for large form field" tooltipPosition="above" /> </flex-block
+    ></mat-label>
+    <input [(ngModel)]="inputFieldModel" matInput placeholder="Placeholder" minlength="2" />
+    <mat-error>
+      <flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center">
+        <ui-icon icon="error" tooltipText="Tooltip error large form field" tooltipPosition="below" />
+        Some error text
+      </flex-block>
+    </mat-error>
+    <button matSuffix class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="world" display="inline" /></button>
+  </mat-form-field>
+</flex-block>
+
+<h1>Selects</h1>
+<flex-block flexAlignItems="center">
+  <mat-form-field class="qrd-form-field-sm">
+    <mat-label>Small select</mat-label>
+    <mat-select placeholder="Placeholder">
+      @for (option of optionList; track option) {
+        <mat-option class="qrd-option-sm" [value]="option.value">{{ option.viewValue }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="qrd-form-field-md">
+    <mat-label>Medium select</mat-label>
+    <mat-select placeholder="Placeholder">
+      @for (option of optionList; track option) {
+        <mat-option class="qrd-option-md" [value]="option.value">{{ option.viewValue }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="qrd-form-field-lg">
+    <mat-label>Large select</mat-label>
+    <mat-select placeholder="Placeholder">
+      @for (option of optionList; track option) {
+        <mat-option class="qrd-option-lg" [value]="option.value">{{ option.viewValue }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</flex-block>
+
 <h1 i18n="@@typography">Typography</h1>
 <div>
   <h1>H1</h1>
@@ -40,6 +94,7 @@
 <flex-block flexAlignItems="center" flexWrap="wrap">
   <button (click)="openSidenavMenu()" mat-flat-button>Open Sidenav Menu</button>
 </flex-block>
+
 <h1>Icon Buttons</h1>
 <flex-block flexAlignItems="center">
   <button class="qrd-fab-icon-button-lg-circle" mat-fab><ui-icon icon="settings" width="24" height="24" /></button>
@@ -55,7 +110,3 @@
   <button class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="arrow-bottom" display="inline" /></button>
   <button class="qrd-icon-button-sm" mat-icon-button paletteAnimation><ui-icon icon="palette" display="inline" /></button>
 </flex-block>
-<mat-form-field>
-  <mat-label>Fill form field</mat-label>
-  <input matInput placeholder="Placeholder" />
-</mat-form-field>

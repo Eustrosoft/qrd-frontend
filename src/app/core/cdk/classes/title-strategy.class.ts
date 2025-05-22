@@ -5,7 +5,7 @@ import { inject, Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class TemplatePageTitleStrategy extends TitleStrategy {
   private readonly title: Title = inject(Title);
-  private readonly defaultTitle: string = $localize`ЛК "Платежи"`;
+  private readonly defaultTitle: string = $localize`QRD`;
 
   constructor() {
     super();

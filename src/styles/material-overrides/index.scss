@@ -3,5 +3,7 @@
 // Кастомизировать material компоненты только таким образом 🔝
 
 @forward 'button-overrides';
+@forward 'form-field-overrides';
+@forward 'select-overrides';
 @forward 'snackbar-overrides';
 @forward 'tooltip-overrides';

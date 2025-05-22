@@ -10,7 +10,7 @@ export class UiSidenavService {
   private readonly defaultSidenavConfig: SidenavConfig = {
     inputs: {},
     mode: 'over',
-    autoFocus: false,
+    autoFocus: 'first-tabbable',
     position: 'start',
     width: 'sm',
     hasBackdrop: true,

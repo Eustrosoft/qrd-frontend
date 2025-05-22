@@ -4,7 +4,6 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { MAT_SELECT_CONFIG } from '@angular/material/select';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS } from '@angular/material/checkbox';
-import { MAT_TABS_CONFIG } from '@angular/material/tabs';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 export function provideMaterialConfig(): Provider[] {
@@ -21,7 +20,6 @@ export function provideMaterialConfig(): Provider[] {
       panelWidth: null,
     }),
     provideMatConfigValue(MAT_CHECKBOX_DEFAULT_OPTIONS, { disabledInteractive: false }),
-    provideMatConfigValue(MAT_TABS_CONFIG, { stretchTabs: false, fitInkBarToContent: false }),
     provideMatConfigValue(MAT_SNACK_BAR_DEFAULT_OPTIONS, {
       horizontalPosition: 'center',
       verticalPosition: 'top',

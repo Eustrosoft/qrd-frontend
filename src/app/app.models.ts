@@ -11,7 +11,7 @@ export type LocaleJson = {
   locale: Locale;
   translations: Record<string, string>;
 };
-export type Icon = 'arrow-left' | 'arrow-bottom' | 'file-search' | 'palette' | 'print' | 'settings' | 'trash';
+export type Icon = 'arrow-bottom' | 'arrow-left' | 'error' | 'file-search' | 'info' | 'palette' | 'print' | 'settings' | 'trash' | 'world';
 export type IconState = {
   iconSvg: SafeHtml | null;
   isLoading: boolean;

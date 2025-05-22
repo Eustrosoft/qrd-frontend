@@ -30,4 +30,18 @@ export class AppComponent {
       this.setTheme(prefersDark ? 'dark' : 'light');
     }
   });
+  /**
+   * TODO
+   *  different sized input, select + ui-icon
+   *  button toggle + ui-icon
+   *  checkbox
+   *  not found page with errorConfig
+   *  switch button
+   *  login page
+   *  header
+   *  footer
+   *  locale change + guard integration (guard should prevent}
+   *  inline link with icon component
+   *  chips
+   */
 }

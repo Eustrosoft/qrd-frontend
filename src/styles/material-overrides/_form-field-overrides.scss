@@ -1,0 +1,44 @@
+@use '@angular/material' as mat;
+@use 'styles/mixins' as mixins;
+
+.qrd-form-field-sm {
+  @include mat.form-field-overrides(
+    (
+      filled-container-shape: 8px,
+      outlined-container-shape: 8px,
+    )
+  );
+  @include mat.form-field-density(
+    (
+      density: -4,
+    )
+  );
+}
+
+.qrd-form-field-md {
+  @include mat.form-field-overrides(
+    (
+      filled-container-shape: 8px,
+      outlined-container-shape: 8px,
+    )
+  );
+  @include mat.form-field-density(
+    (
+      density: -2,
+    )
+  );
+}
+
+.qrd-form-field-lg {
+  @include mat.form-field-overrides(
+    (
+      filled-container-shape: 12px,
+      outlined-container-shape: 12px,
+    )
+  );
+  @include mat.form-field-density(
+    (
+      density: 0,
+    )
+  );
+}
