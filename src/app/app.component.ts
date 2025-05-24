@@ -32,9 +32,6 @@ export class AppComponent {
   });
   /**
    * TODO
-   *  different sized input, select + ui-icon
-   *  button toggle + ui-icon
-   *  checkbox
    *  not found page with errorConfig
    *  switch button
    *  login page

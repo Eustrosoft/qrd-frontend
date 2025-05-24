@@ -1,12 +1,13 @@
 <h1>Form Fields</h1>
-<flex-block flexAlignItems="center">
+<flex-block flexAlignItems="center" flexWrap="wrap">
   <mat-form-field class="qrd-form-field-sm">
-    <mat-label>Small form field <ui-icon icon="info" width="24" height="24" /></mat-label>
+    <mat-label>Small form field <ui-icon icon="info" width="24" height="24" tooltipText="Tooltip for large form field" tooltipPosition="above" /></mat-label>
     <input matInput placeholder="Placeholder" />
   </mat-form-field>
   <mat-form-field class="qrd-form-field-md">
-    <mat-label>Medium form field <ui-icon icon="info" width="24" height="24" /></mat-label>
+    <mat-label>Medium form field <ui-icon icon="info" width="24" height="24" tooltipText="Tooltip for large form field" tooltipPosition="above" /></mat-label>
     <input matInput placeholder="Placeholder" />
+    <button matSuffix class="qrd-icon-button-sm" disabled mat-icon-button><ui-icon icon="world" display="inline" /></button>
   </mat-form-field>
   <mat-form-field class="qrd-form-field-lg">
     <mat-label>
@@ -25,7 +26,7 @@
 </flex-block>
 
 <h1>Selects</h1>
-<flex-block flexAlignItems="center">
+<flex-block flexAlignItems="center" flexWrap="wrap">
   <mat-form-field class="qrd-form-field-sm">
     <mat-label>Small select</mat-label>
     <mat-select placeholder="Placeholder">
@@ -50,6 +51,12 @@
       }
     </mat-select>
   </mat-form-field>
+</flex-block>
+
+<h1>Checkbox, toggle, radio</h1>
+<flex-block flexAlignItems="center">
+  <mat-checkbox>Checked</mat-checkbox>
+  <mat-slide-toggle class="qrd-slide-toggle"> Slide me! </mat-slide-toggle>
 </flex-block>
 
 <h1 i18n="@@typography">Typography</h1>
@@ -109,4 +116,22 @@
 <flex-block flexAlignItems="center">
   <button class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="arrow-bottom" display="inline" /></button>
   <button class="qrd-icon-button-sm" mat-icon-button paletteAnimation><ui-icon icon="palette" display="inline" /></button>
+</flex-block>
+
+<h1>Toggle Buttons</h1>
+<flex-block flexAlignItems="center">
+  <mat-button-toggle-group [hideSingleSelectionIndicator]="true">
+    <mat-button-toggle value="red">
+      <flex-block gapSize="4" flexAlignItems="center" flexDisplay="inline-flex">
+        <ui-icon icon="sidenav" width="24" height="24" />
+        <p>List</p>
+      </flex-block>
+    </mat-button-toggle>
+    <mat-button-toggle value="green">
+      <flex-block gapSize="4" flexAlignItems="center" flexDisplay="inline-flex">
+        <p>Table</p>
+        <ui-icon icon="table" width="24" height="24" />
+      </flex-block>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
 </flex-block>

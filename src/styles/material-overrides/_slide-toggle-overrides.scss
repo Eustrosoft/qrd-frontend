@@ -1,0 +1,15 @@
+@use '@angular/material' as mat;
+@use 'styles/mixins' as mixins;
+
+.qrd-slide-toggle {
+  @include mat.slide-toggle-overrides(
+    (
+      unselected-handle-size: 16px,
+      pressed-handle-size: 16px,
+      selected-handle-size: 24px,
+      unselected-pressed-handle-horizontal-margin: 0 8px,
+      selected-pressed-handle-horizontal-margin: 0 28px,
+      state-layer-size: 0,
+    )
+  );
+}

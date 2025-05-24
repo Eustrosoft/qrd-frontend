@@ -1,17 +1,9 @@
 @use '@angular/material' as mat;
 
 :host {
-  flex: auto;
-  display: flex;
-
-  mat-sidenav-container {
-    flex: auto;
+  mat-sidenav-content {
     display: flex;
-
-    mat-sidenav-content {
-      flex: auto;
-      display: flex;
-    }
+    flex-direction: column;
   }
 
   .width-sm {

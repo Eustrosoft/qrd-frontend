@@ -5,6 +5,7 @@ import { MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { MAT_SELECT_CONFIG } from '@angular/material/select';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS } from '@angular/material/checkbox';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/slide-toggle';
 
 export function provideMaterialConfig(): Provider[] {
   return [
@@ -26,5 +27,6 @@ export function provideMaterialConfig(): Provider[] {
       duration: 7000,
       panelClass: 'qrd-snackbar-panel',
     }),
+    provideMatConfigValue(MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS, { hideIcon: true }),
   ];
 }

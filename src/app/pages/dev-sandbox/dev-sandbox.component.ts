@@ -16,6 +16,9 @@ import { MatOption, MatSelect } from '@angular/material/select';
 import { MatError } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'dev-sandbox',
@@ -38,6 +41,10 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
     MatError,
     FormsModule,
     MatSuffix,
+    MatButtonToggleGroup,
+    MatButtonToggle,
+    MatCheckbox,
+    MatSlideToggle,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
   templateUrl: './dev-sandbox.component.html',
