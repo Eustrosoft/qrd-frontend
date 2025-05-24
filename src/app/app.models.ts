@@ -5,13 +5,26 @@ export type Environment = {
   production: boolean;
   stage: boolean;
 };
-export type Theme = 'light' | 'light-mc' | 'light-hc' | 'dark' | 'dark-mc' | 'dark-hc';
+export type Theme = 'system' | 'light' | 'light-mc' | 'light-hc' | 'dark' | 'dark-mc' | 'dark-hc';
 export type Locale = 'ru' | 'en-US';
 export type LocaleJson = {
   locale: Locale;
   translations: Record<string, string>;
 };
-export type Icon = 'arrow-bottom' | 'arrow-left' | 'error' | 'file-search' | 'info' | 'palette' | 'print' | 'settings' | 'sidenav' | 'table' | 'trash' | 'world';
+export type Icon =
+  | 'arrow-bottom'
+  | 'arrow-left'
+  | 'error'
+  | 'file-search'
+  | 'info'
+  | 'not-found'
+  | 'palette'
+  | 'print'
+  | 'settings'
+  | 'sidenav'
+  | 'table'
+  | 'trash'
+  | 'world';
 export type IconState = {
   iconSvg: SafeHtml | null;
   isLoading: boolean;

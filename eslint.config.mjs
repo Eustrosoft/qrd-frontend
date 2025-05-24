@@ -140,6 +140,10 @@ export default [
     ...config,
     files: ['**/*.html'],
   })),
+  ...compat.extends('plugin:@angular-eslint/template/accessibility').map((config) => ({
+    ...config,
+    files: ['**/*.html'],
+  })),
   {
     files: ['**/*.html'],
     rules: {},

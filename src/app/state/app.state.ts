@@ -7,6 +7,8 @@ import { SetLocale, SetTheme } from '@app/state/app.actions';
 import { patch } from '@ngxs/store/operators';
 import { LOCALE_KEY, THEME_KEY } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
+import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
+import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
 
 export interface AppStateModel {
   theme: Theme;
@@ -14,7 +16,7 @@ export interface AppStateModel {
 }
 
 const defaults: AppStateModel = {
-  theme: 'light',
+  theme: 'system',
   locale: 'ru',
 } as const;
 
@@ -29,6 +31,8 @@ export class AppState {
   private readonly htmlLoaderService = inject(HtmlLoaderService);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly window = inject(WINDOW);
+  private readonly prefersDark = inject(PREFERS_DARK_TOKEN);
+  private readonly prefersContrast = inject(PREFERS_CONTRAST_TOKEN);
 
   @Selector()
   public static getTheme$({ theme }: AppStateModel): Theme {
@@ -41,15 +45,13 @@ export class AppState {
   }
 
   @Action(SetTheme)
-  public setTheme({ setState, getState }: StateContext<AppStateModel>, { theme }: SetTheme): void {
-    if (theme === getState().theme) {
-      return;
-    }
-    const link = this.htmlLoaderService.loadLinkStylesheet(`public/themes/${theme}.css`, `theme-${theme}`);
+  public setTheme({ setState }: StateContext<AppStateModel>, { theme }: SetTheme): void {
+    this.localStorageService.set(THEME_KEY, theme);
+    setState(patch({ theme: theme }));
+    const newTheme: Theme = this.getPreferredTheme(theme);
+    const link = this.htmlLoaderService.loadLinkStylesheet(`public/themes/${newTheme}.css`, `theme-${newTheme}`);
     link.onload = (): void => {
-      this.localStorageService.set(THEME_KEY, theme);
-      setState(patch({ theme }));
-      this.removeOldThemeStyles(theme);
+      this.removeOldThemeStyles(newTheme);
     };
   }
 
@@ -62,6 +64,16 @@ export class AppState {
         this.window.location.reload();
       }
     }
+  }
+
+  private getPreferredTheme(theme: Theme): Theme {
+    if (theme === 'system') {
+      if (this.prefersContrast()) {
+        return this.prefersDark() ? 'dark-hc' : 'light-hc';
+      }
+      return this.prefersDark() ? 'dark' : 'light';
+    }
+    return theme;
   }
 
   private removeOldThemeStyles(currentTheme: string): void {

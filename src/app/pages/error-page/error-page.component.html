@@ -1,0 +1,14 @@
+<flex-block flex="auto" gapSize="96">
+  <flex-block flex="0 1 24rem" gapSize="32" flexDirection="column">
+    <h1>{{ errorConfig.title }}</h1>
+    <p>{{ errorConfig.message }}</p>
+    @for (button of errorConfig.buttonList; track button.buttonText) {
+      <button (click)="onButtonClick(button.buttonAction)" class="qrd-button-xl" mat-flat-button>
+        {{ button.buttonText }}
+      </button>
+    } @empty {}
+  </flex-block>
+  <flex-block flex="1 0 auto">
+    <ui-icon width="100%" height="100%" [icon]="errorConfig.icon" />
+  </flex-block>
+</flex-block>

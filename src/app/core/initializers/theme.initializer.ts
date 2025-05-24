@@ -6,7 +6,7 @@ import { LocalStorageService } from '@shared/service/local-storage.service';
 
 export const themeInitializer = (localStorageService: LocalStorageService, store: Store) => (): Promise<void> => {
   const currentTheme: Theme | null = localStorageService.get<Theme>(THEME_KEY);
-  store.dispatch(new SetTheme(currentTheme ?? 'light'));
+  store.dispatch(new SetTheme(currentTheme ?? 'system'));
 
   return Promise.resolve();
 };

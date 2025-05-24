@@ -1,6 +1,8 @@
-import { Routes } from '@angular/router';
+import { Router, Routes } from '@angular/router';
 import { AppRoutes, RouteTitles } from '@app/app.constants';
 import { environment } from '@environment';
+import { errorConfigFactory } from '@cdk/factories/error-config.factory';
+import { ERROR_CONFIG, ErrorConfig } from '@cdk/tokens/error-config.token';
 
 export const routes: Routes = [
   {
@@ -13,6 +15,24 @@ export const routes: Routes = [
     title: RouteTitles.DEV_SANDBOX,
     canActivate: [(): boolean => !environment.production],
     loadChildren: () => import('@app/pages/dev-sandbox/dev-sandbox.routes').then((m) => m.devSandboxRoutes),
+  },
+  {
+    path: AppRoutes.NOT_FOUND,
+    title: RouteTitles.NOT_FOUND,
+    loadComponent: () => import('@app/pages/error-page/error-page.component').then((m) => m.ErrorPageComponent),
+    providers: [
+      {
+        provide: ERROR_CONFIG,
+        useFactory: (router: Router): ErrorConfig =>
+          errorConfigFactory({
+            title: $localize`Такая страница не найдена`,
+            message: $localize`Запрашиваемой страницы у нас нет. Возможно, она была удалена или в запросе был указан неверный адрес`,
+            icon: 'not-found',
+            buttonList: [{ buttonText: $localize`Главная страница`, buttonAction: () => router.navigate(['/']) }],
+          }),
+        deps: [Router],
+      },
+    ],
   },
   { path: '**', redirectTo: `/${AppRoutes.NOT_FOUND}` },
 ];
