@@ -19,3 +19,8 @@ p {
 small {
   font: var(--mat-sys-body-small);
 }
+
+hr {
+  border-style: solid;
+  border-color: var(--mat-sys-outline);
+}

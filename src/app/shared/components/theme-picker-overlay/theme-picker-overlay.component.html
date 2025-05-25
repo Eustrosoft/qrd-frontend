@@ -1,0 +1,10 @@
+<flex-block flexAlignItems="center" flexJustifyContent="space-between">
+  <p>{{ ThemePickerOverlayLocalization.THEME }}</p>
+  <button (click)="closeClick.emit()" class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="close" display="inline" /></button>
+</flex-block>
+<hr />
+<mat-radio-group [(ngModel)]="themeModel">
+  @for (theme of themeList; track theme.value) {
+    <mat-radio-button [value]="theme.value">{{ theme.viewValue }}</mat-radio-button>
+  }
+</mat-radio-group>

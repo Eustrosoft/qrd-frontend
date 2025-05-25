@@ -13,7 +13,21 @@
     }
   </flex-block>
   <flex-block gapSize="32">
-    <button class="qrd-icon-button-sm" mat-icon-button paletteAnimation><ui-icon icon="palette" cursor="pointer" display="inline" /></button>
+    <button (click)="openOverlay()" class="qrd-icon-button-sm" mat-icon-button paletteAnimation cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+      <ui-icon icon="palette" cursor="pointer" display="inline" />
+    </button>
     <a routerLink="/login" class="qrd-button-md" mat-flat-button>{{ SharedLocalization.LOGIN }}</a>
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="trigger"
+      [cdkConnectedOverlayOpen]="isOverlayOpen()"
+      [cdkConnectedOverlayPositions]="OVERLAY_POSITIONS"
+      [cdkConnectedOverlayScrollStrategy]="cdkConnectedOverlayScrollStrategy"
+      [cdkConnectedOverlayWidth]="240"
+      (overlayOutsideClick)="closeOverlay()"
+      (detach)="closeOverlay()"
+    >
+      <theme-picker-overlay (closeClick)="closeOverlay()" />
+    </ng-template>
   </flex-block>
 </flex-block>

@@ -14,6 +14,7 @@ export type LocaleJson = {
 export type Icon =
   | 'arrow-bottom'
   | 'arrow-left'
+  | 'close'
   | 'error'
   | 'eye'
   | 'eye-slash'

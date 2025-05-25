@@ -16,3 +16,14 @@ export const HeaderLocalization = {
 export const SharedLocalization = {
   LOGIN: $localize`Войти`,
 } as const;
+
+export const ThemePickerOverlayLocalization = {
+  THEME: $localize`Оформление`,
+  DARK: $localize`Темное`,
+  LIGHT: $localize`Светлое`,
+  SYSTEM: $localize`Системное`,
+  CONTRAST: $localize`Контрастность`,
+  DEFAULT_CONTRAST: $localize`Стандартная`,
+  MEDIUM_CONTRAST: $localize`Средняя`,
+  HIGH_CONTRAST: $localize`Высокая`,
+} as const;

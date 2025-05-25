@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { MatAnchor, MatIconButton } from '@angular/material/button';
 import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
@@ -9,15 +9,30 @@ import { HeaderLocalization, SharedLocalization } from '@shared/shared.constants
 import { PaletteAnimationDirective } from '@cdk/directives/palette-animation.directive';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { HeaderLink } from '@shared/components/qrd-header/qrd-header.models';
+import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, Overlay } from '@angular/cdk/overlay';
+import { ThemePickerOverlayComponent } from '@shared/components/theme-picker-overlay/theme-picker-overlay.component';
 
 @Component({
   selector: 'qrd-header',
-  imports: [MatIconButton, UiIconComponent, NgOptimizedImage, FlexBlockComponent, MatAnchor, PaletteAnimationDirective, RouterLink, RouterLinkActive],
+  imports: [
+    MatIconButton,
+    UiIconComponent,
+    NgOptimizedImage,
+    FlexBlockComponent,
+    MatAnchor,
+    PaletteAnimationDirective,
+    RouterLink,
+    RouterLinkActive,
+    CdkOverlayOrigin,
+    CdkConnectedOverlay,
+    ThemePickerOverlayComponent,
+  ],
   templateUrl: './qrd-header.component.html',
   styleUrl: './qrd-header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrdHeaderComponent {
+  private readonly overlay = inject(Overlay);
   private readonly uiSidenavService = inject(UiSidenavService);
   protected readonly isXSmall = inject(IS_XSMALL);
 
@@ -37,6 +52,27 @@ export class QrdHeaderComponent {
       route: '/files',
     },
   ];
+
+  protected readonly isOverlayOpen = signal<boolean>(false);
+  protected readonly cdkConnectedOverlayScrollStrategy = this.overlay.scrollStrategies.close();
+  protected readonly OVERLAY_POSITIONS: ConnectedPosition[] = [
+    {
+      originX: 'end',
+      originY: 'bottom',
+      overlayX: 'end',
+      overlayY: 'top',
+      offsetY: 24,
+      offsetX: 16,
+    },
+  ];
+
+  protected openOverlay(): void {
+    this.isOverlayOpen.set(true);
+  }
+
+  protected closeOverlay(): void {
+    this.isOverlayOpen.set(false);
+  }
 
   protected openSidenavMenu(): void {
     this.uiSidenavService.open(UiIconComponent, { inputs: { icon: 'palette' }, width: 'full' });

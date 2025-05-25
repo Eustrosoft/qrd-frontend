@@ -28,3 +28,4 @@ export type CursorType =
   | 'zoom-out';
 export type VerticalAlign = 'middle';
 export type Overflow = 'hidden' | 'visible' | 'clip' | 'scroll' | 'auto';
+export type Option<T> = { value: T; viewValue: string };
