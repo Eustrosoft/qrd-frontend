@@ -26,9 +26,6 @@ export class AppComponent {
   });
   /**
    * TODO
-   *  not found page with errorConfig
-   *  switch button
-   *  login page
    *  header
    *  footer
    *  locale change + guard integration (guard should prevent}

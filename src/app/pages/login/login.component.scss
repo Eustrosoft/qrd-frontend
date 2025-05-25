@@ -1,0 +1,28 @@
+@use 'styles/mixins' as mixins;
+@use 'styles/breakpoints' as bp;
+@use 'sass:map';
+
+:host {
+  gap: mixins.rem(32);
+  flex: auto;
+  display: flex;
+  min-width: mixins.rem(520);
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  .login-card {
+    width: 100%;
+    padding: mixins.rem(32) mixins.rem(24);
+    background: var(--mat-sys-surface-container-lowest);
+    border-radius: mixins.rem(12);
+  }
+
+  @media #{map.get(bp.$breakpoints, xsmall)} {
+    min-width: 100%;
+
+    .qrd-button-lg {
+      width: 100%;
+    }
+  }
+}

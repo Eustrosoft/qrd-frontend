@@ -1,11 +1,13 @@
 import { Theme } from '@app/app.models';
 
 export const AppRoutes = {
+  LOGIN: 'login',
   DEV_SANDBOX: 'dev-sandbox',
   NOT_FOUND: 'not-found',
 } as const;
 
 export const RouteTitles = {
+  LOGIN: $localize`Вход`,
   NOT_FOUND: $localize`Страница не найдена`,
   DEV_SANDBOX: $localize`Dev Sandbox`,
 } as const;

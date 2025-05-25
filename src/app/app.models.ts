@@ -15,6 +15,8 @@ export type Icon =
   | 'arrow-bottom'
   | 'arrow-left'
   | 'error'
+  | 'eye'
+  | 'eye-slash'
   | 'file-search'
   | 'info'
   | 'not-found'
@@ -24,6 +26,7 @@ export type Icon =
   | 'sidenav'
   | 'table'
   | 'trash'
+  | 'user-circle'
   | 'world';
 export type IconState = {
   iconSvg: SafeHtml | null;

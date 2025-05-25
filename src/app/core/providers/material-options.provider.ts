@@ -9,7 +9,7 @@ import { MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/slide-toggle
 
 export function provideMaterialConfig(): Provider[] {
   return [
-    provideMatConfigValue(MAT_FORM_FIELD_DEFAULT_OPTIONS, { appearance: 'outline', subscriptSizing: 'dynamic' }),
+    provideMatConfigValue(MAT_FORM_FIELD_DEFAULT_OPTIONS, { appearance: 'outline', subscriptSizing: 'fixed', hideRequiredMarker: true }),
     provideMatConfigValue(MAT_TOOLTIP_DEFAULT_OPTIONS, {
       hideDelay: 50,
       showDelay: 0,

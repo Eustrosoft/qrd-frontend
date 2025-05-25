@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
 import { dispatch, Store } from '@ngxs/store';
 import { GetIcon } from '@shared/state/icon-registry.actions';
@@ -30,7 +30,7 @@ import { IconRegistryState } from '@shared/state/icon-registry.state';
     },
   ],
 })
-export class UiIconComponent implements OnInit {
+export class UiIconComponent {
   private readonly store = inject(Store);
   private readonly getIcon = dispatch(GetIcon);
 
@@ -38,7 +38,7 @@ export class UiIconComponent implements OnInit {
   public readonly width = input<string>('16');
   public readonly height = input<string>('16');
 
-  public readonly cursor = input<CursorType>('pointer');
+  public readonly cursor = input<CursorType>('auto');
   public readonly display = input<Display>('inline-flex');
   public readonly verticalAlign = input<VerticalAlign>('middle');
 
@@ -46,7 +46,7 @@ export class UiIconComponent implements OnInit {
 
   protected readonly iconState = toSignal(toObservable(this.icon).pipe(switchMap((icon) => this.store.select(IconRegistryState.getIcon$(icon, this.svgParams())))));
 
-  public ngOnInit(): void {
+  private readonly iconChangeEffect = effect(() => {
     this.getIcon(this.icon(), this.svgParams());
-  }
+  });
 }

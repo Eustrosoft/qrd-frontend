@@ -1,0 +1,39 @@
+<h1>{{ RouteTitles.LOGIN }}</h1>
+<flex-block gapSize="10" flexDirection="column" class="login-card">
+  <mat-form-field class="qrd-form-field-lg">
+    <mat-label>
+      <flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center"> {{ SignUpLocalization.LOGIN }} </flex-block>
+    </mat-label>
+    <input [formControl]="form.controls.login" matInput />
+    <button matSuffix class="qrd-icon-button-sm" disabled mat-icon-button><ui-icon icon="user-circle" display="inline" /></button>
+    <mat-error>
+      @if (form.controls.login.hasError('required')) {
+        {{ SignUpLocalization.LOGIN_REQUIRED_ERR_TEXT }}
+      }
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="qrd-form-field-lg">
+    <mat-label>
+      <flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center"> {{ SignUpLocalization.PASSWORD }} </flex-block>
+    </mat-label>
+    <input [formControl]="form.controls.password" matInput [type]="isPwdVisible() ? 'text' : 'password'" />
+    <button (click)="isPwdVisible.set(!isPwdVisible())" matSuffix class="qrd-icon-button-sm" mat-icon-button>
+      <ui-icon [icon]="isPwdVisible() ? 'eye' : 'eye-slash'" display="inline" />
+    </button>
+    <mat-error>
+      @if (form.controls.login.hasError('required')) {
+        {{ SignUpLocalization.PWD_REQUIRED_ERR_TEXT }}
+      }
+    </mat-error>
+  </mat-form-field>
+  <flex-block
+    gapSize="24"
+    [flexDirection]="isXSmall() ? 'column-reverse' : 'row'"
+    [flexAlignItems]="isXSmall() ? 'flex-end' : 'center'"
+    [flexJustifyContent]="isXSmall() ? 'center' : 'flex-end'"
+  >
+    <button class="qrd-button-md" mat-button>{{ SignUpLocalization.SIGN_UP }}</button>
+    <button class="qrd-button-md" mat-button>{{ SignUpLocalization.FORGOT_PWD }}</button>
+    <button (click)="submitForm()" class="qrd-button-lg" mat-flat-button>{{ SignUpLocalization.SUBMIT_BUTTON_TEXT }}</button>
+  </flex-block>
+</flex-block>

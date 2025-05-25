@@ -3,12 +3,18 @@ import { AppRoutes, RouteTitles } from '@app/app.constants';
 import { environment } from '@environment';
 import { errorConfigFactory } from '@cdk/factories/error-config.factory';
 import { ERROR_CONFIG, ErrorConfig } from '@cdk/tokens/error-config.token';
+import { LoginComponent } from '@app/pages/login/login.component';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
     redirectTo: AppRoutes.DEV_SANDBOX,
+  },
+  {
+    path: AppRoutes.LOGIN,
+    title: RouteTitles.LOGIN,
+    component: LoginComponent,
   },
   {
     path: AppRoutes.DEV_SANDBOX,
