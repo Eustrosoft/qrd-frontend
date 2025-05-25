@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouteTitles } from '@app/app.constants';
 import { FlexBlockComponent } from '@shared/components/flex-block/flex-block.component';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -6,7 +6,7 @@ import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/i
 import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatError } from '@angular/material/form-field';
-import { SignUpLocalization } from '@shared/shared.constants';
+import { SharedLocalization, SignUpLocalization } from '@shared/shared.constants';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginForm } from '@app/pages/login/login.models';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
@@ -23,23 +23,10 @@ import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 export class LoginComponent {
   private readonly fb = inject(FormBuilder);
   protected readonly isXSmall = inject(IS_XSMALL);
+
   protected readonly RouteTitles = RouteTitles;
   protected readonly SignUpLocalization = SignUpLocalization;
-
-  protected readonly controlButtonsFlexSettings = computed(() => {
-    if (this.isXSmall()) {
-      return {
-        direction: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-      };
-    }
-    return {
-      direction: 'row',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-    };
-  });
+  protected readonly SharedLocalization = SharedLocalization;
 
   protected readonly isPwdVisible = signal<boolean>(false);
 

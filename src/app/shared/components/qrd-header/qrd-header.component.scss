@@ -1,0 +1,38 @@
+@use 'styles/mixins' as mixins;
+@use 'styles/breakpoints' as bp;
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+:host {
+  display: flex;
+  padding: mixins.rem(16) mixins.rem(24);
+  background: var(--mat-sys-surface-container);
+  align-items: center;
+  justify-content: space-between;
+
+  img {
+    border-radius: mixins.rem(4);
+  }
+
+  .nav-link {
+    @include mat.button-overrides(
+      (
+        text-label-text-size: 16px,
+        text-container-height: 24px,
+        text-horizontal-padding: 16px,
+      )
+    );
+
+    &-active {
+      @include mat.button-overrides(
+        (
+          label-text-weight: 700,
+        )
+      );
+    }
+  }
+
+  @media #{map.get(bp.$breakpoints, xsmall)} {
+    padding: mixins.rem(16) mixins.rem(24) mixins.rem(16) mixins.rem(4);
+  }
+}

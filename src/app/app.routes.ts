@@ -17,6 +17,21 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: AppRoutes.CARDS,
+    title: RouteTitles.CARDS,
+    loadChildren: () => import('@app/pages/cards/cards.routes').then((m) => m.cardsRoutes),
+  },
+  {
+    path: AppRoutes.TEMPLATES,
+    title: RouteTitles.TEMPLATES,
+    loadChildren: () => import('@app/pages/templates/templates.routes').then((m) => m.templatesRoutes),
+  },
+  {
+    path: AppRoutes.FILES,
+    title: RouteTitles.FILES,
+    loadChildren: () => import('@app/pages/files/files.routes').then((m) => m.filesRoutes),
+  },
+  {
     path: AppRoutes.DEV_SANDBOX,
     title: RouteTitles.DEV_SANDBOX,
     canActivate: [(): boolean => !environment.production],

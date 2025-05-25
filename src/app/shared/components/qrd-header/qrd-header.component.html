@@ -1,2 +1,19 @@
-<p>header</p>
-<button (click)="openSidenavMenu()" class="qrd-button-md" mat-flat-button>Open Sidenav Menu</button>
+<flex-block>
+  @if (isXSmall()) {
+    <button (click)="openSidenavMenu()" class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="sidenav" display="inline" /></button>
+  }
+  <img ngSrc="/public/img/logo.png" alt="logo" width="40" height="40" />
+</flex-block>
+<flex-block gapSize="32" flexAlignItems="center">
+  <flex-block gapSize="32">
+    @for (link of linkList; track link.title) {
+      <a class="nav-link" [routerLink]="link.route" [class.nav-link-active]="rla.isActive" routerLinkActive="active" #rla="routerLinkActive" mat-button>
+        {{ link.title }}
+      </a>
+    }
+  </flex-block>
+  <flex-block gapSize="32">
+    <button class="qrd-icon-button-sm" mat-icon-button paletteAnimation><ui-icon icon="palette" cursor="pointer" display="inline" /></button>
+    <a routerLink="/login" class="qrd-button-md" mat-flat-button>{{ SharedLocalization.LOGIN }}</a>
+  </flex-block>
+</flex-block>
