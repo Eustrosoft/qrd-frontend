@@ -39,7 +39,24 @@
   );
 }
 
-.qrd-button-anchor {
+.qrd-button-anchor-sm {
+  @include mat.button-overrides(
+    (
+      text-label-text-size: 12px,
+      text-container-height: 16px,
+      text-horizontal-padding: 0,
+      text-hover-state-layer-opacity: 0,
+      text-focus-state-layer-opacity: 0,
+      text-pressed-state-layer-opacity: 0,
+      text-ripple-color: none,
+      text-label-text-transform: none,
+    )
+  );
+
+  min-width: auto !important;
+}
+
+.qrd-button-anchor-md {
   @include mat.button-overrides(
     (
       text-label-text-size: 16px,
@@ -52,6 +69,8 @@
       text-label-text-transform: none,
     )
   );
+
+  min-width: auto !important;
 }
 
 .qrd-fab-icon-button-sm-circle {

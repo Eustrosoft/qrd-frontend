@@ -9,15 +9,58 @@ import { LOCALE_KEY, THEME_KEY } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
+import { Option } from '@shared/shared.models';
+import { LocalesLocalization, ThemePickerOverlayLocalization } from '@shared/shared.constants';
 
 export interface AppStateModel {
   theme: Theme;
+  availableThemes: Option<Theme>[];
+  availableContrast: Option<string>[];
   locale: Locale;
+  availableLocales: Option<Locale>[];
 }
 
 const defaults: AppStateModel = {
   theme: 'system',
+  availableThemes: [
+    {
+      value: 'light',
+      viewValue: ThemePickerOverlayLocalization.LIGHT,
+    },
+    {
+      value: 'dark',
+      viewValue: ThemePickerOverlayLocalization.DARK,
+    },
+    {
+      value: 'system',
+      viewValue: ThemePickerOverlayLocalization.SYSTEM,
+    },
+  ],
+  availableContrast: [
+    {
+      value: '',
+      viewValue: ThemePickerOverlayLocalization.DEFAULT_CONTRAST,
+    },
+    {
+      value: '-mc',
+      viewValue: ThemePickerOverlayLocalization.MEDIUM_CONTRAST,
+    },
+    {
+      value: '-hc',
+      viewValue: ThemePickerOverlayLocalization.HIGH_CONTRAST,
+    },
+  ],
   locale: 'ru',
+  availableLocales: [
+    {
+      value: 'ru',
+      viewValue: LocalesLocalization.RU,
+    },
+    {
+      value: 'en-US',
+      viewValue: LocalesLocalization.EN_US,
+    },
+  ],
 } as const;
 
 const APP_STATE_TOKEN: StateToken<AppStateModel> = new StateToken<AppStateModel>('app');
@@ -40,8 +83,23 @@ export class AppState {
   }
 
   @Selector()
+  public static getAvailableThemes$({ availableThemes }: AppStateModel): Option<Theme>[] {
+    return availableThemes;
+  }
+
+  @Selector()
+  public static getAvailableContrast$({ availableContrast }: AppStateModel): Option<string>[] {
+    return availableContrast;
+  }
+
+  @Selector()
   public static getLocale$({ locale }: AppStateModel): Locale {
     return locale;
+  }
+
+  @Selector()
+  public static getAvailableLocales$({ availableLocales }: AppStateModel): Option<Locale>[] {
+    return availableLocales;
   }
 
   @Action(SetTheme)

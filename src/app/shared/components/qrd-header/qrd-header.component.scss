@@ -35,4 +35,8 @@
   @media #{map.get(bp.$breakpoints, xsmall)} {
     padding: mixins.rem(16) mixins.rem(24) mixins.rem(16) mixins.rem(4);
   }
+
+  @media #{map.get(bp.$breakpoints, small)} {
+    padding: mixins.rem(16) mixins.rem(24) mixins.rem(16) mixins.rem(4);
+  }
 }

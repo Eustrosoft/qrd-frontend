@@ -1,18 +1,23 @@
-<flex-block>
-  @if (isXSmall()) {
+<flex-block gapSize="8" flexAlignItems="center">
+  @if (isSmallScreen()) {
     <button (click)="openSidenavMenu()" class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="sidenav" display="inline" /></button>
   }
   <img ngSrc="/public/img/logo.png" alt="logo" width="40" height="40" priority />
+  @if (!isSmallScreen()) {
+    <p>{{ HeaderLocalization.QR_FOR_BUSINESS }}</p>
+  }
 </flex-block>
 <flex-block gapSize="32" flexAlignItems="center">
-  <flex-block gapSize="32">
-    @for (link of linkList; track link.title) {
-      <a class="nav-link" [routerLink]="link.route" [class.nav-link-active]="rla.isActive" routerLinkActive="active" #rla="routerLinkActive" mat-button>
-        {{ link.title }}
-      </a>
-    }
-  </flex-block>
-  <flex-block gapSize="32">
+  @if (!isSmallScreen()) {
+    <flex-block gapSize="32">
+      @for (link of linkList; track link.title) {
+        <a class="nav-link" [routerLink]="link.route" [class.nav-link-active]="rla.isActive" routerLinkActive="active" #rla="routerLinkActive" mat-button>
+          {{ link.title }}
+        </a>
+      }
+    </flex-block>
+  }
+  <flex-block [gapSize]="isSmallScreen() ? '8' : '32'">
     <button (click)="openOverlay()" class="qrd-icon-button-sm" mat-icon-button paletteAnimation cdkOverlayOrigin #trigger="cdkOverlayOrigin">
       <ui-icon icon="palette" cursor="pointer" display="inline" />
     </button>
