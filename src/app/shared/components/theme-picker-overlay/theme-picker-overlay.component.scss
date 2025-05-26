@@ -9,4 +9,5 @@
   box-shadow: var(--mat-sys-level2);
   border-radius: mixins.rem(16);
   flex-direction: column;
+  transform-origin: top left;
 }

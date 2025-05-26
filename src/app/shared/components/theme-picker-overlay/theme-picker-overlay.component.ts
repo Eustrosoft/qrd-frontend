@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, model, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, model, output } from '@angular/core';
 import { ThemePickerOverlayLocalization } from '@shared/shared.constants';
 import { FlexBlockComponent } from '@shared/components/flex-block/flex-block.component';
 import { MatIconButton } from '@angular/material/button';
@@ -42,18 +42,19 @@ export class ThemePickerOverlayComponent {
       viewValue: ThemePickerOverlayLocalization.DEFAULT_CONTRAST,
     },
     {
-      value: 'mc',
+      value: '-mc',
       viewValue: ThemePickerOverlayLocalization.MEDIUM_CONTRAST,
     },
     {
-      value: 'hc',
+      value: '-hc',
       viewValue: ThemePickerOverlayLocalization.HIGH_CONTRAST,
     },
   ]);
   protected readonly themeModel = model<Theme>(this.theme());
-
+  protected readonly contrastModel = model<string>('');
+  protected readonly isSystemThemeSelected = computed<boolean>(() => this.themeModel() === 'system');
   protected readonly themeChangeEffect = effect(() => {
-    this.setTheme(this.themeModel());
+    this.setTheme(<Theme>`${this.themeModel()}${this.isSystemThemeSelected() ? '' : this.contrastModel()}`);
   });
 
   public readonly closeClick = output<void>();

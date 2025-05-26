@@ -2,7 +2,7 @@
   @if (isXSmall()) {
     <button (click)="openSidenavMenu()" class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="sidenav" display="inline" /></button>
   }
-  <img ngSrc="/public/img/logo.png" alt="logo" width="40" height="40" />
+  <img ngSrc="/public/img/logo.png" alt="logo" width="40" height="40" priority />
 </flex-block>
 <flex-block gapSize="32" flexAlignItems="center">
   <flex-block gapSize="32">
@@ -27,7 +27,7 @@
       (overlayOutsideClick)="closeOverlay()"
       (detach)="closeOverlay()"
     >
-      <theme-picker-overlay (closeClick)="closeOverlay()" />
+      <theme-picker-overlay [@transformPanel]="isOverlayOpen() ? 'enter' : 'void'" (closeClick)="closeOverlay()" />
     </ng-template>
   </flex-block>
 </flex-block>

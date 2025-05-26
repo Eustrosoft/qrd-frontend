@@ -26,7 +26,7 @@
     &-active {
       @include mat.button-overrides(
         (
-          label-text-weight: 700,
+          text-label-text-weight: 700,
         )
       );
     }

@@ -8,3 +8,11 @@
     <mat-radio-button [value]="theme.value">{{ theme.viewValue }}</mat-radio-button>
   }
 </mat-radio-group>
+<hr />
+<p>{{ ThemePickerOverlayLocalization.CONTRAST }}</p>
+<hr />
+<mat-radio-group [(ngModel)]="contrastModel" [disabled]="isSystemThemeSelected()">
+  @for (contrast of contrastList; track contrast.value) {
+    <mat-radio-button [value]="contrast.value">{{ contrast.viewValue }}</mat-radio-button>
+  }
+</mat-radio-group>

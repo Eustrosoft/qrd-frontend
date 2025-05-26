@@ -11,6 +11,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { HeaderLink } from '@shared/components/qrd-header/qrd-header.models';
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, Overlay } from '@angular/cdk/overlay';
 import { ThemePickerOverlayComponent } from '@shared/components/theme-picker-overlay/theme-picker-overlay.component';
+import { overlayAnimation } from '@shared/shared.animations';
 
 @Component({
   selector: 'qrd-header',
@@ -27,6 +28,7 @@ import { ThemePickerOverlayComponent } from '@shared/components/theme-picker-ove
     CdkConnectedOverlay,
     ThemePickerOverlayComponent,
   ],
+  animations: [overlayAnimation],
   templateUrl: './qrd-header.component.html',
   styleUrl: './qrd-header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

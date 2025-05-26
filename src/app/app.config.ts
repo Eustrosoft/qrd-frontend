@@ -14,12 +14,13 @@ import { localizedDateAdapterFactory } from '@cdk/factories/localized-date-adapt
 import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { RuDateAdapterParsePipe } from '@shared/pipe/ru-adapter-parse.pipe';
 import { TemplatePageTitleStrategy } from '@cdk/classes/title-strategy.class';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-
+    provideAnimationsAsync(),
     provideStore(
       [AppState, IconRegistryState],
       {

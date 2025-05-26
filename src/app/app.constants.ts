@@ -16,5 +16,5 @@ export const RouteTitles = {
   DEV_SANDBOX: $localize`Dev Sandbox`,
 } as const;
 
-export const THEME_KEY = 'qrd-user-theme' as const;
-export const LOCALE_KEY = 'qrd-user-locale' as const;
+export const THEME_KEY = 'qrd-user-theme';
+export const LOCALE_KEY = 'qrd-user-locale';
