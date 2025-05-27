@@ -5,13 +5,14 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { NgOptimizedImage } from '@angular/common';
 import { FlexBlockComponent } from '@shared/components/flex-block/flex-block.component';
 import { IS_SMALL, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
-import { HeaderLocalization, SharedLocalization } from '@shared/shared.constants';
+import { SharedLocalization } from '@shared/shared.constants';
 import { PaletteAnimationDirective } from '@cdk/directives/palette-animation.directive';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { HeaderLink } from '@shared/components/qrd-header/qrd-header.models';
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, Overlay } from '@angular/cdk/overlay';
 import { ThemePickerOverlayComponent } from '@shared/components/theme-picker-overlay/theme-picker-overlay.component';
 import { overlayAnimation } from '@shared/shared.animations';
+import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 
 @Component({
   selector: 'qrd-header',
@@ -45,15 +46,15 @@ export class QrdHeaderComponent {
 
   protected readonly linkList: HeaderLink[] = [
     {
-      title: HeaderLocalization.CARDS,
+      title: HeaderLocalization.cards,
       route: '/cards',
     },
     {
-      title: HeaderLocalization.TEMPLATES,
+      title: HeaderLocalization.templates,
       route: '/templates',
     },
     {
-      title: HeaderLocalization.FILES,
+      title: HeaderLocalization.files,
       route: '/files',
     },
   ];

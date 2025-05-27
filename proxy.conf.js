@@ -5,9 +5,9 @@
 module.exports = [
   {
     changeOrigin: true,
-    context: ['/api'],
+    context: ['/qrCodeDemo'],
     secure: false,
-    target: '',
+    target: 'https://qrdemo.dev40.qxyz.ru/',
     logLevel: 'info',
   },
 ];

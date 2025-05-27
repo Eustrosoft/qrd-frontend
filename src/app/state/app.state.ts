@@ -10,7 +10,9 @@ import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
 import { Option } from '@shared/shared.models';
-import { LocalesLocalization, ThemePickerOverlayLocalization } from '@shared/shared.constants';
+import { LocalesLocalization } from '@shared/shared.constants';
+import { ThemePickerOverlayLocalization } from '@shared/components/theme-picker-overlay/theme-picker-overlay.constants';
+import { $localize } from '@angular/localize/init';
 
 export interface AppStateModel {
   theme: Theme;
@@ -25,40 +27,40 @@ const defaults: AppStateModel = {
   availableThemes: [
     {
       value: 'light',
-      viewValue: ThemePickerOverlayLocalization.LIGHT,
+      viewValue: ThemePickerOverlayLocalization.light,
     },
     {
       value: 'dark',
-      viewValue: ThemePickerOverlayLocalization.DARK,
+      viewValue: ThemePickerOverlayLocalization.dark,
     },
     {
       value: 'system',
-      viewValue: ThemePickerOverlayLocalization.SYSTEM,
+      viewValue: ThemePickerOverlayLocalization.system,
     },
   ],
   availableContrast: [
     {
       value: '',
-      viewValue: ThemePickerOverlayLocalization.DEFAULT_CONTRAST,
+      viewValue: ThemePickerOverlayLocalization.defaultContrast,
     },
     {
       value: '-mc',
-      viewValue: ThemePickerOverlayLocalization.MEDIUM_CONTRAST,
+      viewValue: ThemePickerOverlayLocalization.mediumContrast,
     },
     {
       value: '-hc',
-      viewValue: ThemePickerOverlayLocalization.HIGH_CONTRAST,
+      viewValue: ThemePickerOverlayLocalization.highContrast,
     },
   ],
   locale: 'ru',
   availableLocales: [
     {
       value: 'ru',
-      viewValue: LocalesLocalization.RU,
+      viewValue: LocalesLocalization.ru,
     },
     {
       value: 'en-US',
-      viewValue: LocalesLocalization.EN_US,
+      viewValue: LocalesLocalization.enUS,
     },
   ],
 } as const;

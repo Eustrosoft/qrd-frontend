@@ -1,11 +1,12 @@
 import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { inject, Injectable } from '@angular/core';
+import { SharedLocalization } from '@shared/shared.constants';
 
 @Injectable({ providedIn: 'root' })
 export class TemplatePageTitleStrategy extends TitleStrategy {
   private readonly title: Title = inject(Title);
-  private readonly defaultTitle: string = $localize`QRD`;
+  private readonly defaultTitle: string = SharedLocalization.defaultTitle;
 
   constructor() {
     super();

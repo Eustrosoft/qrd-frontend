@@ -1,5 +1,5 @@
 <flex-block flexAlignItems="center" flexJustifyContent="space-between">
-  <p>{{ ThemePickerOverlayLocalization.THEME }}</p>
+  <p>{{ ThemePickerOverlayLocalization.theme }}</p>
   <button (click)="closeClick.emit()" class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="close" display="inline" /></button>
 </flex-block>
 <hr />
@@ -9,7 +9,7 @@
   }
 </mat-radio-group>
 <hr />
-<p>{{ ThemePickerOverlayLocalization.CONTRAST }}</p>
+<p>{{ ThemePickerOverlayLocalization.contrast }}</p>
 <hr />
 <mat-radio-group [(ngModel)]="contrastModel" [disabled]="isSystemThemeSelected()">
   @for (contrast of selectors.availableContrast(); track contrast.value) {

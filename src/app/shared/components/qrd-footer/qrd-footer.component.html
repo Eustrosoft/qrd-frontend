@@ -1,13 +1,15 @@
 <flex-block [flexDirection]="isSmallScreen() ? 'column' : 'row'" flexAlignItems="flex-start" flexJustifyContent="space-between">
-  <flex-block flexAlignItems="center">
-    <img ngSrc="/public/img/logo.png" alt="logo" width="40" height="40" priority />
-    <flex-block gapSize="0" flexDirection="column" flexAlignItems="flex-start">
-      <p><b>QR Demo</b></p>
-      <p>{{ FooterLocalization.QR_FOR_ALL }}</p>
+  <flex-block flexDirection="column" flexAlignItems="flex-start">
+    <flex-block flexDirection="row" flexAlignItems="center">
+      <img ngSrc="/public/img/logo.png" alt="logo" width="40" height="40" priority />
+      <flex-block gapSize="0" flexDirection="column" flexAlignItems="flex-start">
+        <p><b>QR Demo</b></p>
+        <p>{{ FooterLocalization.qrForAll }}</p>
+      </flex-block>
     </flex-block>
     <mat-form-field subscriptSizing="dynamic" class="qrd-form-field-sm">
-      <mat-label>{{ SharedLocalization.LANGUAGE }}</mat-label>
-      <mat-select [hideSingleSelectionIndicator]="true" [(ngModel)]="localeModel" placeholder="Placeholder">
+      <mat-label>{{ SharedLocalization.language }}</mat-label>
+      <mat-select [hideSingleSelectionIndicator]="true" [(ngModel)]="localeModel" (selectionChange)="setLocale($event.value, true)">
         @for (locale of selectors.availableLocales(); track locale.value) {
           <mat-option class="qrd-option-sm" [value]="locale.value">{{ locale.viewValue }}</mat-option>
         }
@@ -16,19 +18,19 @@
   </flex-block>
   <flex-block gapSize="2" flexDirection="column" flexAlignItems="flex-start">
     <p><b>QR Demo</b></p>
-    <a class="qrd-button-anchor-md" mat-button>{{ FooterLocalization.TRAINING_VIDEO }}</a>
-    <a class="qrd-button-anchor-md" routerLink="/login" mat-button>{{ FooterLocalization.LOGIN_PAGE }}</a>
+    <a class="qrd-button-anchor-md" mat-button>{{ FooterLocalization.trainingVideo }}</a>
+    <a class="qrd-button-anchor-md" routerLink="/login" mat-button>{{ FooterLocalization.loginPage }}</a>
   </flex-block>
   <flex-block gapSize="2" flexDirection="column" [flexAlignItems]="isSmallScreen() ? 'flex-start' : 'center'">
     <p>
-      <b>{{ FooterLocalization.SERVICES }}</b>
+      <b>{{ FooterLocalization.services }}</b>
     </p>
     <a class="qrd-button-anchor-md" href="https://qxyz.ru" target="_blank" mat-button>QXYZ</a>
     <a class="qrd-button-anchor-md" href="https://qrdemo.qxyz.ru" target="_blank" mat-button>QR Demo</a>
   </flex-block>
   <flex-block gapSize="2" flexDirection="column" [flexAlignItems]="isSmallScreen() ? 'flex-start' : 'flex-end'">
     <p>
-      <b>{{ FooterLocalization.CONTACTS }}</b>
+      <b>{{ FooterLocalization.contacts }}</b>
     </p>
     <a class="qrd-button-anchor-md" mat-button href="mailto:qrdemo@eustrosoft.org">qrdemo&#64;eustrosoft.org</a>
     <a class="qrd-button-anchor-md" mat-button href="tel:+79951161601">+7 (995) 116-16-01</a>

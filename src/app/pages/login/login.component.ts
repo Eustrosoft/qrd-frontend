@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { RouteTitles } from '@app/app.constants';
 import { FlexBlockComponent } from '@shared/components/flex-block/flex-block.component';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatError } from '@angular/material/form-field';
-import { SharedLocalization, SignUpLocalization } from '@shared/shared.constants';
+import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginForm } from '@app/pages/login/login.models';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { SignUpLocalization } from '@app/pages/login/login.constants';
 
 @Component({
   selector: 'login',

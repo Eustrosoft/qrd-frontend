@@ -1,59 +1,61 @@
 import { Router, Routes } from '@angular/router';
-import { AppRoutes, RouteTitles } from '@app/app.constants';
+import { AppRoutes } from '@app/app.constants';
 import { environment } from '@environment';
 import { errorConfigFactory } from '@cdk/factories/error-config.factory';
 import { ERROR_CONFIG, ErrorConfig } from '@cdk/tokens/error-config.token';
 import { LoginComponent } from '@app/pages/login/login.component';
+import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
+import { ErrorsLocalization } from '@app/pages/error-page/error-page.constants';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: AppRoutes.DEV_SANDBOX,
+    redirectTo: AppRoutes.devSandbox,
   },
   {
-    path: AppRoutes.LOGIN,
-    title: RouteTitles.LOGIN,
+    path: AppRoutes.login,
+    title: RouteTitles.login,
     component: LoginComponent,
   },
   {
-    path: AppRoutes.CARDS,
-    title: RouteTitles.CARDS,
+    path: AppRoutes.cards,
+    title: RouteTitles.cards,
     loadChildren: () => import('@app/pages/cards/cards.routes').then((m) => m.cardsRoutes),
   },
   {
-    path: AppRoutes.TEMPLATES,
-    title: RouteTitles.TEMPLATES,
+    path: AppRoutes.templates,
+    title: RouteTitles.templates,
     loadChildren: () => import('@app/pages/templates/templates.routes').then((m) => m.templatesRoutes),
   },
   {
-    path: AppRoutes.FILES,
-    title: RouteTitles.FILES,
+    path: AppRoutes.files,
+    title: RouteTitles.files,
     loadChildren: () => import('@app/pages/files/files.routes').then((m) => m.filesRoutes),
   },
   {
-    path: AppRoutes.DEV_SANDBOX,
-    title: RouteTitles.DEV_SANDBOX,
+    path: AppRoutes.devSandbox,
+    title: RouteTitles.devSandbox,
     canActivate: [(): boolean => !environment.production],
     loadChildren: () => import('@app/pages/dev-sandbox/dev-sandbox.routes').then((m) => m.devSandboxRoutes),
   },
   {
-    path: AppRoutes.NOT_FOUND,
-    title: RouteTitles.NOT_FOUND,
+    path: AppRoutes.notFound,
+    title: ErrorsLocalization.pageNotFound,
     loadComponent: () => import('@app/pages/error-page/error-page.component').then((m) => m.ErrorPageComponent),
     providers: [
       {
         provide: ERROR_CONFIG,
         useFactory: (router: Router): ErrorConfig =>
           errorConfigFactory({
-            title: $localize`Такая страница не найдена`,
-            message: $localize`Запрашиваемой страницы у нас нет. Возможно, она была удалена или в запросе был указан неверный адрес`,
+            title: ErrorsLocalization.pageNotFound,
+            message: ErrorsLocalization.pageNotFoundDescription,
             icon: 'not-found',
-            buttonList: [{ buttonText: $localize`Главная страница`, buttonAction: () => router.navigate(['/']) }],
+            buttonList: [{ buttonText: SharedLocalization.mainPage, buttonAction: () => router.navigate(['/']) }],
           }),
         deps: [Router],
       },
     ],
   },
-  { path: '**', redirectTo: `/${AppRoutes.NOT_FOUND}` },
+  { path: '**', redirectTo: `/${AppRoutes.notFound}` },
 ];
