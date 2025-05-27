@@ -2,10 +2,11 @@
   @if (isSmallScreen()) {
     <button (click)="openSidenavMenu()" class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="sidenav" display="inline" /></button>
   }
-  <img ngSrc="/public/img/logo.png" alt="logo" width="40" height="40" priority />
-  @if (!isSmallScreen()) {
-    <p>{{ HeaderLocalization.qrForBusiness }}</p>
-  }
+  <qrd-logo>
+    @if (!isSmallScreen()) {
+      <p class="is-bold is-on-primary-container">{{ HeaderLocalization.qrForBusiness }}</p>
+    }
+  </qrd-logo>
 </flex-block>
 <flex-block gapSize="32" flexAlignItems="center">
   @if (!isSmallScreen()) {

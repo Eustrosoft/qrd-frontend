@@ -6,17 +6,14 @@
 :host {
   display: flex;
   padding: mixins.rem(16) mixins.rem(24);
-  background: var(--mat-sys-surface-container);
+  background: var(--mat-sys-primary-container);
   align-items: center;
   justify-content: space-between;
-
-  img {
-    border-radius: mixins.rem(4);
-  }
 
   .nav-link {
     @include mat.button-overrides(
       (
+        text-label-text-color: var(--mat-sys-on-primary-container),
         text-label-text-size: 16px,
         text-container-height: 24px,
         text-horizontal-padding: 16px,

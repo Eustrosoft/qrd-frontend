@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, model } from '@angular/core';
 import { FlexBlockComponent } from '@shared/components/flex-block/flex-block.component';
-import { NgOptimizedImage } from '@angular/common';
 import { SharedLocalization } from '@shared/shared.constants';
 import { MatAnchor } from '@angular/material/button';
 import { IS_SMALL, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
@@ -13,10 +12,13 @@ import { AppState } from '@app/state/app.state';
 import { FormsModule } from '@angular/forms';
 import { SetLocale } from '@app/state/app.actions';
 import { FooterLocalization } from '@shared/components/qrd-footer/qrd-footer.constants';
+import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
+import { Option } from '@shared/shared.models';
+import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component';
 
 @Component({
   selector: 'qrd-footer',
-  imports: [FlexBlockComponent, NgOptimizedImage, MatAnchor, RouterLink, MatFormField, MatLabel, MatOption, MatSelect, MatFormField, MatSelect, FormsModule],
+  imports: [FlexBlockComponent, MatAnchor, RouterLink, MatFormField, MatLabel, MatOption, MatSelect, MatFormField, MatSelect, FormsModule, QrdLogoComponent],
   templateUrl: './qrd-footer.component.html',
   styleUrl: './qrd-footer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,7 +28,7 @@ export class QrdFooterComponent {
   private readonly isSmall = inject(IS_SMALL);
   protected readonly selectors = createSelectMap({
     locale: AppState.getLocale$,
-    availableLocales: AppState.getAvailableLocales$,
+    availableLocales: DictionaryRegistryState.getDictionary$<Option<string>>('locales'),
   });
   protected readonly setLocale = dispatch(SetLocale);
   protected readonly isSmallScreen = computed<boolean>(() => this.isXSmall() || this.isSmall());

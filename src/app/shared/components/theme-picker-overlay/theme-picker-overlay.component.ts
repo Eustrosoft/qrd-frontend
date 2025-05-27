@@ -9,6 +9,8 @@ import { AppState } from '@app/state/app.state';
 import { FormsModule } from '@angular/forms';
 import { SetTheme } from '@app/state/app.actions';
 import { ThemePickerOverlayLocalization } from '@shared/components/theme-picker-overlay/theme-picker-overlay.constants';
+import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
+import { Option } from '@shared/shared.models';
 
 @Component({
   selector: 'theme-picker-overlay',
@@ -20,8 +22,8 @@ import { ThemePickerOverlayLocalization } from '@shared/components/theme-picker-
 export class ThemePickerOverlayComponent {
   protected readonly selectors = createSelectMap({
     theme: AppState.getTheme$,
-    availableThemes: AppState.getAvailableThemes$,
-    availableContrast: AppState.getAvailableContrast$,
+    availableThemes: DictionaryRegistryState.getDictionary$<Option<string>>('themes'),
+    availableContrast: DictionaryRegistryState.getDictionary$<Option<string>>('contrast'),
   });
   private readonly setTheme = dispatch(SetTheme);
   protected readonly ThemePickerOverlayLocalization = ThemePickerOverlayLocalization;

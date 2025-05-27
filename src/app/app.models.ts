@@ -1,4 +1,5 @@
 import { SafeHtml } from '@angular/platform-browser';
+import { Option } from '@shared/shared.models';
 
 export type Environment = {
   name: string;
@@ -31,6 +32,12 @@ export type Icon =
   | 'world';
 export type IconState = {
   iconSvg: SafeHtml | null;
+  isLoading: boolean;
+  isLoadError: boolean;
+};
+export type Dictionaries = 'locales' | 'themes' | 'contrast';
+export type DictionaryState<T = Option<unknown>> = {
+  list: T[];
   isLoading: boolean;
   isLoadError: boolean;
 };

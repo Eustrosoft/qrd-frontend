@@ -26,8 +26,6 @@ export class AppComponent {
   });
   /**
    * TODO
-   *  header
-   *  footer
    *  locale change + guard integration (guard should prevent}
    *  inline link with icon component
    *  chips

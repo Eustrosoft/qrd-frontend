@@ -3,6 +3,7 @@
 @use '@angular/material' as mat;
 @forward 'styles/reset';
 @forward 'styles/global';
+@forward 'styles/typography';
 @forward 'styles/fonts';
 @forward 'styles/material-overrides';
 @use 'styles/themes/theme' as theme;

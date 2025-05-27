@@ -1,0 +1,7 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  img {
+    border-radius: mixins.rem(4);
+  }
+}

@@ -1,16 +1,13 @@
 <flex-block [flexDirection]="isSmallScreen() ? 'column' : 'row'" flexAlignItems="flex-start" flexJustifyContent="space-between">
   <flex-block flexDirection="column" flexAlignItems="flex-start">
-    <flex-block flexDirection="row" flexAlignItems="center">
-      <img ngSrc="/public/img/logo.png" alt="logo" width="40" height="40" priority />
-      <flex-block gapSize="0" flexDirection="column" flexAlignItems="flex-start">
-        <p><b>QR Demo</b></p>
-        <p>{{ FooterLocalization.qrForAll }}</p>
-      </flex-block>
-    </flex-block>
+    <qrd-logo>
+      <p><b>QR Demo</b></p>
+      <p>{{ FooterLocalization.qrForAll }}</p>
+    </qrd-logo>
     <mat-form-field subscriptSizing="dynamic" class="qrd-form-field-sm">
       <mat-label>{{ SharedLocalization.language }}</mat-label>
       <mat-select [hideSingleSelectionIndicator]="true" [(ngModel)]="localeModel" (selectionChange)="setLocale($event.value, true)">
-        @for (locale of selectors.availableLocales(); track locale.value) {
+        @for (locale of selectors.availableLocales().list; track locale.value) {
           <mat-option class="qrd-option-sm" [value]="locale.value">{{ locale.viewValue }}</mat-option>
         }
       </mat-select>

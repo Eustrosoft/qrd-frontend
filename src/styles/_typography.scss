@@ -1,0 +1,27 @@
+h1 {
+  font: var(--mat-sys-headline-large);
+}
+
+h2 {
+  font: var(--mat-sys-headline-medium);
+}
+
+h3 {
+  font: var(--mat-sys-headline-small);
+}
+
+p {
+  font: var(--mat-sys-body-medium);
+
+  &.is-bold {
+    font-weight: 700;
+  }
+
+  &.is-on-primary-container {
+    color: var(--mat-sys-on-primary-container);
+  }
+}
+
+small {
+  font: var(--mat-sys-body-small);
+}

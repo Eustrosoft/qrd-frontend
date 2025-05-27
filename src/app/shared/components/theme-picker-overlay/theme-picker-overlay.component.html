@@ -4,15 +4,19 @@
 </flex-block>
 <hr />
 <mat-radio-group [(ngModel)]="themeModel">
-  @for (theme of selectors.availableThemes(); track theme.value) {
-    <mat-radio-button [value]="theme.value">{{ theme.viewValue }}</mat-radio-button>
-  }
+  <flex-block gapSize="0" flexDirection="column">
+    @for (theme of selectors.availableThemes().list; track theme.value) {
+      <mat-radio-button [value]="theme.value">{{ theme.viewValue }}</mat-radio-button>
+    }
+  </flex-block>
 </mat-radio-group>
 <hr />
 <p>{{ ThemePickerOverlayLocalization.contrast }}</p>
 <hr />
 <mat-radio-group [(ngModel)]="contrastModel" [disabled]="isSystemThemeSelected()">
-  @for (contrast of selectors.availableContrast(); track contrast.value) {
-    <mat-radio-button [value]="contrast.value">{{ contrast.viewValue }}</mat-radio-button>
-  }
+  <flex-block gapSize="0" flexDirection="column">
+    @for (contrast of selectors.availableContrast().list; track contrast.value) {
+      <mat-radio-button [value]="contrast.value">{{ contrast.viewValue }}</mat-radio-button>
+    }
+  </flex-block>
 </mat-radio-group>

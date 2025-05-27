@@ -9,60 +9,15 @@ import { LOCALE_KEY, THEME_KEY } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
-import { Option } from '@shared/shared.models';
-import { LocalesLocalization } from '@shared/shared.constants';
-import { ThemePickerOverlayLocalization } from '@shared/components/theme-picker-overlay/theme-picker-overlay.constants';
-import { $localize } from '@angular/localize/init';
 
 export interface AppStateModel {
   theme: Theme;
-  availableThemes: Option<Theme>[];
-  availableContrast: Option<string>[];
   locale: Locale;
-  availableLocales: Option<Locale>[];
 }
 
 const defaults: AppStateModel = {
   theme: 'system',
-  availableThemes: [
-    {
-      value: 'light',
-      viewValue: ThemePickerOverlayLocalization.light,
-    },
-    {
-      value: 'dark',
-      viewValue: ThemePickerOverlayLocalization.dark,
-    },
-    {
-      value: 'system',
-      viewValue: ThemePickerOverlayLocalization.system,
-    },
-  ],
-  availableContrast: [
-    {
-      value: '',
-      viewValue: ThemePickerOverlayLocalization.defaultContrast,
-    },
-    {
-      value: '-mc',
-      viewValue: ThemePickerOverlayLocalization.mediumContrast,
-    },
-    {
-      value: '-hc',
-      viewValue: ThemePickerOverlayLocalization.highContrast,
-    },
-  ],
   locale: 'ru',
-  availableLocales: [
-    {
-      value: 'ru',
-      viewValue: LocalesLocalization.ru,
-    },
-    {
-      value: 'en-US',
-      viewValue: LocalesLocalization.enUS,
-    },
-  ],
 } as const;
 
 const APP_STATE_TOKEN: StateToken<AppStateModel> = new StateToken<AppStateModel>('app');
@@ -85,23 +40,8 @@ export class AppState {
   }
 
   @Selector()
-  public static getAvailableThemes$({ availableThemes }: AppStateModel): Option<Theme>[] {
-    return availableThemes;
-  }
-
-  @Selector()
-  public static getAvailableContrast$({ availableContrast }: AppStateModel): Option<string>[] {
-    return availableContrast;
-  }
-
-  @Selector()
   public static getLocale$({ locale }: AppStateModel): Locale {
     return locale;
-  }
-
-  @Selector()
-  public static getAvailableLocales$({ availableLocales }: AppStateModel): Option<Locale>[] {
-    return availableLocales;
   }
 
   @Action(SetTheme)

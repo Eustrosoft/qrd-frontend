@@ -15,14 +15,16 @@ import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { RuDateAdapterParsePipe } from '@shared/pipe/ru-adapter-parse.pipe';
 import { TemplatePageTitleStrategy } from '@cdk/classes/title-strategy.class';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideInitializers(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideAnimationsAsync(),
     provideStore(
-      [AppState, IconRegistryState],
+      [AppState, IconRegistryState, DictionaryRegistryState],
       {
         developmentMode: !environment.production,
         selectorOptions: {
@@ -31,7 +33,6 @@ export const appConfig: ApplicationConfig = {
       },
       withNgxsReduxDevtoolsPlugin(),
     ),
-    provideInitializers(),
     providePipes(),
     provideHttpClient(),
     provideMaterialConfig(),
