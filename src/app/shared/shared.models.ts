@@ -4,7 +4,27 @@ export type FlexAlignItems = 'baseline' | 'center' | 'flex-end' | 'flex-start' |
 export type FlexWrap = 'wrap' | 'wrap-reverse' | 'nowrap';
 export type FlexJustifyContent = 'center' | 'flex-end' | 'flex-start' | 'space-around' | 'space-between' | 'space-evenly' | '';
 export type GridDisplay = 'grid' | 'inline-grid';
-export type GridJustifySelf = 'auto' | 'start' | 'end' | 'center' | 'stretch' | 'left' | 'right';
+export type GridJustifyItems =
+  | 'anchor-center'
+  | 'auto'
+  | 'baseline'
+  | 'center'
+  | 'end'
+  | 'flex-end'
+  | 'flex-start'
+  | 'left'
+  | 'normal'
+  | 'right'
+  | 'self-end'
+  | 'self-start'
+  | 'start'
+  | 'stretch'
+  | 'inherit'
+  | 'initial'
+  | 'revert'
+  | 'revert-layer'
+  | 'unset';
+export type GridJustifySelf = GridJustifyItems;
 export type CursorType =
   | 'auto'
   | 'default'

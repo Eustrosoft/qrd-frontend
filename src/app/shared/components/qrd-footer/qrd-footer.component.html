@@ -1,4 +1,4 @@
-<flex-block [flexDirection]="isSmallScreen() ? 'column' : 'row'" flexAlignItems="flex-start" flexJustifyContent="space-between">
+<grid-block [gridTemplateColumns]="gridTemplateColumns()">
   <flex-block flexDirection="column" flexAlignItems="flex-start">
     <qrd-logo>
       <p><b>QR Demo</b></p>
@@ -32,7 +32,7 @@
     <a class="qrd-button-anchor-md" mat-button href="mailto:qrdemo@eustrosoft.org">qrdemo&#64;eustrosoft.org</a>
     <a class="qrd-button-anchor-md" mat-button href="tel:+79951161601">+7 (995) 116-16-01</a>
   </flex-block>
-</flex-block>
+</grid-block>
 <flex-block gapSize="4" flexAlignSelf="flex-end">
   <small>© {{ currentYear }} </small> <a class="qrd-button-anchor-sm" href="https://eustrosoft.org" target="_blank" mat-button>eustrosoft.org</a>
 </flex-block>

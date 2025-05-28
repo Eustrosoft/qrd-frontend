@@ -15,10 +15,24 @@ import { FooterLocalization } from '@shared/components/qrd-footer/qrd-footer.con
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 import { Option } from '@shared/shared.models';
 import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component';
+import { GridBlockComponent } from '@shared/components/grid-block/grid-block.component';
 
 @Component({
   selector: 'qrd-footer',
-  imports: [FlexBlockComponent, MatAnchor, RouterLink, MatFormField, MatLabel, MatOption, MatSelect, MatFormField, MatSelect, FormsModule, QrdLogoComponent],
+  imports: [
+    FlexBlockComponent,
+    MatAnchor,
+    RouterLink,
+    MatFormField,
+    MatLabel,
+    MatOption,
+    MatSelect,
+    MatFormField,
+    MatSelect,
+    FormsModule,
+    QrdLogoComponent,
+    GridBlockComponent,
+  ],
   templateUrl: './qrd-footer.component.html',
   styleUrl: './qrd-footer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,6 +49,16 @@ export class QrdFooterComponent {
   protected readonly FooterLocalization = FooterLocalization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly currentYear = new Date().getFullYear();
+
+  protected readonly gridTemplateColumns = computed<string>(() => {
+    if (this.isXSmall()) {
+      return 'repeat(1, 1fr)';
+    }
+    if (this.isSmall()) {
+      return 'repeat(2, 1fr)';
+    }
+    return 'repeat(4, 1fr)';
+  });
 
   protected readonly localeModel = model<Locale>(this.selectors.locale());
 }
