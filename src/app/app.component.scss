@@ -13,6 +13,7 @@
     display: flex;
     padding: mixins.rem(32) mixins.rem(64);
     max-width: mixins.rem(1280);
+    min-height: 100svh;
 
     @media #{map.get(bp.$breakpoints, xsmall)} {
       padding: mixins.rem(12) mixins.rem(16);

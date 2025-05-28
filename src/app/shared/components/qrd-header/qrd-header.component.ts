@@ -7,13 +7,16 @@ import { IS_SMALL, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { SharedLocalization } from '@shared/shared.constants';
 import { PaletteAnimationDirective } from '@cdk/directives/palette-animation.directive';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { HeaderLink } from '@shared/components/qrd-header/qrd-header.models';
+import { HeaderNavbarLink } from '@shared/components/qrd-header/qrd-header.models';
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, Overlay } from '@angular/cdk/overlay';
 import { ThemePickerOverlayComponent } from '@shared/components/theme-picker-overlay/theme-picker-overlay.component';
 import { overlayAnimation } from '@shared/shared.animations';
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component';
 import { MatListItem, MatNavList } from '@angular/material/list';
+import { BottomNavbarComponent } from '@shared/components/bottom-navbar/bottom-navbar.component';
+import { createSelectMap, select } from '@ngxs/store';
+import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 
 @Component({
   selector: 'qrd-header',
@@ -31,6 +34,7 @@ import { MatListItem, MatNavList } from '@angular/material/list';
     QrdLogoComponent,
     MatNavList,
     MatListItem,
+    BottomNavbarComponent,
   ],
   animations: [overlayAnimation],
   templateUrl: './qrd-header.component.html',
@@ -43,24 +47,13 @@ export class QrdHeaderComponent {
   private readonly isXSmall = inject(IS_XSMALL);
   private readonly isSmall = inject(IS_SMALL);
   protected readonly isSmallScreen = computed<boolean>(() => this.isXSmall() || this.isSmall());
+  protected readonly selectors = createSelectMap({
+    navbarLinks: select(DictionaryRegistryState.getDictionary$<HeaderNavbarLink>('headerNavbarLinks')),
+  });
 
   protected readonly HeaderLocalization = HeaderLocalization;
   protected readonly SharedLocalization = SharedLocalization;
 
-  protected readonly linkList: HeaderLink[] = [
-    {
-      title: HeaderLocalization.cards,
-      route: '/cards',
-    },
-    {
-      title: HeaderLocalization.templates,
-      route: '/templates',
-    },
-    {
-      title: HeaderLocalization.files,
-      route: '/files',
-    },
-  ];
   protected readonly isOverlayOpen = signal<boolean>(false);
   protected readonly cdkConnectedOverlayScrollStrategy = this.overlay.scrollStrategies.close();
 
@@ -84,6 +77,6 @@ export class QrdHeaderComponent {
   }
 
   protected openSidenavMenu(): void {
-    this.uiSidenavService.open(UiIconComponent, { inputs: { icon: 'palette' }, width: 'full' });
+    this.uiSidenavService.open(UiIconComponent, { inputs: { icon: 'cringe', width: '300', height: '300' }, width: 'full' });
   }
 }

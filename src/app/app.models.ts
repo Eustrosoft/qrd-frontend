@@ -1,5 +1,4 @@
 import { SafeHtml } from '@angular/platform-browser';
-import { Option } from '@shared/shared.models';
 
 export type Environment = {
   name: string;
@@ -17,6 +16,7 @@ export type Icon =
   | 'arrow-bottom'
   | 'arrow-left'
   | 'close'
+  | 'cringe'
   | 'error'
   | 'eye'
   | 'eye-slash'
@@ -36,8 +36,8 @@ export type IconState = {
   isLoading: boolean;
   isLoadError: boolean;
 };
-export type Dictionaries = 'locales' | 'themes' | 'contrast';
-export type DictionaryState<T = Option<unknown>> = {
+export type Dictionaries = 'locales' | 'themes' | 'contrast' | 'headerNavbarLinks' | 'bottomNavbarLinks';
+export type DictionaryState<T> = {
   list: T[];
   isLoading: boolean;
   isLoadError: boolean;

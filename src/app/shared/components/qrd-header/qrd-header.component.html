@@ -11,7 +11,7 @@
 <flex-block gapSize="32" flexAlignItems="center">
   @if (!isSmallScreen()) {
     <mat-nav-list class="qrd-header-navbar">
-      @for (link of linkList; track link.title) {
+      @for (link of selectors.navbarLinks().list; track link.title) {
         <a class="qrd-header-navbar-link" [activated]="rla.isActive" [routerLink]="link.route" #rla="routerLinkActive" routerLinkActive="active" mat-list-item>
           {{ link.title }}
         </a>
@@ -37,3 +37,6 @@
     </ng-template>
   </flex-block>
 </flex-block>
+@if (isSmallScreen()) {
+  <bottom-navbar />
+}

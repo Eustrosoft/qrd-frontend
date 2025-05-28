@@ -5,9 +5,10 @@ import { Option } from '@shared/shared.models';
 import { ThemePickerOverlayLocalization } from '@shared/components/theme-picker-overlay/theme-picker-overlay.constants';
 import { patch } from '@ngxs/store/operators';
 import { LocalesLocalization } from '@shared/shared.constants';
+import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 
 export interface DictionaryRegistryStateModel {
-  dictionaries: Partial<Record<Dictionaries, DictionaryState>>;
+  dictionaries: Partial<Record<Dictionaries, DictionaryState<unknown>>>;
 }
 
 const defaults: DictionaryRegistryStateModel = {
@@ -71,6 +72,42 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
               {
                 value: 'en-US',
                 viewValue: LocalesLocalization.enUS,
+              },
+            ],
+            isLoading: false,
+            isLoadError: false,
+          }),
+          headerNavbarLinks: patch({
+            list: [
+              {
+                title: HeaderLocalization.cards,
+                route: '/cards',
+              },
+              {
+                title: HeaderLocalization.templates,
+                route: '/templates',
+              },
+              {
+                title: HeaderLocalization.files,
+                route: '/files',
+              },
+            ],
+            isLoading: false,
+            isLoadError: false,
+          }),
+          bottomNavbarLinks: patch({
+            list: [
+              {
+                icon: 'cringe',
+                route: '/cards',
+              },
+              {
+                icon: 'eye',
+                route: '/templates',
+              },
+              {
+                icon: 'world',
+                route: '/files',
               },
             ],
             isLoading: false,

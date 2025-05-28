@@ -1,4 +1,4 @@
-export type HeaderLink = {
+export type HeaderNavbarLink = {
   title: string;
   route: string;
 };

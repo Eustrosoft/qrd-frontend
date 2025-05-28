@@ -129,3 +129,21 @@
     )
   );
 }
+
+.qrd-icon-button-md {
+  @include mat.icon-button-overrides(
+    (
+      icon-size: 40px,
+      state-layer-size: 56px,
+    )
+  );
+}
+
+.qrd-icon-button-lg {
+  @include mat.icon-button-overrides(
+    (
+      icon-size: 56px,
+      state-layer-size: 64px,
+    )
+  );
+}

@@ -1,5 +1,10 @@
-<flex-block flex="auto" gapSize="96">
-  <flex-block flex="0 1 24rem" gapSize="32" flexDirection="column">
+<flex-block
+  flex="auto"
+  [gapSize]="isSmallScreen() ? '32' : '96'"
+  [flexDirection]="isSmallScreen() ? 'column-reverse' : 'row'"
+  [flexAlignItems]="isSmallScreen() ? 'stretch' : 'auto'"
+>
+  <flex-block [flex]="isSmallScreen() ? 'auto' : '0 1 24rem'" gapSize="32" flexDirection="column">
     <h1>{{ errorConfig.title }}</h1>
     <p>{{ errorConfig.message }}</p>
     @for (button of errorConfig.buttonList; track button.buttonText) {
@@ -8,7 +13,7 @@
       </button>
     } @empty {}
   </flex-block>
-  <flex-block flex="1 0 auto">
+  <flex-block flex="1 0 auto" [flexAlignSelf]="isSmallScreen() ? 'center' : 'flex-start'">
     <ui-icon width="100%" height="100%" [icon]="errorConfig.icon" />
   </flex-block>
 </flex-block>

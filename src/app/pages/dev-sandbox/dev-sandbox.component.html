@@ -87,13 +87,9 @@
   <button class="qrd-button-xl" mat-flat-button>Button XL</button>
 </flex-block>
 <flex-block flexAlignItems="center" flexWrap="wrap">
-  <button (click)="setTheme('system')" mat-button>System</button>
-  <button (click)="setTheme('dark')" mat-flat-button>Dark</button>
-  <button (click)="setTheme('dark-mc')" mat-flat-button>Dark MC</button>
-  <button (click)="setTheme('dark-hc')" mat-flat-button>Dark HC</button>
-  <button (click)="setTheme('light')" mat-raised-button>Light</button>
-  <button (click)="setTheme('light-mc')" mat-raised-button>Light MC</button>
-  <button (click)="setTheme('light-hc')" mat-raised-button>Light HC</button>
+  <button (click)="setTheme('system', '')" mat-button>System</button>
+  <button (click)="setTheme('dark', '')" mat-flat-button>Dark</button>
+  <button (click)="setTheme('light', '')" mat-raised-button>Light</button>
 </flex-block>
 <flex-block flexAlignItems="center" flexWrap="wrap">
   <button (click)="setLocale('ru', true)" mat-flat-button>RU Locale</button>
@@ -118,6 +114,8 @@
 <flex-block flexAlignItems="center">
   <button class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="arrow-bottom" display="inline" /></button>
   <button class="qrd-icon-button-sm" mat-icon-button paletteAnimation><ui-icon icon="palette" display="inline" /></button>
+  <button class="qrd-icon-button-md" mat-icon-button><ui-icon icon="cringe" display="inline" /></button>
+  <button class="qrd-icon-button-lg" mat-icon-button><ui-icon icon="eye" display="inline" /></button>
 </flex-block>
 
 <h1>Toggle Buttons</h1>
