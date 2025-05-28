@@ -10,22 +10,12 @@
   align-items: center;
   justify-content: space-between;
 
-  .nav-link {
-    @include mat.button-overrides(
-      (
-        text-label-text-color: var(--mat-sys-on-primary-container),
-        text-label-text-size: 16px,
-        text-container-height: 24px,
-        text-horizontal-padding: 16px,
-      )
-    );
+  .qrd-header-navbar {
+    gap: mixins.rem(32);
+    display: flex;
 
-    &-active {
-      @include mat.button-overrides(
-        (
-          text-label-text-weight: 700,
-        )
-      );
+    &-link {
+      min-width: fit-content;
     }
   }
 

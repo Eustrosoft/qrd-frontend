@@ -13,6 +13,7 @@ import { ThemePickerOverlayComponent } from '@shared/components/theme-picker-ove
 import { overlayAnimation } from '@shared/shared.animations';
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component';
+import { MatListItem, MatNavList } from '@angular/material/list';
 
 @Component({
   selector: 'qrd-header',
@@ -28,6 +29,8 @@ import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component
     CdkConnectedOverlay,
     ThemePickerOverlayComponent,
     QrdLogoComponent,
+    MatNavList,
+    MatListItem,
   ],
   animations: [overlayAnimation],
   templateUrl: './qrd-header.component.html',

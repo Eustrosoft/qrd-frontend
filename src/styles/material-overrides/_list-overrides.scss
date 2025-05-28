@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+@use 'styles/mixins' as mixins;
+
+.qrd-header-navbar {
+  --mat-ripple-color: color-mix(in srgb, var(--mat-sys-secondary) 12%, transparent);
+
+  @include mat.list-overrides(
+    (
+      active-indicator-color: color-mix(in srgb, var(--mat-sys-primary) 12%, transparent),
+      list-item-hover-state-layer-color: color-mix(in srgb, var(--mat-sys-secondary) 12%, transparent),
+      list-item-focus-state-layer-color: color-mix(in srgb, var(--mat-sys-secondary) 12%, transparent),
+      list-item-hover-label-text-color: var(--mat-sys-primary),
+      list-item-focus-label-text-color: var(--mat-sys-on-primary-container),
+      list-item-label-text-color: var(--mat-sys-on-primary-container),
+      active-indicator-shape: 16px,
+      list-item-one-line-container-height: 40px,
+    )
+  );
+}

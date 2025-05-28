@@ -22,7 +22,7 @@ export class AppComponent {
     if (this.theme() !== 'system') {
       return;
     }
-    this.setTheme('system');
+    this.setTheme('system', '');
   });
   /**
    * TODO

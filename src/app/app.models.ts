@@ -6,7 +6,8 @@ export type Environment = {
   production: boolean;
   stage: boolean;
 };
-export type Theme = 'system' | 'light' | 'light-mc' | 'light-hc' | 'dark' | 'dark-mc' | 'dark-hc';
+export type Theme = 'system' | 'light' | 'dark';
+export type ThemeContrast = '' | '-mc' | '-hc';
 export type Locale = 'ru' | 'en-US';
 export type LocaleJson = {
   locale: Locale;

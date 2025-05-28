@@ -10,13 +10,13 @@
 </flex-block>
 <flex-block gapSize="32" flexAlignItems="center">
   @if (!isSmallScreen()) {
-    <flex-block gapSize="32">
+    <mat-nav-list class="qrd-header-navbar">
       @for (link of linkList; track link.title) {
-        <a class="nav-link" [routerLink]="link.route" [class.nav-link-active]="rla.isActive" routerLinkActive="active" #rla="routerLinkActive" mat-button>
+        <a class="qrd-header-navbar-link" [activated]="rla.isActive" [routerLink]="link.route" #rla="routerLinkActive" routerLinkActive="active" mat-list-item>
           {{ link.title }}
         </a>
       }
-    </flex-block>
+    </mat-nav-list>
   }
   <flex-block [gapSize]="isSmallScreen() ? '8' : '32'">
     <button (click)="openOverlay()" class="qrd-icon-button-sm" mat-icon-button paletteAnimation cdkOverlayOrigin #trigger="cdkOverlayOrigin">

@@ -2,21 +2,23 @@ import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { HtmlLoaderService } from '@shared/service/html-loader.service';
 import { LocalStorageService } from '@shared/service/local-storage.service';
-import { Locale, Theme } from '@app/app.models';
+import { Locale, Theme, ThemeContrast } from '@app/app.models';
 import { SetLocale, SetTheme } from '@app/state/app.actions';
 import { patch } from '@ngxs/store/operators';
-import { LOCALE_KEY, THEME_KEY } from '@app/app.constants';
+import { LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
 
 export interface AppStateModel {
   theme: Theme;
+  contrast: ThemeContrast;
   locale: Locale;
 }
 
 const defaults: AppStateModel = {
   theme: 'system',
+  contrast: '',
   locale: 'ru',
 } as const;
 
@@ -40,15 +42,21 @@ export class AppState {
   }
 
   @Selector()
+  public static getContrast$({ contrast }: AppStateModel): ThemeContrast {
+    return contrast;
+  }
+
+  @Selector()
   public static getLocale$({ locale }: AppStateModel): Locale {
     return locale;
   }
 
   @Action(SetTheme)
-  public setTheme({ setState }: StateContext<AppStateModel>, { theme }: SetTheme): void {
+  public setTheme({ setState }: StateContext<AppStateModel>, { theme, contrast }: SetTheme): void {
     this.localStorageService.set(THEME_KEY, theme);
-    setState(patch({ theme: theme }));
-    const newTheme: Theme = this.getPreferredTheme(theme);
+    this.localStorageService.set(THEME_CONTRAST_KEY, contrast);
+    setState(patch({ theme, contrast }));
+    const newTheme: string = this.getPreferredTheme(theme, contrast);
     const link = this.htmlLoaderService.loadLinkStylesheet(`public/themes/${newTheme}.css`, `theme-${newTheme}`);
     link.onload = (): void => {
       this.removeOldThemeStyles(newTheme);
@@ -66,14 +74,14 @@ export class AppState {
     }
   }
 
-  private getPreferredTheme(theme: Theme): Theme {
+  private getPreferredTheme(theme: Theme, contrast: ThemeContrast): string {
     if (theme === 'system') {
       if (this.prefersContrast()) {
         return this.prefersDark() ? 'dark-hc' : 'light-hc';
       }
       return this.prefersDark() ? 'dark' : 'light';
     }
-    return theme;
+    return `${theme}${contrast}`;
   }
 
   private removeOldThemeStyles(currentTheme: string): void {
