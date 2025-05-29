@@ -6,7 +6,7 @@
     </qrd-logo>
     <mat-form-field subscriptSizing="dynamic" class="qrd-form-field-sm">
       <mat-label>{{ SharedLocalization.language }}</mat-label>
-      <mat-select [hideSingleSelectionIndicator]="true" [(ngModel)]="localeModel" (selectionChange)="setLocale($event.value, true)">
+      <mat-select [hideSingleSelectionIndicator]="true" [(ngModel)]="localeModel" (selectionChange)="updateLocale($event)">
         @for (locale of selectors.availableLocales().list; track locale.value) {
           <mat-option class="qrd-option-sm" [value]="locale.value">{{ locale.viewValue }}</mat-option>
         }

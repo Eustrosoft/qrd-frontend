@@ -9,6 +9,7 @@ import { LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
+import { DOCUMENT } from '@angular/common';
 
 export interface AppStateModel {
   theme: Theme;
@@ -33,6 +34,7 @@ export class AppState {
   private readonly htmlLoaderService = inject(HtmlLoaderService);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly window = inject(WINDOW);
+  private readonly document = inject(DOCUMENT);
   private readonly prefersDark = inject(PREFERS_DARK_TOKEN);
   private readonly prefersContrast = inject(PREFERS_CONTRAST_TOKEN);
 
@@ -67,10 +69,10 @@ export class AppState {
   public setLocale({ setState }: StateContext<AppStateModel>, { locale, isReloadRequired }: SetLocale): void {
     setState(patch({ locale }));
     this.localStorageService.set(LOCALE_KEY, locale);
+    this.document.documentElement.setAttribute('lang', locale);
+
     if (isReloadRequired) {
-      if (confirm($localize`Для смены языка требуется перезагрузка страницы, продолжить?`)) {
-        this.window.location.reload();
-      }
+      this.window.location.reload();
     }
   }
 

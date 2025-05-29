@@ -5,7 +5,7 @@ import { MatAnchor } from '@angular/material/button';
 import { IS_SMALL, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { RouterLink } from '@angular/router';
 import { MatFormField, MatLabel } from '@angular/material/input';
-import { MatOption, MatSelect } from '@angular/material/select';
+import { MatOption, MatSelect, MatSelectChange } from '@angular/material/select';
 import { Locale } from '@app/app.models';
 import { createSelectMap, dispatch } from '@ngxs/store';
 import { AppState } from '@app/state/app.state';
@@ -61,4 +61,12 @@ export class QrdFooterComponent {
   });
 
   protected readonly localeModel = model<Locale>(this.selectors.locale());
+
+  protected updateLocale(event: MatSelectChange<Locale>): void {
+    if (confirm($localize`Для смены языка требуется перезагрузка страницы, продолжить?`)) {
+      this.setLocale(event.value, true);
+      return;
+    }
+    event.source.writeValue(this.selectors.locale());
+  }
 }
