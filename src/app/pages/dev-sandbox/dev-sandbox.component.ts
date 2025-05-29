@@ -19,6 +19,7 @@ import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
 
 @Component({
   selector: 'dev-sandbox',
@@ -45,6 +46,7 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
     MatCheckbox,
     MatSlideToggle,
     UiFlexBlockComponent,
+    UiBadgeComponent,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
   templateUrl: './dev-sandbox.component.html',

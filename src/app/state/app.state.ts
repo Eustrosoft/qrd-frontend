@@ -54,11 +54,15 @@ export class AppState {
   }
 
   @Action(SetTheme)
-  public setTheme({ setState }: StateContext<AppStateModel>, { theme, contrast }: SetTheme): void {
-    this.localStorageService.set(THEME_KEY, theme);
-    this.localStorageService.set(THEME_CONTRAST_KEY, contrast);
-    setState(patch({ theme, contrast }));
-    const newTheme: string = this.getPreferredTheme(theme, contrast);
+  public setTheme({ getState, setState }: StateContext<AppStateModel>, payload: SetTheme): void {
+    const { theme, contrast } = getState();
+    if (theme === payload.theme && contrast === payload.contrast) {
+      return;
+    }
+    this.localStorageService.set(THEME_KEY, payload.theme);
+    this.localStorageService.set(THEME_CONTRAST_KEY, payload.contrast);
+    setState(patch({ theme: payload.theme, contrast: payload.contrast }));
+    const newTheme: string = this.getPreferredTheme(payload.theme, payload.contrast);
     const link = this.htmlLoaderService.loadLinkStylesheet(`public/themes/${newTheme}.css`, `theme-${newTheme}`);
     link.onload = (): void => {
       this.removeOldThemeStyles(newTheme);
