@@ -1,4 +1,4 @@
-<flex-block gapSize="8" flexAlignItems="center">
+<ui-flex-block gapSize="8" flexAlignItems="center">
   @if (isSmallScreen()) {
     <button (click)="openSidenavMenu()" class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="sidenav" display="inline" /></button>
   }
@@ -7,8 +7,8 @@
       <p class="is-bold is-on-primary-container">{{ HeaderLocalization.qrForBusiness }}</p>
     }
   </qrd-logo>
-</flex-block>
-<flex-block gapSize="32" flexAlignItems="center">
+</ui-flex-block>
+<ui-flex-block gapSize="32" flexAlignItems="center">
   @if (!isSmallScreen()) {
     <mat-nav-list class="qrd-header-navbar">
       @for (link of selectors.navbarLinks().list; track link.title) {
@@ -18,7 +18,7 @@
       }
     </mat-nav-list>
   }
-  <flex-block [gapSize]="isSmallScreen() ? '8' : '32'">
+  <ui-flex-block [gapSize]="isSmallScreen() ? '8' : '32'">
     <button (click)="openOverlay()" class="qrd-icon-button-sm" mat-icon-button paletteAnimation cdkOverlayOrigin #trigger="cdkOverlayOrigin">
       <ui-icon icon="palette" cursor="pointer" display="inline" />
     </button>
@@ -35,8 +35,8 @@
     >
       <theme-picker-overlay [@transformPanel]="isOverlayOpen() ? 'enter' : 'void'" (closeClick)="closeOverlay()" />
     </ng-template>
-  </flex-block>
-</flex-block>
+  </ui-flex-block>
+</ui-flex-block>
 @if (isSmallScreen()) {
   <bottom-navbar />
 }

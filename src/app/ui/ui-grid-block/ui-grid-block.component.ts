@@ -1,24 +1,22 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { PxToRemPipe } from '@app/shared/pipe/px-to-rem.pipe';
+import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 import { GridDisplay, GridJustifyItems } from '@shared/shared.models';
 
 @Component({
-  selector: 'grid-block, *[grid-block]',
+  selector: 'ui-grid-block, *[ui-grid-block]',
   standalone: true,
   imports: [],
-  templateUrl: './grid-block.component.html',
-  styleUrl: './grid-block.component.scss',
+  template: '<ng-content />',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[style.--grid-display]': 'gridDisplay()',
-    '[style.--grid-row-gap-size]': 'rowGapSize()',
-    '[style.--grid-column-gap-size]': 'columnGapSize()',
-    '[style.--grid-template-columns]': 'gridTemplateColumns()',
-    '[style.--grid-template-rows]': 'gridTemplateRows()',
-    '[style.--grid-justify-items]': 'gridJustifyItems()',
+    '[style.display]': 'gridDisplay()',
+    '[style.gap]': 'rowGapSize() + " " + columnGapSize()',
+    '[style.grid-template-columns]': 'gridTemplateColumns()',
+    '[style.grid-template-rows]': 'gridTemplateRows()',
+    '[style.justify-items]': 'gridJustifyItems()',
   },
 })
-export class GridBlockComponent {
+export class UiGridBlockComponent {
   private readonly pxToRemPipe: PxToRemPipe = inject(PxToRemPipe);
 
   public readonly gridDisplay = input<GridDisplay>('grid');

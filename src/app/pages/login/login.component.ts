@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { FlexBlockComponent } from '@shared/components/flex-block/flex-block.component';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
@@ -11,10 +10,11 @@ import { LoginForm } from '@app/pages/login/login.models';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { SignUpLocalization } from '@app/pages/login/login.constants';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 
 @Component({
   selector: 'login',
-  imports: [FlexBlockComponent, MatFormField, UiIconComponent, MatIconButton, MatInput, MatLabel, MatError, MatSuffix, MatButton, ReactiveFormsModule],
+  imports: [MatFormField, UiIconComponent, MatIconButton, MatInput, MatLabel, MatError, MatSuffix, MatButton, ReactiveFormsModule, UiFlexBlockComponent],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

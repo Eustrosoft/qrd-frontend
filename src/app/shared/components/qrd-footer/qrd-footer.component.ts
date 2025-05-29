@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, computed, inject, model } from '@angular/core';
-import { FlexBlockComponent } from '@shared/components/flex-block/flex-block.component';
 import { SharedLocalization } from '@shared/shared.constants';
 import { MatAnchor } from '@angular/material/button';
 import { IS_SMALL, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
@@ -15,12 +14,12 @@ import { FooterLocalization } from '@shared/components/qrd-footer/qrd-footer.con
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 import { Option } from '@shared/shared.models';
 import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component';
-import { GridBlockComponent } from '@shared/components/grid-block/grid-block.component';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 
 @Component({
   selector: 'qrd-footer',
   imports: [
-    FlexBlockComponent,
     MatAnchor,
     RouterLink,
     MatFormField,
@@ -31,7 +30,8 @@ import { GridBlockComponent } from '@shared/components/grid-block/grid-block.com
     MatSelect,
     FormsModule,
     QrdLogoComponent,
-    GridBlockComponent,
+    UiFlexBlockComponent,
+    UiGridBlockComponent,
   ],
   templateUrl: './qrd-footer.component.html',
   styleUrl: './qrd-footer.component.scss',

@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnDestroy, OnInit } from '@angular/core';
 import { ERROR_CONFIG, ErrorButton, ErrorConfig } from '@cdk/tokens/error-config.token';
-import { FlexBlockComponent } from '@shared/components/flex-block/flex-block.component';
 import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { MatButton } from '@angular/material/button';
 import { IS_SMALL, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 
 @Component({
   selector: 'error-page',
-  imports: [FlexBlockComponent, UiIconComponent, MatButton],
+  imports: [UiIconComponent, MatButton, UiFlexBlockComponent],
   templateUrl: './error-page.component.html',
   styleUrl: './error-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

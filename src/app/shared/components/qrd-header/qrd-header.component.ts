@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { MatAnchor, MatIconButton } from '@angular/material/button';
 import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
-import { FlexBlockComponent } from '@shared/components/flex-block/flex-block.component';
 import { IS_SMALL, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { SharedLocalization } from '@shared/shared.constants';
 import { PaletteAnimationDirective } from '@cdk/directives/palette-animation.directive';
@@ -17,13 +16,13 @@ import { MatListItem, MatNavList } from '@angular/material/list';
 import { BottomNavbarComponent } from '@shared/components/bottom-navbar/bottom-navbar.component';
 import { createSelectMap, select } from '@ngxs/store';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 
 @Component({
   selector: 'qrd-header',
   imports: [
     MatIconButton,
     UiIconComponent,
-    FlexBlockComponent,
     MatAnchor,
     PaletteAnimationDirective,
     RouterLink,
@@ -35,6 +34,7 @@ import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state
     MatNavList,
     MatListItem,
     BottomNavbarComponent,
+    UiFlexBlockComponent,
   ],
   animations: [overlayAnimation],
   templateUrl: './qrd-header.component.html',

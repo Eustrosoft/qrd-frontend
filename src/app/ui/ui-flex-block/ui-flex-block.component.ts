@@ -3,24 +3,22 @@ import { Display, FlexAlignItems, FlexDirection, FlexJustifyContent, FlexWrap, O
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 
 @Component({
-  selector: 'flex-block, *[flex-block]',
+  selector: 'ui-flex-block, *[ui-flex-block]',
   imports: [],
-  templateUrl: './flex-block.component.html',
-  styleUrl: './flex-block.component.scss',
+  template: '<ng-content />',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[style.--flex-display]': 'flexDisplay()',
-    '[style.--flex-direction]': 'flexDirection()',
-    '[style.--flex-gap-size]': 'gapSize()',
-    '[style.--flex-align-items]': 'flexAlignItems()',
-    '[style.--flex-justify-content]': 'flexJustifyContent()',
-    '[style.--flex]': 'flex()',
-    '[style.--flex-align-self]': 'flexAlignSelf()',
-    '[style.--flex-wrap]': 'flexWrap()',
-    '[style.--overflow]': 'overflow()',
+    '[style.display]': 'flexDisplay()',
+    '[style.flex-flow]': 'flexDirection() + " " + flexWrap()',
+    '[style.gap]': 'gapSize()',
+    '[style.align-items]': 'flexAlignItems()',
+    '[style.justify-content]': 'flexJustifyContent()',
+    '[style.flex]': 'flex()',
+    '[style.align-self]': 'flexAlignSelf()',
+    '[style.overflow]': 'overflow()',
   },
 })
-export class FlexBlockComponent {
+export class UiFlexBlockComponent {
   private readonly pxToRemPipe: PxToRemPipe = inject(PxToRemPipe);
 
   public readonly flexDisplay: InputSignal<Display> = input<Display>('flex');

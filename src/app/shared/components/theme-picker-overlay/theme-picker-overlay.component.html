@@ -1,22 +1,22 @@
-<flex-block flexAlignItems="center" flexJustifyContent="space-between">
+<ui-flex-block flexAlignItems="center" flexJustifyContent="space-between">
   <p>{{ ThemePickerOverlayLocalization.theme }}</p>
   <button (click)="closeClick.emit()" class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="close" display="inline" /></button>
-</flex-block>
+</ui-flex-block>
 <hr />
 <mat-radio-group [(ngModel)]="themeModel">
-  <flex-block gapSize="0" flexDirection="column">
+  <ui-flex-block gapSize="0" flexDirection="column">
     @for (theme of selectors.availableThemes().list; track theme.value) {
       <mat-radio-button [value]="theme.value">{{ theme.viewValue }}</mat-radio-button>
     }
-  </flex-block>
+  </ui-flex-block>
 </mat-radio-group>
 <hr />
 <p>{{ ThemePickerOverlayLocalization.contrast }}</p>
 <hr />
 <mat-radio-group [(ngModel)]="contrastModel" [disabled]="isSystemThemeSelected()">
-  <flex-block gapSize="0" flexDirection="column">
+  <ui-flex-block gapSize="0" flexDirection="column">
     @for (contrast of selectors.availableContrast().list; track contrast.value) {
       <mat-radio-button [value]="contrast.value">{{ contrast.viewValue }}</mat-radio-button>
     }
-  </flex-block>
+  </ui-flex-block>
 </mat-radio-group>

@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { ChangeDetectionStrategy, Component, effect, inject, model } from '@angular/core';
-import { FlexBlockComponent } from '@shared/components/flex-block/flex-block.component';
 import { MatAnchor, MatButton, MatFabButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { dispatch } from '@ngxs/store';
 import { SetLocale, SetTheme } from '@app/state/app.actions';
@@ -19,11 +18,11 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 
 @Component({
   selector: 'dev-sandbox',
   imports: [
-    FlexBlockComponent,
     MatAnchor,
     MatButton,
     MatFabButton,
@@ -45,6 +44,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
     MatButtonToggle,
     MatCheckbox,
     MatSlideToggle,
+    UiFlexBlockComponent,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
   templateUrl: './dev-sandbox.component.html',
