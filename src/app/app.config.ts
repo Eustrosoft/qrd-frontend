@@ -16,6 +16,7 @@ import { RuDateAdapterParsePipe } from '@shared/pipe/ru-adapter-parse.pipe';
 import { TemplatePageTitleStrategy } from '@cdk/classes/title-strategy.class';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
+import { AuthState } from '@core/auth/state/auth.state';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,7 +25,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideAnimationsAsync(),
     provideStore(
-      [AppState, IconRegistryState, DictionaryRegistryState],
+      [AppState, AuthState, IconRegistryState, DictionaryRegistryState],
       {
         developmentMode: !environment.production,
         selectorOptions: {

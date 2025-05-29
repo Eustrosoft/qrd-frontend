@@ -49,3 +49,9 @@ export type CursorType =
 export type VerticalAlign = 'middle';
 export type Overflow = 'hidden' | 'visible' | 'clip' | 'scroll' | 'auto';
 export type Option<T> = { value: T; viewValue: string };
+export type BackendError = {
+  title: string;
+  detail: string;
+  code: number;
+  status: number;
+};

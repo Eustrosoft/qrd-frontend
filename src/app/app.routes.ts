@@ -6,6 +6,7 @@ import { ERROR_CONFIG, ErrorConfig } from '@cdk/tokens/error-config.token';
 import { LoginComponent } from '@app/pages/login/login.component';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { ErrorsLocalization } from '@app/pages/error-page/error-page.constants';
+import { authGuard } from '@core/auth/auth.guard';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,7 @@ export const routes: Routes = [
   {
     path: AppRoutes.files,
     title: RouteTitles.files,
+    canActivate: [authGuard],
     loadChildren: () => import('@app/pages/files/files.routes').then((m) => m.filesRoutes),
   },
   {

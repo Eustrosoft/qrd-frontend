@@ -26,6 +26,7 @@ export class AppComponent {
   });
   /**
    * TODO
+   *  error snackbar
    *  locale change + guard integration (guard should prevent}
    *  chips
    */

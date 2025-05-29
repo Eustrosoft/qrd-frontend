@@ -11,6 +11,8 @@ import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-match
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { SignUpLocalization } from '@app/pages/login/login.constants';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { dispatch } from '@ngxs/store';
+import { Login } from '@core/auth/state/auth.actions';
 
 @Component({
   selector: 'login',
@@ -22,6 +24,7 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 })
 export class LoginComponent {
   private readonly fb = inject(FormBuilder);
+  private readonly login = dispatch(Login);
   protected readonly isXSmall = inject(IS_XSMALL);
 
   protected readonly RouteTitles = RouteTitles;
@@ -31,12 +34,15 @@ export class LoginComponent {
   protected readonly isPwdVisible = signal<boolean>(false);
 
   protected readonly form = this.fb.nonNullable.group<LoginForm>({
-    login: this.fb.nonNullable.control<string>('', [Validators.required]),
+    username: this.fb.nonNullable.control<string>('', [Validators.required]),
     password: this.fb.nonNullable.control<string>('', [Validators.required]),
   });
 
   protected submitForm(): void {
     this.form.markAllAsTouched();
-    console.log(this.form.getRawValue());
+    if (this.form.invalid) {
+      return;
+    }
+    this.login(this.form.getRawValue());
   }
 }

@@ -7,7 +7,6 @@ import { CursorType } from '@shared/shared.models';
   selector: 'ui-badge',
   imports: [],
   template: '<ng-content />',
-  styleUrl: './ui-badge.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[style.background]': 'background()',

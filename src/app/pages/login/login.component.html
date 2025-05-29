@@ -4,10 +4,10 @@
     <mat-label>
       <ui-flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center"> {{ SignUpLocalization.login }} </ui-flex-block>
     </mat-label>
-    <input [formControl]="form.controls.login" matInput />
+    <input [formControl]="form.controls.username" matInput />
     <button matSuffix class="qrd-icon-button-sm" disabled mat-icon-button><ui-icon icon="user-circle" display="inline" /></button>
     <mat-error>
-      @if (form.controls.login.hasError('required')) {
+      @if (form.controls.username.hasError('required')) {
         {{ SignUpLocalization.loginRequiredErr }}
       }
     </mat-error>
@@ -21,7 +21,7 @@
       <ui-icon [icon]="isPwdVisible() ? 'eye' : 'eye-slash'" display="inline" />
     </button>
     <mat-error>
-      @if (form.controls.login.hasError('required')) {
+      @if (form.controls.password.hasError('required')) {
         {{ SignUpLocalization.pwdRequiredErr }}
       }
     </mat-error>
