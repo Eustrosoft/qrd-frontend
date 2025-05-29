@@ -12,7 +12,6 @@ import { IconRegistryState } from '@shared/state/icon-registry.state';
   selector: 'ui-icon',
   imports: [],
   template: '',
-  styleUrl: './ui-icon.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   host: {
@@ -21,6 +20,7 @@ import { IconRegistryState } from '@shared/state/icon-registry.state';
     '[style.cursor]': 'cursor()',
     '[style.width]': 'width() + "px"',
     '[style.height]': 'height()  + "px"',
+    '[style.color]': 'color()',
     '[innerHTML]': 'this.iconState()?.iconSvg ?? ""',
   },
   hostDirectives: [
@@ -39,6 +39,7 @@ export class UiIconComponent {
   public readonly height = input<string>('16');
 
   public readonly cursor = input<CursorType>('auto');
+  public readonly color = input<string>('var(--mat-sys-primary)');
   public readonly display = input<Display>('inline-flex');
   public readonly verticalAlign = input<VerticalAlign>('middle');
 
