@@ -57,16 +57,16 @@ export class QrdHeaderComponent {
   protected readonly isOverlayOpen = signal<boolean>(false);
   protected readonly cdkConnectedOverlayScrollStrategy = this.overlay.scrollStrategies.close();
 
-  protected readonly OVERLAY_POSITIONS: ConnectedPosition[] = [
+  protected readonly OVERLAY_POSITIONS = computed<ConnectedPosition[]>(() => [
     {
       originX: 'end',
       originY: 'bottom',
       overlayX: 'end',
       overlayY: 'top',
       offsetY: 24,
-      offsetX: 16,
+      offsetX: this.isSmallScreen() ? 96 : 16,
     },
-  ];
+  ]);
 
   protected openOverlay(): void {
     this.isOverlayOpen.set(true);

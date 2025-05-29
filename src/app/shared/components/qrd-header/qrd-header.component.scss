@@ -13,6 +13,7 @@
   .qrd-header-navbar {
     gap: mixins.rem(32);
     display: flex;
+    padding: 0;
 
     &-link {
       min-width: fit-content;
