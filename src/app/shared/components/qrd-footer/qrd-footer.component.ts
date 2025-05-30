@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, model } from '@angular/core';
 import { SharedLocalization } from '@shared/shared.constants';
 import { MatAnchor } from '@angular/material/button';
-import { IS_SMALL, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { IS_SMALL, IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { RouterLink } from '@angular/router';
 import { MatFormField, MatLabel } from '@angular/material/input';
 import { MatOption, MatSelect, MatSelectChange } from '@angular/material/select';
@@ -45,7 +45,7 @@ export class QrdFooterComponent {
     availableLocales: DictionaryRegistryState.getDictionary$<Option<string>>('locales'),
   });
   protected readonly setLocale = dispatch(SetLocale);
-  protected readonly isSmallScreen = computed<boolean>(() => this.isXSmall() || this.isSmall());
+  protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly FooterLocalization = FooterLocalization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly currentYear = new Date().getFullYear();

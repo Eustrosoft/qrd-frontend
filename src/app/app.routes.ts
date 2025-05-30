@@ -23,11 +23,13 @@ export const routes: Routes = [
   {
     path: AppRoutes.cards,
     title: RouteTitles.cards,
+    canActivate: [authGuard],
     loadChildren: () => import('@app/pages/cards/cards.routes').then((m) => m.cardsRoutes),
   },
   {
     path: AppRoutes.templates,
     title: RouteTitles.templates,
+    canActivate: [authGuard],
     loadChildren: () => import('@app/pages/templates/templates.routes').then((m) => m.templatesRoutes),
   },
   {

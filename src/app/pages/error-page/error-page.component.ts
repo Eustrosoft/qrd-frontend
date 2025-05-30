@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ERROR_CONFIG, ErrorButton, ErrorConfig } from '@cdk/tokens/error-config.token';
 import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { MatButton } from '@angular/material/button';
-import { IS_SMALL, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 
 @Component({
@@ -14,9 +14,7 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 })
 export class ErrorPageComponent implements OnInit, OnDestroy {
   protected readonly errorConfig: ErrorConfig = inject(ERROR_CONFIG);
-  private readonly isXSmall = inject(IS_XSMALL);
-  private readonly isSmall = inject(IS_SMALL);
-  protected readonly isSmallScreen = computed<boolean>(() => this.isXSmall() || this.isSmall());
+  protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
 
   public ngOnInit(): void {
     this.errorConfig.onInit?.call(this);

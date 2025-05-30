@@ -9,7 +9,7 @@
   </qrd-logo>
 </ui-flex-block>
 <ui-flex-block gapSize="32" flexAlignItems="center">
-  @if (!isSmallScreen()) {
+  @if (!isSmallScreen() && selectors.isAuthenticated()) {
     <mat-nav-list class="qrd-header-navbar">
       @for (link of selectors.navbarLinks().list; track link.title) {
         <a class="qrd-header-navbar-link" [activated]="rla.isActive" [routerLink]="link.route" #rla="routerLinkActive" routerLinkActive="active" mat-list-item>
@@ -22,7 +22,11 @@
     <button (click)="openOverlay()" class="qrd-icon-button-sm" mat-icon-button paletteAnimation cdkOverlayOrigin #trigger="cdkOverlayOrigin">
       <ui-icon icon="palette" cursor="pointer" display="inline" />
     </button>
-    <a routerLink="/login" class="qrd-button-md" mat-flat-button>{{ SharedLocalization.login }}</a>
+    @if (selectors.isAuthenticated()) {
+      <auth-info />
+    } @else {
+      <a routerLink="/login" class="qrd-button-md" mat-flat-button>{{ SharedLocalization.login }}</a>
+    }
     <ng-template
       cdkConnectedOverlay
       [cdkConnectedOverlayOrigin]="trigger"

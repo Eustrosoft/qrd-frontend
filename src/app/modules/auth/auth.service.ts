@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { LoginPayload } from '@modules/auth/auth.models';
+import { AuthInfo, LoginPayload } from '@modules/auth/auth.models';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -11,5 +11,9 @@ export class AuthService {
 
   public login(payload: LoginPayload): Observable<void> {
     return this.http.post<void>('/qrCodeDemo/v1/api/login', payload);
+  }
+
+  public getAuthInfo(): Observable<AuthInfo> {
+    return this.http.get<AuthInfo>('/qrCodeDemo/v1/api/secured/participants/me');
   }
 }

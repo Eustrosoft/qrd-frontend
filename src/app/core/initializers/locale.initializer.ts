@@ -5,20 +5,20 @@ import { firstValueFrom, tap } from 'rxjs';
 import { LocaleLoaderService } from '@shared/service/locale-loader.service';
 import { loadTranslations } from '@angular/localize';
 import { inject } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { dispatch } from '@ngxs/store';
 import { SetLocale } from '@app/state/app.actions';
 
 export const localeInitializer = (): Promise<LocaleJson> => {
   const localeLoaderService = inject(LocaleLoaderService);
   const localStorageService = inject(LocalStorageService);
-  const store = inject(Store);
+  const setLocale = dispatch(SetLocale);
   //eslint-disable-next-line
   const currentLocale: Locale = localStorageService.get<Locale>(LOCALE_KEY) || 'ru';
   return firstValueFrom(
     localeLoaderService.getLocale(currentLocale).pipe(
       tap(({ locale, translations }) => {
         loadTranslations(translations);
-        store.dispatch(new SetLocale(locale));
+        setLocale(locale);
       }),
     ),
   );

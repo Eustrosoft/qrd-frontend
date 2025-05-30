@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { MatAnchor, MatIconButton } from '@angular/material/button';
 import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
-import { IS_SMALL, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { SharedLocalization } from '@shared/shared.constants';
 import { PaletteAnimationDirective } from '@cdk/directives/palette-animation.directive';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -17,6 +16,9 @@ import { BottomNavbarComponent } from '@shared/components/bottom-navbar/bottom-n
 import { createSelectMap, select } from '@ngxs/store';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { AuthState } from '@modules/auth/state/auth.state';
+import { AuthInfoComponent } from '@modules/auth/components/auth-info/auth-info.component';
+import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 
 @Component({
   selector: 'qrd-header',
@@ -35,6 +37,7 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
     MatListItem,
     BottomNavbarComponent,
     UiFlexBlockComponent,
+    AuthInfoComponent,
   ],
   animations: [overlayAnimation],
   templateUrl: './qrd-header.component.html',
@@ -44,10 +47,9 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 export class QrdHeaderComponent {
   private readonly overlay = inject(Overlay);
   private readonly uiSidenavService = inject(UiSidenavService);
-  private readonly isXSmall = inject(IS_XSMALL);
-  private readonly isSmall = inject(IS_SMALL);
-  protected readonly isSmallScreen = computed<boolean>(() => this.isXSmall() || this.isSmall());
+  protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly selectors = createSelectMap({
+    isAuthenticated: select(AuthState.isAuthenticated$),
     navbarLinks: select(DictionaryRegistryState.getDictionary$<HeaderNavbarLink>('headerNavbarLinks')),
   });
 

@@ -1,18 +1,22 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
-import { Login, Logout, ResetAuthState } from './auth.actions';
+import { FetchAuthInfo, Login, Logout, ResetAuthState, RestoreAuth } from './auth.actions';
 import { AuthService } from '@modules/auth/auth.service';
-import { Observable, tap } from 'rxjs';
-import { AppRoutes } from '@app/app.constants';
+import { Observable, switchMap, tap } from 'rxjs';
+import { AppRoutes, IS_AUTHENTICATED_KEY } from '@app/app.constants';
 import { Router } from '@angular/router';
 import { patch } from '@ngxs/store/operators';
+import { AuthInfo } from '@modules/auth/auth.models';
+import { LocalStorageService } from '@shared/service/local-storage.service';
 
 export interface AuthStateModel {
   isAuthenticated: boolean;
+  authInfo: AuthInfo | null;
 }
 
 const defaults: AuthStateModel = {
   isAuthenticated: false,
+  authInfo: null,
 } as const;
 
 const AUTH_STATE_TOKEN: StateToken<AuthStateModel> = new StateToken<AuthStateModel>('auth');
@@ -24,6 +28,7 @@ const AUTH_STATE_TOKEN: StateToken<AuthStateModel> = new StateToken<AuthStateMod
 @Injectable()
 export class AuthState {
   private readonly authService = inject(AuthService);
+  private readonly localStorageService = inject(LocalStorageService);
   private readonly router = inject(Router);
 
   @Selector()
@@ -31,22 +36,47 @@ export class AuthState {
     return isAuthenticated;
   }
 
+  @Selector()
+  public static getAuthInfo$({ authInfo }: AuthStateModel): AuthInfo | null {
+    return authInfo;
+  }
+
   @Action(Login)
-  public login({ setState }: StateContext<AuthStateModel>, { payload }: Login): Observable<void> {
+  public login({ setState, dispatch }: StateContext<AuthStateModel>, { payload }: Login): Observable<void> {
     return this.authService.login(payload).pipe(
       tap({
         next: () => {
           setState(patch({ isAuthenticated: true }));
+          this.localStorageService.set(IS_AUTHENTICATED_KEY, '1');
           this.router.navigate([AppRoutes.cards]);
         },
       }),
+      switchMap(() => dispatch(FetchAuthInfo)),
     );
   }
 
   @Action(Logout)
   public logout({ setState }: StateContext<AuthStateModel>): void {
     setState(patch({ isAuthenticated: false }));
+    this.localStorageService.set(IS_AUTHENTICATED_KEY, '0');
     this.router.navigate([AppRoutes.login]);
+  }
+
+  @Action(FetchAuthInfo)
+  public getAuthInfo({ setState }: StateContext<AuthStateModel>): Observable<AuthInfo> {
+    return this.authService.getAuthInfo().pipe(
+      tap({
+        next: (authInfo) => {
+          setState(patch({ authInfo }));
+        },
+      }),
+    );
+  }
+
+  @Action(RestoreAuth)
+  public restoreAuth({ setState, dispatch }: StateContext<AuthStateModel>): Observable<void> {
+    setState(patch({ isAuthenticated: true }));
+    return dispatch(FetchAuthInfo);
   }
 
   @Action(ResetAuthState)

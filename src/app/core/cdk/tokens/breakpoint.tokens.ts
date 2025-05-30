@@ -1,4 +1,4 @@
-import { InjectionToken, Signal } from '@angular/core';
+import { computed, inject, InjectionToken, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { matchMediaQueryFactory } from '@cdk/factories/match-media-query.factory';
 import { Breakpoints } from '@angular/cdk/layout';
@@ -26,4 +26,13 @@ export const IS_LARGE: InjectionToken<Signal<boolean>> = new InjectionToken('Is 
 export const IS_XLARGE: InjectionToken<Signal<boolean>> = new InjectionToken('Is Screen Matches Media Query (min-width: 1920px)', {
   providedIn: 'root',
   factory: () => toSignal(matchMediaQueryFactory(Breakpoints.XLarge), { requireSync: true }),
+});
+
+export const IS_SMALL_SCREEN: InjectionToken<Signal<boolean>> = new InjectionToken('Is Screen Matches Media Query (max-width: 599.98px)', {
+  providedIn: 'root',
+  factory: (): Signal<boolean> => {
+    const isXSmall = inject(IS_XSMALL);
+    const isSmall = inject(IS_SMALL);
+    return computed(() => isXSmall() || isSmall());
+  },
 });
