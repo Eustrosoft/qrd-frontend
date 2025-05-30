@@ -11,7 +11,6 @@ export const ErrorsLocalization = {
     return $localize`:@@errors.notFound:Страница не найдена`;
   },
   get unauthenticatedRoute() {
-    console.log('unauthenticatedRoute');
     return $localize`:@@errors.unauthenticatedRoute:Сессия истекла`;
   },
   get unauthenticated() {

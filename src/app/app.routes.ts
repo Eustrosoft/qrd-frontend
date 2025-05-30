@@ -17,36 +17,36 @@ export const routes: Routes = [
   },
   {
     path: AppRoutes.login,
-    title: RouteTitles.login,
+    title: () => RouteTitles.login,
     component: LoginComponent,
   },
   {
     path: AppRoutes.cards,
-    title: RouteTitles.cards,
+    title: () => RouteTitles.cards,
     canActivate: [authGuard],
     loadChildren: () => import('@app/pages/cards/cards.routes').then((m) => m.cardsRoutes),
   },
   {
     path: AppRoutes.templates,
-    title: RouteTitles.templates,
+    title: () => RouteTitles.templates,
     canActivate: [authGuard],
     loadChildren: () => import('@app/pages/templates/templates.routes').then((m) => m.templatesRoutes),
   },
   {
     path: AppRoutes.files,
-    title: RouteTitles.files,
+    title: () => RouteTitles.files,
     canActivate: [authGuard],
     loadChildren: () => import('@app/pages/files/files.routes').then((m) => m.filesRoutes),
   },
   {
     path: AppRoutes.devSandbox,
-    title: RouteTitles.devSandbox,
+    title: () => RouteTitles.devSandbox,
     canActivate: [(): boolean => !environment.production],
     loadChildren: () => import('@app/pages/dev-sandbox/dev-sandbox.routes').then((m) => m.devSandboxRoutes),
   },
   {
     path: AppRoutes.notFound,
-    title: ErrorsLocalization.pageNotFound,
+    title: () => ErrorsLocalization.pageNotFound,
     loadComponent: () => import('@app/pages/error-page/error-page.component').then((m) => m.ErrorPageComponent),
     providers: [
       {
@@ -64,7 +64,7 @@ export const routes: Routes = [
   },
   {
     path: AppRoutes.unauthenticated,
-    title: ErrorsLocalization.unauthenticatedRoute,
+    title: () => ErrorsLocalization.unauthenticatedRoute,
     loadComponent: () => import('@app/pages/error-page/error-page.component').then((m) => m.ErrorPageComponent),
     providers: [
       {
