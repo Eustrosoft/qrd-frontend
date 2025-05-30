@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
-import { Login } from './auth.actions';
-import { AuthService } from '@core/auth/auth.service';
+import { Login, Logout, ResetAuthState } from './auth.actions';
+import { AuthService } from '@modules/auth/auth.service';
 import { Observable, tap } from 'rxjs';
 import { AppRoutes } from '@app/app.constants';
 import { Router } from '@angular/router';
@@ -41,5 +41,16 @@ export class AuthState {
         },
       }),
     );
+  }
+
+  @Action(Logout)
+  public logout({ setState }: StateContext<AuthStateModel>): void {
+    setState(patch({ isAuthenticated: false }));
+    this.router.navigate([AppRoutes.login]);
+  }
+
+  @Action(ResetAuthState)
+  public resetAuthState({ setState }: StateContext<AuthStateModel>): void {
+    setState(defaults);
   }
 }

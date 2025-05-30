@@ -12,7 +12,7 @@ import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { SignUpLocalization } from '@app/pages/login/login.constants';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { dispatch } from '@ngxs/store';
-import { Login } from '@core/auth/state/auth.actions';
+import { Login } from '@modules/auth/state/auth.actions';
 
 @Component({
   selector: 'login',

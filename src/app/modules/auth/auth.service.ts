@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { LoginPayload } from '@core/auth/auth.models';
+import { LoginPayload } from '@modules/auth/auth.models';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 

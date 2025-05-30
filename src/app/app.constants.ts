@@ -5,8 +5,9 @@ export const AppRoutes = {
   cards: 'cards',
   templates: 'templates',
   files: 'files',
-  devSandbox: 'dev-sandbox',
   notFound: 'not-found',
+  unauthenticated: 'unauthenticated',
+  devSandbox: 'dev-sandbox',
 } as const;
 
 export const THEME_KEY = 'qrd-user-theme';

@@ -9,8 +9,8 @@
   @include mat.snack-bar-overrides(
     (
       container-shape: 12px,
-      container-color: var(--neutral-variant),
-      supporting-text-color: var(--sys-on-surface-variant),
+      container-color: var(--mat-sys-surface-container),
+      supporting-text-color: var(--mat-sys-on-surface-variant),
     )
   );
 }

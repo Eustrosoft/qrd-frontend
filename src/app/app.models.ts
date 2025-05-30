@@ -28,6 +28,7 @@ export type Icon =
   | 'settings'
   | 'sidenav'
   | 'table'
+  | 'timeout'
   | 'trash'
   | 'user-circle'
   | 'world';

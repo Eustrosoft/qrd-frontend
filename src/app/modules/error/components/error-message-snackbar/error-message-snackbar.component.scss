@@ -1,0 +1,18 @@
+@use 'styles/mixins';
+
+:host {
+  display: flex;
+  overflow: hidden auto;
+  max-height: mixins.rem(320);
+  flex-direction: column;
+
+  hr {
+    margin: mixins.rem(4) 0;
+  }
+
+  ui-flex-block {
+    p {
+      flex: auto;
+    }
+  }
+}

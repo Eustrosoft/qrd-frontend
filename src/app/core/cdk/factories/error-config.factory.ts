@@ -1,5 +1,6 @@
 import { ErrorConfig } from '@cdk/tokens/error-config.token';
-import { ErrorsLocalization } from '@app/pages/error-page/error-page.constants';
+
+import { ErrorsLocalization } from '@modules/error/error.constants';
 
 export const errorConfigFactory = (config: Partial<ErrorConfig> = {}): ErrorConfig => ({
   title: config.title ?? ErrorsLocalization.unknownErr,

@@ -9,6 +9,7 @@
       "@public/*": ["public/*"],
       "@cdk/*": ["app/core/cdk/*"],
       "@core/*": ["app/core/*"],
+      "@modules/*": ["app/modules/*"],
       "@ui/*": ["app/ui/*"],
       "@shared/*": ["app/shared/*"],
       "@environment": ["environments/environment.ts"]

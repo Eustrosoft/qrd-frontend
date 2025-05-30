@@ -5,8 +5,9 @@ import { errorConfigFactory } from '@cdk/factories/error-config.factory';
 import { ERROR_CONFIG, ErrorConfig } from '@cdk/tokens/error-config.token';
 import { LoginComponent } from '@app/pages/login/login.component';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
-import { ErrorsLocalization } from '@app/pages/error-page/error-page.constants';
-import { authGuard } from '@core/auth/auth.guard';
+import { authGuard } from '@modules/auth/auth.guard';
+import { ErrorsLocalization } from '@modules/error/error.constants';
+import { timer } from 'rxjs';
 
 export const routes: Routes = [
   {
@@ -54,6 +55,27 @@ export const routes: Routes = [
             message: ErrorsLocalization.pageNotFoundDescription,
             icon: 'not-found',
             buttonList: [{ buttonText: SharedLocalization.mainPage, buttonAction: () => router.navigate(['/']) }],
+          }),
+        deps: [Router],
+      },
+    ],
+  },
+  {
+    path: AppRoutes.unauthenticated,
+    title: ErrorsLocalization.unauthenticated,
+    loadComponent: () => import('@app/pages/error-page/error-page.component').then((m) => m.ErrorPageComponent),
+    providers: [
+      {
+        provide: ERROR_CONFIG,
+        useFactory: (router: Router): ErrorConfig =>
+          errorConfigFactory({
+            title: $localize`Ваша сессия истекла`,
+            message: $localize`Через 5 секунд Вы будете перенаправлены на страницу входа`,
+            icon: 'timeout',
+            buttonList: [{ buttonText: $localize`Войти`, buttonAction: () => router.navigate([AppRoutes.login]) }],
+            onInit: () => {
+              timer(5000).subscribe({ next: () => router.navigate([AppRoutes.login]) });
+            },
           }),
         deps: [Router],
       },

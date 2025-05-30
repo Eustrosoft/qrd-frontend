@@ -6,7 +6,7 @@ import { provideStore, Store } from '@ngxs/store';
 import { environment } from '@environment';
 import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
 import { providePipes } from '@core/providers/pipes.provider';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { IconRegistryState } from '@shared/state/icon-registry.state';
 import { provideMaterialConfig } from '@core/providers/material-options.provider';
 import { provideInitializers } from '@core/providers/initializers.provider';
@@ -16,7 +16,8 @@ import { RuDateAdapterParsePipe } from '@shared/pipe/ru-adapter-parse.pipe';
 import { TemplatePageTitleStrategy } from '@cdk/classes/title-strategy.class';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
-import { AuthState } from '@core/auth/state/auth.state';
+import { AuthState } from '@modules/auth/state/auth.state';
+import { httpErrorInterceptor } from '@modules/error/http-error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -35,7 +36,7 @@ export const appConfig: ApplicationConfig = {
       withNgxsReduxDevtoolsPlugin(),
     ),
     providePipes(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([httpErrorInterceptor])),
     provideMaterialConfig(),
     {
       provide: LOCALE_ID,
