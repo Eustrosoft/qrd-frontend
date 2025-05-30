@@ -18,6 +18,7 @@ export const localeInitializer = (): Promise<LocaleJson> => {
     localeLoaderService.getLocale(currentLocale).pipe(
       tap(({ locale, translations }) => {
         loadTranslations(translations);
+        console.log('loadTranslations');
         setLocale(locale);
       }),
     ),

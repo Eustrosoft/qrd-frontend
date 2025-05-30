@@ -1,0 +1,31 @@
+<text-avatar [text]="selectors.authInfo()?.username ?? ''" />
+@if (!isXSmall()) {
+  <ui-flex-block gapSize="0" flexDirection="column" ellipsis>
+    @if (selectors.authInfo()?.organization) {
+      <p ellipsis>{{ selectors.authInfo()?.organization }}</p>
+    }
+    <p ellipsis>
+      {{ selectors.authInfo()?.username ?? '' }}
+    </p>
+  </ui-flex-block>
+}
+<button (click)="openOverlay()" class="qrd-icon-button-sm" mat-icon-button cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+  <ui-icon icon="arrow-bottom" color="var(--mat-sys-primary)" display="inline" />
+</button>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOverlayOpen()"
+  [cdkConnectedOverlayPositions]="OVERLAY_POSITIONS()"
+  [cdkConnectedOverlayScrollStrategy]="cdkConnectedOverlayScrollStrategy"
+  [cdkConnectedOverlayWidth]="240"
+  (overlayOutsideClick)="closeOverlay()"
+  (detach)="closeOverlay()"
+>
+  <profile-info-overlay
+    [@transformPanel]="isOverlayOpen() ? 'enter' : 'void'"
+    [username]="selectors.authInfo()?.username ?? ''"
+    [email]="selectors.authInfo()?.email ?? ''"
+    (closeClick)="closeOverlay()"
+  />
+</ng-template>

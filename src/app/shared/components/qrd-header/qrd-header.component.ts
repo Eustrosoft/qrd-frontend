@@ -17,8 +17,8 @@ import { createSelectMap, select } from '@ngxs/store';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { AuthState } from '@modules/auth/state/auth.state';
-import { AuthInfoComponent } from '@modules/auth/components/auth-info/auth-info.component';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
+import { MiniProfileInfoComponent } from '@modules/auth/components/mini-profile-info/mini-profile-info.component';
 
 @Component({
   selector: 'qrd-header',
@@ -37,7 +37,7 @@ import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
     MatListItem,
     BottomNavbarComponent,
     UiFlexBlockComponent,
-    AuthInfoComponent,
+    MiniProfileInfoComponent,
   ],
   animations: [overlayAnimation],
   templateUrl: './qrd-header.component.html',

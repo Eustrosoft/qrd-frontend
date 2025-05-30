@@ -2,6 +2,12 @@ export const SharedLocalization = {
   get login() {
     return $localize`:@@shared.login:Войти`;
   },
+  get logout() {
+    return $localize`:@@shared.logout:Выйти`;
+  },
+  get settings() {
+    return $localize`:@@shared.settings:Настройки`;
+  },
   get language() {
     return $localize`:@@shared.language:Язык`;
   },

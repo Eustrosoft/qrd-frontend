@@ -1,18 +1,27 @@
 {
   "locale": "ru",
   "translations": {
-    "typography": "Typography",
-    "buttons": "Buttons",
+    "profileInfoOverlay.aboutService": "О сервисе",
+    "profileInfoOverlay.versionHistory": "История версий",
+    "profileInfoOverlay.feedback": "Связаться с нами",
+    "profileInfoOverlay.help": "Помощь",
     "errors.unknownErr": "Неизвестная ошибка",
     "errors.smthWentWrong": "Что-то пошло не так",
     "errors.notFound": "Страница не найдена",
+    "errors.unauthenticatedRoute": "Сессия истекла",
+    "errors.unauthenticated": "Ваша сессия истекла",
+    "errors.unauthenticatedAction": "Через 5 секунд Вы будете перенаправлены на страницу входа",
     "errors.pageNotFoundDescription": "Запрашиваемой страницы у нас нет. Возможно, она была удалена или в запросе был указан неверный адрес",
+    "errors.errorCode": "Код ошибки",
+    "typography": "Typography",
+    "buttons": "Buttons",
     "signUp.login": "Логин",
     "signUp.": "Пароль",
     "signUp.signUp": "Регистрация",
     "signUp.forgotPwd": "Не помню пароль",
     "signUp.loginRequiredErr": "Логин обязателен",
     "signUp.pwdRequiredErr": "Пароль обязателен",
+    "8140256498401573516": "Для смены языка требуется перезагрузка страницы, продолжить?",
     "footer.qrForAll": "QR-коды для всех",
     "footer.trainingVideo": "Обучающее видео",
     "footer.loginPage": "Вход",
@@ -31,6 +40,8 @@
     "themePickerOverlay.mediumContrast": "Средняя",
     "themePickerOverlay.highContrast": "Высокая",
     "shared.login": "Войти",
+    "shared.logout": "Выйти",
+    "shared.settings": "Настройки",
     "shared.language": "Язык",
     "shared.mainPage": "Главная страница",
     "shared.defaultTitle": "QRD",
@@ -40,7 +51,6 @@
     "routes.cards": "Карточки",
     "routes.templates": "Шаблоны",
     "routes.files": "Файлы",
-    "routes.devSandbox": "Dev Sandbox",
-    "8140256498401573516": "Для смены языка требуется перезагрузка страницы, продолжить?"
+    "routes.devSandbox": "Dev Sandbox"
   }
 }

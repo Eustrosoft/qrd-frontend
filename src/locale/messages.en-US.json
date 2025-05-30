@@ -1,18 +1,27 @@
 {
   "locale": "en-US",
   "translations": {
-    "typography": "Typography",
-    "buttons": "Buttons",
+    "profileInfoOverlay.aboutService": "About service",
+    "profileInfoOverlay.versionHistory": "Version history",
+    "profileInfoOverlay.feedback": "Feedback",
+    "profileInfoOverlay.help": "Help",
     "errors.unknownErr": "Unknown error",
     "errors.smthWentWrong": "Something went wrong",
     "errors.notFound": "Page not found",
+    "errors.unauthenticatedRoute": "Session expired",
+    "errors.unauthenticated": "Your session expired",
+    "errors.unauthenticatedAction": "You will be redirected login in 5 seconds",
     "errors.pageNotFoundDescription": "We do not have the requested page. It may have been deleted or an incorrect address was specified in the request",
+    "errors.errorCode": "Error code",
+    "typography": "Typography",
+    "buttons": "Buttons",
     "signUp.login": "Login",
     "signUp.": "Password",
     "signUp.signUp": "Sign up",
     "signUp.forgotPwd": "Forgot password",
     "signUp.loginRequiredErr": "Login required",
     "signUp.pwdRequiredErr": "Password required",
+    "8140256498401573516": "Change of language requires reload, proceed?",
     "footer.qrForAll": "QR for all",
     "footer.trainingVideo": "Training video",
     "footer.loginPage": "Login",
@@ -31,6 +40,8 @@
     "themePickerOverlay.mediumContrast": "Medium",
     "themePickerOverlay.highContrast": "High",
     "shared.login": "Login",
+    "shared.logout": "Logout",
+    "shared.settings": "Settings",
     "shared.language": "Language",
     "shared.mainPage": "Main",
     "shared.defaultTitle": "QRD",
@@ -40,7 +51,6 @@
     "routes.cards": "Cards",
     "routes.templates": "Templates",
     "routes.files": "Files",
-    "routes.devSandbox": "Dev Sandbox",
-    "8140256498401573516": "Change of language requires reload, proceed?"
+    "routes.devSandbox": "Dev Sandbox"
   }
 }

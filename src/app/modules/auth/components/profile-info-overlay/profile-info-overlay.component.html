@@ -1,0 +1,19 @@
+<ui-flex-block flexAlignItems="center" flexJustifyContent="space-between">
+  <h3>{{ username() }}</h3>
+  <button (click)="closeClick.emit()" class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="close" display="inline" /></button>
+</ui-flex-block>
+@if (email()) {
+  <p>{{ email() }}</p>
+}
+<hr />
+<ui-flex-block flex="auto" flexAlignItems="flex-start" gapSize="8" flexDirection="column">
+  <a class="qrd-button-anchor-md" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.aboutService }}</a>
+  <a class="qrd-button-anchor-md" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.versionHistory }}</a>
+  <a class="qrd-button-anchor-md" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.feedback }}</a>
+  <a class="qrd-button-anchor-md" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.help }}</a>
+  <hr ui-flex-block flexAlignSelf="normal" />
+  <a class="qrd-button-anchor-md" mat-button textInteractionEffect>{{ SharedLocalization.settings }}</a>
+  <hr ui-flex-block flexAlignSelf="normal" />
+</ui-flex-block>
+
+<button (click)="logout()" class="qrd-button-md" mat-flat-button>{{ SharedLocalization.logout }}</button>

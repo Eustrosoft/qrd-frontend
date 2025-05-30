@@ -13,6 +13,10 @@ export class AuthService {
     return this.http.post<void>('/qrCodeDemo/v1/api/login', payload);
   }
 
+  public logout(): Observable<void> {
+    return this.http.post<void>('/qrCodeDemo/v1/api/secured/logout', {});
+  }
+
   public getAuthInfo(): Observable<AuthInfo> {
     return this.http.get<AuthInfo>('/qrCodeDemo/v1/api/secured/participants/me');
   }

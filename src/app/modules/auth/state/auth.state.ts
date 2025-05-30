@@ -56,10 +56,11 @@ export class AuthState {
   }
 
   @Action(Logout)
-  public logout({ setState }: StateContext<AuthStateModel>): void {
+  public logout({ setState }: StateContext<AuthStateModel>): Observable<void> {
     setState(patch({ isAuthenticated: false }));
     this.localStorageService.set(IS_AUTHENTICATED_KEY, '0');
     this.router.navigate([AppRoutes.login]);
+    return this.authService.logout();
   }
 
   @Action(FetchAuthInfo)

@@ -18,12 +18,12 @@
       }
     </mat-nav-list>
   }
-  <ui-flex-block [gapSize]="isSmallScreen() ? '8' : '32'">
+  <ui-flex-block [gapSize]="isSmallScreen() ? '8' : '32'" flexAlignItems="center">
     <button (click)="openOverlay()" class="qrd-icon-button-sm" mat-icon-button paletteAnimation cdkOverlayOrigin #trigger="cdkOverlayOrigin">
       <ui-icon icon="palette" cursor="pointer" display="inline" />
     </button>
     @if (selectors.isAuthenticated()) {
-      <auth-info />
+      <mini-profile-info />
     } @else {
       <a routerLink="/login" class="qrd-button-md" mat-flat-button>{{ SharedLocalization.login }}</a>
     }

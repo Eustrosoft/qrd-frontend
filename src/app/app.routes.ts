@@ -64,17 +64,17 @@ export const routes: Routes = [
   },
   {
     path: AppRoutes.unauthenticated,
-    title: ErrorsLocalization.unauthenticated,
+    title: ErrorsLocalization.unauthenticatedRoute,
     loadComponent: () => import('@app/pages/error-page/error-page.component').then((m) => m.ErrorPageComponent),
     providers: [
       {
         provide: ERROR_CONFIG,
         useFactory: (router: Router): ErrorConfig =>
           errorConfigFactory({
-            title: $localize`Ваша сессия истекла`,
-            message: $localize`Через 5 секунд Вы будете перенаправлены на страницу входа`,
+            title: ErrorsLocalization.unauthenticated,
+            message: ErrorsLocalization.unauthenticatedAction,
             icon: 'timeout',
-            buttonList: [{ buttonText: $localize`Войти`, buttonAction: () => router.navigate([AppRoutes.login]) }],
+            buttonList: [{ buttonText: SharedLocalization.login, buttonAction: () => router.navigate([AppRoutes.login]) }],
             onInit: () => {
               timer(5000).subscribe({ next: () => router.navigate([AppRoutes.login]) });
             },

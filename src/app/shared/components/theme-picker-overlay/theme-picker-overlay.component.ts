@@ -22,6 +22,7 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemePickerOverlayComponent implements OnInit {
+  public readonly closeClick = output<void>();
   protected readonly selectors = createSelectMap({
     theme: AppState.getTheme$,
     contrast: AppState.getContrast$,
@@ -48,6 +49,4 @@ export class ThemePickerOverlayComponent implements OnInit {
   public ngOnInit(): void {
     this.themeChange.subscribe();
   }
-
-  public readonly closeClick = output<void>();
 }

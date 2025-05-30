@@ -10,8 +10,15 @@ export const ErrorsLocalization = {
   get pageNotFound() {
     return $localize`:@@errors.notFound:Страница не найдена`;
   },
+  get unauthenticatedRoute() {
+    console.log('unauthenticatedRoute');
+    return $localize`:@@errors.unauthenticatedRoute:Сессия истекла`;
+  },
   get unauthenticated() {
-    return $localize`:@@errors.unauthenticated:Сессия истекла`;
+    return $localize`:@@errors.unauthenticated:Ваша сессия истекла`;
+  },
+  get unauthenticatedAction() {
+    return $localize`:@@errors.unauthenticatedAction:Через 5 секунд Вы будете перенаправлены на страницу входа`;
   },
   get pageNotFoundDescription() {
     return $localize`:@@errors.pageNotFoundDescription:Запрашиваемой страницы у нас нет. Возможно, она была удалена или в запросе был указан неверный адрес`;
