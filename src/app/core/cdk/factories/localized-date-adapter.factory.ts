@@ -6,7 +6,7 @@ export const localizedDateAdapterFactory = (localeId: Locale): EnCustomDateAdapt
   switch (localeId) {
     case 'en-US':
       return new EnCustomDateAdapter();
-    case 'ru':
+    case 'ru-RU':
       return new RuCustomDateAdapter();
     default:
       return new RuCustomDateAdapter();

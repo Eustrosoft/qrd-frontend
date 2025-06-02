@@ -13,7 +13,7 @@ export const localeInitializer = (): Promise<LocaleJson> => {
   const localStorageService = inject(LocalStorageService);
   const setLocale = dispatch(SetLocale);
   //eslint-disable-next-line
-  const currentLocale: Locale = localStorageService.get<Locale>(LOCALE_KEY) || 'ru';
+  const currentLocale: Locale = localStorageService.get<Locale>(LOCALE_KEY) || 'ru-RU';
   return firstValueFrom(
     localeLoaderService.getLocale(currentLocale).pipe(
       tap(({ locale, translations }) => {

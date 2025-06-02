@@ -20,7 +20,7 @@ export interface AppStateModel {
 const defaults: AppStateModel = {
   theme: 'system',
   contrast: '',
-  locale: 'ru',
+  locale: 'en-US',
 } as const;
 
 const APP_STATE_TOKEN: StateToken<AppStateModel> = new StateToken<AppStateModel>('app');
@@ -56,13 +56,13 @@ export class AppState {
   @Action(SetTheme)
   public setTheme({ getState, setState }: StateContext<AppStateModel>, payload: SetTheme): void {
     const { theme, contrast } = getState();
-    if (theme === payload.theme && contrast === payload.contrast) {
+    const newTheme: string = this.getPreferredTheme(payload.theme, payload.contrast);
+    if (newTheme === `${theme}${contrast}`) {
       return;
     }
     this.localStorageService.set(THEME_KEY, payload.theme);
     this.localStorageService.set(THEME_CONTRAST_KEY, payload.contrast);
     setState(patch({ theme: payload.theme, contrast: payload.contrast }));
-    const newTheme: string = this.getPreferredTheme(payload.theme, payload.contrast);
     const link = this.htmlLoaderService.loadLinkStylesheet(`public/themes/${newTheme}.css`, `theme-${newTheme}`);
     link.onload = (): void => {
       this.removeOldThemeStyles(newTheme);

@@ -65,7 +65,7 @@ export class QrdFooterComponent {
   protected readonly localeModel = model<Locale>(this.selectors.locale());
 
   protected updateLocale(event: MatSelectChange<Locale>): void {
-    if (confirm($localize`Для смены языка требуется перезагрузка страницы, продолжить?`)) {
+    if (confirm($localize`Change of language requires reload, proceed?`)) {
       this.setLocale(event.value, true);
       return;
     }

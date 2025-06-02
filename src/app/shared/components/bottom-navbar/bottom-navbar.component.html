@@ -3,6 +3,7 @@
     <mat-list-item [activated]="rla.isActive">
       <a class="qrd-bottom-navbar-link" [routerLink]="link.route" #rla="routerLinkActive" routerLinkActive="active">
         <ui-icon [icon]="link.icon" height="40" width="40" />
+        <p>{{ link.title }}</p>
       </a>
     </mat-list-item>
   }

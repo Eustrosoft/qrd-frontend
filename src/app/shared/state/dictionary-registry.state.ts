@@ -4,7 +4,7 @@ import { Dictionaries, DictionaryState } from '@app/app.models';
 import { Option } from '@shared/shared.models';
 import { ThemePickerOverlayLocalization } from '@shared/components/theme-picker-overlay/theme-picker-overlay.constants';
 import { patch } from '@ngxs/store/operators';
-import { LocalesLocalization } from '@shared/shared.constants';
+import { LocalesLocalization, RouteTitles } from '@shared/shared.constants';
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 
 export interface DictionaryRegistryStateModel {
@@ -66,7 +66,7 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
           locales: patch({
             list: [
               {
-                value: 'ru',
+                value: 'ru-RU',
                 viewValue: LocalesLocalization.ru,
               },
               {
@@ -100,14 +100,17 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
               {
                 icon: 'cringe',
                 route: '/cards',
+                title: RouteTitles.cards,
               },
               {
                 icon: 'eye',
                 route: '/templates',
+                title: RouteTitles.templates,
               },
               {
                 icon: 'world',
                 route: '/files',
+                title: RouteTitles.files,
               },
             ],
             isLoading: false,

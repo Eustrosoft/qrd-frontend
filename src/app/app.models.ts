@@ -7,7 +7,7 @@ export type Environment = {
 };
 export type Theme = 'system' | 'light' | 'dark';
 export type ThemeContrast = '' | '-mc' | '-hc';
-export type Locale = 'ru' | 'en-US';
+export type Locale = 'ru-RU' | 'en-US';
 export type LocaleJson = {
   locale: Locale;
   translations: Record<string, string>;

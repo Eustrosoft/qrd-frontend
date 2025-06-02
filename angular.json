@@ -45,10 +45,13 @@
       "sourceRoot": "src",
       "prefix": "",
       "i18n": {
-        "sourceLocale": "ru",
+        "sourceLocale": "en",
         "locales": {
+          "ru-RU": {
+            "translation": "src/locale/messages.ru-RU.json"
+          },
           "en-US": {
-            "translation": "src/locale/messages.en.json"
+            "translation": "src/locale/messages.en-US.json"
           }
         }
       },

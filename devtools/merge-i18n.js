@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const baseFilePath = 'src/locale/messages.json'; // freshly extracted
-const locales = ['ru', 'en-US']; // your supported locales
+const locales = ['ru-RU', 'en-US']; // your supported locales
 const targetDir = 'src/locale';
 
 function loadJson(filePath) {
