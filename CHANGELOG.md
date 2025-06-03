@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.0.0...v1.1.0) (2025-06-03)
+
+
+### Features
+
+* **login:** добавлен обработчик keydown.enter ([086935d](https://github.com/Eustrosoft/qrd-frontend/commit/086935d4f017ae1d129590ac4183128f2a95d757))
+
 ## 1.0.0 (2025-06-03)
 
 
