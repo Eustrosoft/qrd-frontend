@@ -4,7 +4,7 @@
     <mat-label>
       <ui-flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center"> {{ SignUpLocalization.login }} </ui-flex-block>
     </mat-label>
-    <input [formControl]="form.controls.username" matInput />
+    <input (keydown.enter)="submitForm()" [formControl]="form.controls.username" matInput />
     <button matSuffix class="qrd-icon-button-sm" disabled mat-icon-button><ui-icon icon="user-circle" display="inline" /></button>
     <mat-error>
       @if (form.controls.username.hasError('required')) {
@@ -16,7 +16,7 @@
     <mat-label>
       <ui-flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center"> {{ SignUpLocalization.pwd }} </ui-flex-block>
     </mat-label>
-    <input [formControl]="form.controls.password" matInput [type]="isPwdVisible() ? 'text' : 'password'" />
+    <input (keydown.enter)="submitForm()" [formControl]="form.controls.password" matInput [type]="isPwdVisible() ? 'text' : 'password'" />
     <button (click)="isPwdVisible.set(!isPwdVisible())" matSuffix class="qrd-icon-button-sm" mat-icon-button>
       <ui-icon [icon]="isPwdVisible() ? 'eye' : 'eye-slash'" display="inline" />
     </button>
