@@ -21,6 +21,8 @@ export type Icon =
   | 'eye'
   | 'eye-slash'
   | 'file-search'
+  | 'folder'
+  | 'folder-open'
   | 'info'
   | 'not-found'
   | 'palette'

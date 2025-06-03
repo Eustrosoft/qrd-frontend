@@ -3,6 +3,14 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from '@app/app.config';
 import { AppComponent } from '@app/app.component';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+import localeRuExtra from '@angular/common/locales/extra/ru';
+import localeEn from '@angular/common/locales/en';
+import localeEnExtra from '@angular/common/locales/extra/en';
+
+registerLocaleData(localeRu, 'ru-RU', localeRuExtra);
+registerLocaleData(localeEn, 'en-US', localeEnExtra);
 
 // eslint-disable-next-line no-console
 bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));

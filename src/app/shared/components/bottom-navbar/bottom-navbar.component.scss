@@ -15,6 +15,11 @@
     &-link {
       display: block;
       text-align: center;
+
+      small {
+        display: block;
+        padding-top: mixins.rem(4);
+      }
     }
   }
 }

@@ -91,6 +91,10 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
                 title: HeaderLocalization.files,
                 route: '/files',
               },
+              {
+                title: HeaderLocalization.files,
+                route: '/not-found',
+              },
             ],
             isLoading: false,
             isLoadError: false,
@@ -108,8 +112,13 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
                 title: RouteTitles.templates,
               },
               {
-                icon: 'world',
+                icon: 'folder',
                 route: '/files',
+                title: RouteTitles.files,
+              },
+              {
+                icon: 'world',
+                route: '/not-found',
                 title: RouteTitles.files,
               },
             ],

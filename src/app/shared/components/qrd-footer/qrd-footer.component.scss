@@ -15,10 +15,10 @@
   }
 
   @media #{map.get(bp.$breakpoints, xsmall)} {
-    padding: mixins.rem(16) mixins.rem(24) mixins.rem(64) mixins.rem(12);
+    padding: mixins.rem(16) mixins.rem(24) mixins.rem(96) mixins.rem(12);
   }
 
   @media #{map.get(bp.$breakpoints, small)} {
-    padding: mixins.rem(16) mixins.rem(24) mixins.rem(64) mixins.rem(12);
+    padding: mixins.rem(16) mixins.rem(24) mixins.rem(96) mixins.rem(12);
   }
 }

@@ -2,7 +2,7 @@
   @if (isSmallScreen()) {
     <button (click)="openSidenavMenu()" class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="sidenav" display="inline" /></button>
   }
-  <qrd-logo>
+  <qrd-logo routerLink="/">
     @if (!isSmallScreen()) {
       <p class="is-bold is-on-primary-container">{{ HeaderLocalization.qrForBusiness }}</p>
     }
