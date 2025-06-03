@@ -8,7 +8,7 @@
     }
   </qrd-logo>
 </ui-flex-block>
-<ui-flex-block gapSize="32" flexAlignItems="center">
+<ui-flex-block flexAlignItems="center">
   @if (!isSmallScreen() && selectors.isAuthenticated()) {
     <mat-nav-list class="qrd-header-navbar">
       @for (link of selectors.navbarLinks().list; track link.title) {

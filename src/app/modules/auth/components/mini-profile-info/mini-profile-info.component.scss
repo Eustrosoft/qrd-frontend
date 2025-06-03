@@ -14,7 +14,7 @@
   }
 
   @media #{map.get(bp.$breakpoints, xsmall)} {
-    gap: mixins.rem(4);
+    gap: mixins.rem(8);
   }
 
   @media #{map.get(bp.$breakpoints, small)} {

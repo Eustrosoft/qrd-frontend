@@ -17,7 +17,7 @@ import { createSelectMap, select } from '@ngxs/store';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { AuthState } from '@modules/auth/state/auth.state';
-import { IS_SMALL, IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { MiniProfileInfoComponent } from '@modules/auth/components/mini-profile-info/mini-profile-info.component';
 import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overlay/create-menu-overlay.component';
 
@@ -49,8 +49,6 @@ import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overl
 export class QrdHeaderComponent {
   private readonly overlay = inject(Overlay);
   private readonly uiSidenavService = inject(UiSidenavService);
-  private readonly isXSmall = inject(IS_XSMALL);
-  private readonly isSmall = inject(IS_SMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly selectors = createSelectMap({
     isAuthenticated: select(AuthState.isAuthenticated$),
@@ -61,13 +59,10 @@ export class QrdHeaderComponent {
   protected readonly SharedLocalization = SharedLocalization;
 
   protected readonly actionsFlexGapSize = computed<string>(() => {
-    if (this.isXSmall()) {
-      return '4';
-    }
-    if (this.isSmall()) {
+    if (this.isSmallScreen()) {
       return '8';
     }
-    return '32';
+    return '16';
   });
 
   protected readonly isThemeOverlayOpen = signal<boolean>(false);
