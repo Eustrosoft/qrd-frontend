@@ -13,16 +13,20 @@ export type LocaleJson = {
   translations: Record<string, string>;
 };
 export type Icon =
+  | 'add-content'
   | 'arrow-bottom'
   | 'arrow-left'
+  | 'cards'
   | 'close'
   | 'cringe'
+  | 'doc'
   | 'error'
   | 'eye'
   | 'eye-slash'
   | 'file-search'
   | 'folder'
   | 'folder-open'
+  | 'grid-plus'
   | 'info'
   | 'not-found'
   | 'palette'
@@ -30,6 +34,7 @@ export type Icon =
   | 'settings'
   | 'sidenav'
   | 'table'
+  | 'template'
   | 'timeout'
   | 'trash'
   | 'user-circle'

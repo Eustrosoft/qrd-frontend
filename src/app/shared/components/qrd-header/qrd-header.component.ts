@@ -3,7 +3,7 @@ import { MatAnchor, MatIconButton } from '@angular/material/button';
 import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { SharedLocalization } from '@shared/shared.constants';
-import { PaletteAnimationDirective } from '@cdk/directives/palette-animation.directive';
+import { PaletteAnimationDirective } from '@shared/directives/palette-animation.directive';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { HeaderNavbarLink } from '@shared/components/qrd-header/qrd-header.models';
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, Overlay } from '@angular/cdk/overlay';
@@ -17,8 +17,9 @@ import { createSelectMap, select } from '@ngxs/store';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { AuthState } from '@modules/auth/state/auth.state';
-import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
+import { IS_SMALL, IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { MiniProfileInfoComponent } from '@modules/auth/components/mini-profile-info/mini-profile-info.component';
+import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overlay/create-menu-overlay.component';
 
 @Component({
   selector: 'qrd-header',
@@ -38,6 +39,7 @@ import { MiniProfileInfoComponent } from '@modules/auth/components/mini-profile-
     BottomNavbarComponent,
     UiFlexBlockComponent,
     MiniProfileInfoComponent,
+    CreateMenuOverlayComponent,
   ],
   animations: [overlayAnimation],
   templateUrl: './qrd-header.component.html',
@@ -47,6 +49,8 @@ import { MiniProfileInfoComponent } from '@modules/auth/components/mini-profile-
 export class QrdHeaderComponent {
   private readonly overlay = inject(Overlay);
   private readonly uiSidenavService = inject(UiSidenavService);
+  private readonly isXSmall = inject(IS_XSMALL);
+  private readonly isSmall = inject(IS_SMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly selectors = createSelectMap({
     isAuthenticated: select(AuthState.isAuthenticated$),
@@ -56,10 +60,19 @@ export class QrdHeaderComponent {
   protected readonly HeaderLocalization = HeaderLocalization;
   protected readonly SharedLocalization = SharedLocalization;
 
-  protected readonly isOverlayOpen = signal<boolean>(false);
-  protected readonly cdkConnectedOverlayScrollStrategy = this.overlay.scrollStrategies.close();
+  protected readonly actionsFlexGapSize = computed<string>(() => {
+    if (this.isXSmall()) {
+      return '4';
+    }
+    if (this.isSmall()) {
+      return '8';
+    }
+    return '32';
+  });
 
-  protected readonly OVERLAY_POSITIONS = computed<ConnectedPosition[]>(() => [
+  protected readonly isThemeOverlayOpen = signal<boolean>(false);
+  protected readonly themeOverlayScrollStrategy = this.overlay.scrollStrategies.close();
+  protected readonly overlayPositions = computed<ConnectedPosition[]>(() => [
     {
       originX: 'end',
       originY: 'bottom',
@@ -70,12 +83,23 @@ export class QrdHeaderComponent {
     },
   ]);
 
-  protected openOverlay(): void {
-    this.isOverlayOpen.set(true);
+  protected readonly isCreateOverlayOpen = signal<boolean>(false);
+  protected readonly createOverlayScrollStrategy = this.overlay.scrollStrategies.close();
+
+  protected openThemeOverlay(): void {
+    this.isThemeOverlayOpen.set(true);
   }
 
-  protected closeOverlay(): void {
-    this.isOverlayOpen.set(false);
+  protected closeThemeOverlay(): void {
+    this.isThemeOverlayOpen.set(false);
+  }
+
+  protected openCreateOverlay(): void {
+    this.isCreateOverlayOpen.set(true);
+  }
+
+  protected closeCreateOverlay(): void {
+    this.isCreateOverlayOpen.set(false);
   }
 
   protected openSidenavMenu(): void {

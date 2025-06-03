@@ -22,6 +22,10 @@
     "signUp.forgotPwd": "Не помню пароль",
     "signUp.loginRequiredErr": "Логин обязателен",
     "signUp.pwdRequiredErr": "Пароль обязателен",
+    "createMenuOverlay.createCard": "Создать карточку",
+    "createMenuOverlay.createTemplate": "Создать шаблон",
+    "createMenuOverlay.uploadFile": "Загрузить файл",
+    "createMenuOverlay.createDoc": "Создать документ",
     "4797787106431053529": "Для смены языка требуется перезагрузка, продолжить?",
     "footer.qrForAll": "QR-коды для всех",
     "footer.trainingVideo": "Обучающее видео",
@@ -32,6 +36,7 @@
     "header.cards": "Карточки",
     "header.templates": "Шаблоны",
     "header.files": "Файлы",
+    "header.docs": "Документы",
     "themePickerOverlay.theme": "Оформление",
     "themePickerOverlay.dark": "Темное",
     "themePickerOverlay.light": "Светлое",
@@ -52,6 +57,7 @@
     "routes.cards": "Карточки",
     "routes.templates": "Шаблоны",
     "routes.files": "Файлы",
+    "routes.docs": "Документы",
     "routes.devSandbox": "Dev Sandbox"
   }
 }

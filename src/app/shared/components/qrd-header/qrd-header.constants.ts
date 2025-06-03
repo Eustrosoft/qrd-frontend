@@ -11,4 +11,7 @@ export const HeaderLocalization = {
   get files() {
     return $localize`:@@header.files:Files`;
   },
+  get docs() {
+    return $localize`:@@header.docs:Docs`;
+  },
 } as const;

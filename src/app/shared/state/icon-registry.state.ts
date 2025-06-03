@@ -11,7 +11,7 @@ export interface IconRegistryStateModel {
   iconRecord: Partial<Record<string, IconState>>;
 }
 
-const defaults = {
+const defaults: IconRegistryStateModel = {
   iconRecord: {},
 } as const;
 

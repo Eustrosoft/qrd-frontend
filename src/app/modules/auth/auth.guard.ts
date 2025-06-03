@@ -5,9 +5,6 @@ import { inject } from '@angular/core';
 
 export const authGuard: CanActivateFn = (): boolean | UrlTree => {
   const router = inject(Router);
-  const isAuthenticated = select(AuthState.isAuthenticated$)();
-  if (isAuthenticated) {
-    return true;
-  }
-  return router.getCurrentNavigation()?.previousNavigation?.extractedUrl ?? router.createUrlTree(['/']);
+  // eslint-disable-next-line
+  return select(AuthState.isAuthenticated$)() || router.getCurrentNavigation()?.previousNavigation?.extractedUrl || router.createUrlTree(['/']);
 };

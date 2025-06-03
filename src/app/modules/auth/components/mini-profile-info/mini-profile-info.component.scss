@@ -1,4 +1,6 @@
 @use 'styles/mixins' as mixins;
+@use 'styles/breakpoints' as bp;
+@use 'sass:map';
 
 :host {
   gap: mixins.rem(12);
@@ -9,5 +11,13 @@
 
   text-avatar {
     flex: 1 0 auto;
+  }
+
+  @media #{map.get(bp.$breakpoints, xsmall)} {
+    gap: mixins.rem(4);
+  }
+
+  @media #{map.get(bp.$breakpoints, small)} {
+    gap: mixins.rem(12);
   }
 }

@@ -13,7 +13,7 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ErrorPageComponent implements OnInit, OnDestroy {
-  protected readonly errorConfig: ErrorConfig = inject(ERROR_CONFIG);
+  protected readonly errorConfig = inject<ErrorConfig>(ERROR_CONFIG);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
 
   public ngOnInit(): void {

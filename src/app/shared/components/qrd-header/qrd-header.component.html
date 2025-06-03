@@ -18,27 +18,44 @@
       }
     </mat-nav-list>
   }
-  <ui-flex-block [gapSize]="isSmallScreen() ? '8' : '32'" flexAlignItems="center">
-    <button (click)="openOverlay()" class="qrd-icon-button-sm" mat-icon-button paletteAnimation cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+  <ui-flex-block [gapSize]="actionsFlexGapSize()" flexAlignItems="center">
+    @if (selectors.isAuthenticated()) {
+      <button (click)="openCreateOverlay()" class="qrd-icon-button-sm" mat-icon-button cdkOverlayOrigin #createTrigger="cdkOverlayOrigin">
+        <ui-icon icon="grid-plus" cursor="pointer" display="inline" />
+      </button>
+      <ng-template
+        cdkConnectedOverlay
+        [cdkConnectedOverlayOrigin]="createTrigger"
+        [cdkConnectedOverlayOpen]="isCreateOverlayOpen()"
+        [cdkConnectedOverlayPositions]="overlayPositions()"
+        [cdkConnectedOverlayScrollStrategy]="createOverlayScrollStrategy"
+        [cdkConnectedOverlayWidth]="220"
+        (overlayOutsideClick)="closeCreateOverlay()"
+        (detach)="closeCreateOverlay()"
+      >
+        <create-menu-overlay [@transformPanel]="isCreateOverlayOpen() ? 'enter' : 'void'" (closeClick)="closeCreateOverlay()" />
+      </ng-template>
+    }
+    <button (click)="openThemeOverlay()" class="qrd-icon-button-sm" mat-icon-button paletteAnimation cdkOverlayOrigin #themeTrigger="cdkOverlayOrigin">
       <ui-icon icon="palette" cursor="pointer" display="inline" />
     </button>
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="themeTrigger"
+      [cdkConnectedOverlayOpen]="isThemeOverlayOpen()"
+      [cdkConnectedOverlayPositions]="overlayPositions()"
+      [cdkConnectedOverlayScrollStrategy]="themeOverlayScrollStrategy"
+      [cdkConnectedOverlayWidth]="240"
+      (overlayOutsideClick)="closeThemeOverlay()"
+      (detach)="closeThemeOverlay()"
+    >
+      <theme-picker-overlay [@transformPanel]="isThemeOverlayOpen() ? 'enter' : 'void'" (closeClick)="closeThemeOverlay()" />
+    </ng-template>
     @if (selectors.isAuthenticated()) {
       <mini-profile-info />
     } @else {
       <a routerLink="/login" class="qrd-button-md" mat-flat-button>{{ SharedLocalization.login }}</a>
     }
-    <ng-template
-      cdkConnectedOverlay
-      [cdkConnectedOverlayOrigin]="trigger"
-      [cdkConnectedOverlayOpen]="isOverlayOpen()"
-      [cdkConnectedOverlayPositions]="OVERLAY_POSITIONS()"
-      [cdkConnectedOverlayScrollStrategy]="cdkConnectedOverlayScrollStrategy"
-      [cdkConnectedOverlayWidth]="240"
-      (overlayOutsideClick)="closeOverlay()"
-      (detach)="closeOverlay()"
-    >
-      <theme-picker-overlay [@transformPanel]="isOverlayOpen() ? 'enter' : 'void'" (closeClick)="closeOverlay()" />
-    </ng-template>
   </ui-flex-block>
 </ui-flex-block>
 @if (isSmallScreen()) {

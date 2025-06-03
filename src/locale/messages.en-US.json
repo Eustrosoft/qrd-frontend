@@ -22,6 +22,10 @@
     "signUp.forgotPwd": "Forgot password",
     "signUp.loginRequiredErr": "Login required",
     "signUp.pwdRequiredErr": "Password required",
+    "createMenuOverlay.createCard": "Create card",
+    "createMenuOverlay.createTemplate": "Create template",
+    "createMenuOverlay.uploadFile": "Upload file",
+    "createMenuOverlay.createDoc": "Create doc",
     "4797787106431053529": "Change of language requires reload, proceed?",
     "footer.qrForAll": "QR for all",
     "footer.trainingVideo": "Training video",
@@ -32,6 +36,7 @@
     "header.cards": "Cards",
     "header.templates": "Templates",
     "header.files": "Files",
+    "header.docs": "Docs",
     "themePickerOverlay.theme": "Theme",
     "themePickerOverlay.dark": "Dark",
     "themePickerOverlay.light": "Light",
@@ -52,6 +57,7 @@
     "routes.cards": "Cards",
     "routes.templates": "Templates",
     "routes.files": "Files",
+    "routes.docs": "Docs",
     "routes.devSandbox": "Dev Sandbox"
   }
 }

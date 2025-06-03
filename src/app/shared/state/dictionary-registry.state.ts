@@ -6,9 +6,12 @@ import { ThemePickerOverlayLocalization } from '@shared/components/theme-picker-
 import { patch } from '@ngxs/store/operators';
 import { LocalesLocalization, RouteTitles } from '@shared/shared.constants';
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
+import { BottomNavbarLink } from '@shared/components/bottom-navbar/bottom-navbar.models';
+import { HeaderNavbarLink } from '@shared/components/qrd-header/qrd-header.models';
 
-export interface DictionaryRegistryStateModel {
-  dictionaries: Partial<Record<Dictionaries, DictionaryState<unknown>>>;
+// eslint-disable-next-line
+export interface DictionaryRegistryStateModel<T = any> {
+  dictionaries: Partial<Record<Dictionaries, DictionaryState<T>>>;
 }
 
 const defaults: DictionaryRegistryStateModel = {
@@ -27,7 +30,7 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
     setState(
       patch({
         dictionaries: patch({
-          themes: patch({
+          themes: patch<DictionaryState<Option<string>>>({
             list: [
               {
                 value: 'light',
@@ -45,7 +48,7 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
             isLoading: false,
             isLoadError: false,
           }),
-          contrast: patch({
+          contrast: patch<DictionaryState<Option<string>>>({
             list: [
               {
                 value: '',
@@ -63,7 +66,7 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
             isLoading: false,
             isLoadError: false,
           }),
-          locales: patch({
+          locales: patch<DictionaryState<Option<string>>>({
             list: [
               {
                 value: 'ru-RU',
@@ -77,7 +80,7 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
             isLoading: false,
             isLoadError: false,
           }),
-          headerNavbarLinks: patch({
+          headerNavbarLinks: patch<DictionaryState<HeaderNavbarLink>>({
             list: [
               {
                 title: HeaderLocalization.cards,
@@ -92,34 +95,35 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
                 route: '/files',
               },
               {
-                title: HeaderLocalization.files,
+                title: HeaderLocalization.docs,
                 route: '/not-found',
               },
             ],
             isLoading: false,
             isLoadError: false,
           }),
-          bottomNavbarLinks: patch({
+          bottomNavbarLinks: patch<DictionaryState<BottomNavbarLink>>({
             list: [
               {
-                icon: 'cringe',
+                icon: 'cards',
                 route: '/cards',
                 title: RouteTitles.cards,
               },
               {
-                icon: 'eye',
+                icon: 'template',
                 route: '/templates',
                 title: RouteTitles.templates,
               },
               {
                 icon: 'folder',
+                iconActive: 'folder-open',
                 route: '/files',
                 title: RouteTitles.files,
               },
               {
-                icon: 'world',
+                icon: 'doc',
                 route: '/not-found',
-                title: RouteTitles.files,
+                title: RouteTitles.docs,
               },
             ],
             isLoading: false,

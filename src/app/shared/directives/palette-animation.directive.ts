@@ -1,4 +1,6 @@
-import { AfterViewInit, Directive, ElementRef, HostListener, inject, Renderer2 } from '@angular/core';
+import { AfterViewInit, DestroyRef, Directive, ElementRef, HostListener, inject, Renderer2 } from '@angular/core';
+import { interval, takeWhile } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
   selector: '[paletteAnimation]',
@@ -6,6 +8,7 @@ import { AfterViewInit, Directive, ElementRef, HostListener, inject, Renderer2 }
 export class PaletteAnimationDirective implements AfterViewInit {
   private readonly elRef = inject(ElementRef);
   private readonly renderer = inject(Renderer2);
+  private readonly destroyRef = inject(DestroyRef);
 
   private circles: SVGCircleElement[] = [];
 
@@ -14,13 +17,19 @@ export class PaletteAnimationDirective implements AfterViewInit {
   }
 
   private waitForIconLoad(): void {
-    const checkInterval = setInterval(() => {
-      const svg = this.elRef.nativeElement.querySelector('ui-icon svg');
-      if (svg) {
-        clearInterval(checkInterval);
-        this.initCircles(svg);
-      }
-    }, 50);
+    interval(50)
+      .pipe(
+        takeWhile(() => !this.elRef.nativeElement.querySelector('ui-icon svg')),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe({
+        complete: () => {
+          const svg = this.elRef.nativeElement.querySelector('ui-icon svg');
+          if (svg) {
+            this.initCircles(svg);
+          }
+        },
+      });
   }
 
   private initCircles(svg: SVGSVGElement): void {

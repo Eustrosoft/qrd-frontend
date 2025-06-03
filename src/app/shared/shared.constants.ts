@@ -41,6 +41,9 @@ export const RouteTitles = {
   get files() {
     return $localize`:@@routes.files:Files`;
   },
+  get docs() {
+    return $localize`:@@routes.docs:Docs`;
+  },
   get devSandbox() {
     return $localize`:@@routes.devSandbox:Dev Sandbox`;
   },

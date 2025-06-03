@@ -8,12 +8,20 @@ import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { authGuard } from '@modules/auth/auth.guard';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { timer } from 'rxjs';
+import { select } from '@ngxs/store';
+import { AuthState } from '@modules/auth/state/auth.state';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: AppRoutes.login,
+    redirectTo: (): string => {
+      const isAuthenticated = select(AuthState.isAuthenticated$);
+      if (isAuthenticated()) {
+        return AppRoutes.cards;
+      }
+      return AppRoutes.login;
+    },
   },
   {
     path: AppRoutes.login,
