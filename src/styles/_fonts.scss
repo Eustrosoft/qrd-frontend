@@ -9,3 +9,26 @@
   font-weight: 700;
   font-family: Lato, sans-serif;
 }
+
+@font-face {
+  src: url('../../public/fonts/Material-Symbols-Outlined.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-family: 'Material Symbols Outlined';
+}
+
+.material-symbols-outlined {
+  display: inline-block;
+  font-size: 24px;
+  word-wrap: normal;
+  direction: ltr;
+  font-style: normal;
+  font-weight: normal;
+  font-family: 'Material Symbols Outlined', serif;
+  line-height: 1;
+  white-space: nowrap;
+  letter-spacing: normal;
+  text-transform: none;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}

@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 @use 'styles/mixins' as mixins;
 
-.qrd-header-navbar {
+.header-navbar {
   --mat-ripple-color: color-mix(in srgb, var(--mat-sys-secondary) 12%, transparent);
 
   @include mat.list-overrides(
@@ -18,7 +18,7 @@
   );
 }
 
-.qrd-bottom-navbar {
+.bottom-navbar {
   --mat-ripple-color: color-mix(in srgb, var(--mat-sys-secondary) 12%, transparent);
 
   @include mat.list-overrides(

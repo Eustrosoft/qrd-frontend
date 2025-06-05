@@ -8,7 +8,7 @@
     <h1>{{ errorConfig.title }}</h1>
     <p>{{ errorConfig.message }}</p>
     @for (button of errorConfig.buttonList; track button.buttonText) {
-      <button (click)="onButtonClick(button.buttonAction)" class="qrd-button-xl" mat-flat-button>
+      <button (click)="onButtonClick(button.buttonAction)" class="button-xl" mat-flat-button>
         {{ button.buttonText }}
       </button>
     } @empty {}

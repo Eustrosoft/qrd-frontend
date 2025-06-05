@@ -4,36 +4,36 @@
       <p><b>QR Demo</b></p>
       <p>{{ FooterLocalization.qrForAll }}</p>
     </qrd-logo>
-    <mat-form-field subscriptSizing="dynamic" class="qrd-form-field-sm">
+    <mat-form-field subscriptSizing="dynamic" class="form-field-sm">
       <mat-label>{{ SharedLocalization.language }}</mat-label>
       <mat-select [hideSingleSelectionIndicator]="true" [(ngModel)]="localeModel" (selectionChange)="updateLocale($event)">
         @for (locale of selectors.availableLocales().list; track locale.value) {
-          <mat-option class="qrd-option-sm" [value]="locale.value">{{ locale.viewValue }}</mat-option>
+          <mat-option class="option-sm" [value]="locale.value">{{ locale.viewValue }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
   </ui-flex-block>
   <ui-flex-block gapSize="2" flexDirection="column" flexAlignItems="flex-start">
     <p><b>QR Demo</b></p>
-    <a class="qrd-button-anchor-md" mat-button textInteractionEffect>{{ FooterLocalization.trainingVideo }}</a>
-    <a class="qrd-button-anchor-md" routerLink="/login" mat-button textInteractionEffect>{{ FooterLocalization.loginPage }}</a>
+    <a class="button-anchor-md" mat-button textInteractionEffect>{{ FooterLocalization.trainingVideo }}</a>
+    <a class="button-anchor-md" routerLink="/login" mat-button textInteractionEffect>{{ FooterLocalization.loginPage }}</a>
   </ui-flex-block>
   <ui-flex-block gapSize="2" flexDirection="column" [flexAlignItems]="isSmallScreen() ? 'flex-start' : 'center'">
     <p>
       <b>{{ FooterLocalization.services }}</b>
     </p>
-    <a class="qrd-button-anchor-md" href="https://qxyz.ru" target="_blank" mat-button textInteractionEffect>QXYZ</a>
-    <a class="qrd-button-anchor-md" href="https://qrdemo.qxyz.ru" target="_blank" mat-button textInteractionEffect>QR Demo</a>
+    <a class="button-anchor-md" href="https://qxyz.ru" target="_blank" mat-button textInteractionEffect>QXYZ</a>
+    <a class="button-anchor-md" href="https://qrdemo.qxyz.ru" target="_blank" mat-button textInteractionEffect>QR Demo</a>
   </ui-flex-block>
   <ui-flex-block gapSize="2" flexDirection="column" [flexAlignItems]="isSmallScreen() ? 'flex-start' : 'flex-end'">
     <p>
       <b>{{ FooterLocalization.contacts }}</b>
     </p>
-    <a class="qrd-button-anchor-md" href="mailto:qrdemo@eustrosoft.org" mat-button textInteractionEffect>qrdemo&#64;eustrosoft.org</a>
-    <a class="qrd-button-anchor-md" href="tel:+79951161601" mat-button textInteractionEffect>+7 (995) 116-16-01</a>
+    <a class="button-anchor-md" href="mailto:qrdemo@eustrosoft.org" mat-button textInteractionEffect>qrdemo&#64;eustrosoft.org</a>
+    <a class="button-anchor-md" href="tel:+79951161601" mat-button textInteractionEffect>+7 (995) 116-16-01</a>
   </ui-flex-block>
 </ui-grid-block>
 <ui-flex-block gapSize="4" flexAlignSelf="flex-end">
   <small>© {{ currentYear }} </small>
-  <a class="qrd-button-anchor-sm" href="https://eustrosoft.org" target="_blank" mat-button textInteractionEffect>eustrosoft.org</a>
+  <a class="button-anchor-sm" href="https://eustrosoft.org" target="_blank" mat-button textInteractionEffect>eustrosoft.org</a>
 </ui-flex-block>

@@ -1,23 +1,23 @@
 <h1>{{ RouteTitles.login }}</h1>
 <ui-flex-block gapSize="10" flexDirection="column" class="login-card">
-  <mat-form-field class="qrd-form-field-lg">
+  <mat-form-field class="form-field-lg">
     <mat-label>
       <ui-flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center"> {{ SignUpLocalization.login }} </ui-flex-block>
     </mat-label>
     <input (keydown.enter)="submitForm()" [formControl]="form.controls.username" matInput />
-    <button matSuffix class="qrd-icon-button-sm" disabled mat-icon-button><ui-icon icon="user-circle" display="inline" /></button>
+    <button matSuffix class="icon-button-sm" disabled mat-icon-button><ui-icon icon="user-circle" display="inline" /></button>
     <mat-error>
       @if (form.controls.username.hasError('required')) {
         {{ SignUpLocalization.loginRequiredErr }}
       }
     </mat-error>
   </mat-form-field>
-  <mat-form-field class="qrd-form-field-lg">
+  <mat-form-field class="form-field-lg">
     <mat-label>
       <ui-flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center"> {{ SignUpLocalization.pwd }} </ui-flex-block>
     </mat-label>
     <input (keydown.enter)="submitForm()" [formControl]="form.controls.password" matInput [type]="isPwdVisible() ? 'text' : 'password'" />
-    <button (click)="isPwdVisible.set(!isPwdVisible())" matSuffix class="qrd-icon-button-sm" mat-icon-button>
+    <button (click)="isPwdVisible.set(!isPwdVisible())" matSuffix class="icon-button-sm" mat-icon-button>
       <ui-icon [icon]="isPwdVisible() ? 'eye' : 'eye-slash'" display="inline" />
     </button>
     <mat-error>
@@ -32,8 +32,8 @@
     [flexAlignItems]="isXSmall() ? 'flex-end' : 'center'"
     [flexJustifyContent]="isXSmall() ? 'center' : 'flex-end'"
   >
-    <button class="qrd-button-md" mat-button>{{ SignUpLocalization.signUp }}</button>
-    <button class="qrd-button-md" mat-button>{{ SignUpLocalization.forgotPwd }}</button>
-    <button (click)="submitForm()" class="qrd-button-lg" mat-flat-button>{{ SharedLocalization.login }}</button>
+    <button class="button-md" mat-button>{{ SignUpLocalization.signUp }}</button>
+    <button class="button-md" mat-button>{{ SignUpLocalization.forgotPwd }}</button>
+    <button (click)="submitForm()" class="button-lg" mat-flat-button>{{ SharedLocalization.login }}</button>
   </ui-flex-block>
 </ui-flex-block>

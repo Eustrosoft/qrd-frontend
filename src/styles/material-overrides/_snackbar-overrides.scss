@@ -1,11 +1,11 @@
 @use '@angular/material' as mat;
 @use 'styles/mixins' as mixins;
 
-.qrd-snackbar-panel {
+.snackbar-panel {
   white-space: pre-line;
 }
 
-.qrd-error-message-snackbar-panel {
+.error-message-snackbar-panel {
   @include mat.snack-bar-overrides(
     (
       container-shape: 12px,

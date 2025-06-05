@@ -6,6 +6,7 @@ import { MAT_SELECT_CONFIG } from '@angular/material/select';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS } from '@angular/material/checkbox';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/slide-toggle';
+import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 
 export function provideMaterialConfig(): Provider[] {
   return [
@@ -14,7 +15,7 @@ export function provideMaterialConfig(): Provider[] {
       hideDelay: 50,
       showDelay: 0,
       touchendHideDelay: 0,
-      tooltipClass: 'qrd-tooltip-pre-line',
+      tooltipClass: 'tooltip-pre-line',
     }),
     provideMatConfigValue(MAT_SELECT_CONFIG, {
       typeaheadDebounceInterval: 150,
@@ -25,8 +26,11 @@ export function provideMaterialConfig(): Provider[] {
       horizontalPosition: 'center',
       verticalPosition: 'top',
       duration: 7000,
-      panelClass: 'qrd-snackbar-panel',
+      panelClass: 'snackbar-panel',
     }),
     provideMatConfigValue(MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS, { hideIcon: true }),
+    provideMatConfigValue(MAT_ICON_DEFAULT_OPTIONS, {
+      fontSet: 'material-symbols-outlined',
+    }),
   ];
 }

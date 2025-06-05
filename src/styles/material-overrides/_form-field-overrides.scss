@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 @use 'styles/mixins' as mixins;
 
-.qrd-form-field-sm {
+.form-field-sm {
   @include mat.form-field-overrides(
     (
       filled-container-shape: 8px,
@@ -15,7 +15,7 @@
   );
 }
 
-.qrd-form-field-md {
+.form-field-md {
   @include mat.form-field-overrides(
     (
       filled-container-shape: 8px,
@@ -29,7 +29,7 @@
   );
 }
 
-.qrd-form-field-lg {
+.form-field-lg {
   @include mat.form-field-overrides(
     (
       filled-container-shape: 12px,

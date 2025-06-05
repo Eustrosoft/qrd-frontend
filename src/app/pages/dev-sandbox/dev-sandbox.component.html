@@ -6,16 +6,16 @@
 </ui-flex-block>
 <h1>Form Fields</h1>
 <ui-flex-block flexAlignItems="center" flexWrap="wrap">
-  <mat-form-field class="qrd-form-field-sm">
+  <mat-form-field class="form-field-sm">
     <mat-label>Small form field <ui-icon icon="info" width="24" height="24" tooltipText="Tooltip for large form field" tooltipPosition="above" /></mat-label>
     <input matInput placeholder="Placeholder" />
   </mat-form-field>
-  <mat-form-field class="qrd-form-field-md">
+  <mat-form-field class="form-field-md">
     <mat-label>Medium form field <ui-icon icon="info" width="24" height="24" tooltipText="Tooltip for large form field" tooltipPosition="above" /></mat-label>
     <input matInput placeholder="Placeholder" />
-    <button matSuffix class="qrd-icon-button-sm" disabled mat-icon-button><ui-icon icon="world" display="inline" /></button>
+    <button matSuffix class="icon-button-sm" disabled mat-icon-button><ui-icon icon="world" display="inline" /></button>
   </mat-form-field>
-  <mat-form-field class="qrd-form-field-lg">
+  <mat-form-field class="form-field-lg">
     <mat-label>
       <ui-flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center">
         Large form field <ui-icon icon="info" width="24" height="24" tooltipText="Tooltip for large form field" tooltipPosition="above" /> </ui-flex-block
@@ -27,33 +27,33 @@
         Some error text
       </ui-flex-block>
     </mat-error>
-    <button matSuffix class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="world" display="inline" /></button>
+    <button matSuffix class="icon-button-sm" mat-icon-button><ui-icon icon="world" display="inline" /></button>
   </mat-form-field>
 </ui-flex-block>
 
 <h1>Selects</h1>
 <ui-flex-block flexAlignItems="center" flexWrap="wrap">
-  <mat-form-field class="qrd-form-field-sm">
+  <mat-form-field class="form-field-sm">
     <mat-label>Small select</mat-label>
     <mat-select placeholder="Placeholder">
       @for (option of optionList; track option) {
-        <mat-option class="qrd-option-sm" [value]="option.value">{{ option.viewValue }}</mat-option>
+        <mat-option class="option-sm" [value]="option.value">{{ option.viewValue }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
-  <mat-form-field class="qrd-form-field-md">
+  <mat-form-field class="form-field-md">
     <mat-label>Medium select</mat-label>
     <mat-select placeholder="Placeholder">
       @for (option of optionList; track option) {
-        <mat-option class="qrd-option-md" [value]="option.value">{{ option.viewValue }}</mat-option>
+        <mat-option class="option-md" [value]="option.value">{{ option.viewValue }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
-  <mat-form-field class="qrd-form-field-lg">
+  <mat-form-field class="form-field-lg">
     <mat-label>Large select</mat-label>
     <mat-select placeholder="Placeholder">
       @for (option of optionList; track option) {
-        <mat-option class="qrd-option-lg" [value]="option.value">{{ option.viewValue }}</mat-option>
+        <mat-option class="option-lg" [value]="option.value">{{ option.viewValue }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
@@ -62,7 +62,7 @@
 <h1>Checkbox, toggle</h1>
 <ui-flex-block flexAlignItems="center">
   <mat-checkbox>Checked</mat-checkbox>
-  <mat-slide-toggle class="qrd-slide-toggle"> Slide me! </mat-slide-toggle>
+  <mat-slide-toggle class="slide-toggle"> Slide me! </mat-slide-toggle>
 </ui-flex-block>
 
 <h1 i18n="@@typography">Typography</h1>
@@ -86,12 +86,12 @@
   <button mat-fab extended>❤️ Basic</button>
 </ui-flex-block>
 <ui-flex-block flexAlignItems="center" flexWrap="wrap">
-  <a class="qrd-button-anchor-sm" mat-button>Link SM</a>
-  <a class="qrd-button-anchor-md" mat-button>Link MD</a>
-  <a class="qrd-button-anchor-md-no-effect" mat-button>Link MD No Effect</a>
-  <button class="qrd-button-md" mat-flat-button>Button MD</button>
-  <button class="qrd-button-lg" mat-flat-button>Button LG</button>
-  <button class="qrd-button-xl" mat-flat-button>Button XL</button>
+  <a class="button-anchor-sm" mat-button>Link SM</a>
+  <a class="button-anchor-md" mat-button>Link MD</a>
+  <a class="button-anchor-md-no-effect" mat-button>Link MD No Effect</a>
+  <button class="button-md" mat-flat-button>Button MD</button>
+  <button class="button-lg" mat-flat-button>Button LG</button>
+  <button class="button-xl" mat-flat-button>Button XL</button>
 </ui-flex-block>
 <ui-flex-block flexAlignItems="center" flexWrap="wrap">
   <button (click)="setTheme('system', '')" mat-button>System</button>
@@ -107,22 +107,27 @@
   <button (click)="openSidenavMenu()" mat-flat-button>Open Sidenav Menu</button>
 </ui-flex-block>
 
+<h1>Mat Icon Button</h1>
+<ui-flex-block>
+  <button class="fab-icon-button-lg-circle" mat-fab><mat-icon>close</mat-icon></button>
+</ui-flex-block>
+
 <h1>Icon Buttons</h1>
 <ui-flex-block flexAlignItems="center">
-  <button class="qrd-fab-icon-button-lg-circle" mat-fab><ui-icon icon="settings" color="var(--mat-sys-on-secondary)" width="24" height="24" /></button>
-  <button class="qrd-fab-icon-button-lg-circle" mat-fab><ui-icon icon="file-search" color="var(--mat-sys-on-secondary)" width="20" height="26" /></button>
+  <button class="fab-icon-button-lg-circle" mat-fab><ui-icon icon="settings" color="var(--mat-sys-on-secondary)" width="24" height="24" /></button>
+  <button class="fab-icon-button-lg-circle" mat-fab><ui-icon icon="file-search" color="var(--mat-sys-on-secondary)" width="20" height="26" /></button>
 </ui-flex-block>
 <ui-flex-block flexAlignItems="center">
-  <button class="qrd-fab-icon-button-md-circle" mat-fab><ui-icon icon="arrow-left" color="var(--mat-sys-on-secondary)" width="12" height="20" /></button>
+  <button class="fab-icon-button-md-circle" mat-fab><ui-icon icon="arrow-left" color="var(--mat-sys-on-secondary)" width="12" height="20" /></button>
 </ui-flex-block>
 <ui-flex-block flexAlignItems="center">
-  <button class="qrd-fab-icon-button-sm-circle" mat-fab><ui-icon icon="arrow-left" color="var(--mat-sys-on-secondary)" width="6" height="20" /></button>
+  <button class="fab-icon-button-sm-circle" mat-fab><ui-icon icon="arrow-left" color="var(--mat-sys-on-secondary)" width="6" height="20" /></button>
 </ui-flex-block>
 <ui-flex-block flexAlignItems="center">
-  <button class="qrd-icon-button-sm" mat-icon-button><ui-icon icon="arrow-bottom" display="inline" /></button>
-  <button class="qrd-icon-button-sm" mat-icon-button paletteAnimation><ui-icon icon="palette" display="inline" /></button>
-  <button class="qrd-icon-button-md" mat-icon-button><ui-icon icon="cringe" display="inline" /></button>
-  <button class="qrd-icon-button-lg" mat-icon-button><ui-icon icon="eye" display="inline" /></button>
+  <button class="icon-button-sm" mat-icon-button><ui-icon icon="arrow-bottom" display="inline" /></button>
+  <button class="icon-button-sm" mat-icon-button paletteAnimation><ui-icon icon="palette" display="inline" /></button>
+  <button class="icon-button-md" mat-icon-button><ui-icon icon="cringe" display="inline" /></button>
+  <button class="icon-button-lg" mat-icon-button><ui-icon icon="eye" display="inline" /></button>
 </ui-flex-block>
 
 <h1>Toggle Buttons</h1>

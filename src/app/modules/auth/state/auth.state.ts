@@ -82,6 +82,7 @@ export class AuthState {
 
   @Action(ResetAuthState)
   public resetAuthState({ setState }: StateContext<AuthStateModel>): void {
+    this.localStorageService.set(IS_AUTHENTICATED_KEY, '0');
     setState(defaults);
   }
 }

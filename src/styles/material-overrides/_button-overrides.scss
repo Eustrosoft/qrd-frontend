@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
 
-.qrd-button-md {
+.button-md {
   @include mat.button-overrides(
     (
       filled-container-shape: 8px,
@@ -13,7 +13,7 @@
   );
 }
 
-.qrd-button-lg {
+.button-lg {
   @include mat.button-overrides(
     (
       filled-container-shape: 8px,
@@ -26,7 +26,7 @@
   );
 }
 
-.qrd-button-xl {
+.button-xl {
   @include mat.button-overrides(
     (
       filled-container-shape: 8px,
@@ -39,7 +39,7 @@
   );
 }
 
-.qrd-button-anchor-sm {
+.button-anchor-sm {
   @include mat.button-overrides(
     (
       text-label-text-size: 12px,
@@ -56,7 +56,7 @@
   min-width: auto !important;
 }
 
-.qrd-button-anchor-md {
+.button-anchor-md {
   @include mat.button-overrides(
     (
       text-label-text-size: 16px,
@@ -73,7 +73,7 @@
   min-width: auto !important;
 }
 
-.qrd-fab-icon-button-sm-circle {
+.fab-icon-button-sm-circle {
   @include mat.fab-overrides(
     (
       container-color: var(--mat-sys-secondary),
@@ -89,7 +89,7 @@
   height: 24px !important;
 }
 
-.qrd-fab-icon-button-md-circle {
+.fab-icon-button-md-circle {
   @include mat.fab-overrides(
     (
       container-color: var(--mat-sys-secondary),
@@ -105,7 +105,7 @@
   height: 40px !important;
 }
 
-.qrd-fab-icon-button-lg-circle {
+.fab-icon-button-lg-circle {
   @include mat.fab-overrides(
     (
       container-color: var(--mat-sys-secondary),
@@ -121,7 +121,7 @@
   height: 48px !important;
 }
 
-.qrd-icon-button-sm {
+.icon-button-sm {
   @include mat.icon-button-overrides(
     (
       icon-size: 24px,
@@ -130,7 +130,7 @@
   );
 }
 
-.qrd-icon-button-md {
+.icon-button-md {
   @include mat.icon-button-overrides(
     (
       icon-size: 40px,
@@ -139,7 +139,7 @@
   );
 }
 
-.qrd-icon-button-lg {
+.icon-button-lg {
   @include mat.icon-button-overrides(
     (
       icon-size: 56px,

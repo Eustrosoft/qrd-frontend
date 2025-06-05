@@ -20,6 +20,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'dev-sandbox',
@@ -47,6 +48,7 @@ import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
     MatSlideToggle,
     UiFlexBlockComponent,
     UiBadgeComponent,
+    MatIcon,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
   templateUrl: './dev-sandbox.component.html',
