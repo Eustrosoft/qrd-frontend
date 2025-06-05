@@ -1,4 +1,4 @@
-import { Theme, ThemeContrast } from '@app/app.models';
+import { Icon, Theme, ThemeContrast } from '@app/app.models';
 
 export const AppRoutes = {
   login: 'login',
@@ -17,3 +17,11 @@ export const IS_AUTHENTICATED_KEY = 'qrd-user-is-authenticated';
 
 export const THEMES = new Set<Theme>(['system', 'light', 'dark']);
 export const THEMES_CONTRAST = new Set<ThemeContrast>(['', '-mc', '-hc']);
+
+export const CUSTOM_ICONS_NAMESPACE = 'qrd';
+export const CUSTOM_ICON_MAP = new Map<Icon, string>([
+  ['arrow-bottom', 'public/icons/arrow-bottom.svg'],
+  ['cringe', 'public/icons/cringe.svg'],
+  ['palette', 'public/icons/palette.svg'],
+  ['not-found', 'public/icons/not-found.svg'],
+]);

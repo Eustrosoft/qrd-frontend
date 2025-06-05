@@ -14,6 +14,6 @@
     } @empty {}
   </ui-flex-block>
   <ui-flex-block flex="1 0 auto" [flexAlignSelf]="isSmallScreen() ? 'center' : 'flex-start'">
-    <ui-icon width="100%" height="100%" [icon]="errorConfig.icon" />
+    <mat-icon [svgIcon]="`qrd:${errorConfig.icon}`"></mat-icon>
   </ui-flex-block>
 </ui-flex-block>

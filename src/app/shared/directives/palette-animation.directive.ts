@@ -19,12 +19,12 @@ export class PaletteAnimationDirective implements AfterViewInit {
   private waitForIconLoad(): void {
     interval(50)
       .pipe(
-        takeWhile(() => !this.elRef.nativeElement.querySelector('ui-icon svg')),
+        takeWhile(() => !this.elRef.nativeElement.querySelector('mat-icon svg')),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe({
         complete: () => {
-          const svg = this.elRef.nativeElement.querySelector('ui-icon svg');
+          const svg = this.elRef.nativeElement.querySelector('mat-icon svg');
           if (svg) {
             this.initCircles(svg);
           }

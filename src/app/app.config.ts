@@ -7,7 +7,6 @@ import { environment } from '@environment';
 import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
 import { providePipes } from '@core/providers/pipes.provider';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { IconRegistryState } from '@shared/state/icon-registry.state';
 import { provideMaterialConfig } from '@core/providers/material-options.provider';
 import { provideInitializers } from '@core/providers/initializers.provider';
 import { localizedDateAdapterFactory } from '@cdk/factories/localized-date-adapter.factory';
@@ -26,7 +25,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideAnimationsAsync(),
     provideStore(
-      [AppState, AuthState, IconRegistryState, DictionaryRegistryState],
+      [AppState, AuthState, DictionaryRegistryState],
       {
         developmentMode: !environment.production,
         selectorOptions: {

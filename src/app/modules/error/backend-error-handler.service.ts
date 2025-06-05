@@ -27,6 +27,6 @@ export class BackendErrorHandlerService {
     ) {
       return this.jsonErrorHandlerStrategy;
     }
-    return this.defaultErrorHandlerStrategy;
+    return this.jsonErrorHandlerStrategy;
   }
 }

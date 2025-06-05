@@ -1,4 +1,5 @@
 @use 'styles/mixins' as mixins;
+@use '@angular/material' as mat;
 
 :host {
   gap: mixins.rem(8);
@@ -10,4 +11,13 @@
   border-radius: mixins.rem(16);
   flex-direction: column;
   transform-origin: top left;
+
+  .create-action-list {
+    @include mat.list-overrides(
+      (
+        list-item-leading-icon-color: var(--mat-sys-primary),
+        list-item-hover-leading-icon-color: var(--mat-sys-primary),
+      )
+    );
+  }
 }

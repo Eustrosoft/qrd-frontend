@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { dispatch, select } from '@ngxs/store';
+import { createDispatchMap, select } from '@ngxs/store';
 import { SetTheme } from '@app/state/app.actions';
 import { UiSidenavComponent } from '@ui/ui-sidenav/ui-sidenav.component';
 import { QrdHeaderComponent } from '@shared/components/qrd-header/qrd-header.component';
@@ -18,14 +18,16 @@ import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 export class AppComponent {
   private readonly prefersDark = inject(PREFERS_DARK_TOKEN);
   private readonly theme = select(AppState.getTheme$);
-  private readonly setTheme = dispatch(SetTheme);
+  private readonly actions = createDispatchMap({
+    setTheme: SetTheme,
+  });
 
   private readonly colorSchemeEffect = effect(() => {
     this.prefersDark();
     if (this.theme() !== 'system') {
       return;
     }
-    this.setTheme('system', '');
+    this.actions.setTheme('system', '');
   });
   /**
    * TODO

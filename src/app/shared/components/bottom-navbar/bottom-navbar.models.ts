@@ -1,8 +1,6 @@
-import { Icon } from '@app/app.models';
-
 export type BottomNavbarLink = {
-  icon: Icon;
-  iconActive?: Icon;
+  icon: string;
+  iconActive?: string;
   route: string;
   title: string;
 };

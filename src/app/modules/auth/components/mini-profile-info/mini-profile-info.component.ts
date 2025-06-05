@@ -4,12 +4,12 @@ import { createSelectMap, select } from '@ngxs/store';
 import { AuthState } from '@modules/auth/state/auth.state';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { MatIconButton } from '@angular/material/button';
-import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, Overlay } from '@angular/cdk/overlay';
 import { overlayAnimation } from '@shared/shared.animations';
 import { ProfileInfoOverlayComponent } from '@modules/auth/components/profile-info-overlay/profile-info-overlay.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'mini-profile-info',
@@ -17,11 +17,11 @@ import { ProfileInfoOverlayComponent } from '@modules/auth/components/profile-in
     TextAvatarComponent,
     UiFlexBlockComponent,
     MatIconButton,
-    UiIconComponent,
     EllipsisDirective,
     CdkConnectedOverlay,
     CdkOverlayOrigin,
     ProfileInfoOverlayComponent,
+    MatIcon,
   ],
   animations: [overlayAnimation],
   templateUrl: './mini-profile-info.component.html',

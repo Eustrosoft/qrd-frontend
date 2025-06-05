@@ -1,7 +1,7 @@
 <ui-flex-block gapSize="8" flexAlignItems="center">
   @if (isSmallScreen()) {
     <button (click)="openSidenavMenu()" class="icon-button-sm" mat-icon-button>
-      <ui-icon icon="sidenav" display="inline" />
+      <mat-icon class="icon-primary">menu</mat-icon>
     </button>
   }
   <qrd-logo routerLink="/">
@@ -36,7 +36,7 @@
         cdkOverlayOrigin
         #createTrigger="cdkOverlayOrigin"
       >
-        <ui-icon icon="grid-plus" cursor="pointer" display="inline" />
+        <mat-icon class="icon-primary">dashboard_customize</mat-icon>
       </button>
       <ng-template
         cdkConnectedOverlay
@@ -62,7 +62,7 @@
       cdkOverlayOrigin
       #themeTrigger="cdkOverlayOrigin"
     >
-      <ui-icon icon="palette" cursor="pointer" display="inline" />
+      <mat-icon class="icon-primary" svgIcon="qrd:palette"></mat-icon>
     </button>
     <ng-template
       cdkConnectedOverlay

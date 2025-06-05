@@ -1,10 +1,10 @@
 @for (error of errors; track error.title) {
   <ui-flex-block gapSize="12" flex="auto" flexAlignItems="center">
-    <ui-icon icon="error" width="32" height="32" color="var(--mat-sys-error)"></ui-icon>
+    <mat-icon class="icon-error">error</mat-icon>
     <p>{{ ErrorsLocalization.errorCode }}: {{ error.code }} {{ error.title }}</p>
     @if ($first) {
       <button (click)="matSnackBarRef.dismiss()" class="icon-button-sm" mat-icon-button>
-        <ui-icon icon="close" display="inline" />
+        <mat-icon class="icon-primary">close</mat-icon>
       </button>
     }
   </ui-flex-block>

@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component, effect, inject, model } from '@angu
 import { MatAnchor, MatButton, MatFabButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { dispatch } from '@ngxs/store';
 import { SetLocale, SetTheme } from '@app/state/app.actions';
-import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { PaletteAnimationDirective } from '@shared/directives/palette-animation.directive';
 import { CURRENT_BREAKPOINT } from '@cdk/tokens/current-breakpoint.token';
@@ -21,6 +20,8 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
 import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overlay/create-menu-overlay.component';
 
 @Component({
   selector: 'dev-sandbox',
@@ -29,7 +30,6 @@ import { MatIcon } from '@angular/material/icon';
     MatButton,
     MatFabButton,
     MatMiniFabButton,
-    UiIconComponent,
     MatFormField,
     MatInput,
     MatLabel,
@@ -49,6 +49,7 @@ import { MatIcon } from '@angular/material/icon';
     UiFlexBlockComponent,
     UiBadgeComponent,
     MatIcon,
+    MatTooltip,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
   templateUrl: './dev-sandbox.component.html',
@@ -91,6 +92,6 @@ export class DevSandboxComponent {
   protected inputFieldModel = model('');
 
   protected openSidenavMenu(): void {
-    this.uiSidenavService.open(UiIconComponent, { inputs: { icon: 'arrow-bottom' } });
+    this.uiSidenavService.open(CreateMenuOverlayComponent);
   }
 }

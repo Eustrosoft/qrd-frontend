@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { MatAnchor, MatIconButton } from '@angular/material/button';
-import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { SharedLocalization } from '@shared/shared.constants';
 import { PaletteAnimationDirective } from '@shared/directives/palette-animation.directive';
@@ -20,12 +19,12 @@ import { AuthState } from '@modules/auth/state/auth.state';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { MiniProfileInfoComponent } from '@modules/auth/components/mini-profile-info/mini-profile-info.component';
 import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overlay/create-menu-overlay.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'qrd-header',
   imports: [
     MatIconButton,
-    UiIconComponent,
     MatAnchor,
     PaletteAnimationDirective,
     RouterLink,
@@ -40,6 +39,7 @@ import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overl
     UiFlexBlockComponent,
     MiniProfileInfoComponent,
     CreateMenuOverlayComponent,
+    MatIcon,
   ],
   animations: [overlayAnimation],
   templateUrl: './qrd-header.component.html',
@@ -98,9 +98,6 @@ export class QrdHeaderComponent {
   }
 
   protected openSidenavMenu(): void {
-    this.uiSidenavService.open(UiIconComponent, {
-      inputs: { icon: 'cringe', width: '300', height: '300' },
-      width: 'full',
-    });
+    this.uiSidenavService.open(CreateMenuOverlayComponent);
   }
 }

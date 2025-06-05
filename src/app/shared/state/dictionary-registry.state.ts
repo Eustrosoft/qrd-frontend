@@ -106,23 +106,23 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
           bottomNavbarLinks: patch<DictionaryState<BottomNavbarLink>>({
             list: [
               {
-                icon: 'cards',
+                icon: 'article',
                 route: '/cards',
                 title: RouteTitles.cards,
               },
               {
-                icon: 'template',
+                icon: 'difference',
                 route: '/templates',
                 title: RouteTitles.templates,
               },
               {
                 icon: 'folder',
-                iconActive: 'folder-open',
+                iconActive: 'folder_open',
                 route: '/files',
                 title: RouteTitles.files,
               },
               {
-                icon: 'doc',
+                icon: 'note_add',
                 route: '/not-found',
                 title: RouteTitles.docs,
               },

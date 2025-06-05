@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
-import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatError } from '@angular/material/form-field';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
@@ -19,7 +18,6 @@ import { MatIcon } from '@angular/material/icon';
   selector: 'login',
   imports: [
     MatFormField,
-    UiIconComponent,
     MatIconButton,
     MatInput,
     MatLabel,

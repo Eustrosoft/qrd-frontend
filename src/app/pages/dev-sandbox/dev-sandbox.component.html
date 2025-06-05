@@ -1,48 +1,57 @@
 <h1>Badges</h1>
 <ui-flex-block flexAlignItems="center" flexWrap="wrap">
-  <ui-badge borderRadius="100%" lineHeight="normal" padding="4px"
-    ><ui-icon icon="world" width="24" height="24" color="var(--mat-sys-on-primary)"
-  /></ui-badge>
+  <ui-badge borderRadius="100%" lineHeight="normal" padding="4px">
+    <mat-icon class="icon-on-primary">globe_asia</mat-icon>
+  </ui-badge>
   <ui-badge>1.5MB</ui-badge>
   <ui-badge>Изм. 18.03.2025 17:36</ui-badge>
 </ui-flex-block>
 <h1>Form Fields</h1>
 <ui-flex-block flexAlignItems="center" flexWrap="wrap">
   <mat-form-field class="form-field-sm">
-    <mat-label
-      >Small form field
-      <ui-icon icon="info" width="24" height="24" tooltipText="Tooltip for large form field" tooltipPosition="above"
-    /></mat-label>
+    <mat-label>
+      Small form field
+      <mat-icon inline class="icon-primary" matTooltip="Tooltip for large form field" matTooltipPosition="above">
+        info
+      </mat-icon>
+    </mat-label>
     <input matInput placeholder="Placeholder" />
   </mat-form-field>
   <mat-form-field class="form-field-md">
-    <mat-label
-      >Medium form field
-      <ui-icon icon="info" width="24" height="24" tooltipText="Tooltip for large form field" tooltipPosition="above"
-    /></mat-label>
+    <mat-label>
+      Medium form field
+      <mat-icon inline class="icon-primary" matTooltip="Tooltip for large form field" matTooltipPosition="above">
+        info
+      </mat-icon>
+    </mat-label>
     <input matInput placeholder="Placeholder" />
-    <button matSuffix class="icon-button-sm" disabled mat-icon-button><ui-icon icon="world" display="inline" /></button>
+    <button matSuffix class="icon-button-sm" disabled mat-icon-button>
+      <mat-icon class="icon-primary" matTooltip="Tooltip for large form field" matTooltipPosition="above">
+        globe_asia
+      </mat-icon>
+    </button>
   </mat-form-field>
   <mat-form-field class="form-field-lg">
     <mat-label>
-      <ui-flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center">
-        Large form field
-        <ui-icon
-          icon="info"
-          width="24"
-          height="24"
-          tooltipText="Tooltip for large form field"
-          tooltipPosition="above"
-        /> </ui-flex-block
-    ></mat-label>
+      Large form field
+      <mat-icon inline class="icon-primary" matTooltip="Tooltip for large form field" matTooltipPosition="above">
+        info
+      </mat-icon>
+    </mat-label>
     <input [(ngModel)]="inputFieldModel" matInput placeholder="Placeholder" minlength="2" />
     <mat-error>
       <ui-flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center">
-        <ui-icon icon="error" tooltipText="Tooltip error large form field" tooltipPosition="below" />
+        <mat-icon class="icon-error" matTooltip="Tooltip for large form field" matTooltipPosition="above">
+          error
+        </mat-icon>
         Some error text
       </ui-flex-block>
     </mat-error>
-    <button matSuffix class="icon-button-sm" mat-icon-button><ui-icon icon="world" display="inline" /></button>
+    <button matSuffix class="icon-button-sm" mat-icon-button>
+      <mat-icon class="icon-primary" matTooltip="Tooltip for large form field" matTooltipPosition="above">
+        globe_asia
+      </mat-icon>
+    </button>
   </mat-form-field>
 </ui-flex-block>
 
@@ -122,35 +131,37 @@
   <button (click)="openSidenavMenu()" mat-flat-button>Open Sidenav Menu</button>
 </ui-flex-block>
 
-<h1>Mat Icon Button</h1>
-<ui-flex-block>
-  <button class="fab-icon-button-lg-circle" mat-fab><mat-icon>close</mat-icon></button>
-</ui-flex-block>
-
-<h1>Icon Buttons</h1>
+<h1>Mat Icon Buttons</h1>
 <ui-flex-block flexAlignItems="center">
   <button class="fab-icon-button-lg-circle" mat-fab>
-    <ui-icon icon="settings" color="var(--mat-sys-on-secondary)" width="24" height="24" />
+    <mat-icon class="icon-on-secondary">settings</mat-icon>
   </button>
   <button class="fab-icon-button-lg-circle" mat-fab>
-    <ui-icon icon="file-search" color="var(--mat-sys-on-secondary)" width="20" height="26" />
+    <mat-icon class="icon-on-secondary">search</mat-icon>
   </button>
 </ui-flex-block>
 <ui-flex-block flexAlignItems="center">
   <button class="fab-icon-button-md-circle" mat-fab>
-    <ui-icon icon="arrow-left" color="var(--mat-sys-on-secondary)" width="12" height="20" />
+    <mat-icon class="icon-on-secondary">arrow_back_ios_new</mat-icon>
   </button>
 </ui-flex-block>
 <ui-flex-block flexAlignItems="center">
   <button class="fab-icon-button-sm-circle" mat-fab>
-    <ui-icon icon="arrow-left" color="var(--mat-sys-on-secondary)" width="6" height="20" />
+    <mat-icon class="icon-on-secondary">chevron_left</mat-icon>
   </button>
 </ui-flex-block>
+
+<h1>Custom Icon Buttons</h1>
 <ui-flex-block flexAlignItems="center">
-  <button class="icon-button-sm" mat-icon-button><ui-icon icon="arrow-bottom" display="inline" /></button>
-  <button class="icon-button-sm" mat-icon-button paletteAnimation><ui-icon icon="palette" display="inline" /></button>
-  <button class="icon-button-md" mat-icon-button><ui-icon icon="cringe" display="inline" /></button>
-  <button class="icon-button-lg" mat-icon-button><ui-icon icon="eye" display="inline" /></button>
+  <button class="icon-button-sm" mat-icon-button>
+    <mat-icon svgIcon="qrd:arrow-bottom" class="icon-primary"></mat-icon>
+  </button>
+  <button class="icon-button-sm" mat-icon-button paletteAnimation>
+    <mat-icon svgIcon="qrd:palette" class="icon-primary"></mat-icon>
+  </button>
+  <button class="icon-button-md" mat-icon-button>
+    <mat-icon svgIcon="qrd:cringe" class="icon-primary icon-md"></mat-icon>
+  </button>
 </ui-flex-block>
 
 <h1>Toggle Buttons</h1>
@@ -158,14 +169,14 @@
   <mat-button-toggle-group [hideSingleSelectionIndicator]="true">
     <mat-button-toggle value="red">
       <ui-flex-block gapSize="4" flexAlignItems="center" flexDisplay="inline-flex">
-        <ui-icon icon="sidenav" width="24" height="24" />
+        <mat-icon class="icon-primary">menu</mat-icon>
         <p>List</p>
       </ui-flex-block>
     </mat-button-toggle>
     <mat-button-toggle value="green">
       <ui-flex-block gapSize="4" flexAlignItems="center" flexDisplay="inline-flex">
         <p>Table</p>
-        <ui-icon icon="table" width="24" height="24" />
+        <mat-icon class="icon-primary">table</mat-icon>
       </ui-flex-block>
     </mat-button-toggle>
   </mat-button-toggle-group>

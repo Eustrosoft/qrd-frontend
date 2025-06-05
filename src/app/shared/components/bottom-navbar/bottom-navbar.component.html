@@ -2,7 +2,7 @@
   @for (link of selectors.navbarLinks().list; track link.route) {
     <mat-list-item [activated]="rla.isActive">
       <a class="bottom-navbar-link" [routerLink]="link.route" #rla="routerLinkActive" routerLinkActive="active">
-        <ui-icon [icon]="rla.isActive ? (link?.iconActive ?? link.icon) : link.icon" height="32" width="32" />
+        <mat-icon>{{ rla.isActive ? (link?.iconActive ?? link.icon) : link.icon }}</mat-icon>
         <small ellipsis>{{ link.title }}</small>
       </a>
     </mat-list-item>

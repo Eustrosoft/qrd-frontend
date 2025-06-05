@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, model, OnInit, output } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
-import { UiIconComponent } from '@ui/ui-icon/ui-icon.component';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { Theme, ThemeContrast } from '@app/app.models';
 import { createSelectMap, dispatch } from '@ngxs/store';
@@ -13,10 +12,11 @@ import { Option } from '@shared/shared.models';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { combineLatest, skip, tap } from 'rxjs';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'theme-picker-overlay',
-  imports: [MatIconButton, UiIconComponent, MatRadioGroup, MatRadioButton, FormsModule, UiFlexBlockComponent],
+  imports: [MatIconButton, MatRadioGroup, MatRadioButton, FormsModule, UiFlexBlockComponent, MatIcon],
   templateUrl: './theme-picker-overlay.component.html',
   styleUrl: './theme-picker-overlay.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
