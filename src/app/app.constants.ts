@@ -24,4 +24,5 @@ export const CUSTOM_ICON_MAP = new Map<Icon, string>([
   ['cringe', 'public/icons/cringe.svg'],
   ['palette', 'public/icons/palette.svg'],
   ['not-found', 'public/icons/not-found.svg'],
+  ['timeout', 'public/icons/timeout.svg'],
 ]);
