@@ -36,7 +36,10 @@ export class ThemePickerOverlayComponent implements OnInit {
   protected readonly contrastModel = model<ThemeContrast>(this.selectors.contrast());
   protected readonly isSystemThemeSelected = computed<boolean>(() => this.themeModel() === 'system');
 
-  protected readonly themeChange = combineLatest([toObservable(this.themeModel), toObservable(this.contrastModel)]).pipe(
+  protected readonly themeChange = combineLatest([
+    toObservable(this.themeModel),
+    toObservable(this.contrastModel),
+  ]).pipe(
     skip(1),
     tap({
       next: ([theme, contrast]) => {

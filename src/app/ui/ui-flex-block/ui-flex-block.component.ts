@@ -23,7 +23,9 @@ export class UiFlexBlockComponent {
 
   public readonly flexDisplay: InputSignal<Display> = input<Display>('flex');
   public readonly flexDirection: InputSignal<FlexDirection> = input<FlexDirection>('row');
-  public readonly gapSize: InputSignal<string> = input('1rem', { transform: (value: string) => this.pxToRemPipe.transform(value) });
+  public readonly gapSize: InputSignal<string> = input('1rem', {
+    transform: (value: string) => this.pxToRemPipe.transform(value),
+  });
   public readonly flexAlignItems: InputSignal<FlexAlignItems> = input<FlexAlignItems>('');
   public readonly flexJustifyContent: InputSignal<FlexJustifyContent> = input<FlexJustifyContent>('');
   public readonly flex: InputSignal<string | number> = input<string | number>('');

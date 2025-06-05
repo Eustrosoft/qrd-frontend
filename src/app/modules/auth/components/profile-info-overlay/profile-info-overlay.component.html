@@ -1,6 +1,8 @@
 <ui-flex-block flexAlignItems="center" flexJustifyContent="space-between">
   <h3>{{ username() }}</h3>
-  <button (click)="closeClick.emit()" class="icon-button-sm" mat-icon-button><ui-icon icon="close" display="inline" /></button>
+  <button (click)="closeClick.emit()" class="icon-button-sm" mat-icon-button>
+    <ui-icon icon="close" display="inline" />
+  </button>
 </ui-flex-block>
 @if (email()) {
   <p>{{ email() }}</p>
@@ -14,7 +16,9 @@
   <hr ui-flex-block flexAlignSelf="normal" />
   <a class="button-anchor-md" mat-button textInteractionEffect>{{ SharedLocalization.settings }}</a>
   <hr ui-flex-block flexAlignSelf="normal" />
-  <a class="button-anchor-md" href="https://qrdemo.qxyz.ru/" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.oldApp }}</a>
+  <a class="button-anchor-md" href="https://qrdemo.qxyz.ru/" mat-button textInteractionEffect>{{
+    ProfileInfoOverlayLocalization.oldApp
+  }}</a>
   <hr ui-flex-block flexAlignSelf="normal" />
 </ui-flex-block>
 

@@ -13,10 +13,23 @@ import { SignUpLocalization } from '@app/pages/login/login.constants';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { dispatch } from '@ngxs/store';
 import { Login } from '@modules/auth/state/auth.actions';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'login',
-  imports: [MatFormField, UiIconComponent, MatIconButton, MatInput, MatLabel, MatError, MatSuffix, MatButton, ReactiveFormsModule, UiFlexBlockComponent],
+  imports: [
+    MatFormField,
+    UiIconComponent,
+    MatIconButton,
+    MatInput,
+    MatLabel,
+    MatError,
+    MatSuffix,
+    MatButton,
+    ReactiveFormsModule,
+    UiFlexBlockComponent,
+    MatIcon,
+  ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

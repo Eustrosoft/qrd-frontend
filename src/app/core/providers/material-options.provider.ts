@@ -10,7 +10,11 @@ import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 
 export function provideMaterialConfig(): Provider[] {
   return [
-    provideMatConfigValue(MAT_FORM_FIELD_DEFAULT_OPTIONS, { appearance: 'outline', subscriptSizing: 'fixed', hideRequiredMarker: true }),
+    provideMatConfigValue(MAT_FORM_FIELD_DEFAULT_OPTIONS, {
+      appearance: 'outline',
+      subscriptSizing: 'fixed',
+      hideRequiredMarker: true,
+    }),
     provideMatConfigValue(MAT_TOOLTIP_DEFAULT_OPTIONS, {
       hideDelay: 50,
       showDelay: 0,

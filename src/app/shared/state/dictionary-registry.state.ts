@@ -18,7 +18,8 @@ const defaults: DictionaryRegistryStateModel = {
   dictionaries: {},
 } as const;
 
-const DICTIONARY_REGISTRY_STATE_TOKEN: StateToken<DictionaryRegistryStateModel> = new StateToken<DictionaryRegistryStateModel>('dictionaryRegistry');
+const DICTIONARY_REGISTRY_STATE_TOKEN: StateToken<DictionaryRegistryStateModel> =
+  new StateToken<DictionaryRegistryStateModel>('dictionaryRegistry');
 
 @State<DictionaryRegistryStateModel>({
   name: DICTIONARY_REGISTRY_STATE_TOKEN,
@@ -134,7 +135,9 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
     );
   }
 
-  public static getDictionary$<T = Option<unknown>>(dictionary: Dictionaries): (state: DictionaryRegistryStateModel) => DictionaryState<T> {
+  public static getDictionary$<T = Option<unknown>>(
+    dictionary: Dictionaries,
+  ): (state: DictionaryRegistryStateModel) => DictionaryState<T> {
     return createSelector([DictionaryRegistryState], (state: DictionaryRegistryStateModel): DictionaryState<T> => {
       return (
         <DictionaryState<T>>state.dictionaries?.[dictionary] ?? {

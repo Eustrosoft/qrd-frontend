@@ -25,7 +25,9 @@ export class PxToRemPipe implements PipeTransform {
     const number = Number(value);
 
     if (isNaN(number)) {
-      throw new Error(`Value "${value}" is incorrect in PxToRemPipe. Provide correct value: numeric string with percent like "100%" or numeric string like "50"`);
+      throw new Error(
+        `Value "${value}" is incorrect in PxToRemPipe. Provide correct value: numeric string with percent like "100%" or numeric string like "50"`,
+      );
     }
 
     if (isNaN(this.documentFontSize)) {

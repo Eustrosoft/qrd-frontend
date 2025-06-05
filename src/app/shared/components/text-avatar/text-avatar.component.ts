@@ -20,5 +20,7 @@ import { TextAvatarPipe } from '@shared/pipe/text-avatar.pipe';
 export class TextAvatarComponent {
   private readonly textAvatarPipe = inject(TextAvatarPipe);
 
-  public readonly text: InputSignal<string> = input('', { transform: (value: string) => this.textAvatarPipe.transform(value) });
+  public readonly text: InputSignal<string> = input('', {
+    transform: (value: string) => this.textAvatarPipe.transform(value),
+  });
 }

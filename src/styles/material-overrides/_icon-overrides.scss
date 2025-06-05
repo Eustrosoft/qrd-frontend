@@ -1,0 +1,41 @@
+@use '@angular/material' as mat;
+
+.icon-primary {
+  @include mat.icon-overrides(
+    (
+      color: var(--mat-sys-primary),
+    )
+  );
+}
+
+.icon-on-primary {
+  @include mat.icon-overrides(
+    (
+      color: var(--mat-sys-on-primary),
+    )
+  );
+}
+
+.icon-secondary {
+  @include mat.icon-overrides(
+    (
+      color: var(--mat-sys-secondary),
+    )
+  );
+}
+
+.icon-on-secondary {
+  @include mat.icon-overrides(
+    (
+      color: var(--mat-sys-on-secondary),
+    )
+  );
+}
+
+.icon-error {
+  @include mat.icon-overrides(
+    (
+      color: var(--mat-sys-error),
+    )
+  );
+}

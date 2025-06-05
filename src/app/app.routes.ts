@@ -82,7 +82,9 @@ export const routes: Routes = [
             title: ErrorsLocalization.unauthenticated,
             message: ErrorsLocalization.unauthenticatedAction,
             icon: 'timeout',
-            buttonList: [{ buttonText: SharedLocalization.login, buttonAction: () => router.navigate([AppRoutes.login]) }],
+            buttonList: [
+              { buttonText: SharedLocalization.login, buttonAction: () => router.navigate([AppRoutes.login]) },
+            ],
             onInit: () => {
               timer(5000).subscribe({ next: () => router.navigate([AppRoutes.login]) });
             },

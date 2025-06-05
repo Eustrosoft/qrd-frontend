@@ -1,4 +1,7 @@
-<mat-sidenav-container (backdropClick)="uiSidenavService.backDropClick()" [hasBackdrop]="uiSidenavService.sidenavConfig().hasBackdrop">
+<mat-sidenav-container
+  (backdropClick)="uiSidenavService.backDropClick()"
+  [hasBackdrop]="uiSidenavService.sidenavConfig().hasBackdrop"
+>
   <mat-sidenav
     [class]="`width-${uiSidenavService.sidenavConfig().width}`"
     [position]="uiSidenavService.sidenavConfig().position"
@@ -6,7 +9,9 @@
     [autoFocus]="uiSidenavService.sidenavConfig().autoFocus"
     [opened]="uiSidenavService.isOpen()"
   >
-    <ng-container *ngComponentOutlet="uiSidenavService.sidenavCmp(); inputs: uiSidenavService.sidenavConfig().inputs"></ng-container>
+    <ng-container
+      *ngComponentOutlet="uiSidenavService.sidenavCmp(); inputs: uiSidenavService.sidenavConfig().inputs"
+    ></ng-container>
   </mat-sidenav>
   <mat-sidenav-content>
     <ng-content />

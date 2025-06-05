@@ -9,7 +9,9 @@ export const IS_PORTRAIT = new InjectionToken<Signal<boolean>>('Is Portrait Orie
     const breakpointObserver = inject(BreakpointObserver);
     const portraitQuery = '(orientation: portrait)';
 
-    return toSignal(breakpointObserver.observe(portraitQuery).pipe(map((result) => result.matches)), { requireSync: true });
+    return toSignal(breakpointObserver.observe(portraitQuery).pipe(map((result) => result.matches)), {
+      requireSync: true,
+    });
   },
 });
 

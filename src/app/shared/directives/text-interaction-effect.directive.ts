@@ -38,16 +38,28 @@ export class TextInteractionEffect {
   }
 
   private setHoverState(): void {
-    this.renderer.setStyle(this.el.nativeElement, 'color', 'color-mix(in srgb,  var(--mat-sys-primary-container) 15%, var(--mat-sys-primary))');
+    this.renderer.setStyle(
+      this.el.nativeElement,
+      'color',
+      'color-mix(in srgb,  var(--mat-sys-primary-container) 15%, var(--mat-sys-primary))',
+    );
     this.renderer.setStyle(this.el.nativeElement, 'transition', 'color 120ms cubic-bezier(0.4, 0, 0.2, 1)');
   }
 
   private setFocusState(): void {
-    this.renderer.setStyle(this.el.nativeElement, 'color', 'color-mix(in srgb,  var(--mat-sys-on-surface) 12%, var(--mat-sys-primary))');
+    this.renderer.setStyle(
+      this.el.nativeElement,
+      'color',
+      'color-mix(in srgb,  var(--mat-sys-on-surface) 12%, var(--mat-sys-primary))',
+    );
   }
 
   private setPressedState(): void {
-    this.renderer.setStyle(this.el.nativeElement, 'color', 'color-mix(in srgb,  var(--mat-sys-on-surface) 16%, var(--mat-sys-primary))');
+    this.renderer.setStyle(
+      this.el.nativeElement,
+      'color',
+      'color-mix(in srgb,  var(--mat-sys-on-surface) 16%, var(--mat-sys-primary))',
+    );
   }
 
   private resetState(): void {

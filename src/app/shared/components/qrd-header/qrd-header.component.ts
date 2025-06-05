@@ -98,6 +98,9 @@ export class QrdHeaderComponent {
   }
 
   protected openSidenavMenu(): void {
-    this.uiSidenavService.open(UiIconComponent, { inputs: { icon: 'cringe', width: '300', height: '300' }, width: 'full' });
+    this.uiSidenavService.open(UiIconComponent, {
+      inputs: { icon: 'cringe', width: '300', height: '300' },
+      width: 'full',
+    });
   }
 }

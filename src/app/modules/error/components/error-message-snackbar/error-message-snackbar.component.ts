@@ -15,6 +15,8 @@ import { ErrorsLocalization } from '@modules/error/error.constants';
 })
 export class ErrorMessageSnackbarComponent {
   protected readonly errors = inject<BackendError[]>(MAT_SNACK_BAR_DATA);
-  protected readonly matSnackBarRef = inject<MatSnackBarRef<ErrorMessageSnackbarComponent>>(MatSnackBarRef<ErrorMessageSnackbarComponent>);
+  protected readonly matSnackBarRef = inject<MatSnackBarRef<ErrorMessageSnackbarComponent>>(
+    MatSnackBarRef<ErrorMessageSnackbarComponent>,
+  );
   protected readonly ErrorsLocalization = ErrorsLocalization;
 }

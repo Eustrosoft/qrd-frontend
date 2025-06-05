@@ -45,7 +45,11 @@ export class UiIconComponent {
 
   private readonly svgParams = computed<IconSvgParams>(() => ({ width: this.width(), height: this.height() }));
 
-  protected readonly iconState = toSignal(toObservable(this.icon).pipe(switchMap((icon) => this.store.select(IconRegistryState.getIcon$(icon, this.svgParams())))));
+  protected readonly iconState = toSignal(
+    toObservable(this.icon).pipe(
+      switchMap((icon) => this.store.select(IconRegistryState.getIcon$(icon, this.svgParams()))),
+    ),
+  );
 
   private readonly iconChangeEffect = effect(() => {
     this.getIcon(this.icon(), this.svgParams());

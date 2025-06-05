@@ -1,6 +1,8 @@
 <ui-flex-block flexAlignItems="center" flexJustifyContent="space-between">
   <p>{{ ThemePickerOverlayLocalization.theme }}</p>
-  <button (click)="closeClick.emit()" class="icon-button-sm" mat-icon-button><ui-icon icon="close" display="inline" /></button>
+  <button (click)="closeClick.emit()" class="icon-button-sm" mat-icon-button>
+    <ui-icon icon="close" display="inline" />
+  </button>
 </ui-flex-block>
 <hr />
 <mat-radio-group [(ngModel)]="themeModel">

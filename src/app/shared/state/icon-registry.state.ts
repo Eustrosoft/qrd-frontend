@@ -15,7 +15,9 @@ const defaults: IconRegistryStateModel = {
   iconRecord: {},
 } as const;
 
-const ICON_REGISTRY_STATE_TOKEN: StateToken<IconRegistryStateModel> = new StateToken<IconRegistryStateModel>('iconRegistry');
+const ICON_REGISTRY_STATE_TOKEN: StateToken<IconRegistryStateModel> = new StateToken<IconRegistryStateModel>(
+  'iconRegistry',
+);
 
 @State<IconRegistryStateModel>({
   name: ICON_REGISTRY_STATE_TOKEN,
@@ -40,7 +42,10 @@ export class IconRegistryState {
   }
 
   @Action(GetIcon)
-  public getIcon({ getState, setState }: StateContext<IconRegistryStateModel>, { icon, params }: GetIcon): Observable<IconState> {
+  public getIcon(
+    { getState, setState }: StateContext<IconRegistryStateModel>,
+    { icon, params }: GetIcon,
+  ): Observable<IconState> {
     const { iconRecord } = getState();
     const iconKey = IconRegistryState.getIconKey(icon, params);
 
@@ -88,7 +93,9 @@ export class IconRegistryState {
 
   private processSvg(svg: string, params: IconSvgParams): SafeHtml {
     return this.domSanitizer.bypassSecurityTrustHtml(
-      svg.replace(/(<svg[^>]*\s)width="[^"]*"/g, `$1width="${params.width}"`).replace(/(<svg[^>]*\s)height="[^"]*"/g, `$1height="${params.height}"`),
+      svg
+        .replace(/(<svg[^>]*\s)width="[^"]*"/g, `$1width="${params.width}"`)
+        .replace(/(<svg[^>]*\s)height="[^"]*"/g, `$1height="${params.height}"`),
     );
   }
 }

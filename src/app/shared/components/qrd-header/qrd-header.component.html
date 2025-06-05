@@ -1,6 +1,8 @@
 <ui-flex-block gapSize="8" flexAlignItems="center">
   @if (isSmallScreen()) {
-    <button (click)="openSidenavMenu()" class="icon-button-sm" mat-icon-button><ui-icon icon="sidenav" display="inline" /></button>
+    <button (click)="openSidenavMenu()" class="icon-button-sm" mat-icon-button>
+      <ui-icon icon="sidenav" display="inline" />
+    </button>
   }
   <qrd-logo routerLink="/">
     @if (!isSmallScreen()) {
@@ -12,7 +14,14 @@
   @if (!isSmallScreen() && selectors.isAuthenticated()) {
     <mat-nav-list class="header-navbar">
       @for (link of selectors.navbarLinks().list; track link.title) {
-        <a class="header-navbar-link" [activated]="rla.isActive" [routerLink]="link.route" #rla="routerLinkActive" routerLinkActive="active" mat-list-item>
+        <a
+          class="header-navbar-link"
+          [activated]="rla.isActive"
+          [routerLink]="link.route"
+          #rla="routerLinkActive"
+          routerLinkActive="active"
+          mat-list-item
+        >
           {{ link.title }}
         </a>
       }
@@ -20,7 +29,13 @@
   }
   <ui-flex-block [gapSize]="actionsFlexGapSize()" flexAlignItems="center">
     @if (selectors.isAuthenticated()) {
-      <button (click)="openCreateOverlay()" class="icon-button-sm" mat-icon-button cdkOverlayOrigin #createTrigger="cdkOverlayOrigin">
+      <button
+        (click)="openCreateOverlay()"
+        class="icon-button-sm"
+        mat-icon-button
+        cdkOverlayOrigin
+        #createTrigger="cdkOverlayOrigin"
+      >
         <ui-icon icon="grid-plus" cursor="pointer" display="inline" />
       </button>
       <ng-template
@@ -33,10 +48,20 @@
         (overlayOutsideClick)="closeCreateOverlay()"
         (detach)="closeCreateOverlay()"
       >
-        <create-menu-overlay [@transformPanel]="isCreateOverlayOpen() ? 'enter' : 'void'" (closeClick)="closeCreateOverlay()" />
+        <create-menu-overlay
+          [@transformPanel]="isCreateOverlayOpen() ? 'enter' : 'void'"
+          (closeClick)="closeCreateOverlay()"
+        />
       </ng-template>
     }
-    <button (click)="openThemeOverlay()" class="icon-button-sm" mat-icon-button paletteAnimation cdkOverlayOrigin #themeTrigger="cdkOverlayOrigin">
+    <button
+      (click)="openThemeOverlay()"
+      class="icon-button-sm"
+      mat-icon-button
+      paletteAnimation
+      cdkOverlayOrigin
+      #themeTrigger="cdkOverlayOrigin"
+    >
       <ui-icon icon="palette" cursor="pointer" display="inline" />
     </button>
     <ng-template
@@ -49,7 +74,10 @@
       (overlayOutsideClick)="closeThemeOverlay()"
       (detach)="closeThemeOverlay()"
     >
-      <theme-picker-overlay [@transformPanel]="isThemeOverlayOpen() ? 'enter' : 'void'" (closeClick)="closeThemeOverlay()" />
+      <theme-picker-overlay
+        [@transformPanel]="isThemeOverlayOpen() ? 'enter' : 'void'"
+        (closeClick)="closeThemeOverlay()"
+      />
     </ng-template>
     @if (selectors.isAuthenticated()) {
       <mini-profile-info />
