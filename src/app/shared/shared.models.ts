@@ -66,3 +66,4 @@ export type CursorType =
 export type VerticalAlign = 'middle';
 export type Overflow = 'hidden' | 'visible' | 'clip' | 'scroll' | 'auto';
 export type Option<T> = { value: T; viewValue: string };
+export type DataViewDisplayType = 'list' | 'table';

@@ -1,0 +1,10 @@
+@use '@angular/material' as mat;
+@use 'styles/mixins' as mixins;
+
+.button-toggle-md {
+  @include mat.button-toggle-overrides(
+    (
+      height: 48px,
+    )
+  );
+}

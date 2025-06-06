@@ -17,6 +17,15 @@ export const SharedLocalization = {
   get defaultTitle() {
     return $localize`:@@shared.defaultTitle:QRD`;
   },
+  get search() {
+    return $localize`:@@shared.search:Search`;
+  },
+  get list() {
+    return $localize`:@@shared.list:List`;
+  },
+  get table() {
+    return $localize`:@@shared.table:Table`;
+  },
 } as const;
 
 export const LocalesLocalization = {

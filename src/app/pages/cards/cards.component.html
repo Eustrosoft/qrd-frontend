@@ -1,1 +1,7 @@
-<p>cards works!</p>
+<data-view
+  [displayType]="selectors.displayType()"
+  (displayTypeChange)="actions.setDisplayType($event.value)"
+  (advancedSearchClicked)="openAdvancedSearch()"
+>
+  <h1>Cards List</h1>
+</data-view>

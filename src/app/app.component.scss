@@ -8,9 +8,8 @@
   flex-direction: column;
 
   main {
-    flex: auto;
+    width: 100%;
     margin: 0 auto;
-    display: flex;
     padding: mixins.rem(32) mixins.rem(64);
     max-width: mixins.rem(1280);
     min-height: calc(100svh - 72px);

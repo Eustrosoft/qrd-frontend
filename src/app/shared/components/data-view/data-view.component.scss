@@ -1,0 +1,33 @@
+@use '@angular/material' as mat;
+@use 'styles/mixins' as mixins;
+@use 'styles/breakpoints' as bp;
+@use 'sass:map';
+
+:host {
+  gap: mixins.rem(32);
+  display: flex;
+  flex-direction: column;
+
+  .search-bar {
+    @include mat.form-field-overrides(
+      (
+        outlined-outline-width: 0,
+        outlined-focus-outline-width: 0,
+        outlined-container-shape: 28px,
+      )
+    );
+
+    flex: auto;
+    width: 100%;
+    background: var(--mat-sys-surface-container-high);
+    border-radius: 28px;
+  }
+
+  @media #{map.get(bp.$breakpoints, xsmall)} {
+    gap: mixins.rem(16);
+  }
+
+  @media #{map.get(bp.$breakpoints, small)} {
+    gap: mixins.rem(16);
+  }
+}

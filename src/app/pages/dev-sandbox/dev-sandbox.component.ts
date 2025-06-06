@@ -12,7 +12,7 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { DatePipe } from '@angular/common';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { MatError } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -50,6 +50,7 @@ import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overl
     UiBadgeComponent,
     MatIcon,
     MatTooltip,
+    ReactiveFormsModule,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
   templateUrl: './dev-sandbox.component.html',

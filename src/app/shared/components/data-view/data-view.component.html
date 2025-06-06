@@ -1,0 +1,41 @@
+<ui-flex-block flex="auto" [flexDirection]="isSmallScreen() ? 'column' : 'row'" flexJustifyContent="space-between">
+  <ui-flex-block gapSize="8" flex="0 1 70%">
+    <mat-form-field class="form-field-md search-bar" subscriptSizing="dynamic">
+      <input
+        [value]="searchValue()"
+        (change)="searchValueChange.emit(searchInput.value)"
+        (keydown.enter)="searchClicked.emit()"
+        [placeholder]="SharedLocalization.search"
+        #searchInput="matInput"
+        matInput
+      />
+      <button (click)="searchClicked.emit()" matSuffix class="icon-button-sm" mat-icon-button>
+        <mat-icon class="icon-primary">search</mat-icon>
+      </button>
+    </mat-form-field>
+    <button (click)="advancedSearchClicked.emit()" class="fab-icon-button-lg-circle" mat-fab>
+      <mat-icon class="icon-on-secondary">manage_search</mat-icon>
+    </button>
+  </ui-flex-block>
+  <ui-flex-block>
+    <mat-button-toggle-group
+      [value]="displayType()"
+      (change)="displayTypeChange.emit($event)"
+      [hideSingleSelectionIndicator]="true"
+    >
+      <mat-button-toggle class="button-toggle-md" value="list">
+        <ui-flex-block gapSize="4" flexAlignItems="center" flexDisplay="inline-flex">
+          <mat-icon class="icon-primary">menu</mat-icon>
+          <p>{{ SharedLocalization.list }}</p>
+        </ui-flex-block>
+      </mat-button-toggle>
+      <mat-button-toggle class="button-toggle-md" value="table">
+        <ui-flex-block gapSize="4" flexAlignItems="center" flexDisplay="inline-flex">
+          <p>{{ SharedLocalization.table }}</p>
+          <mat-icon class="icon-primary">table</mat-icon>
+        </ui-flex-block>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </ui-flex-block>
+</ui-flex-block>
+<ng-content />
