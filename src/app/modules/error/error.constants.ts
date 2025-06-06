@@ -1,4 +1,5 @@
 import { BackendError } from '@modules/error/error.models';
+import { HttpContextToken } from '@angular/common/http';
 
 export const ErrorsLocalization = {
   get unknownErr() {
@@ -34,3 +35,5 @@ export const UnknownBackendError: BackendError = {
   code: 0,
   status: 0,
 } as const;
+
+export const SUPPRESS_HTTP_ERROR_INTERCEPTOR = new HttpContextToken<boolean>(() => true);

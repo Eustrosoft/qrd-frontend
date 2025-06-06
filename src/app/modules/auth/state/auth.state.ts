@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { FetchAuthInfo, Login, Logout, ResetAuthState, RestoreAuth } from './auth.actions';
 import { AuthService } from '@modules/auth/auth.service';
-import { Observable, switchMap, tap } from 'rxjs';
+import { catchError, Observable, switchMap, tap, throwError } from 'rxjs';
 import { AppRoutes, IS_AUTHENTICATED_KEY } from '@app/app.constants';
 import { Router } from '@angular/router';
 import { patch } from '@ngxs/store/operators';
@@ -11,11 +11,13 @@ import { LocalStorageService } from '@shared/service/local-storage.service';
 
 export interface AuthStateModel {
   isAuthenticated: boolean;
+  isAuthInfoLoading: boolean;
   authInfo: AuthInfo | null;
 }
 
 const defaults: AuthStateModel = {
   isAuthenticated: false,
+  isAuthInfoLoading: false,
   authInfo: null,
 } as const;
 
@@ -34,6 +36,11 @@ export class AuthState {
   @Selector()
   public static isAuthenticated$({ isAuthenticated }: AuthStateModel): boolean {
     return isAuthenticated;
+  }
+
+  @Selector()
+  public static isAuthInfoLoading$({ isAuthInfoLoading }: AuthStateModel): boolean {
+    return isAuthInfoLoading;
   }
 
   @Selector()
@@ -65,11 +72,16 @@ export class AuthState {
 
   @Action(FetchAuthInfo)
   public getAuthInfo({ setState }: StateContext<AuthStateModel>): Observable<AuthInfo> {
+    setState(patch({ isAuthInfoLoading: true }));
     return this.authService.getAuthInfo().pipe(
       tap({
         next: (authInfo) => {
-          setState(patch({ authInfo }));
+          setState(patch({ authInfo, isAuthInfoLoading: false }));
         },
+      }),
+      catchError((err) => {
+        setState(patch({ isAuthInfoLoading: false }));
+        return throwError(() => err);
       }),
     );
   }

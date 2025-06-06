@@ -10,6 +10,7 @@ import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, Overlay } fro
 import { overlayAnimation } from '@shared/shared.animations';
 import { ProfileInfoOverlayComponent } from '@modules/auth/components/profile-info-overlay/profile-info-overlay.component';
 import { MatIcon } from '@angular/material/icon';
+import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 
 @Component({
   selector: 'mini-profile-info',
@@ -22,6 +23,7 @@ import { MatIcon } from '@angular/material/icon';
     CdkOverlayOrigin,
     ProfileInfoOverlayComponent,
     MatIcon,
+    UiSkeletonComponent,
   ],
   animations: [overlayAnimation],
   templateUrl: './mini-profile-info.component.html',
@@ -32,6 +34,7 @@ export class MiniProfileInfoComponent {
   protected readonly overlay = inject(Overlay);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly selectors = createSelectMap({
+    isAuthInfoLoading: select(AuthState.isAuthInfoLoading$),
     authInfo: select(AuthState.getAuthInfo$),
   });
 

@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { HttpErrorResponse, HttpRequest, HttpStatusCode } from '@angular/common/http';
 import { ErrorHandlerStrategy } from '@modules/error/error.models';
 import { JsonErrorHandlerStrategy } from '@modules/error/strategies/json-error-handler.strategy';
 import { UnauthenticatedErrorHandlerStrategy } from '@modules/error/strategies/unauthenticated-error-handler.strategy';
 import { DefaultErrorHandlerStrategy } from '@modules/error/strategies/default-error-handler.strategy';
+import { SUPPRESS_HTTP_ERROR_INTERCEPTOR } from '@modules/error/error.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,10 @@ export class BackendErrorHandlerService {
   private readonly jsonErrorHandlerStrategy = inject(JsonErrorHandlerStrategy);
   private readonly unauthenticatedErrorHandlerStrategy = inject(UnauthenticatedErrorHandlerStrategy);
 
-  public getHandler(err: HttpErrorResponse): ErrorHandlerStrategy {
+  public getHandler(err: HttpErrorResponse, req: HttpRequest<unknown>): ErrorHandlerStrategy {
+    if (req.context.has(SUPPRESS_HTTP_ERROR_INTERCEPTOR)) {
+      return this.defaultErrorHandlerStrategy;
+    }
     if (err.status === HttpStatusCode.Unauthorized || err.status === HttpStatusCode.Forbidden) {
       return this.unauthenticatedErrorHandlerStrategy;
     }

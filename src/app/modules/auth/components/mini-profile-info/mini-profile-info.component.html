@@ -1,12 +1,16 @@
 <text-avatar [text]="selectors.authInfo()?.username ?? ''" />
 @if (!isXSmall()) {
   <ui-flex-block gapSize="0" flexDirection="column" ellipsis>
-    @if (selectors.authInfo()?.organization) {
-      <p ellipsis>{{ selectors.authInfo()?.organization }}</p>
+    @if (!selectors.isAuthInfoLoading()) {
+      @if (selectors.authInfo()?.organization) {
+        <p ellipsis>{{ selectors.authInfo()?.organization }}</p>
+      }
+      <p ellipsis>
+        {{ selectors.authInfo()?.username ?? '' }}
+      </p>
+    } @else {
+      <ui-skeleton width="108" height="48" />
     }
-    <p ellipsis>
-      {{ selectors.authInfo()?.username ?? '' }}
-    </p>
   </ui-flex-block>
 }
 <button (click)="openOverlay()" class="icon-button-sm" mat-icon-button cdkOverlayOrigin #trigger="cdkOverlayOrigin">

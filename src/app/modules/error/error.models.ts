@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export type BackendError = {
@@ -9,5 +9,5 @@ export type BackendError = {
 };
 
 export interface ErrorHandlerStrategy {
-  handleError(err: HttpErrorResponse): Observable<never>;
+  handleError(err: HttpErrorResponse, req: HttpRequest<unknown>): Observable<never>;
 }
