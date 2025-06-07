@@ -2,7 +2,7 @@ import { Icon, Theme, ThemeContrast } from '@app/app.models';
 
 export const AppRoutes = {
   login: 'login',
-  cards: 'cards',
+  qrCards: 'qr-cards',
   templates: 'templates',
   files: 'files',
   notFound: 'not-found',

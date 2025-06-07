@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
-import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -20,7 +20,7 @@ export class ViewListItemComponent {
 
   public readonly isSelected = input<boolean>(false);
   public readonly isPreviewShown = input<boolean>(false);
-  public readonly title = input<string>('');
+  public readonly title = input<string | number>('');
 
-  public readonly checkboxChanged = output<MatCheckboxChange>();
+  public readonly checkboxChanged = output<boolean>();
 }

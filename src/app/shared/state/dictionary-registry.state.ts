@@ -85,7 +85,7 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
             list: [
               {
                 title: HeaderLocalization.cards,
-                route: '/cards',
+                route: '/qr-cards',
               },
               {
                 title: HeaderLocalization.templates,
@@ -107,7 +107,7 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
             list: [
               {
                 icon: 'article',
-                route: '/cards',
+                route: '/qr-cards',
                 title: RouteTitles.cards,
               },
               {

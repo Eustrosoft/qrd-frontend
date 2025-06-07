@@ -958,145 +958,145 @@ export interface components {
         JsonNode: Record<string, never>;
         QRChangeDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
-            data?: components["schemas"]["JsonNode"];
-            filesIds?: number[];
+            updated: string;
+            name: string;
+            description: string;
+            data: components["schemas"]["JsonNode"];
+            filesIds: number[];
             /** Format: int64 */
-            formId?: number;
+            formId: number;
             /** @enum {string} */
-            action?: "STD" | "REDIRECT" | "REDIRECT_QR_SVC" | "HIDE";
-            redirect?: string;
+            action: "STD" | "REDIRECT" | "REDIRECT_QR_SVC" | "HIDE";
+            redirect: string;
             /** Format: int64 */
-            code?: number;
+            code: number;
             /** Format: int64 */
-            rangeId?: number;
+            rangeId: number;
         };
         FileDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
-            fileName?: string;
-            fileType?: string;
-            extension?: string;
-            isActive?: boolean;
+            updated: string;
+            name: string;
+            description: string;
+            fileName: string;
+            fileType: string;
+            extension: string;
+            isActive: boolean;
             /** Format: date-time */
-            lastAccessed?: string;
-            checksum?: string;
-            isPublic?: boolean;
+            lastAccessed: string;
+            checksum: string;
+            isPublic: boolean;
             /** @enum {string} */
-            fileStorageType?: "S3" | "DB" | "LOCAL" | "URL";
-            storagePath?: string;
+            fileStorageType: "S3" | "DB" | "LOCAL" | "URL";
+            storagePath: string;
             /** Format: int64 */
-            fileSize?: number;
+            fileSize: number;
         };
         FormDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
-            data?: string;
-            fields?: components["schemas"]["FormFieldDto"][];
-            files?: components["schemas"]["FileDto"][];
+            updated: string;
+            name: string;
+            description: string;
+            data: string;
+            fields: components["schemas"]["FormFieldDto"][];
+            files: components["schemas"]["FileDto"][];
         };
         FormFieldDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
-            caption?: string;
-            placeholder?: string;
+            updated: string;
+            name: string;
+            description: string;
+            caption: string;
+            placeholder: string;
             /** Format: int32 */
-            fieldOrder?: number;
+            fieldOrder: number;
             /** @enum {string} */
-            fieldType?: "TEXT" | "NUMBER" | "FILE" | "MEDIA_FILE" | "DATE" | "URL" | "PHONE" | "EMAIL" | "TEXTAREA" | "EDIT";
-            isStatic?: boolean;
-            isPublic?: boolean;
+            fieldType: "TEXT" | "NUMBER" | "FILE" | "MEDIA_FILE" | "DATE" | "URL" | "PHONE" | "EMAIL" | "TEXTAREA" | "EDIT";
+            isStatic: boolean;
+            isPublic: boolean;
         };
         QRDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
+            updated: string;
+            name: string;
+            description: string;
             /** Format: int64 */
-            code?: number;
-            data?: string;
+            code: number;
+            data: string;
             /** @enum {string} */
-            action?: "STD" | "REDIRECT" | "REDIRECT_QR_SVC" | "HIDE";
-            redirect?: string;
-            form?: components["schemas"]["FormDto"];
-            files?: components["schemas"]["FileDto"][];
+            action: "STD" | "REDIRECT" | "REDIRECT_QR_SVC" | "HIDE";
+            redirect: string;
+            form: components["schemas"]["FormDto"];
+            files: components["schemas"]["FileDto"][];
         };
         FileChooseRequest: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
+            updated: string;
+            name: string;
+            description: string;
         };
         File: {
             /** Format: int64 */
-            id?: number;
-            type?: string;
-            name?: string;
-            description?: string;
+            id: number;
+            type: string;
+            name: string;
+            description: string;
             /** Format: int64 */
-            participantId?: number;
+            participantId: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            fileName?: string;
-            fileType?: string;
-            extension?: string;
-            isActive?: boolean;
+            updated: string;
+            fileName: string;
+            fileType: string;
+            extension: string;
+            isActive: boolean;
             /** Format: date-time */
-            lastAccessed?: string;
-            checksum?: string;
-            isPublic?: boolean;
+            lastAccessed: string;
+            checksum: string;
+            isPublic: boolean;
             /** @enum {string} */
-            storagePlace?: "S3" | "DB" | "LOCAL" | "URL";
-            storagePath?: string;
+            storagePlace: "S3" | "DB" | "LOCAL" | "URL";
+            storagePath: string;
             /** Format: int64 */
-            fileSize?: number;
+            fileSize: number;
         };
         FormChangeDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
-            data?: components["schemas"]["JsonNode"];
-            files?: components["schemas"]["File"][];
-            fields?: components["schemas"]["FormFieldChangeDto"][];
+            updated: string;
+            name: string;
+            description: string;
+            data: components["schemas"]["JsonNode"];
+            files: components["schemas"]["File"][];
+            fields: components["schemas"]["FormFieldChangeDto"][];
         };
         FormFieldChangeDto: {
             name?: string;
@@ -1113,188 +1113,188 @@ export interface components {
         };
         FileChangeDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
-            storagePath?: string;
-            isActive?: boolean;
-            isPublic?: boolean;
+            updated: string;
+            name: string;
+            description: string;
+            storagePath: string;
+            isActive: boolean;
+            isPublic: boolean;
         };
         ParticipantChangeDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
-            username?: string;
-            email?: string;
-            roles?: components["schemas"]["RoleDto"][];
-            lei?: string;
-            address?: string;
-            organization?: string;
-            website?: string;
-            banned?: boolean;
-            bannedReason?: string;
-            active?: boolean;
-            ranges?: components["schemas"]["QRRangeDto"][];
-            qrs?: components["schemas"]["QRDto"][];
-            password?: string;
-            confirmPassword?: string;
+            updated: string;
+            name: string;
+            description: string;
+            username: string;
+            email: string;
+            roles: components["schemas"]["RoleDto"][];
+            lei: string;
+            address: string;
+            organization: string;
+            website: string;
+            banned: boolean;
+            bannedReason: string;
+            active: boolean;
+            ranges: components["schemas"]["QRRangeDto"][];
+            qrs: components["schemas"]["QRDto"][];
+            password: string;
+            confirmPassword: string;
         };
         QRRangeDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
+            updated: string;
+            name: string;
+            description: string;
             /** Format: int64 */
-            from?: number;
+            from: number;
             /** Format: int64 */
-            to?: number;
+            to: number;
         };
         RoleDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
-            active?: boolean;
+            updated: string;
+            name: string;
+            description: string;
+            active: boolean;
         };
         QRRange: {
             /** Format: int64 */
-            id?: number;
-            type?: string;
-            name?: string;
-            description?: string;
+            id: number;
+            type: string;
+            name: string;
+            description: string;
             /** Format: int64 */
-            participantId?: number;
+            participantId: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
+            updated: string;
             /** Format: int64 */
-            from?: number;
+            from: number;
             /** Format: int64 */
-            to?: number;
+            to: number;
         };
         Form: {
             /** Format: int64 */
-            id?: number;
-            type?: string;
-            name?: string;
-            description?: string;
+            id: number;
+            type: string;
+            name: string;
+            description: string;
             /** Format: int64 */
-            participantId?: number;
+            participantId: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            data?: string;
-            fields?: components["schemas"]["FormField"][];
-            files?: components["schemas"]["File"][];
-            qrs?: components["schemas"]["QR"][];
+            updated: string;
+            data: string;
+            fields: components["schemas"]["FormField"][];
+            files: components["schemas"]["File"][];
+            qrs: components["schemas"]["QR"][];
         };
         FormField: {
             /** Format: int64 */
-            id?: number;
-            name?: string;
+            id: number;
+            name: string;
             /** Format: int64 */
-            formId?: number;
-            form?: components["schemas"]["Form"];
-            caption?: string;
+            formId: number;
+            form: components["schemas"]["Form"];
+            caption: string;
             /** Format: int64 */
-            participantId?: number;
+            participantId: number;
             /** Format: int32 */
-            fieldOrder?: number;
-            placeholder?: string;
+            fieldOrder: number;
+            placeholder: string;
             /** @enum {string} */
-            fieldType?: "TEXT" | "NUMBER" | "FILE" | "MEDIA_FILE" | "DATE" | "URL" | "PHONE" | "EMAIL" | "TEXTAREA" | "EDIT";
-            isStatic?: boolean;
-            isPublic?: boolean;
+            fieldType: "TEXT" | "NUMBER" | "FILE" | "MEDIA_FILE" | "DATE" | "URL" | "PHONE" | "EMAIL" | "TEXTAREA" | "EDIT";
+            isStatic: boolean;
+            isPublic: boolean;
         };
         Participant: {
             /** Format: int64 */
-            id?: number;
-            type?: string;
-            name?: string;
-            description?: string;
+            id: number;
+            type: string;
+            name: string;
+            description: string;
             /** Format: int64 */
-            participantId?: number;
+            participantId: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            username?: string;
-            password?: string;
-            email?: string;
+            updated: string;
+            username: string;
+            password: string;
+            email: string;
             /** Format: int64 */
-            referer?: number;
-            lei?: string;
-            address?: string;
-            website?: string;
-            organization?: string;
-            settings?: string;
-            active?: boolean;
-            banned?: boolean;
-            bannedReason?: string;
-            files?: components["schemas"]["File"][];
-            roles?: components["schemas"]["Role"][];
-            ranges?: components["schemas"]["QRRange"][];
-            qrs?: components["schemas"]["QR"][];
+            referer: number;
+            lei: string;
+            address: string;
+            website: string;
+            organization: string;
+            settings: string;
+            active: boolean;
+            banned: boolean;
+            bannedReason: string;
+            files: components["schemas"]["File"][];
+            roles: components["schemas"]["Role"][];
+            ranges: components["schemas"]["QRRange"][];
+            qrs: components["schemas"]["QR"][];
         };
         QR: {
             /** Format: int64 */
-            id?: number;
-            type?: string;
-            name?: string;
-            description?: string;
+            id: number;
+            type: string;
+            name: string;
+            description: string;
             /** Format: int64 */
-            participantId?: number;
+            participantId: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
+            updated: string;
             /** Format: int64 */
-            code?: number;
-            data?: string;
+            code: number;
+            data: string;
             /** Format: int64 */
-            formId?: number;
-            form?: components["schemas"]["Form"];
-            files?: components["schemas"]["File"][];
+            formId: number;
+            form: components["schemas"]["Form"];
+            files: components["schemas"]["File"][];
             /** @enum {string} */
-            action?: "STD" | "REDIRECT" | "REDIRECT_QR_SVC" | "HIDE";
-            redirect?: string;
+            action: "STD" | "REDIRECT" | "REDIRECT_QR_SVC" | "HIDE";
+            redirect: string;
         };
         Role: {
             /** Format: int64 */
-            id?: number;
-            type?: string;
-            name?: string;
-            description?: string;
+            id: number;
+            type: string;
+            name: string;
+            description: string;
             /** Format: int64 */
-            participantId?: number;
+            participantId: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            active?: boolean;
+            updated: string;
+            active: boolean;
         };
         ParticipantChangePasswordDto: {
-            password?: string;
-            confirmPassword?: string;
+            password: string;
+            confirmPassword: string;
         };
         RegistrationRequestCreationDto: {
             /** Format: int64 */
@@ -1316,59 +1316,59 @@ export interface components {
         };
         QRCreationDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
-            data?: components["schemas"]["JsonNode"];
-            filesIds?: number[];
+            updated: string;
+            name: string;
+            description: string;
+            data: components["schemas"]["JsonNode"];
+            filesIds: number[];
             /** Format: int64 */
-            formId?: number;
+            formId: number;
             /** @enum {string} */
-            action?: "STD" | "REDIRECT" | "REDIRECT_QR_SVC" | "HIDE";
-            redirect?: string;
+            action: "STD" | "REDIRECT" | "REDIRECT_QR_SVC" | "HIDE";
+            redirect: string;
             /** Format: int64 */
-            code?: number;
+            code: number;
             /** Format: int64 */
-            rangeId?: number;
+            rangeId: number;
         };
         FileUploadRequest: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
+            updated: string;
+            name: string;
+            description: string;
             /** Format: binary */
-            file?: string;
-            storagePath?: string;
+            file: string;
+            storagePath: string;
             /** @enum {string} */
-            fileStorageType?: "S3" | "DB" | "LOCAL" | "URL";
-            public?: boolean;
-            active?: boolean;
+            fileStorageType: "S3" | "DB" | "LOCAL" | "URL";
+            public: boolean;
+            active: boolean;
         };
         PasswordChangeDto: {
-            oldPassword?: string;
-            newPassword?: string;
-            confirmNewPassword?: string;
+            oldPassword: string;
+            newPassword: string;
+            confirmNewPassword: string;
         };
         FormCreationDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
-            data?: components["schemas"]["JsonNode"];
-            fields?: components["schemas"]["FormFieldCreationDto"][];
-            files?: components["schemas"]["File"][];
+            updated: string;
+            name: string;
+            description: string;
+            data: components["schemas"]["JsonNode"];
+            fields: components["schemas"]["FormFieldCreationDto"][];
+            files: components["schemas"]["File"][];
         };
         FormFieldCreationDto: {
             name?: string;
@@ -1382,155 +1382,155 @@ export interface components {
             isPublic: boolean;
         };
         FileProjection: {
-            fileName?: string;
-            extension?: string;
-            fileType?: string;
-            isActive?: boolean;
+            fileName: string;
+            extension: string;
+            fileType: string;
+            isActive: boolean;
             /** Format: date-time */
-            lastAccessed?: string;
-            checksum?: string;
-            isPublic?: boolean;
+            lastAccessed: string;
+            checksum: string;
+            isPublic: boolean;
             /** @enum {string} */
-            storagePlace?: "S3" | "DB" | "LOCAL" | "URL";
-            storagePath?: string;
+            storagePlace: "S3" | "DB" | "LOCAL" | "URL";
+            storagePath: string;
             /** Format: int64 */
-            fileSize?: number;
-            description?: string;
-            name?: string;
+            fileSize: number;
+            description: string;
+            name: string;
             /** Format: int64 */
-            participantId?: number;
+            participantId: number;
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
+            updated: string;
         };
         FileReUploadRequest: {
             /** Format: binary */
-            file?: string;
+            file: string;
         };
         FileWithBlobUploadRequest: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
+            updated: string;
+            name: string;
+            description: string;
             /** Format: int64 */
-            fileId?: number;
+            fileId: number;
             /** Format: int64 */
-            no?: number;
+            no: number;
             /** Format: int64 */
-            total?: number;
+            total: number;
             /** Format: binary */
-            chunk?: string;
+            chunk: string;
             /** Format: int64 */
-            fileSize?: number;
-            storagePath?: string;
+            fileSize: number;
+            storagePath: string;
             /** @enum {string} */
-            fileStorageType?: "S3" | "DB" | "LOCAL" | "URL";
-            public?: boolean;
-            active?: boolean;
+            fileStorageType: "S3" | "DB" | "LOCAL" | "URL";
+            public: boolean;
+            active: boolean;
         };
         FileUploadResponse: {
             /** Format: int64 */
-            fileId?: number;
+            fileId: number;
             /** Format: int64 */
-            no?: number;
+            no: number;
         };
         UserLoginDto: {
-            username?: string;
-            password?: string;
+            username: string;
+            password: string;
         };
         RegistrationDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
-            username?: string;
-            email?: string;
-            roles?: components["schemas"]["RoleDto"][];
-            lei?: string;
-            address?: string;
-            organization?: string;
-            website?: string;
-            banned?: boolean;
-            bannedReason?: string;
-            active?: boolean;
-            ranges?: components["schemas"]["QRRangeDto"][];
-            qrs?: components["schemas"]["QRDto"][];
-            password?: string;
-            confirmPassword?: string;
+            updated: string;
+            name: string;
+            description: string;
+            username: string;
+            email: string;
+            roles: components["schemas"]["RoleDto"][];
+            lei: string;
+            address: string;
+            organization: string;
+            website: string;
+            banned: boolean;
+            bannedReason: string;
+            active: boolean;
+            ranges: components["schemas"]["QRRangeDto"][];
+            qrs: components["schemas"]["QRDto"][];
+            password: string;
+            confirmPassword: string;
         };
         ParticipantDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
-            username?: string;
-            email?: string;
-            roles?: components["schemas"]["RoleDto"][];
-            lei?: string;
-            address?: string;
-            organization?: string;
-            website?: string;
-            banned?: boolean;
-            bannedReason?: string;
-            active?: boolean;
-            ranges?: components["schemas"]["QRRangeDto"][];
-            qrs?: components["schemas"]["QRDto"][];
+            updated: string;
+            name: string;
+            description: string;
+            username: string;
+            email: string;
+            roles: components["schemas"]["RoleDto"][];
+            lei: string;
+            address: string;
+            organization: string;
+            website: string;
+            banned: boolean;
+            bannedReason: string;
+            active: boolean;
+            ranges: components["schemas"]["QRRangeDto"][];
+            qrs: components["schemas"]["QRDto"][];
         };
         RegistrationRequestDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
-            username?: string;
-            password?: string;
-            email?: string;
-            ipAddress?: string;
-            userAgent?: string;
-            referrerUrl?: string;
-            firstName?: string;
-            lastName?: string;
-            webSite?: string;
-            organization?: string;
-            phoneNumber?: string;
-            country?: string;
-            city?: string;
+            updated: string;
+            name: string;
+            description: string;
+            username: string;
+            password: string;
+            email: string;
+            ipAddress: string;
+            userAgent: string;
+            referrerUrl: string;
+            firstName: string;
+            lastName: string;
+            webSite: string;
+            organization: string;
+            phoneNumber: string;
+            country: string;
+            city: string;
             /** @enum {string} */
-            status?: "PENDING" | "IN_WORK" | "ACCEPTED" | "REJECTED";
-            statusMsg?: string;
+            status: "PENDING" | "IN_WORK" | "ACCEPTED" | "REJECTED";
+            statusMsg: string;
             /** Format: uuid */
-            registrationId?: string;
-            reviewedBy?: components["schemas"]["ParticipantDto"];
+            registrationId: string;
+            reviewedBy: components["schemas"]["ParticipantDto"];
             /** Format: date-time */
-            reviewedAt?: string;
+            reviewedAt: string;
         };
         EntityDto: {
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
-            name?: string;
-            description?: string;
+            updated: string;
+            name: string;
+            description: string;
         };
         ParticipantBlockDto: {
             /** Format: int64 */
@@ -1538,55 +1538,55 @@ export interface components {
             reason?: string;
         };
         SettingsChangeDto: {
-            settings?: components["schemas"]["JsonNode"];
+            settings: components["schemas"]["JsonNode"];
         };
         SettingsDto: {
-            settings?: string;
+            settings: string;
         };
         RegistrationRequestDetails: {
             /** @enum {string} */
-            status?: "PENDING" | "IN_WORK" | "ACCEPTED" | "REJECTED";
-            username?: string;
-            statusMsg?: string;
+            status: "PENDING" | "IN_WORK" | "ACCEPTED" | "REJECTED";
+            username: string;
+            statusMsg: string;
         };
         VersionDto: {
-            version?: string;
-            releaseDate?: string;
-            author?: string;
-            content?: string;
+            version: string;
+            releaseDate: string;
+            author: string;
+            content: string;
         };
         QRRequestFilter: {
             /** Format: int64 */
-            rangeId?: number;
-            emptyFilters?: boolean;
+            rangeId: number;
+            emptyFilters: boolean;
         };
         Dictionary: {
-            name?: string;
-            code?: string;
-            value?: string;
-            description?: string;
+            name: string;
+            code: string;
+            value: string;
+            description: string;
         };
         ParticipantAdminSimpleProjection: {
-            address?: string;
-            roles?: components["schemas"]["Role"][];
-            username?: string;
-            active?: boolean;
-            organization?: string;
-            website?: string;
-            banned?: boolean;
-            ranges?: components["schemas"]["QRRange"][];
-            lei?: string;
-            email?: string;
-            description?: string;
-            name?: string;
+            address: string;
+            roles: components["schemas"]["Role"][];
+            username: string;
+            active: boolean;
+            organization: string;
+            website: string;
+            banned: boolean;
+            ranges: components["schemas"]["QRRange"][];
+            lei: string;
+            email: string;
+            description: string;
+            name: string;
             /** Format: int64 */
-            participantId?: number;
+            participantId: number;
             /** Format: int64 */
-            id?: number;
+            id: number;
             /** Format: date-time */
-            created?: string;
+            created: string;
             /** Format: date-time */
-            updated?: string;
+            updated: string;
         };
     };
     responses: never;

@@ -18,9 +18,9 @@
   }
 
   gap: mixins.rem(32);
-  flex: auto;
   display: flex;
   min-width: mixins.rem(520);
+  min-height: inherit;
   align-items: center;
   flex-direction: column;
   justify-content: center;
@@ -46,7 +46,6 @@
   }
 
   .login-card {
-    width: 100%;
     padding: mixins.rem(32) mixins.rem(24);
     background: var(--mat-sys-surface-container);
     border-radius: mixins.rem(12);
