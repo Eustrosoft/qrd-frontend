@@ -22,6 +22,9 @@ import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overlay/create-menu-overlay.component';
+import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
+import { MatMenuItem } from '@angular/material/menu';
+import { ViewListItemComponent } from '@shared/components/view-list-item/view-list-item.component';
 
 @Component({
   selector: 'dev-sandbox',
@@ -51,6 +54,9 @@ import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overl
     MatIcon,
     MatTooltip,
     ReactiveFormsModule,
+    EllipsisDirective,
+    MatMenuItem,
+    ViewListItemComponent,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
   templateUrl: './dev-sandbox.component.html',

@@ -8,6 +8,7 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 import { MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { DataViewDisplayType } from '@shared/shared.models';
+import { ToggleVisibilityDirective } from '@shared/directives/toggle-visibility.directive';
 
 @Component({
   selector: 'data-view',
@@ -22,6 +23,7 @@ import { DataViewDisplayType } from '@shared/shared.models';
     MatFabButton,
     MatButtonToggle,
     MatButtonToggleGroup,
+    ToggleVisibilityDirective,
   ],
   templateUrl: './data-view.component.html',
   styleUrl: './data-view.component.scss',

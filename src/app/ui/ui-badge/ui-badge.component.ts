@@ -16,6 +16,7 @@ import { CursorType, Display } from '@shared/shared.models';
     '[style.border-radius]': 'borderRadius()',
     '[style.cursor]': 'cursor()',
     '[style.line-height]': 'lineHeight()',
+    '[style.font-size]': 'fontSize()',
   },
   hostDirectives: [
     {
@@ -31,7 +32,8 @@ export class UiBadgeComponent {
   public readonly background = input<string>('var(--mat-sys-primary)');
   public readonly color = input<string>('var(--mat-sys-on-primary)');
   public readonly cursor = input<CursorType>('default');
-  public readonly padding = input('4px 8px');
+  public readonly padding = input('0 8px');
   public readonly borderRadius = input('1rem', { transform: (value: string) => this.pxToRemPipe.transform(value) });
   public readonly lineHeight = input('24px');
+  public readonly fontSize = input('12px');
 }

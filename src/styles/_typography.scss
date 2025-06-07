@@ -17,6 +17,10 @@ p {
     font-weight: 700;
   }
 
+  &.is-primary {
+    color: var(--mat-sys-primary);
+  }
+
   &.is-on-primary-container {
     color: var(--mat-sys-on-primary-container);
   }

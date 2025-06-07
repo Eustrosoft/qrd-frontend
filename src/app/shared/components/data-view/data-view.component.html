@@ -9,6 +9,17 @@
         #searchInput="matInput"
         matInput
       />
+      @if (!isSmallScreen()) {
+        <button
+          (click)="searchInput.value = ''"
+          [toggleVisibility]="!!searchInput.value"
+          matSuffix
+          class="icon-button-sm"
+          mat-icon-button
+        >
+          <mat-icon class="icon-primary">clear</mat-icon>
+        </button>
+      }
       <button (click)="searchClicked.emit()" matSuffix class="icon-button-sm" mat-icon-button>
         <mat-icon class="icon-primary">search</mat-icon>
       </button>
