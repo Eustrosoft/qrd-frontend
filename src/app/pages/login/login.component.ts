@@ -10,9 +10,11 @@ import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-match
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { SignUpLocalization } from '@app/pages/login/login.constants';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
-import { dispatch } from '@ngxs/store';
+import { dispatch, select } from '@ngxs/store';
 import { Login } from '@modules/auth/state/auth.actions';
 import { MatIcon } from '@angular/material/icon';
+import { AuthState } from '@modules/auth/state/auth.state';
+import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 
 @Component({
   selector: 'login',
@@ -27,6 +29,7 @@ import { MatIcon } from '@angular/material/icon';
     ReactiveFormsModule,
     UiFlexBlockComponent,
     MatIcon,
+    UiSkeletonComponent,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './login.component.html',
@@ -37,6 +40,7 @@ export class LoginComponent {
   private readonly fb = inject(FormBuilder);
   private readonly login = dispatch(Login);
   protected readonly isXSmall = inject(IS_XSMALL);
+  protected readonly isAuthInfoLoading = select(AuthState.isAuthInfoLoading$);
 
   protected readonly RouteTitles = RouteTitles;
   protected readonly SignUpLocalization = SignUpLocalization;

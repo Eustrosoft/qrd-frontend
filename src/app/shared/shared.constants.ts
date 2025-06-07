@@ -26,6 +26,12 @@ export const SharedLocalization = {
   get table() {
     return $localize`:@@shared.table:Table`;
   },
+  get edit() {
+    return $localize`:@@shared.edit:Edit`;
+  },
+  get delete() {
+    return $localize`:@@shared.delete:Delete`;
+  },
 } as const;
 
 export const LocalesLocalization = {

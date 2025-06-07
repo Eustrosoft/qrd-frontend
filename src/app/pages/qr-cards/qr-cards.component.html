@@ -1,0 +1,12 @@
+<data-view
+  [displayType]="selectors.displayType()"
+  (displayTypeChange)="actions.setDisplayType($event.value)"
+  (advancedSearchClicked)="openAdvancedSearch()"
+>
+  @if (selectors.displayType() === 'list') {
+    <qr-card-list />
+  }
+  @if (selectors.displayType() === 'table') {
+    <h1>Not implemented</h1>
+  }
+</data-view>

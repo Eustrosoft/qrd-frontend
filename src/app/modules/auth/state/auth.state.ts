@@ -50,15 +50,20 @@ export class AuthState {
 
   @Action(Login)
   public login({ setState, dispatch }: StateContext<AuthStateModel>, { payload }: Login): Observable<void> {
+    setState(patch({ isAuthInfoLoading: true }));
     return this.authService.login(payload).pipe(
       tap({
         next: () => {
           setState(patch({ isAuthenticated: true }));
           this.localStorageService.set(IS_AUTHENTICATED_KEY, '1');
-          this.router.navigate([AppRoutes.cards]);
+          this.router.navigate([AppRoutes.qrCards]);
         },
       }),
       switchMap(() => dispatch(FetchAuthInfo)),
+      catchError((err) => {
+        setState(patch({ isAuthInfoLoading: false }));
+        return throwError(() => err);
+      }),
     );
   }
 
@@ -72,7 +77,6 @@ export class AuthState {
 
   @Action(FetchAuthInfo)
   public getAuthInfo({ setState }: StateContext<AuthStateModel>): Observable<ParticipantDto> {
-    setState(patch({ isAuthInfoLoading: true }));
     return this.authService.getAuthInfo().pipe(
       tap({
         next: (authInfo) => {

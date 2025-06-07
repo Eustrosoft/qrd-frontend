@@ -1,4 +1,4 @@
-<mat-checkbox [checked]="isSelected()" (change)="checkboxChanged.emit($event)" />
+<mat-checkbox [checked]="isSelected()" (change)="checkboxChanged.emit($event.checked)" />
 @if (!isSmallScreen() && isPreviewShown()) {
   <img
     src="https://qrgen.qxyz.ru/generate?q=1080091&amp;color=%23000000&amp;background=%23ffffff&amp;x=125&amp;fileType=SVG&amp;correctionLevel=L"

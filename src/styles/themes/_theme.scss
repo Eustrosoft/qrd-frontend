@@ -1,80 +1,27 @@
 @use '@angular/material' as mat;
 @use 'styles/themes/theme-colors' as theme-colors;
 
-$theme: (
-  color: (
-    theme-type: light,
-    primary: theme-colors.$primary-palette,
-    tertiary: theme-colors.$tertiary-palette,
-    use-system-variables: true,
-    system-variables-prefix: sys,
-  ),
-  typography: (
-    plain-family: 'Lato, sans-serif',
-    brand-family: 'Lato, sans-serif',
-    bold-weight: 700,
-    medium-weight: 400,
-    regular-weight: 400,
-    use-system-variables: true,
-    system-variables-prefix: sys,
-  ),
-  density: 0,
-);
-
 @mixin app-theme() {
-  @include mat.button-overrides(
-    (
-      filled-container-shape: 8px,
-      outlined-container-shape: 8px,
-      filled-container-height: 48px,
-      outlined-container-height: 48px,
-      protected-container-height: 48px,
-      text-container-height: 48px,
-    )
-  );
-  @include mat.form-field-overrides(
-    (
-      filled-input-text-color: var(--sys-on-surface),
-      outlined-input-text-color: var(--sys-on-surface),
-    )
-  );
-  @include mat.form-field-density(
-    (
-      density: -2,
-    )
-  );
-  @include mat.tooltip-overrides(
-    (
-      container-color: var(--sys-surface),
-      supporting-text-color: var(--sys-on-surface),
-    )
-  );
-  @include mat.select-overrides(
-    (
-      panel-background-color: var(--sys-surface),
-      enabled-trigger-text-color: var(--sys-on-surface),
-      disabled-trigger-text-color: var(--sys-on-surface),
-    )
-  );
-  @include mat.option-overrides(
-    (
-      label-text-color: var(--sys-on-surface-container),
-    )
-  );
-  @include mat.checkbox-density(
-    (
-      density: -5,
-    )
-  );
-  @include mat.tabs-overrides(
-    (
-      divider-height: 2px,
-      active-label-text-color: var(--sys-on-surface),
-      inactive-label-text-color: var(--primary),
-    )
-  );
   @include mat.theme(
-    $theme,
+    $config: (
+      color: (
+        theme-type: light,
+        primary: theme-colors.$primary-palette,
+        tertiary: theme-colors.$tertiary-palette,
+        use-system-variables: true,
+        system-variables-prefix: sys,
+      ),
+      typography: (
+        plain-family: 'Lato, sans-serif',
+        brand-family: 'Lato, sans-serif',
+        bold-weight: 700,
+        medium-weight: 400,
+        regular-weight: 400,
+        use-system-variables: true,
+        system-variables-prefix: sys,
+      ),
+      density: 0,
+    ),
     $overrides: (
       body-small: 400 0.75rem / 1rem 'Lato, sans-serif',
       body-small-size: 0.75rem,
@@ -120,7 +67,12 @@ $theme: (
       title-medium-line-height: 1.5rem,
       title-large: 400 1rem / 1.5rem 'Lato, sans-serif',
       title-large-size: 1rem,
-      title-large-line-height: 1.5rem
+      title-large-line-height: 1.5rem,
+    )
+  );
+  @include mat.menu-overrides(
+    (
+      item-icon-color: var(--mat-sys-primary),
     )
   );
 }

@@ -18,7 +18,7 @@ export const routes: Routes = [
     redirectTo: (): string => {
       const isAuthenticated = select(AuthState.isAuthenticated$);
       if (isAuthenticated()) {
-        return AppRoutes.cards;
+        return AppRoutes.qrCards;
       }
       return AppRoutes.login;
     },
@@ -29,10 +29,10 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: AppRoutes.cards,
+    path: AppRoutes.qrCards,
     title: () => RouteTitles.cards,
     canActivate: [authGuard],
-    loadChildren: () => import('@app/pages/cards/cards.routes').then((m) => m.cardsRoutes),
+    loadChildren: () => import('@app/pages/qr-cards/qr-cards.routes').then((m) => m.qrCardsRoutes),
   },
   {
     path: AppRoutes.templates,

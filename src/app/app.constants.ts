@@ -2,7 +2,7 @@ import { Icon, Theme, ThemeContrast } from '@app/app.models';
 
 export const AppRoutes = {
   login: 'login',
-  cards: 'cards',
+  qrCards: 'qr-cards',
   templates: 'templates',
   files: 'files',
   notFound: 'not-found',
@@ -26,3 +26,5 @@ export const CUSTOM_ICON_MAP = new Map<Icon, string>([
   ['not-found', 'public/icons/not-found.svg'],
   ['timeout', 'public/icons/timeout.svg'],
 ]);
+
+export const SKELETON_TIMER = 300;

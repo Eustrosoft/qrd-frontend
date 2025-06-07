@@ -1,0 +1,49 @@
+<ui-flex-block flexDirection="column" scrolledToLast (isLast)="fetchMore()">
+  @if (!selectors.isQrCardListLoading()) {
+    @for (qrCard of selectors.qrCardList(); track qrCard.id) {
+      <view-list-item
+        [title]="qrCard.code | toHex"
+        [isPreviewShown]="true"
+        (checkboxChanged)="$event ? selectionModel.select(qrCard.id) : selectionModel.deselect(qrCard.id)"
+      >
+        <ng-container content>
+          @if (qrCard?.name) {
+            <p ellipsis>
+              {{ qrCard.name }}
+            </p>
+          }
+          @if (qrCard?.description) {
+            <p ellipsis>
+              {{ qrCard.description }}
+            </p>
+          }
+        </ng-container>
+        <ng-container menu-items>
+          <button mat-menu-item>
+            <mat-icon>open_in_new</mat-icon>
+            {{ QrCardsLocalization.toPreview }}
+          </button>
+          <button mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            {{ SharedLocalization.edit }}
+          </button>
+          <button mat-menu-item>
+            <mat-icon>delete</mat-icon>
+            {{ SharedLocalization.delete }}
+          </button>
+        </ng-container>
+      </view-list-item>
+    }
+  } @else {
+    <ui-skeleton height="141" />
+    <ui-skeleton height="141" />
+    <ui-skeleton height="141" />
+    <ui-skeleton height="141" />
+    <ui-skeleton height="141" />
+    <ui-skeleton height="141" />
+    <ui-skeleton height="141" />
+    <ui-skeleton height="141" />
+    <ui-skeleton height="141" />
+    <ui-skeleton height="141" />
+  }
+</ui-flex-block>
