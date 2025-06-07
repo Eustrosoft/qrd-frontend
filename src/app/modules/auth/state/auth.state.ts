@@ -6,13 +6,13 @@ import { catchError, Observable, switchMap, tap, throwError } from 'rxjs';
 import { AppRoutes, IS_AUTHENTICATED_KEY } from '@app/app.constants';
 import { Router } from '@angular/router';
 import { patch } from '@ngxs/store/operators';
-import { AuthInfo } from '@modules/auth/auth.models';
 import { LocalStorageService } from '@shared/service/local-storage.service';
+import { ParticipantDto } from '@api/api.models';
 
 export interface AuthStateModel {
   isAuthenticated: boolean;
   isAuthInfoLoading: boolean;
-  authInfo: AuthInfo | null;
+  authInfo: ParticipantDto | null;
 }
 
 const defaults: AuthStateModel = {
@@ -44,7 +44,7 @@ export class AuthState {
   }
 
   @Selector()
-  public static getAuthInfo$({ authInfo }: AuthStateModel): AuthInfo | null {
+  public static getAuthInfo$({ authInfo }: AuthStateModel): ParticipantDto | null {
     return authInfo;
   }
 
@@ -71,7 +71,7 @@ export class AuthState {
   }
 
   @Action(FetchAuthInfo)
-  public getAuthInfo({ setState }: StateContext<AuthStateModel>): Observable<AuthInfo> {
+  public getAuthInfo({ setState }: StateContext<AuthStateModel>): Observable<ParticipantDto> {
     setState(patch({ isAuthInfoLoading: true }));
     return this.authService.getAuthInfo().pipe(
       tap({

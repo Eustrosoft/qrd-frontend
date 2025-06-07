@@ -8,6 +8,7 @@
       "@app/*": ["app/*"],
       "@public/*": ["public/*"],
       "@cdk/*": ["app/core/cdk/*"],
+      "@api/*": ["app/api/*"],
       "@core/*": ["app/core/*"],
       "@modules/*": ["app/modules/*"],
       "@ui/*": ["app/ui/*"],

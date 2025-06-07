@@ -16,7 +16,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['projects/**/*'],
+    ignores: ['projects/**/*', 'src/app/api/*.d.ts'],
   },
   {
     plugins: {

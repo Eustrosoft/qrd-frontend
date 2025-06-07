@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { AuthInfo, LoginPayload } from '@modules/auth/auth.models';
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SUPPRESS_HTTP_ERROR_INTERCEPTOR } from '@modules/error/error.constants';
+import { ParticipantDto, UserLoginDto } from '@api/api.models';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ import { SUPPRESS_HTTP_ERROR_INTERCEPTOR } from '@modules/error/error.constants'
 export class AuthService {
   private readonly http = inject(HttpClient);
 
-  public login(payload: LoginPayload): Observable<void> {
+  public login(payload: UserLoginDto): Observable<void> {
     return this.http.post<void>('/qrCodeDemo/v1/api/login', payload);
   }
 
@@ -22,7 +22,7 @@ export class AuthService {
     );
   }
 
-  public getAuthInfo(): Observable<AuthInfo> {
-    return this.http.get<AuthInfo>('/qrCodeDemo/v1/api/secured/participants/me');
+  public getAuthInfo(): Observable<ParticipantDto> {
+    return this.http.get<ParticipantDto>('/qrCodeDemo/v1/api/secured/participants/me');
   }
 }

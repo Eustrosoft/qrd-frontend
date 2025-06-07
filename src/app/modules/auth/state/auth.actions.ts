@@ -1,8 +1,8 @@
-import { LoginPayload } from '@modules/auth/auth.models';
+import { UserLoginDto } from '@api/api.models';
 
 export class Login {
   public static readonly type = '[Auth] Login';
-  constructor(readonly payload: LoginPayload) {}
+  constructor(readonly payload: UserLoginDto) {}
 }
 
 export class Logout {
