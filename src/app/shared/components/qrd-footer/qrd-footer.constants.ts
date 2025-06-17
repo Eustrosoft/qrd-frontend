@@ -1,17 +1,7 @@
 export const FooterLocalization = {
-  get qrForAll() {
-    return $localize`:@@footer.qrForAll:QR for all`;
-  },
-  get trainingVideo() {
-    return $localize`:@@footer.trainingVideo:Training video`;
-  },
-  get loginPage() {
-    return $localize`:@@footer.loginPage:Login`;
-  },
-  get services() {
-    return $localize`:@@footer.services:Services`;
-  },
-  get contacts() {
-    return $localize`:@@footer.contacts:Contacts`;
-  },
+  qrForAll: $localize`:@@footer.qrForAll:QR for all`,
+  trainingVideo: $localize`:@@footer.trainingVideo:Training video`,
+  loginPage: $localize`:@@footer.loginPage:Login`,
+  services: $localize`:@@footer.services:Services`,
+  contacts: $localize`:@@footer.contacts:Contacts`,
 } as const;

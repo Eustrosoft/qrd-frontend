@@ -1,20 +1,8 @@
 export const SignUpLocalization = {
-  get login() {
-    return $localize`:@@signUp.login:Login`;
-  },
-  get pwd() {
-    return $localize`:@@signUp.password:Password`;
-  },
-  get signUp() {
-    return $localize`:@@signUp.signUp:Sign up`;
-  },
-  get forgotPwd() {
-    return $localize`:@@signUp.forgotPwd:Forgot password`;
-  },
-  get loginRequiredErr() {
-    return $localize`:@@signUp.loginRequiredErr:Login required`;
-  },
-  get pwdRequiredErr() {
-    return $localize`:@@signUp.pwdRequiredErr:Password required`;
-  },
+  login: $localize`:@@signUp.login:Login`,
+  pwd: $localize`:@@signUp.password:Password`,
+  signUp: $localize`:@@signUp.signUp:Sign up`,
+  forgotPwd: $localize`:@@signUp.forgotPwd:Forgot password`,
+  loginRequiredErr: $localize`:@@signUp.loginRequiredErr:Login required`,
+  pwdRequiredErr: $localize`:@@signUp.pwdRequiredErr:Password required`,
 } as const;

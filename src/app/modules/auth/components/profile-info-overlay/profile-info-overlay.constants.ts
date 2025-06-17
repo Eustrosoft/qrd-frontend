@@ -1,17 +1,7 @@
 export const ProfileInfoOverlayLocalization = {
-  get aboutService() {
-    return $localize`:@@profileInfoOverlay.aboutService:About service`;
-  },
-  get versionHistory() {
-    return $localize`:@@profileInfoOverlay.versionHistory:Version history`;
-  },
-  get feedback() {
-    return $localize`:@@profileInfoOverlay.feedback:Feedback`;
-  },
-  get help() {
-    return $localize`:@@profileInfoOverlay.help:Help`;
-  },
-  get oldApp() {
-    return $localize`:@@profileInfoOverlay.oldApp:Old app`;
-  },
+  aboutService: $localize`:@@profileInfoOverlay.aboutService:About service`,
+  versionHistory: $localize`:@@profileInfoOverlay.versionHistory:Version history`,
+  feedback: $localize`:@@profileInfoOverlay.feedback:Feedback`,
+  help: $localize`:@@profileInfoOverlay.help:Help`,
+  oldApp: $localize`:@@profileInfoOverlay.oldApp:Old app`,
 } as const;

@@ -1,65 +1,27 @@
 export const SharedLocalization = {
-  get login() {
-    return $localize`:@@shared.login:Login`;
-  },
-  get logout() {
-    return $localize`:@@shared.logout:Logout`;
-  },
-  get settings() {
-    return $localize`:@@shared.settings:Settings`;
-  },
-  get language() {
-    return $localize`:@@shared.language:Language`;
-  },
-  get mainPage() {
-    return $localize`:@@shared.mainPage:Main`;
-  },
-  get defaultTitle() {
-    return $localize`:@@shared.defaultTitle:QRD`;
-  },
-  get search() {
-    return $localize`:@@shared.search:Search`;
-  },
-  get list() {
-    return $localize`:@@shared.list:List`;
-  },
-  get table() {
-    return $localize`:@@shared.table:Table`;
-  },
-  get edit() {
-    return $localize`:@@shared.edit:Edit`;
-  },
-  get delete() {
-    return $localize`:@@shared.delete:Delete`;
-  },
+  login: $localize`:@@shared.login:Login`,
+  logout: $localize`:@@shared.logout:Logout`,
+  settings: $localize`:@@shared.settings:Settings`,
+  language: $localize`:@@shared.language:Language`,
+  mainPage: $localize`:@@shared.mainPage:Main`,
+  defaultTitle: $localize`:@@shared.defaultTitle:QRD`,
+  search: $localize`:@@shared.search:Search`,
+  list: $localize`:@@shared.list:List`,
+  table: $localize`:@@shared.table:Table`,
+  edit: $localize`:@@shared.edit:Edit`,
+  delete: $localize`:@@shared.delete:Delete`,
 } as const;
 
 export const LocalesLocalization = {
-  get ru() {
-    return $localize`:@@locales.ru:Russian`;
-  },
-  get enUS() {
-    return $localize`:@@locales.enUS:English (US)`;
-  },
+  ru: $localize`:@@locales.ru:Russian`,
+  enUS: $localize`:@@locales.enUS:English (US)`,
 } as const;
 
 export const RouteTitles = {
-  get login() {
-    return $localize`:@@routes.login:Login`;
-  },
-  get cards() {
-    return $localize`:@@routes.cards:Cards`;
-  },
-  get templates() {
-    return $localize`:@@routes.templates:Templates`;
-  },
-  get files() {
-    return $localize`:@@routes.files:Files`;
-  },
-  get docs() {
-    return $localize`:@@routes.docs:Docs`;
-  },
-  get devSandbox() {
-    return $localize`:@@routes.devSandbox:Dev Sandbox`;
-  },
+  login: $localize`:@@routes.login:Login`,
+  cards: $localize`:@@routes.cards:Cards`,
+  templates: $localize`:@@routes.templates:Templates`,
+  files: $localize`:@@routes.files:Files`,
+  docs: $localize`:@@routes.docs:Docs`,
+  devSandbox: $localize`:@@routes.devSandbox:Dev Sandbox`,
 } as const;

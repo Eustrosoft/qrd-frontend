@@ -5,7 +5,7 @@ import { LocalStorageService } from '@shared/service/local-storage.service';
 import { Locale, Theme, ThemeContrast } from '@app/app.models';
 import { SetLocale, SetTheme } from '@app/state/app.actions';
 import { patch } from '@ngxs/store/operators';
-import { LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/app.constants';
+import { DEFAULT_LOCALE, LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
@@ -20,7 +20,7 @@ export interface AppStateModel {
 const defaults: AppStateModel = {
   theme: 'system',
   contrast: '',
-  locale: 'en-US',
+  locale: DEFAULT_LOCALE,
 } as const;
 
 const APP_STATE_TOKEN: StateToken<AppStateModel> = new StateToken<AppStateModel>('app');
