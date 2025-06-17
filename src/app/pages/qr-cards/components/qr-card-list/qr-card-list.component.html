@@ -4,6 +4,7 @@
       <view-list-item
         [title]="qrCard.code | toHex"
         [isPreviewShown]="true"
+        [isSelected]="selectionModel.isSelected(qrCard.id)"
         (checkboxChanged)="$event ? selectionModel.select(qrCard.id) : selectionModel.deselect(qrCard.id)"
       >
         <ng-container content>
@@ -22,6 +23,10 @@
           <button mat-menu-item>
             <mat-icon>open_in_new</mat-icon>
             {{ QrCardsLocalization.toPreview }}
+          </button>
+          <button mat-menu-item>
+            <mat-icon>print</mat-icon>
+            {{ SharedLocalization.print }}
           </button>
           <button mat-menu-item>
             <mat-icon>edit</mat-icon>

@@ -3,8 +3,16 @@
   (displayTypeChange)="actions.setDisplayType($event.value)"
   (advancedSearchClicked)="openAdvancedSearch()"
 >
+  @if (selectors.selectedQrCardList().length) {
+    <selection-actions-bar
+      [count]="selectors.selectedQrCardList().length"
+      (onSelectAll)="actions.selectedAllQrCards()"
+      (onClose)="actions.setSelectedQrCards([])"
+      [@expandFade]
+    />
+  }
   @if (selectors.displayType() === 'list') {
-    <qr-card-list />
+    <qr-card-list (selectionChanged)="actions.setSelectedQrCards($event)" />
   }
   @if (selectors.displayType() === 'table') {
     <h1>Not implemented</h1>

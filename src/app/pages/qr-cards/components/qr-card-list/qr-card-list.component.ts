@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, OnInit } from '@angular/core';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { ScrolledToLastDirective } from '@shared/directives/scrolled-to-last.directive';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
@@ -12,8 +12,9 @@ import { MatMenuItem } from '@angular/material/menu';
 import { SharedLocalization } from '@shared/shared.constants';
 import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
-import { map } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
+import { outputFromObservable } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'qr-card-list',
@@ -32,27 +33,35 @@ import { MatIcon } from '@angular/material/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrCardListComponent implements OnInit {
+  protected readonly QrCardsLocalization = QrCardsLocalization;
+  protected readonly SharedLocalization = SharedLocalization;
   protected readonly selectors = createSelectMap({
     displayType: QrCardsState.getDisplayType$,
     isQrCardListLoading: QrCardsState.isQrCardListLoading$,
     qrCardList: QrCardsState.getQrCardList$,
+    selectedQrCardList: QrCardsState.getSelectedQrCardList$,
   });
   protected readonly actions = createDispatchMap({
     setDisplayType: SetQrCardsDataViewDisplayType,
     fetchQrCards: FetchQrCards,
   });
 
-  protected readonly selectionModel = new SelectionModel<number>(true);
+  protected readonly selectionModel = new SelectionModel(true, this.selectors.selectedQrCardList());
 
-  protected readonly QrCardsLocalization = QrCardsLocalization;
-  protected readonly SharedLocalization = SharedLocalization;
+  public readonly selectionChanged = outputFromObservable(
+    this.selectionModel.changed.asObservable().pipe(map(() => this.selectionModel.selected)),
+  );
+
+  private readonly selectionEffect = effect(() => {
+    const selectedValues = this.selectors.selectedQrCardList();
+    this.selectionModel.select(...selectedValues);
+    if (!selectedValues.length) {
+      this.selectionModel.clear();
+    }
+  });
 
   public ngOnInit(): void {
     this.actions.fetchQrCards();
-    this.selectionModel.changed
-      .asObservable()
-      .pipe(map(() => this.selectionModel.selected))
-      .subscribe(console.log);
   }
 
   protected fetchMore(): void {

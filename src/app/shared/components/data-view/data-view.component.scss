@@ -4,9 +4,12 @@
 @use 'sass:map';
 
 :host {
-  gap: mixins.rem(32);
   display: flex;
   flex-direction: column;
+
+  .toolbar {
+    margin-bottom: mixins.rem(32);
+  }
 
   .search-bar {
     @include mat.form-field-overrides(
@@ -24,10 +27,14 @@
   }
 
   @media #{map.get(bp.$breakpoints, xsmall)} {
-    gap: mixins.rem(16);
+    .toolbar {
+      margin-bottom: mixins.rem(16);
+    }
   }
 
   @media #{map.get(bp.$breakpoints, small)} {
-    gap: mixins.rem(16);
+    .toolbar {
+      margin-bottom: mixins.rem(16);
+    }
   }
 }

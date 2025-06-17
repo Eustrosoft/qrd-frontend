@@ -1,0 +1,11 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  display: flex;
+  padding: mixins.rem(12) mixins.rem(16);
+  background: var(--mat-sys-surface-container);
+  align-items: center;
+  margin-bottom: mixins.rem(32);
+  border-radius: mixins.rem(12);
+  justify-content: space-between;
+}

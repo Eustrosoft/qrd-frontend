@@ -9,7 +9,10 @@ export const SharedLocalization = {
   list: $localize`:@@shared.list:List`,
   table: $localize`:@@shared.table:Table`,
   edit: $localize`:@@shared.edit:Edit`,
+  print: $localize`:@@shared.print:Print`,
   delete: $localize`:@@shared.delete:Delete`,
+  selected: $localize`:@@shared.selected:Selected`,
+  selectAll: $localize`:@@shared.selectAll:Select all`,
 } as const;
 
 export const LocalesLocalization = {

@@ -1,4 +1,9 @@
-<ui-flex-block flex="0 1 auto" [flexDirection]="isSmallScreen() ? 'column' : 'row'" flexJustifyContent="space-between">
+<ui-flex-block
+  class="toolbar"
+  flex="0 1 auto"
+  [flexDirection]="isSmallScreen() ? 'column' : 'row'"
+  flexJustifyContent="space-between"
+>
   <ui-flex-block gapSize="8" flex="0 1 70%">
     <mat-form-field class="form-field-md search-bar" subscriptSizing="dynamic">
       <input

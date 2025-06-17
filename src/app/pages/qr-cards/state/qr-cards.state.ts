@@ -1,6 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
-import { FetchQrCards, SetQrCardsDataViewDisplayType } from './qr-cards.actions';
+import {
+  FetchQrCards,
+  SelectedAllQrCards,
+  SetQrCardsDataViewDisplayType,
+  SetSelectedQrCards,
+} from './qr-cards.actions';
 import { DataViewDisplayType } from '@shared/shared.models';
 import { patch } from '@ngxs/store/operators';
 import { QRDto } from '@api/qrs/qrs-api.models';
@@ -12,12 +17,14 @@ export interface QrCardsStateModel {
   displayType: DataViewDisplayType;
   isQrCardListLoading: boolean;
   qrCardList: QRDto[];
+  selectedQrCardList: number[];
 }
 
 const defaults: QrCardsStateModel = {
   displayType: 'list',
   isQrCardListLoading: false,
   qrCardList: [],
+  selectedQrCardList: [],
 } as const;
 
 const QR_CARDS_STATE_TOKEN: StateToken<QrCardsStateModel> = new StateToken<QrCardsStateModel>('qrCards');
@@ -45,6 +52,11 @@ export class QrCardsState {
     return qrCardList;
   }
 
+  @Selector()
+  public static getSelectedQrCardList$({ selectedQrCardList }: QrCardsStateModel): number[] {
+    return selectedQrCardList;
+  }
+
   @Action(FetchQrCards)
   public fetchQrCards({ setState }: StateContext<QrCardsStateModel>): Observable<QRDto[]> {
     setState(patch({ isQrCardListLoading: true }));
@@ -60,6 +72,20 @@ export class QrCardsState {
         return throwError(() => err);
       }),
     );
+  }
+
+  @Action(SetSelectedQrCards)
+  public setSelectedQrCards(
+    { setState }: StateContext<QrCardsStateModel>,
+    { selectedQrCardList }: SetSelectedQrCards,
+  ): void {
+    setState(patch({ selectedQrCardList }));
+  }
+
+  @Action(SelectedAllQrCards)
+  public selectedAllQrCards({ setState, getState }: StateContext<QrCardsStateModel>): void {
+    const { qrCardList } = getState();
+    setState(patch({ selectedQrCardList: qrCardList.map((card) => card.id) }));
   }
 
   @Action(SetQrCardsDataViewDisplayType)
