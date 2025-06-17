@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { DOCUMENT, inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { HtmlLoaderService } from '@shared/service/html-loader.service';
 import { LocalStorageService } from '@shared/service/local-storage.service';
@@ -9,7 +9,6 @@ import { DEFAULT_LOCALE, LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
-import { DOCUMENT } from '@angular/common';
 
 export interface AppStateModel {
   theme: Theme;
