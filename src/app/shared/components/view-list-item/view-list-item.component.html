@@ -1,19 +1,18 @@
 <mat-checkbox [checked]="isSelected()" (change)="checkboxChanged.emit($event.checked)" />
-@if (!isSmallScreen() && isPreviewShown()) {
-  <img
-    src="https://qrgen.qxyz.ru/generate?q=1080091&amp;color=%23000000&amp;background=%23ffffff&amp;x=125&amp;fileType=SVG&amp;correctionLevel=L"
-    alt="qr code"
-  />
-}
-<ui-flex-block flexDirection="column" gapSize="4" flex="auto" overflow="hidden">
-  <ui-flex-block flexDirection="row" flexJustifyContent="space-between">
-    <p class="is-primary is-bold">{{ title() }}</p>
-    @if (!isSmallScreen()) {
-      <ng-content select="[attributes]" />
-    }
+<a [routerLink]="navigateTo()" [relativeTo]="activatedRoute" ui-flex-block flex="auto" flexAlignItems="center" ellipsis>
+  @if (!isSmallScreen() && isPreviewShown()) {
+    <ng-content select="[preview]" />
+  }
+  <ui-flex-block flexDirection="column" gapSize="4" flex="auto" overflow="hidden">
+    <ui-flex-block flexDirection="row" flexJustifyContent="space-between">
+      <p class="is-primary is-bold">{{ title() }}</p>
+      @if (!isSmallScreen()) {
+        <ng-content select="[attributes]" />
+      }
+    </ui-flex-block>
+    <ng-content select="[content]" />
   </ui-flex-block>
-  <ng-content select="[content]" />
-</ui-flex-block>
+</a>
 <button class="icon-button-md" mat-icon-button [matMenuTriggerFor]="menu">
   <mat-icon class="icon-primary icon-md">more_vert</mat-icon>
 </button>
