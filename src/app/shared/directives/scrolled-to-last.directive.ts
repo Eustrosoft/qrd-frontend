@@ -1,10 +1,39 @@
-import { AfterViewInit, Directive, ElementRef, inject, OnDestroy, output } from '@angular/core';
+import {
+  afterNextRender,
+  AfterViewInit,
+  Directive,
+  effect,
+  ElementRef,
+  inject,
+  Injector,
+  input,
+  OnDestroy,
+  output,
+  runInInjectionContext,
+} from '@angular/core';
 
 @Directive({
   selector: '[scrolledToLast]',
 })
 export class ScrolledToLastDirective implements AfterViewInit, OnDestroy {
+  private readonly injector = inject(Injector);
+
+  public readonly count = input<number>();
+  public readonly isListLoading = input<boolean>();
   public readonly isLast = output<void>();
+
+  protected readonly observerEffect = effect(() => {
+    if (!this.count() || this.isListLoading()) {
+      return;
+    }
+    runInInjectionContext(this.injector, () => {
+      afterNextRender({
+        write: () => {
+          this.setupIntersectionObserver();
+        },
+      });
+    });
+  });
 
   private observer!: IntersectionObserver;
   private lastElement: HTMLElement | null = null;
@@ -40,21 +69,14 @@ export class ScrolledToLastDirective implements AfterViewInit, OnDestroy {
   }
 
   private observeLastChild(): void {
-    // Отключаем наблюдение за предыдущим последним элементом
     if (this.lastElement) {
       this.observer.unobserve(this.lastElement);
     }
 
-    // Находим новый последний элемент
     const children = this.elRef.nativeElement.children;
     if (children.length > 0) {
       this.lastElement = children[children.length - 1] as HTMLElement;
       this.observer.observe(this.lastElement);
     }
-  }
-
-  // Метод для вызова из родительского компонента при изменении списка
-  public updateLastItem(): void {
-    this.observeLastChild();
   }
 }
