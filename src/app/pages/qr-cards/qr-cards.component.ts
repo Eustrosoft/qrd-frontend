@@ -11,10 +11,12 @@ import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { QrCardListComponent } from '@app/pages/qr-cards/components/qr-card-list/qr-card-list.component';
 import { SelectionActionsBarComponent } from '@shared/components/selection-actions-bar/selection-actions-bar.component';
 import { expandAnimation } from '@shared/shared.animations';
+import { MatMiniFabButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'qr-cards',
-  imports: [DataViewComponent, QrCardListComponent, SelectionActionsBarComponent],
+  imports: [DataViewComponent, QrCardListComponent, SelectionActionsBarComponent, MatIcon, MatMiniFabButton],
   animations: [expandAnimation],
   templateUrl: './qr-cards.component.html',
   styleUrl: './qr-cards.component.scss',

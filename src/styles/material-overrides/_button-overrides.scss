@@ -1,5 +1,21 @@
 @use '@angular/material' as mat;
 
+.button-primary {
+  @include mat.button-overrides(
+    (
+      filled-container-color: var(--mat-sys-primary),
+    )
+  );
+}
+
+.button-secondary {
+  @include mat.button-overrides(
+    (
+      filled-container-color: var(--mat-sys-secondary),
+    )
+  );
+}
+
 .button-md {
   @include mat.button-overrides(
     (
@@ -73,39 +89,20 @@
   min-width: auto !important;
 }
 
-.fab-icon-button-sm-circle {
+.mini-fab-icon-button-circle {
   @include mat.fab-overrides(
     (
-      container-color: var(--mat-sys-secondary),
-      container-shape: 999px,
-      container-elevation-shadow: none,
-      pressed-container-elevation-shadow: none,
-      hover-container-elevation-shadow: none,
-      focus-container-elevation-shadow: none,
+      small-container-color: var(--mat-sys-secondary),
+      small-container-shape: 999px,
+      small-container-elevation-shadow: none,
+      small-pressed-container-elevation-shadow: none,
+      small-hover-container-elevation-shadow: none,
+      small-focus-container-elevation-shadow: none,
     )
   );
-
-  width: 24px !important;
-  height: 24px !important;
 }
 
-.fab-icon-button-md-circle {
-  @include mat.fab-overrides(
-    (
-      container-color: var(--mat-sys-secondary),
-      container-shape: 999px,
-      container-elevation-shadow: none,
-      pressed-container-elevation-shadow: none,
-      hover-container-elevation-shadow: none,
-      focus-container-elevation-shadow: none,
-    )
-  );
-
-  width: 40px !important;
-  height: 40px !important;
-}
-
-.fab-icon-button-lg-circle {
+.fab-icon-button-circle {
   @include mat.fab-overrides(
     (
       container-color: var(--mat-sys-secondary),

@@ -1,8 +1,10 @@
 <ui-flex-block flexAlignItems="center">
   <p>{{ SharedLocalization.selected }}: {{ count() }}</p>
-  <button (click)="onSelectAll.emit()" class="button-md" mat-flat-button>{{ SharedLocalization.selectAll }}</button>
+  <button (click)="onSelectAll.emit()" class="button-md button-secondary" mat-flat-button>
+    {{ SharedLocalization.selectAll }}
+  </button>
 </ui-flex-block>
-<ui-flex-block>
+<ui-flex-block flexAlignItems="center">
   <ng-content />
   <button (click)="onClose.emit()" class="icon-button-sm" mat-icon-button>
     <mat-icon class="icon-secondary">close</mat-icon>
