@@ -3,11 +3,24 @@ import { Icon, Locale, Theme, ThemeContrast } from '@app/app.models';
 export const AppRoutes = {
   login: 'login',
   qrCards: 'qr-cards',
+  card: 'card',
+  attrs: 'attributes',
   templates: 'templates',
   files: 'files',
   notFound: 'not-found',
   unauthenticated: 'unauthenticated',
   devSandbox: 'dev-sandbox',
+} as const;
+
+export const RouteTitles = {
+  login: $localize`:@@routes.login:Login`,
+  cards: $localize`:@@routes.cards:Cards`,
+  card: $localize`:@@routes.card:Card`,
+  attrs: $localize`:@@routes.attrs:Attributes`,
+  templates: $localize`:@@routes.templates:Templates`,
+  files: $localize`:@@routes.files:Files`,
+  docs: $localize`:@@routes.docs:Docs`,
+  devSandbox: $localize`:@@routes.devSandbox:Dev Sandbox`,
 } as const;
 
 export const THEME_KEY = 'qrd-user-theme';

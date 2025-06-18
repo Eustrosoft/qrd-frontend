@@ -1,12 +1,31 @@
-<ui-flex-block flexDirection="column" scrolledToLast (isLast)="fetchMore()">
+<ui-flex-block
+  flexDirection="column"
+  scrolledToLast
+  [count]="selectors.qrCardList().length"
+  [isListLoading]="selectors.isQrCardListLoading()"
+  (isLast)="fetchMore()"
+>
   @if (!selectors.isQrCardListLoading()) {
     @for (qrCard of selectors.qrCardList(); track qrCard.id) {
       <view-list-item
         [title]="qrCard.code | toHex"
+        [navigateTo]="`./${qrCard.id}`"
         [isPreviewShown]="true"
         [isSelected]="selectionModel.isSelected(qrCard.id)"
         (checkboxChanged)="$event ? selectionModel.select(qrCard.id) : selectionModel.deselect(qrCard.id)"
       >
+        <ng-container preview>
+          <img
+            [src]="`https://qrgen.qxyz.ru/generate?q=${qrCard.code | toHex}&amp;color=%23000000&amp;background=%23ffffff&amp;x=128&amp;fileType=SVG&amp;correctionLevel=L`"
+            alt="qr code"
+            imgLoadState
+            #imgLoadState="imgLoadState"
+            [hidden]="!imgLoadState.isLoaded"
+          />
+          @if (!imgLoadState.isLoaded) {
+            <ui-skeleton [style.flex]="'0 0 128px'" width="128" height="128" />
+          }
+        </ng-container>
         <ng-container content>
           @if (qrCard?.name) {
             <p ellipsis>
@@ -20,6 +39,10 @@
           }
         </ng-container>
         <ng-container menu-items>
+          <button mat-menu-item>
+            <mat-icon>outbound</mat-icon>
+            {{ SharedLocalization.open }}
+          </button>
           <button mat-menu-item>
             <mat-icon>open_in_new</mat-icon>
             {{ QrCardsLocalization.toPreview }}

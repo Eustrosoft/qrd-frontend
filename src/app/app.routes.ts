@@ -1,15 +1,16 @@
 import { Router, Routes } from '@angular/router';
-import { AppRoutes } from '@app/app.constants';
+import { AppRoutes, RouteTitles } from '@app/app.constants';
 import { environment } from '@environment';
 import { errorConfigFactory } from '@cdk/factories/error-config.factory';
 import { ERROR_CONFIG, ErrorConfig } from '@cdk/tokens/error-config.token';
 import { LoginComponent } from '@app/pages/login/login.component';
-import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
+import { SharedLocalization } from '@shared/shared.constants';
 import { authGuard } from '@modules/auth/auth.guard';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { timer } from 'rxjs';
-import { select } from '@ngxs/store';
+import { provideStates, select } from '@ngxs/store';
 import { AuthState } from '@modules/auth/state/auth.state';
+import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 
 export const routes: Routes = [
   {
@@ -33,6 +34,7 @@ export const routes: Routes = [
     title: () => RouteTitles.cards,
     canActivate: [authGuard],
     loadChildren: () => import('@app/pages/qr-cards/qr-cards.routes').then((m) => m.qrCardsRoutes),
+    providers: [provideStates([QrCardsState])],
   },
   {
     path: AppRoutes.templates,

@@ -15,6 +15,7 @@ import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { MatIcon } from '@angular/material/icon';
 import { outputFromObservable } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
+import { ImgLoadStateDirective } from '@shared/directives/img-load-state.directive';
 
 @Component({
   selector: 'qr-card-list',
@@ -27,6 +28,7 @@ import { map } from 'rxjs';
     MatMenuItem,
     UiSkeletonComponent,
     MatIcon,
+    ImgLoadStateDirective,
   ],
   templateUrl: './qr-card-list.component.html',
   styleUrl: './qr-card-list.component.scss',

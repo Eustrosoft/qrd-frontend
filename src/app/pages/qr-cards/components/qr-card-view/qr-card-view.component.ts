@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'qr-cards',
+  selector: 'qr-card-view',
   imports: [RouterOutlet],
-  templateUrl: './qr-cards.component.html',
-  styleUrl: './qr-cards.component.scss',
+  templateUrl: './qr-card-view.component.html',
+  styleUrl: './qr-card-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class QrCardsComponent {}
+export class QrCardViewComponent {}

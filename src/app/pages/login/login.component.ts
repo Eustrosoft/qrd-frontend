@@ -3,7 +3,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatError } from '@angular/material/form-field';
-import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
+import { SharedLocalization } from '@shared/shared.constants';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginForm } from '@app/pages/login/login.models';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
@@ -15,6 +15,7 @@ import { Login } from '@modules/auth/state/auth.actions';
 import { MatIcon } from '@angular/material/icon';
 import { AuthState } from '@modules/auth/state/auth.state';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
+import { RouteTitles } from '@app/app.constants';
 
 @Component({
   selector: 'login',

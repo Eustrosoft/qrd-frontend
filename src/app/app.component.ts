@@ -7,6 +7,7 @@ import { QrdHeaderComponent } from '@shared/components/qrd-header/qrd-header.com
 import { QrdFooterComponent } from '@shared/components/qrd-footer/qrd-footer.component';
 import { AppState } from '@app/state/app.state';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
+import { HideNgVersionDirective } from '@shared/directives/hide-ng-version.directive';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [HideNgVersionDirective],
 })
 export class AppComponent {
   private readonly prefersDark = inject(PREFERS_DARK_TOKEN);
