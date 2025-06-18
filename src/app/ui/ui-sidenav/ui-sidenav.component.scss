@@ -8,11 +8,13 @@
   mat-sidenav-container {
     flex: auto;
     display: flex;
+    overflow: unset;
     flex-direction: column;
 
     mat-sidenav-content {
       flex: auto;
       display: flex;
+      overflow: unset;
       flex-direction: column;
     }
   }

@@ -1,11 +1,25 @@
+@use '@angular/material' as mat;
 @use 'styles/mixins' as mixins;
+@use 'styles/breakpoints' as bp;
+@use 'sass:map';
 
 :host {
+  top: 0;
+  z-index: 1;
   display: flex;
   padding: mixins.rem(12) mixins.rem(16);
+  position: sticky;
   background: var(--mat-sys-surface-container);
   align-items: center;
   margin-bottom: mixins.rem(32);
   border-radius: mixins.rem(12);
   justify-content: space-between;
+
+  @media #{map.get(bp.$breakpoints, xsmall)} {
+    margin-bottom: mixins.rem(16);
+  }
+
+  @media #{map.get(bp.$breakpoints, small)} {
+    margin-bottom: mixins.rem(16);
+  }
 }
