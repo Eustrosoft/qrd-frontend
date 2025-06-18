@@ -1,3 +1,19 @@
+@use 'styles/mixins' as mixins;
+@use 'styles/breakpoints' as bp;
+@use 'sass:map';
+
+@media #{map.get(bp.$breakpoints, xsmall)} {
+  :root {
+    --selection-bar-animation-margin-bottom: 16px;
+  }
+}
+
+@media #{map.get(bp.$breakpoints, small)} {
+  :root {
+    --selection-bar-animation-margin-bottom: 16px;
+  }
+}
+
 hr {
   border-style: solid;
   border-color: var(--mat-sys-outline);
