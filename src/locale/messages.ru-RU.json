@@ -1,6 +1,14 @@
 {
   "locale": "ru-RU",
   "translations": {
+    "routes.login": "Вход",
+    "routes.cards": "Карточки",
+    "routes.card": "Карточка",
+    "routes.attrs": "Атрибуты",
+    "routes.templates": "Шаблоны",
+    "routes.files": "Файлы",
+    "routes.docs": "Документы",
+    "routes.devSandbox": "Dev Sandbox",
     "profileInfoOverlay.aboutService": "О сервисе",
     "profileInfoOverlay.versionHistory": "История версий",
     "profileInfoOverlay.feedback": "Связаться с нами",
@@ -55,18 +63,13 @@
     "shared.search": "Поиск",
     "shared.list": "Список",
     "shared.table": "Таблица",
+    "shared.open": "Открыть",
     "shared.edit": "Редактировать",
     "shared.print": "Печать",
     "shared.delete": "Удалить",
     "shared.selected": "Выбрано",
     "shared.selectAll": "Выбрать всё",
-    "locales.ru": "Русский",
-    "locales.enUS": "Английский (США)",
-    "routes.login": "Вход",
-    "routes.cards": "Карточки",
-    "routes.templates": "Шаблоны",
-    "routes.files": "Файлы",
-    "routes.docs": "Документы",
-    "routes.devSandbox": "Dev Sandbox"
+    "locales.ruRu": "Русский",
+    "locales.enUS": "Английский (США)"
   }
 }

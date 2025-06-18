@@ -72,7 +72,7 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
             list: [
               {
                 value: 'ru-RU',
-                viewValue: LocalesLocalization.ru,
+                viewValue: LocalesLocalization.ruRu,
               },
               {
                 value: 'en-US',

@@ -17,6 +17,6 @@ export const SharedLocalization = {
 } as const;
 
 export const LocalesLocalization = {
-  ru: $localize`:@@locales.ru:Russian`,
+  ruRu: $localize`:@@locales.ruRu:Russian`,
   enUS: $localize`:@@locales.enUS:English (US)`,
 } as const;

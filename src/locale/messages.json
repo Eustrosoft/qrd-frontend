@@ -1,6 +1,14 @@
 {
-  "locale": "en-US",
+  "locale": "en",
   "translations": {
+    "routes.login": "Login",
+    "routes.cards": "Cards",
+    "routes.card": "Card",
+    "routes.attrs": "Attributes",
+    "routes.templates": "Templates",
+    "routes.files": "Files",
+    "routes.docs": "Docs",
+    "routes.devSandbox": "Dev Sandbox",
     "profileInfoOverlay.aboutService": "About service",
     "profileInfoOverlay.versionHistory": "Version history",
     "profileInfoOverlay.feedback": "Feedback",
@@ -55,18 +63,13 @@
     "shared.search": "Search",
     "shared.list": "List",
     "shared.table": "Table",
+    "shared.open": "Open",
     "shared.edit": "Edit",
     "shared.print": "Print",
     "shared.delete": "Delete",
     "shared.selected": "Selected",
     "shared.selectAll": "Select all",
-    "locales.ru": "Russian",
-    "locales.enUS": "English (US)",
-    "routes.login": "Login",
-    "routes.cards": "Cards",
-    "routes.templates": "Templates",
-    "routes.files": "Files",
-    "routes.docs": "Docs",
-    "routes.devSandbox": "Dev Sandbox"
+    "locales.ruRu": "Russian",
+    "locales.enUS": "English (US)"
   }
 }
