@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.1.0...v1.2.0) (2025-06-18)
+
+
+### Features
+
+* **cards:** добавлен компонент data-view ([a40bf8f](https://github.com/Eustrosoft/qrd-frontend/commit/a40bf8f95487f19f718efbb2414495e39ecb9385))
+* **cards:** добавлен компонент view-list-item ([3d98c93](https://github.com/Eustrosoft/qrd-frontend/commit/3d98c93e2d82dd88bdef9317938a521dfcb0b627))
+* **create-menu:** добавлено меню создания сущностей ([96c98cc](https://github.com/Eustrosoft/qrd-frontend/commit/96c98cca48df08b81bac10f99ba6f15528b16e70))
+* **list-item:** добавлена динамическая генерация картинки, добавлен <a> для навигации в карточку ([134c65b](https://github.com/Eustrosoft/qrd-frontend/commit/134c65b02a4c956a83b5aae8d803bdb1d02d391b))
+* **localization:** удалены геттеры переводов, оптимизирована загрузка локали ([49d271e](https://github.com/Eustrosoft/qrd-frontend/commit/49d271e7a16dc067ef56bfc66ef5f4da0f7ba6e1))
+* **mat-icon:** интегрирован mat-icon, удалены избыточные конструкции ([32f364e](https://github.com/Eustrosoft/qrd-frontend/commit/32f364e90a98593a414d7d1ebac0375fad56a537))
+* **ng-version:** скрыт атрибут ng-version в DOM ([bc8bf7a](https://github.com/Eustrosoft/qrd-frontend/commit/bc8bf7a2ef23771cdf7c44ec8cdbb4c32b862d18))
+* **openapi:** добавлена автогенерация типов api ([876b588](https://github.com/Eustrosoft/qrd-frontend/commit/876b588f5d5e8c63ef6a9df9d9a07430d66c6641))
+* **qr-cards:** добавлено представление списка ([b20890f](https://github.com/Eustrosoft/qrd-frontend/commit/b20890f9fd9dc61f5f8b3e850cd6843e46e12317))
+* **routing:** настроен роутинг для qr-cards, сгенерированы компоненты ([8e22a3b](https://github.com/Eustrosoft/qrd-frontend/commit/8e22a3b0c4734774efd4c211422536c9e38cdfe0))
+* **selection-bar:** добавлена sticky position для меню выбора ([35dbd22](https://github.com/Eustrosoft/qrd-frontend/commit/35dbd228869c5385a30dbda8156a2855f23203ae))
+* **selection:** добавлен selection-actions-bar ([de52d0e](https://github.com/Eustrosoft/qrd-frontend/commit/de52d0ebe5dccacac2d8443bba313c23d5a06ab5))
+* **selection:** доработан selection-actions-bar ([bbb0546](https://github.com/Eustrosoft/qrd-frontend/commit/bbb054621cb40a345239a28a2ac397192e31de7b))
+* **skeleton:** добавлен компонент skeleton, добавлена заглушка для ошибок http ([fc17e45](https://github.com/Eustrosoft/qrd-frontend/commit/fc17e45dde29fbd0f94b170ba496e2a38b24b0fa))
+
+
+### Bug Fixes
+
+* **anim:** исправлено поведение анимации на адаптивной версии ([35ec092](https://github.com/Eustrosoft/qrd-frontend/commit/35ec0926f33df2a1fae28b8ad18fd93f2f46f29f))
+
 ## [1.1.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.0.0...v1.1.0) (2025-06-03)
 
 
