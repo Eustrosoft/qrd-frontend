@@ -1,12 +1,25 @@
+<view-toolbar>
+  <ng-container heading>
+    <h1>
+      {{ SharedLocalization.card }}
+    </h1>
+    <link-with-icon><h1>QR №1323133</h1></link-with-icon>
+  </ng-container>
+  <ng-container action-buttons>
+    <button class="button-md" mat-flat-button>{{ SharedLocalization.edit }}</button>
+    <button class="button-md" mat-flat-button>{{ SharedLocalization.delete }}</button>
+  </ng-container>
+</view-toolbar>
 <ui-flex-block>
   <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="tabs">
     @for (link of tabLinks; track link.link) {
       <a
         tabindex="0"
         mat-tab-link
-        [active]="activeLink === link"
-        (click)="activeLink = link"
-        (keydown.enter)="activeLink = link"
+        [active]="activeLink === link.link"
+        (click)="activeLink = link.link"
+        (keydown.enter)="activeLink = link.link"
+        [routerLink]="link.link"
       >
         {{ link.title | uppercase }}
       </a>

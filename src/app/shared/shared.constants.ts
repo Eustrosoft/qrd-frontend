@@ -5,6 +5,7 @@ export const SharedLocalization = {
   language: $localize`:@@shared.language:Language`,
   mainPage: $localize`:@@shared.mainPage:Main`,
   defaultTitle: $localize`:@@shared.defaultTitle:QRD`,
+  card: $localize`:@@shared.card:Card`,
   search: $localize`:@@shared.search:Search`,
   list: $localize`:@@shared.list:List`,
   table: $localize`:@@shared.table:Table`,
@@ -19,4 +20,15 @@ export const SharedLocalization = {
 export const LocalesLocalization = {
   ruRu: $localize`:@@locales.ruRu:Russian`,
   enUS: $localize`:@@locales.enUS:English (US)`,
+} as const;
+
+export const RouteTitles = {
+  login: $localize`:@@routes.login:Login`,
+  cards: $localize`:@@routes.cards:Cards`,
+  card: $localize`:@@routes.card:Card`,
+  attrs: $localize`:@@routes.attrs:Attributes`,
+  templates: $localize`:@@routes.templates:Templates`,
+  files: $localize`:@@routes.files:Files`,
+  docs: $localize`:@@routes.docs:Docs`,
+  devSandbox: $localize`:@@routes.devSandbox:Dev Sandbox`,
 } as const;

@@ -2,9 +2,10 @@ import { Routes } from '@angular/router';
 import { QrCardsComponent } from '@app/pages/qr-cards/qr-cards.component';
 import { QrCardViewComponent } from '@app/pages/qr-cards/components/qr-card-view/qr-card-view.component';
 import { QrCardsLayoutComponent } from '@app/pages/qr-cards/components/qr-cards-layout/qr-cards-layout.component';
-import { AppRoutes, RouteTitles } from '@app/app.constants';
+import { AppRoutes } from '@app/app.constants';
 import { QrCardMainComponent } from '@app/pages/qr-cards/components/qr-card-main/qr-card-main.component';
 import { QrCardAttrsComponent } from '@app/pages/qr-cards/components/qr-card-attrs/qr-card-attrs.component';
+import { RouteTitles } from '@shared/shared.constants';
 
 export const qrCardsRoutes: Routes = [
   {
@@ -18,6 +19,7 @@ export const qrCardsRoutes: Routes = [
       {
         path: ':id',
         component: QrCardViewComponent,
+        title: RouteTitles.card,
         children: [
           {
             path: '',
@@ -26,12 +28,10 @@ export const qrCardsRoutes: Routes = [
           },
           {
             path: AppRoutes.card,
-            title: RouteTitles.card,
             component: QrCardMainComponent,
           },
           {
             path: AppRoutes.attrs,
-            title: RouteTitles.attrs,
             component: QrCardAttrsComponent,
           },
         ],

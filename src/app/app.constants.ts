@@ -12,17 +12,6 @@ export const AppRoutes = {
   devSandbox: 'dev-sandbox',
 } as const;
 
-export const RouteTitles = {
-  login: $localize`:@@routes.login:Login`,
-  cards: $localize`:@@routes.cards:Cards`,
-  card: $localize`:@@routes.card:Card`,
-  attrs: $localize`:@@routes.attrs:Attributes`,
-  templates: $localize`:@@routes.templates:Templates`,
-  files: $localize`:@@routes.files:Files`,
-  docs: $localize`:@@routes.docs:Docs`,
-  devSandbox: $localize`:@@routes.devSandbox:Dev Sandbox`,
-} as const;
-
 export const THEME_KEY = 'qrd-user-theme';
 export const THEME_CONTRAST_KEY = 'qrd-user-theme-contrast';
 export const LOCALE_KEY = 'qrd-user-locale';

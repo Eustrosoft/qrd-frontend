@@ -1,0 +1,18 @@
+@use 'styles/mixins' as mixins;
+@use 'styles/breakpoints' as bp;
+@use 'sass:map';
+
+:host {
+  display: flex;
+  justify-content: space-between;
+
+  @media #{map.get(bp.$breakpoints, xsmall)} {
+    gap: mixins.rem(16);
+    flex-direction: column;
+  }
+
+  @media #{map.get(bp.$breakpoints, small)} {
+    gap: mixins.rem(16);
+    flex-direction: column;
+  }
+}

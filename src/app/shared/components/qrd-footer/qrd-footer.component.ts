@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, model } from '@angular/core';
 import { SharedLocalization } from '@shared/shared.constants';
-import { MatAnchor } from '@angular/material/button';
+import { MatAnchor, MatButton } from '@angular/material/button';
 import { IS_SMALL, IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { RouterLink } from '@angular/router';
 import { MatFormField, MatLabel } from '@angular/material/input';
@@ -34,6 +34,7 @@ import { TextInteractionEffect } from '@shared/directives/text-interaction-effec
     UiFlexBlockComponent,
     UiGridBlockComponent,
     TextInteractionEffect,
+    MatButton,
   ],
   templateUrl: './qrd-footer.component.html',
   styleUrl: './qrd-footer.component.scss',

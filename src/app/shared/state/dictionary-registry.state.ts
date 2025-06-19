@@ -4,11 +4,10 @@ import { Dictionaries, DictionaryState } from '@app/app.models';
 import { Option } from '@shared/shared.models';
 import { ThemePickerOverlayLocalization } from '@shared/components/theme-picker-overlay/theme-picker-overlay.constants';
 import { patch } from '@ngxs/store/operators';
-import { LocalesLocalization } from '@shared/shared.constants';
+import { LocalesLocalization, RouteTitles } from '@shared/shared.constants';
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 import { BottomNavbarLink } from '@shared/components/bottom-navbar/bottom-navbar.models';
 import { HeaderNavbarLink } from '@shared/components/qrd-header/qrd-header.models';
-import { RouteTitles } from '@app/app.constants';
 
 // eslint-disable-next-line
 export interface DictionaryRegistryStateModel<T = any> {
