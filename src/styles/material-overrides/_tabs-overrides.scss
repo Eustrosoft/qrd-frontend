@@ -1,7 +1,9 @@
 @use '@angular/material' as mat;
 @use 'styles/mixins' as mixins;
+@use 'styles/breakpoints' as bp;
+@use 'sass:map';
 
-.tabs {
+.tab-nav-bar {
   @include mat.tabs-overrides(
     (
       label-text-size: var(--mat-sys-body-medium-size),
@@ -19,4 +21,20 @@
 
   box-shadow: var(--mat-sys-level1);
   border-radius: mixins.rem(12);
+
+  a {
+    padding: 0 mixins.rem(32);
+  }
+
+  @media #{map.get(bp.$breakpoints, xsmall)} {
+    a {
+      padding: 0 mixins.rem(24);
+    }
+  }
+
+  @media #{map.get(bp.$breakpoints, small)} {
+    a {
+      padding: 0 mixins.rem(24);
+    }
+  }
 }

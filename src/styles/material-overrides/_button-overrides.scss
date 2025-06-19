@@ -89,10 +89,10 @@
   min-width: auto !important;
 }
 
-.mini-fab-icon-button-circle {
+.mini-fab-icon-primary-button-circle {
   @include mat.fab-overrides(
     (
-      small-container-color: var(--mat-sys-secondary),
+      small-container-color: var(--mat-sys-primary),
       small-container-shape: 999px,
       small-container-elevation-shadow: none,
       small-pressed-container-elevation-shadow: none,
@@ -102,7 +102,7 @@
   );
 }
 
-.fab-icon-button-circle {
+.fab-icon-secondary-button-circle {
   @include mat.fab-overrides(
     (
       container-color: var(--mat-sys-secondary),

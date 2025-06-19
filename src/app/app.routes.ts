@@ -26,7 +26,7 @@ export const routes: Routes = [
   },
   {
     path: AppRoutes.login,
-    title: () => RouteTitles.login,
+    title: RouteTitles.login,
     component: LoginComponent,
   },
   {

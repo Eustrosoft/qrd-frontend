@@ -11,16 +11,9 @@
   </ng-container>
 </view-toolbar>
 <ui-flex-block>
-  <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="tabs">
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="tab-nav-bar">
     @for (link of tabLinks; track link.link) {
-      <a
-        tabindex="0"
-        mat-tab-link
-        [active]="activeLink === link.link"
-        (click)="activeLink = link.link"
-        (keydown.enter)="activeLink = link.link"
-        [routerLink]="link.link"
-      >
+      <a mat-tab-link [active]="activeLink === link.link" (click)="activeLink = link.link" [routerLink]="link.link">
         {{ link.title | uppercase }}
       </a>
     }
