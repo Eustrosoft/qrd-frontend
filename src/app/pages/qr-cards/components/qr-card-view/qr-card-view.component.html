@@ -1,1 +1,18 @@
-<router-outlet />
+<ui-flex-block>
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="tabs">
+    @for (link of tabLinks; track link.link) {
+      <a
+        tabindex="0"
+        mat-tab-link
+        [active]="activeLink === link"
+        (click)="activeLink = link"
+        (keydown.enter)="activeLink = link"
+      >
+        {{ link.title | uppercase }}
+      </a>
+    }
+  </nav>
+</ui-flex-block>
+<mat-tab-nav-panel #tabPanel>
+  <router-outlet />
+</mat-tab-nav-panel>

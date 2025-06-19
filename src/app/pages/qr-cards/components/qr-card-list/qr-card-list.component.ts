@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { ScrolledToLastDirective } from '@shared/directives/scrolled-to-last.directive';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
@@ -16,6 +16,7 @@ import { MatIcon } from '@angular/material/icon';
 import { outputFromObservable } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { ImgLoadStateDirective } from '@shared/directives/img-load-state.directive';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'qr-card-list',
@@ -29,12 +30,14 @@ import { ImgLoadStateDirective } from '@shared/directives/img-load-state.directi
     UiSkeletonComponent,
     MatIcon,
     ImgLoadStateDirective,
+    RouterLink,
   ],
   templateUrl: './qr-card-list.component.html',
   styleUrl: './qr-card-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrCardListComponent implements OnInit {
+  protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly QrCardsLocalization = QrCardsLocalization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly selectors = createSelectMap({

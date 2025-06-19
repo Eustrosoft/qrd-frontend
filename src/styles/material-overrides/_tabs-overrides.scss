@@ -1,0 +1,22 @@
+@use '@angular/material' as mat;
+@use 'styles/mixins' as mixins;
+
+.tabs {
+  @include mat.tabs-overrides(
+    (
+      label-text-size: var(--mat-sys-body-medium-size),
+      label-text-line-height: var(--mat-sys-body-medium-line-height),
+      active-label-text-color: var(--mat-sys-primary),
+      active-hover-label-text-color: var(--mat-sys-primary),
+      active-focus-label-text-color: var(--mat-sys-primary),
+      background-color: var(--mat-sys-surface-container-lowest),
+      foreground-color: var(--mat-sys-surface-container-lowest),
+      divider-height: 0,
+      active-indicator-height: 2px,
+      active-indicator-shape: 999px,
+    )
+  );
+
+  box-shadow: var(--mat-sys-level1);
+  border-radius: mixins.rem(12);
+}
