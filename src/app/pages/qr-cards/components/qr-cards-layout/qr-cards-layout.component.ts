@@ -3,7 +3,7 @@ import { DataViewComponent } from '@shared/components/data-view/data-view.compon
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import {
-  FetchQrCards,
+  FetchQrCardList,
   SelectedAllQrCards,
   SetQrCardsDataViewDisplayType,
   SetSelectedQrCards,
@@ -29,7 +29,7 @@ export class QrCardsLayoutComponent {
   });
   protected readonly actions = createDispatchMap({
     setDisplayType: SetQrCardsDataViewDisplayType,
-    fetchQrCards: FetchQrCards,
+    fetchQrCards: FetchQrCardList,
     setSelectedQrCards: SetSelectedQrCards,
     selectedAllQrCards: SelectedAllQrCards,
   });

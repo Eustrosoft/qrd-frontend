@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
 import { AppRoutes } from '@app/app.constants';
 import { TabLink } from '@shared/shared.models';
@@ -9,6 +9,12 @@ import { ViewToolbarComponent } from '@shared/components/view-toolbar/view-toolb
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { LinkWithIconComponent } from '@shared/components/link-with-icon/link-with-icon.component';
 import { MatButton } from '@angular/material/button';
+import { createDispatchMap, createSelectMap } from '@ngxs/store';
+import { FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
+import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
+import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 
 @Component({
   selector: 'qr-card-view',
@@ -23,16 +29,32 @@ import { MatButton } from '@angular/material/button';
     LinkWithIconComponent,
     MatButton,
     RouterLink,
+    ToHexPipe,
+    UiSkeletonComponent,
   ],
   templateUrl: './qr-card-view.component.html',
   styleUrl: './qr-card-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class QrCardViewComponent {
+export class QrCardViewComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
+  protected readonly selectors = createSelectMap({
+    isQrCardLoading: QrCardsState.isQrCardLoading$,
+    qrCard: QrCardsState.getQrCard$,
+  });
+  protected readonly actions = createDispatchMap({
+    fetchQrCard: FetchQrCard,
+  });
   protected readonly tabLinks: TabLink[] = [
     { link: AppRoutes.card, title: RouteTitles.card },
     { link: AppRoutes.attrs, title: RouteTitles.attrs },
   ];
   protected activeLink = this.tabLinks[0].link;
   protected readonly SharedLocalization = SharedLocalization;
+
+  public ngOnInit(): void {
+    this.actions.fetchQrCard(this.routeParams()['code'], this.destroyRef);
+  }
 }

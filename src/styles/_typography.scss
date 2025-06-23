@@ -13,16 +13,20 @@ h3 {
 p {
   font: var(--mat-sys-body-medium);
 
-  &.is-bold {
+  &.bold {
     font-weight: 700;
   }
 
-  &.is-primary {
+  &.primary-color {
     color: var(--mat-sys-primary);
   }
 
-  &.is-on-primary-container {
+  &.on-primary-container-color {
     color: var(--mat-sys-on-primary-container);
+  }
+
+  &.outline-variant-color {
+    color: var(--mat-sys-outline-variant);
   }
 }
 

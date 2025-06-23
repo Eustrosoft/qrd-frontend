@@ -17,7 +17,7 @@ export const qrCardsRoutes: Routes = [
         component: QrCardsLayoutComponent,
       },
       {
-        path: ':id',
+        path: ':code',
         component: QrCardViewComponent,
         title: RouteTitles.card,
         children: [

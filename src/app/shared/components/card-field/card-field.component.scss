@@ -1,0 +1,7 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  gap: mixins.rem(4);
+  display: flex;
+  flex-direction: column;
+}

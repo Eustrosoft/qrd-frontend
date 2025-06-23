@@ -1,6 +1,18 @@
 <card-container [hideHeading]="true">
   <ng-container content>
-    <p>qr-card-main works!</p>
+    <ui-grid-block [gridTemplateColumns]="infoGridTemplateColumns()">
+      @if (selectors.qrCard()?.form?.name) {
+        <card-field [heading]="`${SharedLocalization.template}:`">
+          <link-with-icon>{{ selectors.qrCard()?.form?.name }}</link-with-icon>
+        </card-field>
+      }
+      <card-field [heading]="`${SharedLocalization.name}:`">
+        {{ selectors.qrCard()?.name ?? SharedLocalization.noName }}
+      </card-field>
+      <card-field [heading]="`${SharedLocalization.description}:`">
+        {{ selectors.qrCard()?.description ?? SharedLocalization.noDescription }}
+      </card-field>
+    </ui-grid-block>
   </ng-container>
 </card-container>
 <card-container>

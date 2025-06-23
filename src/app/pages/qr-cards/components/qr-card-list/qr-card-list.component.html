@@ -9,7 +9,7 @@
     @for (qrCard of selectors.qrCardList(); track qrCard.id) {
       <view-list-item
         [title]="qrCard.code | toHex"
-        [navigateTo]="`./${qrCard.id}`"
+        [navigateTo]="`./${qrCard.code}`"
         [isPreviewShown]="true"
         [isSelected]="selectionModel.isSelected(qrCard.id)"
         (checkboxChanged)="$event ? selectionModel.select(qrCard.id) : selectionModel.deselect(qrCard.id)"

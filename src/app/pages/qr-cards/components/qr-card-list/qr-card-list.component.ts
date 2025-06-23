@@ -3,7 +3,7 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 import { ScrolledToLastDirective } from '@shared/directives/scrolled-to-last.directive';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
-import { FetchQrCards, SetQrCardsDataViewDisplayType } from '@app/pages/qr-cards/state/qr-cards.actions';
+import { FetchQrCardList, SetQrCardsDataViewDisplayType } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { ViewListItemComponent } from '@shared/components/view-list-item/view-list-item.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
@@ -48,7 +48,7 @@ export class QrCardListComponent implements OnInit {
   });
   protected readonly actions = createDispatchMap({
     setDisplayType: SetQrCardsDataViewDisplayType,
-    fetchQrCards: FetchQrCards,
+    fetchQrCards: FetchQrCardList,
   });
 
   protected readonly selectionModel = new SelectionModel(true, this.selectors.selectedQrCardList());

@@ -1,7 +1,16 @@
 import { DataViewDisplayType } from '@shared/shared.models';
+import { DestroyRef } from '@angular/core';
 
-export class FetchQrCards {
-  public static readonly type = '[Qr Cards] Fetch Qr Cards';
+export class FetchQrCardList {
+  public static readonly type = '[Qr Cards] Fetch Qr Card List';
+}
+
+export class FetchQrCard {
+  public static readonly type = '[Qr Cards] Fetch Qr Card';
+  constructor(
+    readonly code: string,
+    readonly destroyRef: DestroyRef,
+  ) {}
 }
 
 export class SetSelectedQrCards {
