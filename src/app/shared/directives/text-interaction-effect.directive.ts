@@ -1,9 +1,9 @@
 import { Directive, ElementRef, HostListener, inject, model, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[textInteractionEffect]',
+  selector: '[interactionEffect]',
 })
-export class TextInteractionEffect {
+export class InteractionEffect {
   private readonly el: ElementRef = inject(ElementRef);
   private readonly renderer: Renderer2 = inject(Renderer2);
 

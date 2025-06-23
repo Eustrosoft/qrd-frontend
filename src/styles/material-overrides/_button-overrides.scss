@@ -89,6 +89,27 @@
   min-width: auto !important;
 }
 
+.button-anchor-md-with-icon {
+  @include mat.button-overrides(
+    (
+      text-label-text-size: 16px,
+      text-container-height: 24px,
+      text-horizontal-padding: 0,
+      text-hover-state-layer-opacity: 0,
+      text-focus-state-layer-opacity: 0,
+      text-pressed-state-layer-opacity: 0,
+      text-ripple-color: none,
+      text-label-text-transform: none,
+      text-icon-offset: 4px,
+      text-icon-spacing: 0,
+      text-with-icon-horizontal-padding: 0,
+    )
+  );
+
+  flex-flow: row-reverse;
+  min-width: auto !important;
+}
+
 .mini-fab-icon-primary-button-circle {
   @include mat.fab-overrides(
     (

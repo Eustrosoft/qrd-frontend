@@ -3,7 +3,16 @@
     <ui-grid-block [gridTemplateColumns]="infoGridTemplateColumns()">
       @if (selectors.qrCard()?.form?.name) {
         <card-field [heading]="`${SharedLocalization.template}:`">
-          <link-with-icon>{{ selectors.qrCard()?.form?.name }}</link-with-icon>
+          <a
+            routerLink="./"
+            class="button-anchor-md-with-icon"
+            interactionEffect
+            [targetSelectors]="['p', 'mat-icon']"
+            mat-button
+          >
+            <p>{{ selectors.qrCard()?.form?.name }}</p>
+            <mat-icon class="icon-primary">open_in_new</mat-icon>
+          </a>
         </card-field>
       }
       <card-field [heading]="`${SharedLocalization.name}:`">

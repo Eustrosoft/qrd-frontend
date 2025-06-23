@@ -4,13 +4,24 @@ import { createSelectMap } from '@ngxs/store';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { CardFieldComponent } from '@shared/components/card-field/card-field.component';
 import { SharedLocalization } from '@shared/shared.constants';
-import { LinkWithIconComponent } from '@shared/components/link-with-icon/link-with-icon.component';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
 
 @Component({
   selector: 'qr-card-main',
-  imports: [CardContainerComponent, CardFieldComponent, LinkWithIconComponent, UiGridBlockComponent],
+  imports: [
+    CardContainerComponent,
+    CardFieldComponent,
+    UiGridBlockComponent,
+    MatButton,
+    MatIcon,
+    RouterLink,
+    InteractionEffect,
+  ],
   templateUrl: './qr-card-main.component.html',
   styleUrl: './qr-card-main.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

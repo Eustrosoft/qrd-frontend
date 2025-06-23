@@ -16,7 +16,7 @@ import { Option } from '@shared/shared.models';
 import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
-import { TextInteractionEffect } from '@shared/directives/text-interaction-effect.directive';
+import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
 
 @Component({
   selector: 'qrd-footer',
@@ -33,8 +33,8 @@ import { TextInteractionEffect } from '@shared/directives/text-interaction-effec
     QrdLogoComponent,
     UiFlexBlockComponent,
     UiGridBlockComponent,
-    TextInteractionEffect,
     MatButton,
+    InteractionEffect,
   ],
   templateUrl: './qrd-footer.component.html',
   styleUrl: './qrd-footer.component.scss',

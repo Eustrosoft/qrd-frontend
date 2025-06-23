@@ -7,7 +7,6 @@ import { UpperCasePipe } from '@angular/common';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { ViewToolbarComponent } from '@shared/components/view-toolbar/view-toolbar.component';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
-import { LinkWithIconComponent } from '@shared/components/link-with-icon/link-with-icon.component';
 import { MatButton } from '@angular/material/button';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
@@ -15,6 +14,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
+import { MatIcon } from '@angular/material/icon';
+import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
 
 @Component({
   selector: 'qr-card-view',
@@ -26,11 +27,12 @@ import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
     UpperCasePipe,
     UiFlexBlockComponent,
     ViewToolbarComponent,
-    LinkWithIconComponent,
     MatButton,
     RouterLink,
     ToHexPipe,
     UiSkeletonComponent,
+    MatIcon,
+    InteractionEffect,
   ],
   templateUrl: './qr-card-view.component.html',
   styleUrl: './qr-card-view.component.scss',
