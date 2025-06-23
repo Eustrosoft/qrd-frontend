@@ -1,15 +1,19 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
-import { createSelectMap } from '@ngxs/store';
+import { createSelectMap, select } from '@ngxs/store';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { CardFieldComponent } from '@shared/components/card-field/card-field.component';
-import { SharedLocalization } from '@shared/shared.constants';
+import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { FileListItemComponent } from '@shared/components/file-list-item/file-list-item.component';
+import { DatePipe } from '@angular/common';
+import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 
 @Component({
   selector: 'qr-card-main',
@@ -21,6 +25,10 @@ import { InteractionEffect } from '@shared/directives/text-interaction-effect.di
     MatIcon,
     RouterLink,
     InteractionEffect,
+    UiFlexBlockComponent,
+    FileListItemComponent,
+    DatePipe,
+    BytesToSizePipe,
   ],
   templateUrl: './qr-card-main.component.html',
   styleUrl: './qr-card-main.component.scss',
@@ -31,7 +39,9 @@ export class QrCardMainComponent {
   protected readonly selectors = createSelectMap({
     qrCard: QrCardsState.getQrCard$,
   });
+
   protected readonly SharedLocalization = SharedLocalization;
+  protected readonly RouteTitles = RouteTitles;
 
   protected readonly infoGridTemplateColumns = computed<string>(() => {
     if (this.isSmallScreen()) {
@@ -39,4 +49,5 @@ export class QrCardMainComponent {
     }
     return 'repeat(2, 1fr)';
   });
+  protected readonly select = select;
 }

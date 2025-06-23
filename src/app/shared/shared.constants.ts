@@ -11,6 +11,7 @@ export const SharedLocalization = {
   noDescription: $localize`:@@shared.noDescription:No description`,
   template: $localize`:@@shared.template:Template`,
   noTemplate: $localize`:@@shared.noTemplate:No template`,
+  noFiles: $localize`:@@shared.noFiles:No files`,
   card: $localize`:@@shared.card:Card`,
   search: $localize`:@@shared.search:Search`,
   list: $localize`:@@shared.list:List`,
@@ -21,6 +22,15 @@ export const SharedLocalization = {
   delete: $localize`:@@shared.delete:Delete`,
   selected: $localize`:@@shared.selected:Selected`,
   selectAll: $localize`:@@shared.selectAll:Select all`,
+  updateDate: $localize`:@@shared.updateDate:Last update at`,
+  storedInS3: $localize`:@@shared.storedInS3:Stored in S3`,
+  storedInDB: $localize`:@@shared.storedInDB:Stored in database`,
+  storedLocally: $localize`:@@shared.storedLocally:Stored locally`,
+  storedExternally: $localize`:@@shared.storedExternally:Stored externally`,
+  isPublic: $localize`:@@shared.isPublic:Publicly available`,
+  nonPublic: $localize`:@@shared.nonPublic:Publicly unavailable`,
+  isActive: $localize`:@@shared.isActive:Is active`,
+  isInactive: $localize`:@@shared.isInactive:Is inactive`,
 } as const;
 
 export const SizeUnitsLocalization = {

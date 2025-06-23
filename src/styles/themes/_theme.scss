@@ -75,4 +75,11 @@
       item-icon-color: var(--mat-sys-primary),
     )
   );
+  @include mat.tooltip-overrides(
+    (
+      container-shape: 8px,
+      container-color: var(--mat-sys-secondary-container),
+      supporting-text-color: var(--mat-sys-on-secondary-container),
+    )
+  );
 }

@@ -110,7 +110,23 @@
   min-width: auto !important;
 }
 
-.mini-fab-icon-primary-button-circle {
+.mini-fab-icon-primary-button-circle-sm {
+  @include mat.fab-overrides(
+    (
+      small-container-color: var(--mat-sys-primary),
+      small-container-shape: 999px,
+      small-container-elevation-shadow: none,
+      small-pressed-container-elevation-shadow: none,
+      small-hover-container-elevation-shadow: none,
+      small-focus-container-elevation-shadow: none,
+    )
+  );
+
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.mini-fab-icon-primary-button-circle-md {
   @include mat.fab-overrides(
     (
       small-container-color: var(--mat-sys-primary),

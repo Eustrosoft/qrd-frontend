@@ -26,9 +26,22 @@
 </card-container>
 <card-container>
   <ng-container heading>
-    <h1>Files</h1>
+    <h1>{{ RouteTitles.files }}</h1>
   </ng-container>
   <ng-container content>
-    <p>qr-card-main works!</p>
+    <ui-flex-block flexDirection="column">
+      @for (file of selectors.qrCard()?.files; track file.id) {
+        <file-list-item
+          [fileStorageType]="file.fileStorageType"
+          [name]="file?.name ?? ''"
+          [fileSize]="file.fileSize | bytesToSize"
+          [isPublic]="file.isPublic"
+          [isActive]="file.isActive"
+          [updated]="(file.updated | date: 'short') ?? ''"
+        />
+      } @empty {
+        {{ SharedLocalization.noFiles }}
+      }
+    </ui-flex-block>
   </ng-container>
 </card-container>
