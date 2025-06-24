@@ -8,7 +8,7 @@
     </ui-badge>
   }
   @if (updated()) {
-    <ui-badge>
+    <ui-badge [tooltipText]="SharedLocalization.updateDate" tooltipPosition="above">
       <small>{{ updated() }}</small>
     </ui-badge>
   }
