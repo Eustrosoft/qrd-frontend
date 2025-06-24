@@ -12,10 +12,11 @@ import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
-import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { MatIcon } from '@angular/material/icon';
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
+import { TruncateDirective } from '@shared/directives/truncate.directive';
+import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 
 @Component({
   selector: 'qr-card-view',
@@ -29,10 +30,11 @@ import { InteractionEffect } from '@shared/directives/text-interaction-effect.di
     ViewToolbarComponent,
     MatButton,
     RouterLink,
-    ToHexPipe,
     UiSkeletonComponent,
     MatIcon,
     InteractionEffect,
+    TruncateDirective,
+    ToHexPipe,
   ],
   templateUrl: './qr-card-view.component.html',
   styleUrl: './qr-card-view.component.scss',

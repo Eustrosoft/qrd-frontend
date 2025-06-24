@@ -3,16 +3,15 @@
 @use 'sass:map';
 
 :host {
+  gap: mixins.rem(16);
   display: flex;
   justify-content: space-between;
 
   @media #{map.get(bp.$breakpoints, xsmall)} {
-    gap: mixins.rem(16);
     flex-direction: column;
   }
 
   @media #{map.get(bp.$breakpoints, small)} {
-    gap: mixins.rem(16);
     flex-direction: column;
   }
 }

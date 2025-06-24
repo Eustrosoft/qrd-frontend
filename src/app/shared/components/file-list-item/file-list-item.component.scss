@@ -1,12 +1,25 @@
 @use 'styles/mixins' as mixins;
+@use 'styles/breakpoints' as bp;
+@use 'sass:map';
 
 :host {
-  gap: mixins.rem(8);
   display: flex;
   padding: mixins.rem(4) mixins.rem(8);
-  flex-flow: row wrap;
+  flex-flow: row;
   background: var(--mat-sys-surface-container-low);
   align-items: center;
   border-radius: mixins.rem(12);
   justify-content: space-between;
+
+  @media #{map.get(bp.$breakpoints, xsmall)} {
+    gap: mixins.rem(8);
+    flex-flow: column;
+    align-items: start;
+  }
+
+  @media #{map.get(bp.$breakpoints, small)} {
+    gap: mixins.rem(8);
+    flex-flow: column;
+    align-items: start;
+  }
 }

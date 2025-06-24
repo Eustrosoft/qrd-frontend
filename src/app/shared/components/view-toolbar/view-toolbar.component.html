@@ -1,4 +1,4 @@
-<ui-flex-block flexAlignItems="center" flexWrap="wrap">
+<ui-flex-block flexAlignItems="center" overflow="hidden" flexJustifyContent="flex-start" flex="auto">
   <a
     [routerLink]="navigateTo()"
     [relativeTo]="activatedRoute"
@@ -9,6 +9,6 @@
   </a>
   <ng-content select="[heading]"></ng-content>
 </ui-flex-block>
-<ui-flex-block flexAlignItems="center">
+<ui-flex-block flexAlignItems="center" flexJustifyContent="flex-end" flex="0 1 auto">
   <ng-content select="[action-buttons]"></ng-content>
 </ui-flex-block>
