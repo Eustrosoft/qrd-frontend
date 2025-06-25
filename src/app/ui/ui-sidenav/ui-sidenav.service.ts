@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, Injector, signal } from '@angular/core';
 import { SidenavConfig } from '@ui/ui-sidenav/ui-sidenav.models';
 import { MatSidenav } from '@angular/material/sidenav';
 import { first, from, tap } from 'rxjs';
@@ -9,6 +9,8 @@ import { first, from, tap } from 'rxjs';
 export class UiSidenavService {
   private readonly defaultSidenavConfig: SidenavConfig = {
     inputs: {},
+    content: [],
+    injector: Injector.create({ providers: [] }),
     mode: 'over',
     autoFocus: 'first-tabbable',
     position: 'start',
@@ -66,6 +68,8 @@ export class UiSidenavService {
     this._sidenavCmp.set(null);
     const cfg: SidenavConfig = {
       inputs: config.inputs ?? this.defaultSidenavConfig.inputs,
+      content: config.content ?? this.defaultSidenavConfig.content,
+      injector: config.injector ?? this.defaultSidenavConfig.injector,
       mode: config.mode ?? this.defaultSidenavConfig.mode,
       autoFocus: config.autoFocus ?? this.defaultSidenavConfig.autoFocus,
       position: config.position ?? this.defaultSidenavConfig.position,

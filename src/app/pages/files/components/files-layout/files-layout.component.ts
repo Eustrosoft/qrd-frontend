@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DOCUMENT, inject } from '@angular/core';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { FilesState } from '@app/pages/files/state/files.state';
 import {
@@ -13,6 +13,7 @@ import { MatIcon } from '@angular/material/icon';
 import { FileListComponent } from '@app/pages/files/components/file-list/file-list.component';
 import { expandAnimation } from '@shared/shared.animations';
 import { MatMiniFabButton } from '@angular/material/button';
+import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 
 @Component({
   selector: 'files-layout',
@@ -23,6 +24,9 @@ import { MatMiniFabButton } from '@angular/material/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilesLayoutComponent {
+  protected readonly uiSidenavService = inject(UiSidenavService);
+  protected readonly document = inject(DOCUMENT);
+
   protected readonly selectors = createSelectMap({
     displayType: FilesState.getDisplayType$,
     selectedFileList: FilesState.getSelectedFileList$,
@@ -35,6 +39,8 @@ export class FilesLayoutComponent {
   });
 
   protected openAdvancedSearch(): void {
-    throw new Error('Not implemented');
+    this.uiSidenavService.open(MatIcon, {
+      content: [[this.document.createTextNode('database_search')]],
+    });
   }
 }

@@ -1,9 +1,12 @@
 import { MatDrawerMode } from '@angular/material/sidenav';
 import { AutoFocusTarget } from '@angular/cdk/dialog';
 import { BooleanInput } from '@angular/cdk/coercion';
+import { Injector } from '@angular/core';
 
 export interface SidenavConfig {
   inputs: Record<string, unknown>;
+  content: Node[][];
+  injector: Injector;
   mode: MatDrawerMode;
   autoFocus: AutoFocusTarget | string | BooleanInput;
   position: 'start' | 'end';

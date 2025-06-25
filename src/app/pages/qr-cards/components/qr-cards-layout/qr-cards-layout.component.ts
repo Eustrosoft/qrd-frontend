@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DOCUMENT, inject } from '@angular/core';
 import { DataViewComponent } from '@shared/components/data-view/data-view.component';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
@@ -13,6 +13,7 @@ import { QrCardListComponent } from '@app/pages/qr-cards/components/qr-card-list
 import { MatIcon } from '@angular/material/icon';
 import { expandAnimation } from '@shared/shared.animations';
 import { MatMiniFabButton } from '@angular/material/button';
+import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 
 @Component({
   selector: 'qr-cards-layout',
@@ -23,6 +24,9 @@ import { MatMiniFabButton } from '@angular/material/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrCardsLayoutComponent {
+  protected readonly uiSidenavService = inject(UiSidenavService);
+  protected readonly document = inject(DOCUMENT);
+
   protected readonly selectors = createSelectMap({
     displayType: QrCardsState.getDisplayType$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
@@ -35,6 +39,8 @@ export class QrCardsLayoutComponent {
   });
 
   protected openAdvancedSearch(): void {
-    throw new Error('Not implemented');
+    this.uiSidenavService.open(MatIcon, {
+      content: [[this.document.createTextNode('database_search')]],
+    });
   }
 }

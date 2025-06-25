@@ -10,7 +10,12 @@
     [opened]="uiSidenavService.isOpen()"
   >
     <ng-container
-      *ngComponentOutlet="uiSidenavService.sidenavCmp(); inputs: uiSidenavService.sidenavConfig().inputs"
+      *ngComponentOutlet="
+        uiSidenavService.sidenavCmp();
+        inputs: uiSidenavService.sidenavConfig().inputs;
+        content: uiSidenavService.sidenavConfig().content;
+        injector: uiSidenavService.sidenavConfig().injector
+      "
     ></ng-container>
   </mat-sidenav>
   <mat-sidenav-content>
