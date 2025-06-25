@@ -1,22 +1,45 @@
-<p ellipsis>{{ caption() }}</p>
-<p ellipsis>{{ value() }}</p>
-<ui-flex-block flexWrap="wrap">
-  <button
-    [matTooltip]="isPublic() ? SharedLocalization.isPublic : SharedLocalization.nonPublic"
-    matTooltipPosition="above"
-    class="mini-fab-icon-primary-button-circle-sm"
-    tabIndex="-1"
-    mat-mini-fab
+<p [title]="caption()" ellipsis>{{ caption() }}</p>
+@if (isTextLike()) {
+  <p [title]="value()" ellipsis>{{ value() }}</p>
+}
+@if (type() === 'TEXTAREA') {
+  <p style="white-space: pre-line; word-wrap: break-word; hyphens: auto">{{ value() }}</p>
+}
+@if (type() === 'DATE') {
+  <p ellipsis>{{ value() | date: 'shortDate' }}</p>
+}
+@if (type() === 'EMAIL') {
+  <a
+    [title]="value()"
+    [href]="`mailto:${value()}`"
+    class="button-anchor-md"
+    style="display: inline"
+    mat-button
+    interactionEffect
+    ellipsis
   >
-    <mat-icon class="icon-on-secondary">{{ isPublic() ? 'visibility' : 'visibility_lock' }}</mat-icon>
-  </button>
-  <button
-    [matTooltip]="isStatic() ? SharedLocalization.isStatic : SharedLocalization.nonStatic"
-    matTooltipPosition="above"
-    class="mini-fab-icon-primary-button-circle-sm"
-    tabIndex="-1"
-    mat-mini-fab
-  >
-    <mat-icon class="icon-on-secondary">{{ isStatic() ? 'lock_open_right' : 'lock' }}</mat-icon>
-  </button>
-</ui-flex-block>
+    {{ value() }}
+  </a>
+}
+@if (!hideIconAttrs()) {
+  <ui-flex-block flexWrap="wrap">
+    <button
+      [matTooltip]="isPublic() ? SharedLocalization.isPublic : SharedLocalization.nonPublic"
+      matTooltipPosition="above"
+      class="mini-fab-icon-primary-button-circle-sm"
+      tabIndex="-1"
+      mat-mini-fab
+    >
+      <mat-icon class="icon-on-secondary">{{ isPublic() ? 'visibility' : 'visibility_lock' }}</mat-icon>
+    </button>
+    <button
+      [matTooltip]="isStatic() ? SharedLocalization.isStatic : SharedLocalization.nonStatic"
+      matTooltipPosition="above"
+      class="mini-fab-icon-primary-button-circle-sm"
+      tabIndex="-1"
+      mat-mini-fab
+    >
+      <mat-icon class="icon-on-secondary">{{ isStatic() ? 'lock' : 'lock_open_right' }}</mat-icon>
+    </button>
+  </ui-flex-block>
+}

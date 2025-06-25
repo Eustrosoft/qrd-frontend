@@ -5,6 +5,7 @@
         <attr-list-item
           [caption]="field.caption"
           [value]="selectors.qrCard()?.data?.[field.name] ?? SharedLocalization.empty"
+          [type]="field.fieldType"
           [isPublic]="field.isPublic"
           [isStatic]="field.isStatic"
         />

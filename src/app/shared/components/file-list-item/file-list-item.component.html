@@ -1,5 +1,5 @@
 <a [href]="fileHref()" target="_blank" rel="noreferrer" [style.flex]="'auto'" [style.width]="'100%'" ellipsis>
-  <p class="primary-color" ellipsis>{{ name() }}</p>
+  <p [title]="name()" class="primary-color" ellipsis>{{ name() }}</p>
 </a>
 <ui-flex-block gapSize="8" flex="0 0 auto" flexAlignItems="center" [flexWrap]="isSmallScreen() ? 'wrap' : 'nowrap'">
   @if (fileSize()) {
