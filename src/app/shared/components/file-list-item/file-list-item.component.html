@@ -68,12 +68,12 @@
     <mat-icon class="icon-on-secondary">{{ isPublic() ? 'visibility' : 'visibility_lock' }}</mat-icon>
   </button>
   <button
-    [matTooltip]="isPublic() ? SharedLocalization.isActive : SharedLocalization.isInactive"
+    [matTooltip]="isActive() ? SharedLocalization.isActive : SharedLocalization.isInactive"
     matTooltipPosition="above"
     class="mini-fab-icon-primary-button-circle-sm"
     tabIndex="-1"
     mat-mini-fab
   >
-    <mat-icon class="icon-on-secondary">{{ isActive() ? 'lock_open_right' : 'lock' }}</mat-icon>
+    <mat-icon class="icon-on-secondary">{{ isActive() ? 'done_all' : 'remove_done' }}</mat-icon>
   </button>
 </ui-flex-block>

@@ -12,6 +12,8 @@ export const SharedLocalization = {
   template: $localize`:@@shared.template:Template`,
   noTemplate: $localize`:@@shared.noTemplate:No template`,
   noFiles: $localize`:@@shared.noFiles:No files`,
+  noAttrs: $localize`:@@shared.noAttrs:No attributes`,
+  empty: $localize`:@@shared.empty:Empty`,
   card: $localize`:@@shared.card:Card`,
   search: $localize`:@@shared.search:Search`,
   list: $localize`:@@shared.list:List`,
@@ -29,6 +31,8 @@ export const SharedLocalization = {
   storedExternally: $localize`:@@shared.storedExternally:Stored externally`,
   isPublic: $localize`:@@shared.isPublic:Publicly available`,
   nonPublic: $localize`:@@shared.nonPublic:Publicly unavailable`,
+  isStatic: $localize`:@@shared.isStatic:Static`,
+  nonStatic: $localize`:@@shared.nonStatic:Non static`,
   isActive: $localize`:@@shared.isActive:Is active`,
   isInactive: $localize`:@@shared.isInactive:Is inactive`,
 } as const;

@@ -1,1 +1,16 @@
-<p>qr-card-attrs works!</p>
+<card-container [hideHeading]="true">
+  <ng-container content>
+    <ui-flex-block gapSize="0" flexDirection="column">
+      @for (field of selectors.qrCard()?.form?.fields; track field.id) {
+        <attr-list-item
+          [caption]="field.caption"
+          [value]="selectors.qrCard()?.data?.[field.name] ?? SharedLocalization.empty"
+          [isPublic]="field.isPublic"
+          [isStatic]="field.isStatic"
+        />
+      } @empty {
+        {{ SharedLocalization.noAttrs }}
+      }
+    </ui-flex-block>
+  </ng-container>
+</card-container>

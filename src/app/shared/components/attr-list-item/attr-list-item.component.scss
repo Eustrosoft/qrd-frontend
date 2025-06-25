@@ -1,0 +1,17 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  gap: mixins.rem(16);
+  display: grid;
+  padding: mixins.rem(8) mixins.rem(16);
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+  &:nth-child(odd) {
+    background: var(--mat-sys-surface-container-lowest);
+  }
+
+  &:nth-child(even) {
+    background: var(--mat-sys-surface-container-low);
+  }
+}

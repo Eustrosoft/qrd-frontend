@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
-import { createSelectMap, select } from '@ngxs/store';
+import { createSelectMap } from '@ngxs/store';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { CardFieldComponent } from '@shared/components/card-field/card-field.component';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
@@ -49,5 +49,4 @@ export class QrCardMainComponent {
     }
     return 'repeat(2, 1fr)';
   });
-  protected readonly select = select;
 }

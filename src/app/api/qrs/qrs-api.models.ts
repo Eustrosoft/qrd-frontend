@@ -1,3 +1,5 @@
 import { components } from '@api/schema';
 
-export type QRDto = components['schemas']['QRDto'];
+export type QRDto = Omit<components['schemas']['QRDto'], 'data'> & {
+  data: components['schemas']['QRChangeDto']['data'];
+};

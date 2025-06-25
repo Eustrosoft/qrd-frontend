@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
 import { AppRoutes } from '@app/app.constants';
 import { TabLink } from '@shared/shared.models';
@@ -35,6 +35,7 @@ import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
     InteractionEffect,
     TruncateDirective,
     ToHexPipe,
+    RouterLinkActive,
   ],
   templateUrl: './qr-card-view.component.html',
   styleUrl: './qr-card-view.component.scss',
@@ -55,7 +56,6 @@ export class QrCardViewComponent implements OnInit {
     { link: AppRoutes.card, title: RouteTitles.card },
     { link: AppRoutes.attrs, title: RouteTitles.attrs },
   ];
-  protected activeLink = this.tabLinks[0].link;
   protected readonly SharedLocalization = SharedLocalization;
 
   public ngOnInit(): void {

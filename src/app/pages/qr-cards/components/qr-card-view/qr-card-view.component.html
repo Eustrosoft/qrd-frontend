@@ -25,7 +25,7 @@
   <ui-flex-block>
     <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="tab-nav-bar">
       @for (link of tabLinks; track link.link) {
-        <a mat-tab-link [active]="activeLink === link.link" (click)="activeLink = link.link" [routerLink]="link.link">
+        <a [routerLink]="link.link" [active]="rla.isActive" #rla="routerLinkActive" routerLinkActive mat-tab-link>
           {{ link.title | uppercase }}
         </a>
       }

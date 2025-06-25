@@ -1575,8 +1575,8 @@ export interface components {
             website: string;
             banned: boolean;
             ranges: components["schemas"]["QRRange"][];
-            lei: string;
             email: string;
+            lei: string;
             description: string;
             name: string;
             /** Format: int64 */
