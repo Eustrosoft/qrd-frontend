@@ -1,6 +1,6 @@
-<p>{{ caption() }}</p>
-<p>{{ value() }}</p>
-<ui-flex-block>
+<p ellipsis>{{ caption() }}</p>
+<p ellipsis>{{ value() }}</p>
+<ui-flex-block flexWrap="wrap">
   <button
     [matTooltip]="isPublic() ? SharedLocalization.isPublic : SharedLocalization.nonPublic"
     matTooltipPosition="above"

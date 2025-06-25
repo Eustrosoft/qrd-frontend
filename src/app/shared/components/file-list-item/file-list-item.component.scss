@@ -5,6 +5,7 @@
 :host {
   display: flex;
   padding: mixins.rem(4) mixins.rem(8);
+  overflow: hidden;
   flex-flow: row;
   background: var(--mat-sys-surface-container-low);
   align-items: center;

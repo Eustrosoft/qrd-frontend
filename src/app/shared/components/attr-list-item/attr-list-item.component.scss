@@ -4,6 +4,7 @@
   gap: mixins.rem(16);
   display: grid;
   padding: mixins.rem(8) mixins.rem(16);
+  overflow: hidden;
   align-items: center;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 

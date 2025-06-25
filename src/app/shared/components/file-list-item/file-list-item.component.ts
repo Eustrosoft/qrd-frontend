@@ -7,10 +7,11 @@ import { MatMiniFabButton } from '@angular/material/button';
 import { FileStorageTypeMap, SharedLocalization } from '@shared/shared.constants';
 import { MatTooltip } from '@angular/material/tooltip';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
+import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 
 @Component({
   selector: 'file-list-item',
-  imports: [UiFlexBlockComponent, UiBadgeComponent, MatIcon, MatMiniFabButton, MatTooltip],
+  imports: [UiFlexBlockComponent, UiBadgeComponent, MatIcon, MatMiniFabButton, MatTooltip, EllipsisDirective],
   templateUrl: './file-list-item.component.html',
   styleUrl: './file-list-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
