@@ -9,6 +9,12 @@
   </a>
   <ng-content select="[heading]"></ng-content>
 </ui-flex-block>
-<ui-flex-block flexAlignItems="center" flexJustifyContent="flex-end" flex="0 1 auto">
+<ui-flex-block
+  [gapSize]="isSmallScreen() ? '8' : '16'"
+  flexAlignItems="center"
+  flexJustifyContent="flex-end"
+  flex="0 1 auto"
+  [flexWrap]="isSmallScreen() ? 'wrap' : 'nowrap'"
+>
   <ng-content select="[action-buttons]"></ng-content>
 </ui-flex-block>

@@ -1,7 +1,7 @@
 @if (!selectors.isFileLoading()) {
   <view-toolbar>
     <ng-container heading>
-      <h1>{{ selectors.file()?.name }}</h1>
+      <h1 ellipsis>{{ selectors.file()?.name }}</h1>
     </ng-container>
     <ng-container action-buttons>
       <button class="button-md" mat-flat-button>{{ SharedLocalization.download }}</button>

@@ -2,7 +2,8 @@
 
 :host {
   gap: mixins.rem(4);
-  display: flex;
-  align-items: start;
-  flex-direction: column;
+  display: grid;
+  word-break: normal;
+  justify-items: start;
+  overflow-wrap: anywhere;
 }

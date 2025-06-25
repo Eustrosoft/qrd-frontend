@@ -13,6 +13,7 @@ import { AppRoutes } from '@app/app.constants';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { FilesState } from '@app/pages/files/state/files.state';
 import { FetchFile } from '@app/pages/files/state/files.actions';
+import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 
 @Component({
   selector: 'file-view',
@@ -28,6 +29,7 @@ import { FetchFile } from '@app/pages/files/state/files.actions';
     UiSkeletonComponent,
     UpperCasePipe,
     ViewToolbarComponent,
+    EllipsisDirective,
   ],
   templateUrl: './file-view.component.html',
   styleUrl: './file-view.component.scss',
