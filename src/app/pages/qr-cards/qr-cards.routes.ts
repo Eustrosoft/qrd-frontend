@@ -24,10 +24,10 @@ export const qrCardsRoutes: Routes = [
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: AppRoutes.card,
+            redirectTo: AppRoutes.qrCard,
           },
           {
-            path: AppRoutes.card,
+            path: AppRoutes.qrCard,
             component: QrCardMainComponent,
           },
           {

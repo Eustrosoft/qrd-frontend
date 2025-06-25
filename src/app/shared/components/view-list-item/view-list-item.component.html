@@ -5,7 +5,7 @@
   }
   <ui-flex-block flexDirection="column" gapSize="4" flex="auto" overflow="hidden">
     <ui-flex-block flexDirection="row" flexJustifyContent="space-between">
-      <p class="primary-color bold">{{ title() }}</p>
+      <p class="primary-color bold" ellipsis>{{ title() }}</p>
       @if (!isSmallScreen()) {
         <ng-content select="[attributes]" />
       }

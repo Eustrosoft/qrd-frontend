@@ -3,13 +3,13 @@ import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import {
   FetchQrCard,
   FetchQrCardList,
-  SelectedAllQrCards,
+  SelectAllQrCards,
   SetQrCardsDataViewDisplayType,
   SetSelectedQrCards,
 } from './qr-cards.actions';
 import { DataViewDisplayType } from '@shared/shared.models';
 import { patch } from '@ngxs/store/operators';
-import { QRDto } from '@api/qrs/qrs-api.models';
+import { QRDto } from '@api/qr-cards/qrs-api.models';
 import { catchError, Observable, switchMap, tap, throwError, timer } from 'rxjs';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
 import { SKELETON_TIMER } from '@app/app.constants';
@@ -76,7 +76,7 @@ export class QrCardsState {
   }
 
   @Action(FetchQrCardList)
-  public fetchQrCards({ setState }: StateContext<QrCardsStateModel>): Observable<QRDto[]> {
+  public fetchQrCardList({ setState }: StateContext<QrCardsStateModel>): Observable<QRDto[]> {
     setState(patch({ isQrCardListLoading: true }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.qrCardsService.getQrCardList()),
@@ -121,7 +121,7 @@ export class QrCardsState {
     setState(patch({ selectedQrCardList }));
   }
 
-  @Action(SelectedAllQrCards)
+  @Action(SelectAllQrCards)
   public selectedAllQrCards({ setState, getState }: StateContext<QrCardsStateModel>): void {
     const { qrCardList } = getState();
     setState(patch({ selectedQrCardList: qrCardList.map((card) => card.id) }));

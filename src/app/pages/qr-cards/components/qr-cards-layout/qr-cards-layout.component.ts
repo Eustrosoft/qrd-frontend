@@ -4,7 +4,7 @@ import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import {
   FetchQrCardList,
-  SelectedAllQrCards,
+  SelectAllQrCards,
   SetQrCardsDataViewDisplayType,
   SetSelectedQrCards,
 } from '@app/pages/qr-cards/state/qr-cards.actions';
@@ -31,7 +31,7 @@ export class QrCardsLayoutComponent {
     setDisplayType: SetQrCardsDataViewDisplayType,
     fetchQrCards: FetchQrCardList,
     setSelectedQrCards: SetSelectedQrCards,
-    selectedAllQrCards: SelectedAllQrCards,
+    selectedAllQrCards: SelectAllQrCards,
   });
 
   protected openAdvancedSearch(): void {

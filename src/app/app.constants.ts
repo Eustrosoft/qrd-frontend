@@ -3,10 +3,12 @@ import { Icon, Locale, Theme, ThemeContrast } from '@app/app.models';
 export const AppRoutes = {
   login: 'login',
   qrCards: 'qr-cards',
-  card: 'card',
+  qrCard: 'qr-card',
   attrs: 'attributes',
   templates: 'templates',
   files: 'files',
+  file: 'file',
+  usages: 'usages',
   notFound: 'not-found',
   unauthenticated: 'unauthenticated',
   devSandbox: 'dev-sandbox',
@@ -32,3 +34,4 @@ export const CUSTOM_ICON_MAP = new Map<Icon, string>([
 ]);
 
 export const SKELETON_TIMER = 300;
+export const DEFAULT_ITEMS_PER_PAGE = 5;

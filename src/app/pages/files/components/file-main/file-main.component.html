@@ -1,0 +1,30 @@
+<card-container [hideHeading]="true">
+  <ng-container content>
+    <ui-grid-block [gridTemplateColumns]="infoGridTemplateColumns()">
+      <card-field [heading]="`${SharedLocalization.name}:`">
+        {{ selectors.file()?.name ?? SharedLocalization.noName }}
+      </card-field>
+      <card-field [heading]="`${SharedLocalization.originalName}:`">
+        {{ selectors.file()?.fileName ?? SharedLocalization.noName }}
+      </card-field>
+      <card-field [heading]="`${SharedLocalization.description}:`">
+        {{ selectors.file()?.description ?? SharedLocalization.noDescription }}
+      </card-field>
+      <card-field [heading]="`${SharedLocalization.isPublic}:`">
+        {{ selectors.file()?.isPublic | boolToText }}
+      </card-field>
+      <card-field [heading]="`${SharedLocalization.isActive}:`">
+        {{ selectors.file()?.isActive | boolToText }}
+      </card-field>
+      <card-field [heading]="`${SharedLocalization.fileLocation}:`">
+        {{ FileStorageTypeMap.get(selectors.file()?.fileStorageType)?.text ?? '' }}
+      </card-field>
+      <card-field [heading]="`${SharedLocalization.createDate}:`">
+        {{ selectors.file()?.created | date: 'short' }}
+      </card-field>
+      <card-field [heading]="`${SharedLocalization.updateDate}:`">
+        {{ selectors.file()?.updated | date: 'short' }}
+      </card-field>
+    </ui-grid-block>
+  </ng-container>
+</card-container>

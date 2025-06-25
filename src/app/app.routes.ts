@@ -11,6 +11,7 @@ import { timer } from 'rxjs';
 import { provideStates, select } from '@ngxs/store';
 import { AuthState } from '@modules/auth/state/auth.state';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
+import { FilesState } from '@app/pages/files/state/files.state';
 
 export const routes: Routes = [
   {
@@ -47,6 +48,7 @@ export const routes: Routes = [
     title: RouteTitles.files,
     canActivate: [authGuard],
     loadChildren: () => import('@app/pages/files/files.routes').then((m) => m.filesRoutes),
+    providers: [provideStates([FilesState])],
   },
   {
     path: AppRoutes.devSandbox,

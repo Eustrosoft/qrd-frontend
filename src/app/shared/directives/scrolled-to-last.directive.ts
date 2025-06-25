@@ -11,6 +11,7 @@ import {
   output,
   runInInjectionContext,
 } from '@angular/core';
+import { DEFAULT_ITEMS_PER_PAGE } from '@app/app.constants';
 
 @Directive({
   selector: '[scrolledToLast]',
@@ -22,7 +23,7 @@ export class ScrolledToLastDirective implements AfterViewInit, OnDestroy {
   public readonly isListLoading = input<boolean>();
   public readonly isLast = output<void>();
 
-  protected readonly observerEffect = effect(() => {
+  protected readonly intersectionObserverEffect = effect(() => {
     if (!this.count() || this.isListLoading()) {
       return;
     }
@@ -74,7 +75,7 @@ export class ScrolledToLastDirective implements AfterViewInit, OnDestroy {
     }
 
     const children = this.elRef.nativeElement.children;
-    if (children.length > 0) {
+    if (children.length > DEFAULT_ITEMS_PER_PAGE) {
       this.lastElement = children[children.length - 1] as HTMLElement;
       this.observer.observe(this.lastElement);
     }

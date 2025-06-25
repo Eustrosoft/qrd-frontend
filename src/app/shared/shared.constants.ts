@@ -1,3 +1,6 @@
+import { FileStorageType } from '@api/files/file-api.models';
+import { FileStorageTypeItem } from '@shared/shared.models';
+
 export const SharedLocalization = {
   login: $localize`:@@shared.login:Login`,
   logout: $localize`:@@shared.logout:Logout`,
@@ -6,6 +9,7 @@ export const SharedLocalization = {
   mainPage: $localize`:@@shared.mainPage:Main`,
   defaultTitle: $localize`:@@shared.defaultTitle:QRD`,
   name: $localize`:@@shared.name:Name`,
+  originalName: $localize`:@@shared.originalName:Original name`,
   noName: $localize`:@@shared.noName:No name`,
   description: $localize`:@@shared.description:Description`,
   noDescription: $localize`:@@shared.noDescription:No description`,
@@ -19,12 +23,15 @@ export const SharedLocalization = {
   list: $localize`:@@shared.list:List`,
   table: $localize`:@@shared.table:Table`,
   open: $localize`:@@shared.open:Open`,
+  download: $localize`:@@shared.download:Download`,
   edit: $localize`:@@shared.edit:Edit`,
   print: $localize`:@@shared.print:Print`,
   delete: $localize`:@@shared.delete:Delete`,
   selected: $localize`:@@shared.selected:Selected`,
   selectAll: $localize`:@@shared.selectAll:Select all`,
-  updateDate: $localize`:@@shared.updateDate:Last update at`,
+  createDate: $localize`:@@shared.createDate:Created at`,
+  updateDate: $localize`:@@shared.updateDate:Last updated at`,
+  fileLocation: $localize`:@@shared.fileLocation:File location`,
   storedInS3: $localize`:@@shared.storedInS3:Stored in S3`,
   storedInDB: $localize`:@@shared.storedInDB:Stored in database`,
   storedLocally: $localize`:@@shared.storedLocally:Stored locally`,
@@ -35,6 +42,9 @@ export const SharedLocalization = {
   nonStatic: $localize`:@@shared.nonStatic:Non static`,
   isActive: $localize`:@@shared.isActive:Is active`,
   isInactive: $localize`:@@shared.isInactive:Is inactive`,
+  yes: $localize`:@@shared.yes:Yes`,
+  no: $localize`:@@shared.no:No`,
+  unknown: $localize`:@@shared.unknown:Unknown`,
 } as const;
 
 export const SizeUnitsLocalization = {
@@ -59,8 +69,17 @@ export const RouteTitles = {
   cards: $localize`:@@routes.cards:Cards`,
   card: $localize`:@@routes.card:Card`,
   attrs: $localize`:@@routes.attrs:Attributes`,
+  usages: $localize`:@@routes.usages:Usages`,
   templates: $localize`:@@routes.templates:Templates`,
   files: $localize`:@@routes.files:Files`,
+  file: $localize`:@@routes.file:File`,
   docs: $localize`:@@routes.docs:Docs`,
   devSandbox: $localize`:@@routes.devSandbox:Dev Sandbox`,
 } as const;
+
+export const FileStorageTypeMap = new Map<FileStorageType | undefined, FileStorageTypeItem>([
+  ['S3', { text: SharedLocalization.storedInS3, icon: 'cloud' }],
+  ['DB', { text: SharedLocalization.storedInDB, icon: 'database' }],
+  ['LOCAL', { text: SharedLocalization.storedLocally, icon: 'folder' }],
+  ['URL', { text: SharedLocalization.storedExternally, icon: 'http' }],
+]);

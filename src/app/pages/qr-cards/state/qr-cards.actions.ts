@@ -18,8 +18,8 @@ export class SetSelectedQrCards {
   constructor(readonly selectedQrCardList: number[]) {}
 }
 
-export class SelectedAllQrCards {
-  public static readonly type = '[Qr Cards]  Select All Qr Cards';
+export class SelectAllQrCards {
+  public static readonly type = '[Qr Cards] Select All Qr Cards';
 }
 
 export class SetQrCardsDataViewDisplayType {

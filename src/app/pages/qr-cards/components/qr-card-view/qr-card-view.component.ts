@@ -53,7 +53,7 @@ export class QrCardViewComponent implements OnInit {
     fetchQrCard: FetchQrCard,
   });
   protected readonly tabLinks: TabLink[] = [
-    { link: AppRoutes.card, title: RouteTitles.card },
+    { link: AppRoutes.qrCard, title: RouteTitles.card },
     { link: AppRoutes.attrs, title: RouteTitles.attrs },
   ];
   protected readonly SharedLocalization = SharedLocalization;

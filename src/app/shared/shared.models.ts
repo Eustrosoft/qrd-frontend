@@ -68,3 +68,4 @@ export type Overflow = 'hidden' | 'visible' | 'clip' | 'scroll' | 'auto';
 export type Option<T> = { value: T; viewValue: string };
 export type DataViewDisplayType = 'list' | 'table';
 export type TabLink = { link: string; title: string };
+export type FileStorageTypeItem = { text: string; icon: string };

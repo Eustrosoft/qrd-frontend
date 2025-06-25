@@ -1,0 +1,28 @@
+@if (!selectors.isFileLoading()) {
+  <view-toolbar>
+    <ng-container heading>
+      <h1>{{ selectors.file()?.name }}</h1>
+    </ng-container>
+    <ng-container action-buttons>
+      <button class="button-md" mat-flat-button>{{ SharedLocalization.download }}</button>
+      <button class="button-md" mat-flat-button>{{ SharedLocalization.edit }}</button>
+      <button class="button-md" mat-flat-button>{{ SharedLocalization.delete }}</button>
+    </ng-container>
+  </view-toolbar>
+  <ui-flex-block>
+    <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="tab-nav-bar">
+      @for (link of tabLinks; track link.link) {
+        <a [routerLink]="link.link" [active]="rla.isActive" #rla="routerLinkActive" routerLinkActive mat-tab-link>
+          {{ link.title | uppercase }}
+        </a>
+      }
+    </nav>
+  </ui-flex-block>
+  <mat-tab-nav-panel #tabPanel>
+    <router-outlet />
+  </mat-tab-nav-panel>
+} @else {
+  <ui-skeleton height="44" />
+  <ui-skeleton height="48" />
+  <ui-skeleton height="220" />
+}

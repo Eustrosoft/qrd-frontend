@@ -1,4 +1,4 @@
-<a href="#" target="_blank" rel="noreferrer">
+<a [href]="fileHref()" target="_blank" rel="noreferrer">
   <p class="primary-color">{{ name() }}</p>
 </a>
 <ui-flex-block gapSize="8" flexAlignItems="center" flexWrap="wrap">
@@ -12,52 +12,15 @@
       <small>{{ updated() }}</small>
     </ui-badge>
   }
-  @switch (fileStorageType()) {
-    @case ('S3') {
-      <button
-        [matTooltip]="SharedLocalization.storedInS3"
-        matTooltipPosition="above"
-        class="mini-fab-icon-primary-button-circle-sm"
-        tabIndex="-1"
-        mat-mini-fab
-      >
-        <mat-icon class="icon-on-secondary">cloud</mat-icon>
-      </button>
-    }
-    @case ('DB') {
-      <button
-        [matTooltip]="SharedLocalization.storedInDB"
-        matTooltipPosition="above"
-        class="mini-fab-icon-primary-button-circle-sm"
-        tabIndex="-1"
-        mat-mini-fab
-      >
-        <mat-icon class="icon-on-secondary">database</mat-icon>
-      </button>
-    }
-    @case ('LOCAL') {
-      <button
-        [matTooltip]="SharedLocalization.storedLocally"
-        matTooltipPosition="above"
-        class="mini-fab-icon-primary-button-circle-sm"
-        tabIndex="-1"
-        mat-mini-fab
-      >
-        <mat-icon class="icon-on-secondary">folder</mat-icon>
-      </button>
-    }
-    @case ('URL') {
-      <button
-        [matTooltip]="SharedLocalization.storedExternally"
-        matTooltipPosition="above"
-        class="mini-fab-icon-primary-button-circle-sm"
-        tabIndex="-1"
-        mat-mini-fab
-      >
-        <mat-icon class="icon-on-secondary">http</mat-icon>
-      </button>
-    }
-  }
+  <button
+    [matTooltip]="FileStorageTypeMap.get(fileStorageType())?.text ?? ''"
+    matTooltipPosition="above"
+    class="mini-fab-icon-primary-button-circle-sm"
+    tabIndex="-1"
+    mat-mini-fab
+  >
+    <mat-icon class="icon-on-secondary">{{ FileStorageTypeMap.get(fileStorageType())?.icon ?? '' }}</mat-icon>
+  </button>
   <button
     [matTooltip]="isPublic() ? SharedLocalization.isPublic : SharedLocalization.nonPublic"
     matTooltipPosition="above"

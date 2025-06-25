@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { QRDto } from '@api/qrs/qrs-api.models';
+import { QRDto } from '@api/qr-cards/qrs-api.models';
 import { Observable } from 'rxjs';
 
 @Injectable({
