@@ -1,4 +1,4 @@
-import { Injectable, Injector, signal } from '@angular/core';
+import { ComponentRef, Injectable, Injector, signal, Type, ViewContainerRef } from '@angular/core';
 import { SidenavConfig } from '@ui/ui-sidenav/ui-sidenav.models';
 import { MatSidenav } from '@angular/material/sidenav';
 import { first, from, tap } from 'rxjs';
@@ -8,7 +8,8 @@ import { first, from, tap } from 'rxjs';
 })
 export class UiSidenavService {
   private readonly defaultSidenavConfig: SidenavConfig = {
-    inputs: {},
+    bindings: [],
+    directives: [],
     content: [],
     injector: Injector.create({ providers: [] }),
     mode: 'over',
@@ -22,14 +23,21 @@ export class UiSidenavService {
 
   private readonly _matSidenav = signal<MatSidenav | null>(null);
   private readonly _isOpen = signal<boolean>(false);
-  // eslint-disable-next-line
-  private readonly _sidenavCmp = signal<any | null>(null);
+  private readonly _sidenavVcr = signal<ViewContainerRef | null>(null);
+  private readonly _sidenavCmpRef = signal<ComponentRef<unknown> | undefined>(undefined);
   private readonly _sidenavConfig = signal<SidenavConfig>(this.defaultSidenavConfig);
 
   public readonly isOpen = this._isOpen.asReadonly();
-  public readonly sidenavCmp = this._sidenavCmp.asReadonly();
+  public readonly sidenavCmpRef = this._sidenavCmpRef.asReadonly();
 
   public readonly sidenavConfig = this._sidenavConfig.asReadonly();
+
+  public setSidenavVcr(vcr: ViewContainerRef): void {
+    if (this._sidenavVcr()) {
+      return;
+    }
+    this._sidenavVcr.set(vcr);
+  }
 
   public setSidenav(sidenav: MatSidenav): void {
     if (this._matSidenav()) {
@@ -39,16 +47,12 @@ export class UiSidenavService {
     this.initCloseSubscription();
   }
 
-  public backDropClick(): void {
-    this._sidenavConfig()?.onBackdropClick?.call(this);
-  }
-
   public close(): void {
     this._isOpen.set(false);
   }
 
-  public open<T>(cmp: T, config: Partial<SidenavConfig> = this.defaultSidenavConfig): void {
-    if (this.isOpen()) {
+  public open<T>(cmp: Type<T>, config: Partial<SidenavConfig> = this.defaultSidenavConfig): void {
+    if (this._isOpen()) {
       from(this._matSidenav()!.close())
         .pipe(
           tap({
@@ -64,10 +68,11 @@ export class UiSidenavService {
     this.openNew(cmp, config);
   }
 
-  private openNew<T>(cmp: T, config: Partial<SidenavConfig> = this.defaultSidenavConfig): void {
-    this._sidenavCmp.set(null);
+  private openNew<T>(cmp: Type<T>, config: Partial<SidenavConfig> = this.defaultSidenavConfig): void {
+    this.clearCmpVcr();
     const cfg: SidenavConfig = {
-      inputs: config.inputs ?? this.defaultSidenavConfig.inputs,
+      bindings: config.bindings ?? this.defaultSidenavConfig.bindings,
+      directives: config.directives ?? this.defaultSidenavConfig.directives,
       content: config.content ?? this.defaultSidenavConfig.content,
       injector: config.injector ?? this.defaultSidenavConfig.injector,
       mode: config.mode ?? this.defaultSidenavConfig.mode,
@@ -79,7 +84,13 @@ export class UiSidenavService {
       onBackdropClick: config.onBackdropClick ?? this.defaultSidenavConfig.onBackdropClick,
     };
     this._sidenavConfig.set(cfg);
-    this._sidenavCmp.set(cmp);
+    const cmpRef = this._sidenavVcr()?.createComponent<T>(cmp, {
+      bindings: cfg.bindings,
+      directives: cfg.directives,
+      projectableNodes: cfg.content,
+      injector: cfg.injector,
+    });
+    this._sidenavCmpRef.set(cmpRef);
     this._isOpen.set(true);
   }
 
@@ -90,10 +101,15 @@ export class UiSidenavService {
           next: () => {
             this._sidenavConfig()?.onSidenavClose?.call(this);
             this._isOpen.set(false);
-            this._sidenavCmp.set(null);
+            this.clearCmpVcr();
           },
         }),
       )
       .subscribe();
+  }
+
+  private clearCmpVcr(): void {
+    this._sidenavVcr()?.clear();
+    this._sidenavCmpRef.set(undefined);
   }
 }
