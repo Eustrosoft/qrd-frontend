@@ -1,16 +1,11 @@
 import { InjectionToken } from '@angular/core';
-import { Icon } from '@app/app.models';
-
-export interface ErrorButton {
-  buttonText: string;
-  buttonAction: (() => void) | null;
-}
+import { GenericButton, Icon } from '@app/app.models';
 
 export interface ErrorConfig {
   title: string;
   message: string;
   icon: Icon;
-  buttonList: ErrorButton[];
+  buttonList: GenericButton[];
   onInit: (() => void) | null;
   onDestroy: (() => void) | null;
 }

@@ -2,6 +2,7 @@ import { BackendError } from '@modules/error/error.models';
 import { HttpContextToken } from '@angular/common/http';
 
 export const ErrorsLocalization = {
+  errOccurred: $localize`:@@errors.errOccurred:Error occurred`,
   unknownErr: $localize`:@@errors.unknownErr:Unknown error`,
   smthWentWrong: $localize`:@@errors.smthWentWrong:Something went wrong`,
   pageNotFound: $localize`:@@errors.notFound:Page not found`,

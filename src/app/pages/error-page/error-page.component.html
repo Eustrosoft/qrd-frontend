@@ -1,19 +1,6 @@
-<ui-flex-block
-  flex="0 0 auto"
-  [gapSize]="isSmallScreen() ? '32' : '96'"
-  [flexDirection]="isSmallScreen() ? 'column-reverse' : 'row'"
-  [flexAlignItems]="isSmallScreen() ? 'stretch' : 'auto'"
->
-  <ui-flex-block [flex]="isSmallScreen() ? 'auto' : '0 1 24rem'" gapSize="32" flexDirection="column">
-    <h1>{{ errorConfig.title }}</h1>
-    <p>{{ errorConfig.message }}</p>
-    @for (button of errorConfig.buttonList; track button.buttonText) {
-      <button (click)="onButtonClick(button.buttonAction)" class="button-xl button-secondary" mat-flat-button>
-        {{ button.buttonText }}
-      </button>
-    } @empty {}
-  </ui-flex-block>
-  <ui-flex-block flex="1 0 auto" [flexAlignSelf]="isSmallScreen() ? 'center' : 'flex-start'">
-    <mat-icon [svgIcon]="`qrd:${errorConfig.icon}`"></mat-icon>
-  </ui-flex-block>
-</ui-flex-block>
+<banner
+  [title]="errorConfig.title"
+  [message]="errorConfig.message"
+  [buttonList]="errorConfig.buttonList"
+  [icon]="errorConfig.icon"
+/>

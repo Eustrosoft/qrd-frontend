@@ -31,6 +31,7 @@ export const CUSTOM_ICON_MAP = new Map<Icon, string>([
   ['palette', 'public/icons/palette.svg'],
   ['not-found', 'public/icons/not-found.svg'],
   ['timeout', 'public/icons/timeout.svg'],
+  ['unknown-err', 'public/icons/unknown-err.svg'],
 ]);
 
 export const SKELETON_TIMER = 300;

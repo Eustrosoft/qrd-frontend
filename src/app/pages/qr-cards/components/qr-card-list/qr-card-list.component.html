@@ -43,10 +43,10 @@
             <mat-icon>outbound</mat-icon>
             {{ SharedLocalization.open }}
           </a>
-          <button mat-menu-item>
+          <a routerLink="/" [queryParams]="{ q: qrCard.code | toHex }" target="_blank" rel="noreferrer" mat-menu-item>
             <mat-icon>open_in_new</mat-icon>
-            {{ QrCardsLocalization.toPreview }}
-          </button>
+            {{ QrCardsLocalization.viewCard }}
+          </a>
           <button mat-menu-item>
             <mat-icon>print</mat-icon>
             {{ SharedLocalization.print }}

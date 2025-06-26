@@ -1,0 +1,41 @@
+@if (!selectors.isLoading() && !selectors.isLoadError()) {
+  <card-container [hideHeading]="true">
+    <ng-container content>
+      <ui-flex-block gapSize="0" flexDirection="column">
+        @for (field of selectors.qr()?.form?.fields; track field.id) {
+          <attr-list-item
+            [caption]="field.caption"
+            [value]="selectors.qr()?.data?.[field.name] ?? SharedLocalization.empty"
+            [type]="field.fieldType"
+            [hideIconAttrs]="true"
+          />
+        } @empty {
+          {{ SharedLocalization.noAttrs }}
+        }
+      </ui-flex-block>
+    </ng-container>
+  </card-container>
+  <card-container [hideHeading]="true">
+    <ng-container content>
+      <ui-flex-block flexDirection="column">
+        @for (file of selectors.qr()?.files; track file.id) {
+          <file-list-item
+            [fileHref]="`/qrCodeDemo/v1/api/unsecured/files/${file.id}/download/${file.name}`"
+            [name]="file?.name ?? ''"
+            [fileSize]="file.fileSize | bytesToSize"
+          />
+        } @empty {
+          {{ SharedLocalization.noFiles }}
+        }
+      </ui-flex-block>
+    </ng-container>
+  </card-container>
+}
+@if (selectors.isLoading()) {
+  <ui-skeleton height="300" />
+  <ui-skeleton height="300" />
+}
+
+@if (selectors.isLoadError()) {
+  <banner [title]="selectors.errorText()" [message]="ErrorsLocalization.smthWentWrong" style="flex: 1" />
+}

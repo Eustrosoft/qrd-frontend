@@ -22,10 +22,10 @@ export class FileListItemComponent {
   protected readonly FileStorageTypeMap = FileStorageTypeMap;
 
   public readonly fileHref = input<string>('#');
-  public readonly fileStorageType = input.required<FileStorageType>();
+  public readonly fileStorageType = input<FileStorageType | null>(null);
   public readonly name = input<string>('');
   public readonly fileSize = input<string | null>(null);
-  public readonly isPublic = input<boolean>(false);
-  public readonly isActive = input<boolean>(false);
+  public readonly isPublic = input<boolean | null>(null);
+  public readonly isActive = input<boolean | null>(null);
   public readonly updated = input<string>('');
 }

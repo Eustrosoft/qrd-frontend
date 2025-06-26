@@ -17,4 +17,9 @@ export class QrCardsService {
     const params = new HttpParams({ fromObject: { q: code } });
     return this.http.get<QRDto>('/qrCodeDemo/v1/api/secured/qrs/code', { params });
   }
+
+  public getPublicQrCard(q: string): Observable<QRDto> {
+    const params = new HttpParams({ fromObject: { q } });
+    return this.http.get<QRDto>('/qrCodeDemo/v1/api/unsecured/qrs', { params });
+  }
 }

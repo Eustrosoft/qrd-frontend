@@ -77,7 +77,7 @@ export const RouteTitles = {
   devSandbox: $localize`:@@routes.devSandbox:Dev Sandbox`,
 } as const;
 
-export const FileStorageTypeMap = new Map<FileStorageType | undefined, FileStorageTypeItem>([
+export const FileStorageTypeMap = new Map<FileStorageType | null | undefined, FileStorageTypeItem>([
   ['S3', { text: SharedLocalization.storedInS3, icon: 'cloud' }],
   ['DB', { text: SharedLocalization.storedInDB, icon: 'database' }],
   ['LOCAL', { text: SharedLocalization.storedLocally, icon: 'folder' }],

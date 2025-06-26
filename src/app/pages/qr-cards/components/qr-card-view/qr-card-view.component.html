@@ -2,7 +2,10 @@
   <view-toolbar>
     <ng-container heading>
       <a
-        routerLink="./"
+        routerLink="/"
+        [queryParams]="{ q: selectors.qrCard()?.code | toHex }"
+        target="_blank"
+        rel="noreferrer"
         class="button-anchor-md-with-icon"
         interactionEffect
         [targetSelectors]="['h1', 'mat-icon']"

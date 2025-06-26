@@ -12,31 +12,37 @@
       <small>{{ updated() }}</small>
     </ui-badge>
   }
-  <button
-    [matTooltip]="FileStorageTypeMap.get(fileStorageType())?.text ?? ''"
-    matTooltipPosition="above"
-    class="mini-fab-icon-primary-button-circle-sm"
-    tabIndex="-1"
-    mat-mini-fab
-  >
-    <mat-icon class="icon-on-secondary">{{ FileStorageTypeMap.get(fileStorageType())?.icon ?? '' }}</mat-icon>
-  </button>
-  <button
-    [matTooltip]="isPublic() ? SharedLocalization.isPublic : SharedLocalization.nonPublic"
-    matTooltipPosition="above"
-    class="mini-fab-icon-primary-button-circle-sm"
-    tabIndex="-1"
-    mat-mini-fab
-  >
-    <mat-icon class="icon-on-secondary">{{ isPublic() ? 'visibility' : 'visibility_lock' }}</mat-icon>
-  </button>
-  <button
-    [matTooltip]="isActive() ? SharedLocalization.isActive : SharedLocalization.isInactive"
-    matTooltipPosition="above"
-    class="mini-fab-icon-primary-button-circle-sm"
-    tabIndex="-1"
-    mat-mini-fab
-  >
-    <mat-icon class="icon-on-secondary">{{ isActive() ? 'done_all' : 'remove_done' }}</mat-icon>
-  </button>
+  @if (fileStorageType()) {
+    <button
+      [matTooltip]="FileStorageTypeMap.get(fileStorageType())?.text ?? ''"
+      matTooltipPosition="above"
+      class="mini-fab-icon-primary-button-circle-sm"
+      tabIndex="-1"
+      mat-mini-fab
+    >
+      <mat-icon class="icon-on-secondary">{{ FileStorageTypeMap.get(fileStorageType())?.icon ?? '' }}</mat-icon>
+    </button>
+  }
+  @if (isPublic() !== null) {
+    <button
+      [matTooltip]="isPublic() ? SharedLocalization.isPublic : SharedLocalization.nonPublic"
+      matTooltipPosition="above"
+      class="mini-fab-icon-primary-button-circle-sm"
+      tabIndex="-1"
+      mat-mini-fab
+    >
+      <mat-icon class="icon-on-secondary">{{ isPublic() ? 'visibility' : 'visibility_lock' }}</mat-icon>
+    </button>
+  }
+  @if (isActive() !== null) {
+    <button
+      [matTooltip]="isActive() ? SharedLocalization.isActive : SharedLocalization.isInactive"
+      matTooltipPosition="above"
+      class="mini-fab-icon-primary-button-circle-sm"
+      tabIndex="-1"
+      mat-mini-fab
+    >
+      <mat-icon class="icon-on-secondary">{{ isActive() ? 'done_all' : 'remove_done' }}</mat-icon>
+    </button>
+  }
 </ui-flex-block>

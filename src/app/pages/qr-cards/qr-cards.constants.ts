@@ -1,3 +1,3 @@
 export const QrCardsLocalization = {
-  toPreview: $localize`:@@qrCards.toPreview:Open preview`,
+  viewCard: $localize`:@@qrCards.viewCard:View card`,
 } as const;
