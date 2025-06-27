@@ -4,10 +4,23 @@
 
 module.exports = [
   {
-    changeOrigin: true,
-    context: ['/qrCodeDemo'],
-    secure: false,
+    context: ['^/qrCodeDemo(/|$)'], // ^ = start, (/|$) = / or end
     target: 'https://qrdemo.dev40.qxyz.ru/',
-    logLevel: 'info',
+    changeOrigin: true,
+    secure: false,
+    logLevel: 'debug',
+    pathRewrite: {
+      '^/qrCodeDemo': '/qrCodeDemo', // Optional, keeps the path as-is
+    },
+  },
+  {
+    context: ['^/qr(/|$)'], // ^ = start, (/|$) = / or end
+    target: 'https://qrdemo.dev40.qxyz.ru/',
+    changeOrigin: true,
+    secure: false,
+    logLevel: 'debug',
+    pathRewrite: {
+      '^/qr': '/qr', // Optional, keeps the path as-is
+    },
   },
 ];

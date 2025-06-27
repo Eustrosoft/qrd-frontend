@@ -3,6 +3,7 @@
 :host {
   gap: mixins.rem(4);
   display: grid;
+  align-self: start;
   word-break: normal;
   justify-items: start;
   overflow-wrap: anywhere;

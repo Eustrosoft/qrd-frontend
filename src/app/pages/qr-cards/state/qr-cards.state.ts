@@ -12,7 +12,7 @@ import { patch } from '@ngxs/store/operators';
 import { QRDto } from '@api/qr-cards/qrs-api.models';
 import { catchError, Observable, switchMap, tap, throwError, timer } from 'rxjs';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
-import { SKELETON_TIMER } from '@app/app.constants';
+import { QR_API_URL, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 
@@ -23,6 +23,7 @@ export interface QrCardsStateModel {
   selectedQrCardList: number[];
   isQrCardLoading: boolean;
   qrCard: QRDto | null;
+  qrCardPreviewUrl: string;
 }
 
 const defaults: QrCardsStateModel = {
@@ -32,6 +33,7 @@ const defaults: QrCardsStateModel = {
   selectedQrCardList: [],
   isQrCardLoading: false,
   qrCard: null,
+  qrCardPreviewUrl: '',
 } as const;
 
 const QR_CARDS_STATE_TOKEN: StateToken<QrCardsStateModel> = new StateToken<QrCardsStateModel>('qrCards');
@@ -71,6 +73,11 @@ export class QrCardsState {
   }
 
   @Selector()
+  public static getQrCardPreviewUrl$({ qrCardPreviewUrl }: QrCardsStateModel): string {
+    return qrCardPreviewUrl;
+  }
+
+  @Selector()
   public static getSelectedQrCardList$({ selectedQrCardList }: QrCardsStateModel): number[] {
     return selectedQrCardList;
   }
@@ -98,11 +105,18 @@ export class QrCardsState {
     { code, destroyRef }: FetchQrCard,
   ): Observable<QRDto> {
     setState(patch({ isQrCardLoading: true }));
+    const qrHexCode = this.toHexPipe.transform(code);
     return timer(SKELETON_TIMER).pipe(
-      switchMap(() => this.qrCardsService.getQrCard(this.toHexPipe.transform(code))),
+      switchMap(() => this.qrCardsService.getQrCard(qrHexCode)),
       tap({
         next: (qrCard) => {
-          setState(patch({ qrCard, isQrCardLoading: false }));
+          setState(
+            patch({
+              qrCard,
+              qrCardPreviewUrl: `${QR_API_URL}${qrHexCode}`,
+              isQrCardLoading: false,
+            }),
+          );
         },
       }),
       catchError((err) => {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, inputBinding, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
 import { AppRoutes } from '@app/app.constants';
@@ -17,6 +17,8 @@ import { MatIcon } from '@angular/material/icon';
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
 import { TruncateDirective } from '@shared/directives/truncate.directive';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
+import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
+import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 
 @Component({
   selector: 'qr-card-view',
@@ -42,12 +44,14 @@ import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrCardViewComponent implements OnInit {
+  private readonly uiSidenavService = inject(UiSidenavService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly activatedRoute = inject(ActivatedRoute);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
   protected readonly selectors = createSelectMap({
     isQrCardLoading: QrCardsState.isQrCardLoading$,
     qrCard: QrCardsState.getQrCard$,
+    qrCardPreviewUrl: QrCardsState.getQrCardPreviewUrl$,
   });
   protected readonly actions = createDispatchMap({
     fetchQrCard: FetchQrCard,
@@ -60,5 +64,12 @@ export class QrCardViewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.actions.fetchQrCard(this.routeParams()['code'], this.destroyRef);
+  }
+
+  protected openCardPreview(): void {
+    this.uiSidenavService.open(QrViewComponent, {
+      bindings: [inputBinding('iframeSrc', this.selectors.qrCardPreviewUrl)],
+      position: 'end',
+    });
   }
 }

@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'qr-view',
@@ -9,8 +9,10 @@ import { ActivatedRoute } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrViewComponent implements OnInit {
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly domSanitizer = inject(DomSanitizer);
+  public readonly iframeSrc = input.required<string>();
+
+  protected readonly src = computed(() => this.domSanitizer.bypassSecurityTrustResourceUrl(this.iframeSrc()));
 
   public ngOnInit(): void {
     console.log('mng');

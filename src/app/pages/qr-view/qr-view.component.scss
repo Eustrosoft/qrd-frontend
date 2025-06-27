@@ -1,18 +1,6 @@
-@use 'styles/mixins' as mixins;
-@use 'styles/breakpoints' as bp;
-@use 'sass:map';
-
 :host {
-  gap: mixins.rem(24);
-  display: flex;
-  min-height: inherit;
-  flex-direction: column;
-
-  @media #{map.get(bp.$breakpoints, xsmall)} {
-    gap: mixins.rem(16);
-  }
-
-  @media #{map.get(bp.$breakpoints, small)} {
-    gap: mixins.rem(16);
-  }
+  width: 100%;
+  height: inherit;
+  display: block;
+  overflow: clip;
 }

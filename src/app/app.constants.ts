@@ -36,3 +36,4 @@ export const CUSTOM_ICON_MAP = new Map<Icon, string>([
 
 export const SKELETON_TIMER = 300;
 export const DEFAULT_ITEMS_PER_PAGE = 5;
+export const QR_API_URL = '/qr/?q=';

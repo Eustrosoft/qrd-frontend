@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, inputBinding } from '@angular/core';
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
 import { createSelectMap } from '@ngxs/store';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
@@ -43,6 +43,7 @@ export class QrCardMainComponent {
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly selectors = createSelectMap({
     qrCard: QrCardsState.getQrCard$,
+    qrCardPreviewUrl: QrCardsState.getQrCardPreviewUrl$,
   });
 
   protected readonly SharedLocalization = SharedLocalization;
@@ -57,6 +58,7 @@ export class QrCardMainComponent {
 
   protected openCardPreview(): void {
     this.uiSidenavService.open(QrViewComponent, {
+      bindings: [inputBinding('iframeSrc', this.selectors.qrCardPreviewUrl)],
       position: 'end',
     });
   }
