@@ -15,6 +15,18 @@
           </a>
         </card-field>
       }
+      <card-field [heading]="`${SharedLocalization.cardPreview}:`">
+        <button
+          class="button-anchor-md-with-icon"
+          mat-button
+          interactionEffect
+          [targetSelectors]="['p', 'mat-icon']"
+          (click)="openCardPreview()"
+        >
+          <p>QR №{{ selectors.qrCard()?.code | toHex }}</p>
+          <mat-icon class="icon-primary">open_in_new</mat-icon>
+        </button>
+      </card-field>
       <card-field [heading]="`${SharedLocalization.name}:`">
         {{ selectors.qrCard()?.name ?? SharedLocalization.noName }}
       </card-field>

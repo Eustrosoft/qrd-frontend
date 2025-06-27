@@ -18,7 +18,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: mixins.rem(6);
+  width: var(--scrollbar-width);
 }
 
 ::-webkit-scrollbar-track {

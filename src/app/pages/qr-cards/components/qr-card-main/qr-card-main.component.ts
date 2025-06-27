@@ -14,6 +14,9 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 import { FileListItemComponent } from '@shared/components/file-list-item/file-list-item.component';
 import { DatePipe } from '@angular/common';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
+import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
+import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
+import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 
 @Component({
   selector: 'qr-card-main',
@@ -29,12 +32,14 @@ import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
     FileListItemComponent,
     DatePipe,
     BytesToSizePipe,
+    ToHexPipe,
   ],
   templateUrl: './qr-card-main.component.html',
   styleUrl: './qr-card-main.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrCardMainComponent {
+  private readonly uiSidenavService = inject(UiSidenavService);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly selectors = createSelectMap({
     qrCard: QrCardsState.getQrCard$,
@@ -49,4 +54,10 @@ export class QrCardMainComponent {
     }
     return 'repeat(2, 1fr)';
   });
+
+  protected openCardPreview(): void {
+    this.uiSidenavService.open(QrViewComponent, {
+      position: 'end',
+    });
+  }
 }

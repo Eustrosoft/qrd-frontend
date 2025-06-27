@@ -1,7 +1,7 @@
 import { ComponentRef, Injectable, Injector, signal, Type, ViewContainerRef } from '@angular/core';
 import { SidenavConfig } from '@ui/ui-sidenav/ui-sidenav.models';
 import { MatSidenav } from '@angular/material/sidenav';
-import { first, from, tap } from 'rxjs';
+import { asyncScheduler, first, from, of, scheduled, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -70,20 +70,24 @@ export class UiSidenavService {
 
   private openNew<T>(cmp: Type<T>, config: Partial<SidenavConfig> = this.defaultSidenavConfig): void {
     this.clearCmpVcr();
-    const cfg: SidenavConfig = {
-      bindings: config.bindings ?? this.defaultSidenavConfig.bindings,
-      directives: config.directives ?? this.defaultSidenavConfig.directives,
-      content: config.content ?? this.defaultSidenavConfig.content,
-      injector: config.injector ?? this.defaultSidenavConfig.injector,
-      mode: config.mode ?? this.defaultSidenavConfig.mode,
-      autoFocus: config.autoFocus ?? this.defaultSidenavConfig.autoFocus,
-      position: config.position ?? this.defaultSidenavConfig.position,
-      width: config.width ?? this.defaultSidenavConfig.width,
-      hasBackdrop: config.hasBackdrop ?? this.defaultSidenavConfig.hasBackdrop,
-      onSidenavClose: config.onSidenavClose ?? this.defaultSidenavConfig.onSidenavClose,
-      onBackdropClick: config.onBackdropClick ?? this.defaultSidenavConfig.onBackdropClick,
-    };
+    const cfg = this.mergeConfig(config);
     this._sidenavConfig.set(cfg);
+    this.createComponent(cmp, cfg);
+
+    scheduled(of(null), asyncScheduler)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          this._isOpen.set(true);
+        },
+      });
+  }
+
+  private mergeConfig(config: Partial<SidenavConfig>): SidenavConfig {
+    return { ...this.defaultSidenavConfig, ...config };
+  }
+
+  private createComponent<T>(cmp: Type<T>, cfg: SidenavConfig): void {
     const cmpRef = this._sidenavVcr()?.createComponent<T>(cmp, {
       bindings: cfg.bindings,
       directives: cfg.directives,
@@ -91,7 +95,6 @@ export class UiSidenavService {
       injector: cfg.injector,
     });
     this._sidenavCmpRef.set(cmpRef);
-    this._isOpen.set(true);
   }
 
   private initCloseSubscription(): void {

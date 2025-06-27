@@ -2,15 +2,23 @@
 @use 'styles/breakpoints' as bp;
 @use 'sass:map';
 
+:root {
+  --scrollbar-width: 6px;
+  --main-padding-vertical: 1.5rem;
+  --main-padding-horizontal: 4rem;
+}
+
 @media #{map.get(bp.$breakpoints, xsmall)} {
   :root {
-    --selection-bar-animation-margin-bottom: 16px;
+    --main-padding-vertical: 0.75rem;
+    --main-padding-horizontal: 1rem;
   }
 }
 
 @media #{map.get(bp.$breakpoints, small)} {
   :root {
-    --selection-bar-animation-margin-bottom: 16px;
+    --main-padding-vertical: 0.75rem;
+    --main-padding-horizontal: 1rem;
   }
 }
 

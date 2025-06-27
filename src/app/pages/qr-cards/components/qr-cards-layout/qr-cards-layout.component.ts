@@ -41,6 +41,7 @@ export class QrCardsLayoutComponent {
   protected openAdvancedSearch(): void {
     this.uiSidenavService.open(MatIcon, {
       content: [[this.document.createTextNode('database_search')]],
+      position: 'end',
     });
   }
 }

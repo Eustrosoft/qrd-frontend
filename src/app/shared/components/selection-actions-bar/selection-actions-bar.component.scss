@@ -4,22 +4,24 @@
 @use 'sass:map';
 
 :host {
-  top: 0;
-  z-index: 1;
+  width: calc(100vw - calc(var(--main-padding-horizontal) * 2) - var(--scrollbar-width));
+  bottom: 0;
+  z-index: 2;
   display: flex;
   padding: mixins.rem(12) mixins.rem(16);
-  position: sticky;
+  position: fixed;
   background: var(--mat-sys-surface-container);
   align-items: center;
-  margin-bottom: mixins.rem(32);
   border-radius: mixins.rem(12);
   justify-content: space-between;
 
   @media #{map.get(bp.$breakpoints, xsmall)} {
-    margin-bottom: mixins.rem(16);
+    width: calc(100vw - calc(var(--main-padding-horizontal) * 2));
+    bottom: mixins.rem(80);
   }
 
   @media #{map.get(bp.$breakpoints, small)} {
-    margin-bottom: mixins.rem(16);
+    width: calc(100vw - calc(var(--main-padding-horizontal) * 2));
+    bottom: mixins.rem(80);
   }
 }

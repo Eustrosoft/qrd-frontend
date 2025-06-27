@@ -12,23 +12,8 @@ import { provideStates, select } from '@ngxs/store';
 import { AuthState } from '@modules/auth/state/auth.state';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { FilesState } from '@app/pages/files/state/files.state';
-import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
-import { queryParamsMatcherFactory } from '@cdk/factories/query-params-matcher.factory';
-import { queryParamTitleResolverFactory } from '@cdk/factories/query-param-title-resolver.factory';
-import { QrViewState } from '@app/pages/qr-view/state/qr-view.state';
 
 export const routes: Routes = [
-  {
-    matcher: queryParamsMatcherFactory(['q']),
-    title: queryParamTitleResolverFactory('q'),
-    component: QrViewComponent,
-    providers: [provideStates([QrViewState])],
-  },
-  {
-    path: AppRoutes.login,
-    title: RouteTitles.login,
-    component: LoginComponent,
-  },
   {
     path: '',
     pathMatch: 'full',
@@ -40,7 +25,11 @@ export const routes: Routes = [
       return AppRoutes.login;
     },
   },
-
+  {
+    path: AppRoutes.login,
+    title: RouteTitles.login,
+    component: LoginComponent,
+  },
   {
     path: AppRoutes.qrCards,
     title: RouteTitles.cards,

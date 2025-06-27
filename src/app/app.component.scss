@@ -10,12 +10,8 @@
   main {
     width: 100%;
     margin: 0 auto;
-    padding: mixins.rem(24) mixins.rem(64);
+    padding: var(--main-padding-vertical) var(--main-padding-horizontal);
     max-width: mixins.rem(1280);
     min-height: calc(100svh - 72px);
-
-    @media #{map.get(bp.$breakpoints, xsmall)} {
-      padding: mixins.rem(12) mixins.rem(16);
-    }
   }
 }

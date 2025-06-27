@@ -18,6 +18,7 @@ export const SharedLocalization = {
   noFiles: $localize`:@@shared.noFiles:No files`,
   noAttrs: $localize`:@@shared.noAttrs:No attributes`,
   empty: $localize`:@@shared.empty:Empty`,
+  cardPreview: $localize`:@@shared.cardPreview:Card preview`,
   card: $localize`:@@shared.card:Card`,
   search: $localize`:@@shared.search:Search`,
   list: $localize`:@@shared.list:List`,
