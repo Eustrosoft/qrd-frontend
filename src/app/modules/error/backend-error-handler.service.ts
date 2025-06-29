@@ -18,7 +18,7 @@ export class BackendErrorHandlerService {
     if (req.context.has(SUPPRESS_HTTP_ERROR_INTERCEPTOR)) {
       return this.defaultErrorHandlerStrategy;
     }
-    if (err.status === HttpStatusCode.Unauthorized || err.status === HttpStatusCode.Forbidden) {
+    if (err.status === HttpStatusCode.Unauthorized) {
       return this.unauthenticatedErrorHandlerStrategy;
     }
     if (

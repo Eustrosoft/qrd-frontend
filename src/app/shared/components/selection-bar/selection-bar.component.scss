@@ -4,6 +4,7 @@
 @use 'sass:map';
 
 :host {
+  gap: mixins.rem(8);
   width: calc(100vw - calc(var(--main-padding-horizontal) * 2) - var(--scrollbar-width));
   bottom: 0;
   z-index: 2;

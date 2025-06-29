@@ -12,6 +12,7 @@ export const ErrorsLocalization = {
   // eslint-disable-next-line max-len
   pageNotFoundDescription: $localize`:@@errors.pageNotFoundDescription:We do not have the requested page. It may have been deleted or an incorrect address was specified in the request`,
   errorCode: $localize`:@@errors.errorCode:Error code`,
+  errorLoadingPreview: $localize`:@@errors.errorLoadingPreview:Error loading preview`,
 } as const;
 
 export const UnknownBackendError: BackendError = {

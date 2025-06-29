@@ -19,6 +19,7 @@ import { TruncateDirective } from '@shared/directives/truncate.directive';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
+import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 
 @Component({
   selector: 'qr-card-view',
@@ -47,6 +48,7 @@ export class QrCardViewComponent implements OnInit {
   private readonly uiSidenavService = inject(UiSidenavService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly isXSmall = inject(IS_XSMALL);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
   protected readonly selectors = createSelectMap({
     isQrCardLoading: QrCardsState.isQrCardLoading$,
@@ -70,6 +72,7 @@ export class QrCardViewComponent implements OnInit {
     this.uiSidenavService.open(QrViewComponent, {
       bindings: [inputBinding('iframeSrc', this.selectors.qrCardPreviewUrl)],
       position: 'end',
+      width: this.isXSmall() ? 'full' : 'sm',
     });
   }
 }

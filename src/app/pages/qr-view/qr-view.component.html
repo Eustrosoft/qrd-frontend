@@ -1,1 +1,18 @@
-<iframe [src]="src()"></iframe>
+<button (click)="closeSidenav()" class="button-md button-secondary" mat-flat-button>
+  {{ SharedLocalization.close }}
+</button>
+<iframe
+  [src]="src()"
+  (load)="onIframeLoad()"
+  (error)="onIframeError()"
+  [class.hidden]="isLoading || isLoadError"
+  tabindex="0"
+></iframe>
+
+@if (isLoading) {
+  <mat-spinner diameter="64" />
+}
+
+@if (isLoadError) {
+  <h1>{{ ErrorsLocalization.errorLoadingPreview }}</h1>
+}

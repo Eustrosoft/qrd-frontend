@@ -17,18 +17,6 @@
   }
 }
 
-::-webkit-scrollbar {
-  width: var(--scrollbar-width);
-}
-
-::-webkit-scrollbar-track {
-  background: var(--mat-sys-surface-container-low);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--mat-sys-secondary-container);
-}
-
 h1,
 h2,
 h3,

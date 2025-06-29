@@ -5,7 +5,7 @@ import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { CardFieldComponent } from '@shared/components/card-field/card-field.component';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
-import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
+import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
@@ -40,6 +40,7 @@ import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 })
 export class QrCardMainComponent {
   private readonly uiSidenavService = inject(UiSidenavService);
+  protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly selectors = createSelectMap({
     qrCard: QrCardsState.getQrCard$,
@@ -60,6 +61,7 @@ export class QrCardMainComponent {
     this.uiSidenavService.open(QrViewComponent, {
       bindings: [inputBinding('iframeSrc', this.selectors.qrCardPreviewUrl)],
       position: 'end',
+      width: this.isXSmall() ? 'full' : 'sm',
     });
   }
 }

@@ -4,7 +4,7 @@
   (advancedSearchClicked)="openAdvancedSearch()"
 >
   @if (selectors.selectedFileList().length) {
-    <selection-actions-bar
+    <selection-bar
       [count]="selectors.selectedFileList().length"
       (onSelectAll)="actions.selectAllFiles()"
       (onClose)="actions.setSelectedFiles([])"
@@ -13,7 +13,7 @@
       <button class="mini-fab-icon-secondary-button-circle-md" mat-mini-fab>
         <mat-icon class="icon-on-secondary">delete</mat-icon>
       </button>
-    </selection-actions-bar>
+    </selection-bar>
   }
   @if (selectors.displayType() === 'list') {
     <file-list (selectionChanged)="actions.setSelectedFiles($event)" />

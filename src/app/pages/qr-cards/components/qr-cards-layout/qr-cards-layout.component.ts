@@ -8,7 +8,7 @@ import {
   SetQrCardsDataViewDisplayType,
   SetSelectedQrCards,
 } from '@app/pages/qr-cards/state/qr-cards.actions';
-import { SelectionActionsBarComponent } from '@shared/components/selection-actions-bar/selection-actions-bar.component';
+import { SelectionBarComponent } from '@shared/components/selection-bar/selection-bar.component';
 import { QrCardListComponent } from '@app/pages/qr-cards/components/qr-card-list/qr-card-list.component';
 import { MatIcon } from '@angular/material/icon';
 import { expandAnimation } from '@shared/shared.animations';
@@ -17,7 +17,7 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 
 @Component({
   selector: 'qr-cards-layout',
-  imports: [DataViewComponent, SelectionActionsBarComponent, QrCardListComponent, MatIcon, MatMiniFabButton],
+  imports: [DataViewComponent, SelectionBarComponent, QrCardListComponent, MatIcon, MatMiniFabButton],
   animations: [expandAnimation],
   templateUrl: './qr-cards-layout.component.html',
   styleUrl: './qr-cards-layout.component.scss',

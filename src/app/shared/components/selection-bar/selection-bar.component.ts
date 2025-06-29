@@ -5,13 +5,13 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'selection-actions-bar',
+  selector: 'selection-bar',
   imports: [UiFlexBlockComponent, MatButton, MatIcon, MatIconButton],
-  templateUrl: './selection-actions-bar.component.html',
-  styleUrl: './selection-actions-bar.component.scss',
+  templateUrl: './selection-bar.component.html',
+  styleUrl: './selection-bar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SelectionActionsBarComponent {
+export class SelectionBarComponent {
   protected readonly SharedLocalization = SharedLocalization;
 
   public readonly count = input<number>(0);
