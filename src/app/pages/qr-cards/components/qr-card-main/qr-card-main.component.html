@@ -28,10 +28,10 @@
         </button>
       </card-field>
       <card-field [heading]="`${SharedLocalization.name}:`">
-        {{ selectors.qrCard()?.name ?? SharedLocalization.noName }}
+        {{ selectors.qrCard()?.name | fallback: SharedLocalization.noName }}
       </card-field>
       <card-field [heading]="`${SharedLocalization.description}:`">
-        {{ selectors.qrCard()?.description ?? SharedLocalization.noDescription }}
+        {{ selectors.qrCard()?.description | fallback: SharedLocalization.noDescription }}
       </card-field>
     </ui-grid-block>
   </ng-container>

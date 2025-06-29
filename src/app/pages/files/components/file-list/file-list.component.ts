@@ -17,6 +17,7 @@ import { FetchFileList, SetFilesDataViewDisplayType } from '@app/pages/files/sta
 import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 import { DatePipe } from '@angular/common';
+import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 
 @Component({
   selector: 'file-list',
@@ -32,6 +33,7 @@ import { DatePipe } from '@angular/common';
     UiBadgeComponent,
     BytesToSizePipe,
     DatePipe,
+    FallbackPipe,
   ],
   templateUrl: './file-list.component.html',
   styleUrl: './file-list.component.scss',
@@ -52,11 +54,9 @@ export class FileListComponent implements OnInit {
   });
 
   protected readonly selectionModel = new SelectionModel(true, this.selectors.selectedFileList());
-
   public readonly selectionChanged = outputFromObservable(
     this.selectionModel.changed.asObservable().pipe(map(() => this.selectionModel.selected)),
   );
-
   private readonly selectionEffect = effect(() => {
     const selectedValues = this.selectors.selectedFileList();
     this.selectionModel.select(...selectedValues);

@@ -15,16 +15,9 @@
         (checkboxChanged)="$event ? selectionModel.select(file.id) : selectionModel.deselect(file.id)"
       >
         <ng-container content>
-          @if (file?.name) {
-            <p ellipsis>
-              {{ file.name }}
-            </p>
-          }
-          @if (file?.description) {
-            <p ellipsis>
-              {{ file.description }}
-            </p>
-          }
+          <p ellipsis>
+            {{ file.description | fallback: SharedLocalization.noDescription }}
+          </p>
         </ng-container>
         <ng-container attributes>
           <ui-flex-block gapSize="4" flexAlignItems="center" flexWrap="wrap">
@@ -57,15 +50,15 @@
       </view-list-item>
     }
   } @else {
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
+    <ui-skeleton height="72" />
+    <ui-skeleton height="72" />
+    <ui-skeleton height="72" />
+    <ui-skeleton height="72" />
+    <ui-skeleton height="72" />
+    <ui-skeleton height="72" />
+    <ui-skeleton height="72" />
+    <ui-skeleton height="72" />
+    <ui-skeleton height="72" />
+    <ui-skeleton height="72" />
   }
 </ui-flex-block>

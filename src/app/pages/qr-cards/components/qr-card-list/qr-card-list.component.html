@@ -27,16 +27,12 @@
           }
         </ng-container>
         <ng-container content>
-          @if (qrCard?.name) {
-            <p ellipsis>
-              {{ qrCard.name }}
-            </p>
-          }
-          @if (qrCard?.description) {
-            <p ellipsis>
-              {{ qrCard.description }}
-            </p>
-          }
+          <p ellipsis>
+            {{ qrCard.name | fallback: SharedLocalization.noName }}
+          </p>
+          <p ellipsis>
+            {{ qrCard.description | fallback: SharedLocalization.noDescription }}
+          </p>
         </ng-container>
         <ng-container menu-items>
           <a [routerLink]="`./${qrCard.code}`" [relativeTo]="activatedRoute" mat-menu-item>
@@ -63,15 +59,15 @@
       </view-list-item>
     }
   } @else {
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
-    <ui-skeleton height="141" />
+    <ui-skeleton [height]="skeletonHeight()" />
+    <ui-skeleton [height]="skeletonHeight()" />
+    <ui-skeleton [height]="skeletonHeight()" />
+    <ui-skeleton [height]="skeletonHeight()" />
+    <ui-skeleton [height]="skeletonHeight()" />
+    <ui-skeleton [height]="skeletonHeight()" />
+    <ui-skeleton [height]="skeletonHeight()" />
+    <ui-skeleton [height]="skeletonHeight()" />
+    <ui-skeleton [height]="skeletonHeight()" />
+    <ui-skeleton [height]="skeletonHeight()" />
   }
 </ui-flex-block>

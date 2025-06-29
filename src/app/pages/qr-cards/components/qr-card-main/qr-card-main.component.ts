@@ -17,6 +17,7 @@ import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
+import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 
 @Component({
   selector: 'qr-card-main',
@@ -33,6 +34,7 @@ import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
     DatePipe,
     BytesToSizePipe,
     ToHexPipe,
+    FallbackPipe,
   ],
   templateUrl: './qr-card-main.component.html',
   styleUrl: './qr-card-main.component.scss',

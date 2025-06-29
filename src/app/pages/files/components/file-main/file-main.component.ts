@@ -8,10 +8,11 @@ import { createSelectMap } from '@ngxs/store';
 import { FilesState } from '@app/pages/files/state/files.state';
 import { BoolToTextPipe } from '@shared/pipe/bool-to-text.pipe';
 import { DatePipe } from '@angular/common';
+import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 
 @Component({
   selector: 'file-main',
-  imports: [CardContainerComponent, CardFieldComponent, UiGridBlockComponent, BoolToTextPipe, DatePipe],
+  imports: [CardContainerComponent, CardFieldComponent, UiGridBlockComponent, BoolToTextPipe, DatePipe, FallbackPipe],
   templateUrl: './file-main.component.html',
   styleUrl: './file-main.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

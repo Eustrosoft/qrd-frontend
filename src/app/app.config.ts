@@ -1,5 +1,11 @@
 import { ApplicationConfig, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
-import { PreloadAllModules, provideRouter, TitleStrategy, withPreloading } from '@angular/router';
+import {
+  PreloadAllModules,
+  provideRouter,
+  TitleStrategy,
+  withInMemoryScrolling,
+  withPreloading,
+} from '@angular/router';
 import { routes } from './app.routes';
 import { AppState } from '@app/state/app.state';
 import { provideStore, Store } from '@ngxs/store';
@@ -22,7 +28,11 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideInitializers(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withPreloading(PreloadAllModules)),
+    provideRouter(
+      routes,
+      withPreloading(PreloadAllModules),
+      withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' }),
+    ),
     provideAnimationsAsync(),
     provideStore(
       [AppState, AuthState, DictionaryRegistryState],

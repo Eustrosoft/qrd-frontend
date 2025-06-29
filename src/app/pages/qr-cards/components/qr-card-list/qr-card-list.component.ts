@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, inputBinding, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, inputBinding, OnInit } from '@angular/core';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { ScrolledToLastDirective } from '@shared/directives/scrolled-to-last.directive';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
@@ -19,7 +19,8 @@ import { ImgLoadStateDirective } from '@shared/directives/img-load-state.directi
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
-import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 
 @Component({
   selector: 'qr-card-list',
@@ -34,14 +35,16 @@ import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
     MatIcon,
     ImgLoadStateDirective,
     RouterLink,
+    FallbackPipe,
   ],
   templateUrl: './qr-card-list.component.html',
   styleUrl: './qr-card-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrCardListComponent implements OnInit {
-  protected readonly uiSidenavService = inject(UiSidenavService);
   protected readonly isXSmall = inject(IS_XSMALL);
+  protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
+  protected readonly uiSidenavService = inject(UiSidenavService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly QrCardsLocalization = QrCardsLocalization;
   protected readonly SharedLocalization = SharedLocalization;
@@ -56,12 +59,12 @@ export class QrCardListComponent implements OnInit {
     fetchQrCards: FetchQrCardList,
   });
 
-  protected readonly selectionModel = new SelectionModel(true, this.selectors.selectedQrCardList());
+  protected readonly skeletonHeight = computed(() => (this.isSmallScreen() ? '96' : '144'));
 
+  protected readonly selectionModel = new SelectionModel(true, this.selectors.selectedQrCardList());
   public readonly selectionChanged = outputFromObservable(
     this.selectionModel.changed.asObservable().pipe(map(() => this.selectionModel.selected)),
   );
-
   private readonly selectionEffect = effect(() => {
     const selectedValues = this.selectors.selectedQrCardList();
     this.selectionModel.select(...selectedValues);
