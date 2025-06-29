@@ -5,13 +5,13 @@
 
 :host {
   gap: mixins.rem(8);
-  width: calc(100vw - calc(var(--main-padding-horizontal) * 2) - var(--scrollbar-width));
+  width: calc(100vw - calc(var(--main-padding-horizontal) * 2));
   bottom: 0;
   z-index: 2;
   display: flex;
   padding: mixins.rem(12) mixins.rem(16);
   position: fixed;
-  background: var(--mat-sys-surface-container);
+  background: var(--mat-sys-surface-container-high);
   align-items: center;
   border-radius: mixins.rem(12);
   justify-content: space-between;
