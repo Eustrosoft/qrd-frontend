@@ -12,6 +12,7 @@ export interface SidenavConfig {
   autoFocus: AutoFocusTarget | string | BooleanInput;
   position: 'start' | 'end';
   width: SidenavWidth;
+  isFixed: boolean;
   hasBackdrop: boolean;
   onSidenavClose: (() => void) | null;
   onBackdropClick: (() => void) | null;

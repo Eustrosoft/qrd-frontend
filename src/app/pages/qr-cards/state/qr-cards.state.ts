@@ -89,7 +89,15 @@ export class QrCardsState {
       switchMap(() => this.qrCardsService.getQrCardList()),
       tap({
         next: (qrCardList) => {
-          setState(patch({ qrCardList, isQrCardListLoading: false }));
+          setState(
+            patch({
+              qrCardList: qrCardList.map((qrCard) => ({
+                ...qrCard,
+                qrCardPreviewUrl: `${QR_API_URL}${this.toHexPipe.transform(qrCard.code)}`,
+              })),
+              isQrCardListLoading: false,
+            }),
+          );
         },
       }),
       catchError((err) => {

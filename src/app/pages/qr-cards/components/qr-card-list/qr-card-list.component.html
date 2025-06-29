@@ -43,7 +43,7 @@
             <mat-icon>outbound</mat-icon>
             {{ SharedLocalization.open }}
           </a>
-          <button mat-menu-item>
+          <button (click)="openCardPreview(qrCard.qrCardPreviewUrl)" mat-menu-item>
             <mat-icon>open_in_new</mat-icon>
             {{ QrCardsLocalization.viewCard }}
           </button>

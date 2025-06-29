@@ -27,7 +27,7 @@ export class QrViewComponent {
 
   protected onIframeLoad(): void {
     this.isLoading = false;
-    this.isLoadError = true;
+    this.isLoadError = false;
   }
 
   protected onIframeError(): void {

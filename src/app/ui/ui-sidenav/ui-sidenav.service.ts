@@ -16,6 +16,7 @@ export class UiSidenavService {
     autoFocus: 'first-tabbable',
     position: 'start',
     width: 'sm',
+    isFixed: false,
     hasBackdrop: true,
     onSidenavClose: null,
     onBackdropClick: null,

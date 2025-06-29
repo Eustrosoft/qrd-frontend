@@ -73,6 +73,7 @@ export class QrCardViewComponent implements OnInit {
       bindings: [inputBinding('iframeSrc', this.selectors.qrCardPreviewUrl)],
       position: 'end',
       width: this.isXSmall() ? 'full' : 'sm',
+      isFixed: true,
     });
   }
 }

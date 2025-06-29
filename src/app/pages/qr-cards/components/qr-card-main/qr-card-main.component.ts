@@ -62,6 +62,7 @@ export class QrCardMainComponent {
       bindings: [inputBinding('iframeSrc', this.selectors.qrCardPreviewUrl)],
       position: 'end',
       width: this.isXSmall() ? 'full' : 'sm',
+      isFixed: true,
     });
   }
 }

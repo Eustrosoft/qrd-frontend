@@ -1,9 +1,15 @@
+@use 'styles/mixins' as mixins;
+
 :host {
   height: 100vh;
   display: grid;
   position: relative;
   overflow: hidden;
   grid-template-rows: auto 1fr;
+
+  .close-button {
+    margin: mixins.rem(8);
+  }
 
   iframe {
     width: 100%;

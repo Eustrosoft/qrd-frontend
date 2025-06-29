@@ -1,4 +1,4 @@
-<button (click)="closeSidenav()" class="button-md button-secondary" mat-flat-button>
+<button (click)="closeSidenav()" class="button-md button-secondary close-button" mat-flat-button>
   {{ SharedLocalization.close }}
 </button>
 <iframe
@@ -7,6 +7,7 @@
   (error)="onIframeError()"
   [class.hidden]="isLoading || isLoadError"
   tabindex="0"
+  sandbox="allow-popups allow-scripts"
 ></iframe>
 
 @if (isLoading) {

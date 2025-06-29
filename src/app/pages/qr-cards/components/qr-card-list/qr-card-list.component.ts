@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, inputBinding, OnInit } from '@angular/core';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { ScrolledToLastDirective } from '@shared/directives/scrolled-to-last.directive';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
@@ -17,6 +17,9 @@ import { outputFromObservable } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { ImgLoadStateDirective } from '@shared/directives/img-load-state.directive';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
+import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
+import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 
 @Component({
   selector: 'qr-card-list',
@@ -37,6 +40,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrCardListComponent implements OnInit {
+  protected readonly uiSidenavService = inject(UiSidenavService);
+  protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly QrCardsLocalization = QrCardsLocalization;
   protected readonly SharedLocalization = SharedLocalization;
@@ -67,6 +72,15 @@ export class QrCardListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.actions.fetchQrCards();
+  }
+
+  protected openCardPreview(previewUrl: string): void {
+    this.uiSidenavService.open(QrViewComponent, {
+      bindings: [inputBinding('iframeSrc', () => previewUrl)],
+      position: 'end',
+      width: this.isXSmall() ? 'full' : 'sm',
+      isFixed: true,
+    });
   }
 
   protected fetchMore(): void {
