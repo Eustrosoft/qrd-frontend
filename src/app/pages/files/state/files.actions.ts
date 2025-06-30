@@ -26,3 +26,11 @@ export class SetFilesDataViewDisplayType {
   public static readonly type = '[Files] Set Files Display Type';
   constructor(readonly displayType: DataViewDisplayType) {}
 }
+
+export class DownloadFile {
+  public static readonly type = '[Files] Download File';
+  constructor(
+    readonly id: number,
+    readonly fileName: string,
+  ) {}
+}

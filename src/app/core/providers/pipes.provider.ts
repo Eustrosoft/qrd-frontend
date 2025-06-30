@@ -4,7 +4,8 @@ import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 import { BoolToTextPipe } from '@shared/pipe/bool-to-text.pipe';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
+import { ContentDispositionHeaderParsePipe } from '@shared/pipe/content-disposition-header-parse.pipe';
 
 export function providePipes(): Provider[] {
-  return [PxToRemPipe, ToHexPipe, BytesToSizePipe, BoolToTextPipe, FallbackPipe];
+  return [PxToRemPipe, ToHexPipe, BytesToSizePipe, BoolToTextPipe, FallbackPipe, ContentDispositionHeaderParsePipe];
 }

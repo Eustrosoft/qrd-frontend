@@ -7,6 +7,7 @@ import { patch } from '@ngxs/store/operators';
 import { SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
+  DownloadFile,
   FetchFile,
   FetchFileList,
   SelectAllFiles,
@@ -14,6 +15,8 @@ import {
   SetSelectedFiles,
 } from '@app/pages/files/state/files.actions';
 import { FilesService } from '@app/pages/files/services/files.service';
+import { HttpResponse } from '@angular/common/http';
+import { ContentDispositionHeaderParsePipe } from '@shared/pipe/content-disposition-header-parse.pipe';
 
 export interface FilesStateModel {
   displayType: DataViewDisplayType;
@@ -22,6 +25,7 @@ export interface FilesStateModel {
   selectedFileList: number[];
   isFileLoading: boolean;
   file: FileDto | null;
+  isFileDownloading: boolean;
 }
 
 const defaults: FilesStateModel = {
@@ -31,6 +35,7 @@ const defaults: FilesStateModel = {
   selectedFileList: [],
   isFileLoading: false,
   file: null,
+  isFileDownloading: false,
 } as const;
 
 const FILES_STATE_TOKEN: StateToken<FilesStateModel> = new StateToken<FilesStateModel>('files');
@@ -42,6 +47,7 @@ const FILES_STATE_TOKEN: StateToken<FilesStateModel> = new StateToken<FilesState
 @Injectable()
 export class FilesState {
   private readonly filesService = inject(FilesService);
+  private readonly contentDispositionHeaderParsePipe = inject(ContentDispositionHeaderParsePipe);
 
   @Selector()
   public static getDisplayType$({ displayType }: FilesStateModel): DataViewDisplayType {
@@ -61,6 +67,11 @@ export class FilesState {
   @Selector()
   public static isFileLoading$({ isFileLoading }: FilesStateModel): boolean {
     return isFileLoading;
+  }
+
+  @Selector()
+  public static isFileDownloading$({ isFileDownloading }: FilesStateModel): boolean {
+    return isFileDownloading;
   }
 
   @Selector()
@@ -125,5 +136,30 @@ export class FilesState {
     { displayType }: SetFilesDataViewDisplayType,
   ): void {
     setState(patch({ displayType }));
+  }
+
+  @Action(DownloadFile)
+  public downloadFile(
+    { setState }: StateContext<FilesStateModel>,
+    { id, fileName }: DownloadFile,
+  ): Observable<HttpResponse<Blob>> {
+    setState(patch({ isFileDownloading: true }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.filesService.downloadFile(id, fileName)),
+      tap({
+        next: (response: HttpResponse<Blob>) => {
+          setState(patch({ isFileDownloading: false }));
+          const filename = this.contentDispositionHeaderParsePipe.transform(
+            response.headers.get('content-disposition'),
+            fileName,
+          );
+          this.filesService.saveBlobToFile(response?.body ?? new Blob([]), filename);
+        },
+      }),
+      catchError((err) => {
+        setState(patch({ isFileDownloading: false }));
+        return throwError(() => err);
+      }),
+    );
   }
 }

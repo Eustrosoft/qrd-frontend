@@ -1,10 +1,16 @@
 @if (!selectors.isFileLoading()) {
   <view-toolbar>
     <ng-container heading>
-      <h1 ellipsis>{{ selectors.file()?.name }}</h1>
+      <h1 ellipsis>{{ selectors.file()?.name | fallback: SharedLocalization.noName }}</h1>
     </ng-container>
     <ng-container action-buttons>
-      <button class="button-md" mat-flat-button>{{ SharedLocalization.download }}</button>
+      @if (!selectors.isFileDownloading()) {
+        <button (click)="downloadFile()" #button class="button-md" mat-flat-button>
+          {{ SharedLocalization.download }}
+        </button>
+      } @else {
+        <ui-skeleton height="40" width="116" />
+      }
       <button class="button-md" mat-flat-button>{{ SharedLocalization.edit }}</button>
       <button class="button-md" mat-flat-button>{{ SharedLocalization.delete }}</button>
     </ng-container>

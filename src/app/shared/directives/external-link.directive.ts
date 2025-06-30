@@ -15,6 +15,6 @@ export class ExternalLinkDirective {
     }
     event.preventDefault();
     event.stopImmediatePropagation();
-    this.window.open(this.externalLink(), '_blank', 'noopener noreferrer');
+    this.window.open(this.externalLink(), '_blank', 'noreferrer');
   }
 }

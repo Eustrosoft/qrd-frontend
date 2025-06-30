@@ -1,0 +1,10 @@
+@use '@angular/material' as mat;
+@use 'styles/mixins' as mixins;
+
+.spinner-on-primary {
+  @include mat.progress-spinner-overrides(
+    (
+      active-indicator-color: var(--mat-sys-on-primary),
+    )
+  );
+}
