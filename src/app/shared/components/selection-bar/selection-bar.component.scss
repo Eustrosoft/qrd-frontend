@@ -12,17 +12,18 @@
   padding: mixins.rem(12) mixins.rem(16);
   position: fixed;
   background: var(--mat-sys-surface-container-high);
+  box-shadow: var(--mat-sys-level2);
   align-items: center;
   border-radius: mixins.rem(12);
   justify-content: space-between;
 
   @media #{map.get(bp.$breakpoints, xsmall)} {
     width: calc(100vw - calc(var(--main-padding-horizontal) * 2));
-    bottom: mixins.rem(80);
+    bottom: mixins.rem(88);
   }
 
   @media #{map.get(bp.$breakpoints, small)} {
     width: calc(100vw - calc(var(--main-padding-horizontal) * 2));
-    bottom: mixins.rem(80);
+    bottom: mixins.rem(88);
   }
 }
