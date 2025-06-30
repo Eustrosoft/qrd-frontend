@@ -14,6 +14,7 @@ import { MatIcon } from '@angular/material/icon';
 import { expandAnimation } from '@shared/shared.animations';
 import { MatMiniFabButton } from '@angular/material/button';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
+import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 
 @Component({
   selector: 'qr-cards-layout',
@@ -24,6 +25,7 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrCardsLayoutComponent {
+  protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly uiSidenavService = inject(UiSidenavService);
   protected readonly document = inject(DOCUMENT);
 
@@ -42,6 +44,7 @@ export class QrCardsLayoutComponent {
     this.uiSidenavService.open(MatIcon, {
       content: [[this.document.createTextNode('database_search')]],
       position: 'end',
+      width: this.isSmallScreen() ? 'full' : 'sm',
     });
   }
 }

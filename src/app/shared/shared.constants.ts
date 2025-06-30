@@ -48,6 +48,7 @@ export const SharedLocalization = {
   no: $localize`:@@shared.no:No`,
   unknown: $localize`:@@shared.unknown:Unknown`,
   close: $localize`:@@shared.close:Close`,
+  dev: $localize`:@@shared.dev:Under development`,
 } as const;
 
 export const SizeUnitsLocalization = {

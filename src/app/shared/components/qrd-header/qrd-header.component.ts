@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DOCUMENT, inject, signal } from '@angular/core';
 import { MatAnchor, MatIconButton } from '@angular/material/button';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { SharedLocalization } from '@shared/shared.constants';
@@ -20,6 +20,7 @@ import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { MiniProfileInfoComponent } from '@modules/auth/components/mini-profile-info/mini-profile-info.component';
 import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overlay/create-menu-overlay.component';
 import { MatIcon } from '@angular/material/icon';
+import { CardFieldComponent } from '@shared/components/card-field/card-field.component';
 
 @Component({
   selector: 'qrd-header',
@@ -47,6 +48,7 @@ import { MatIcon } from '@angular/material/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrdHeaderComponent {
+  private readonly document = inject(DOCUMENT);
   private readonly overlay = inject(Overlay);
   private readonly uiSidenavService = inject(UiSidenavService);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
@@ -98,6 +100,11 @@ export class QrdHeaderComponent {
   }
 
   protected openSidenavMenu(): void {
-    this.uiSidenavService.open(CreateMenuOverlayComponent);
+    const el = this.document.createElement('h1');
+    el.textContent = SharedLocalization.dev;
+    this.uiSidenavService.open(CardFieldComponent, {
+      content: [[el]],
+      width: 'full',
+    });
   }
 }
