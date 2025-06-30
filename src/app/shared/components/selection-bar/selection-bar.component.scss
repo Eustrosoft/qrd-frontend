@@ -5,12 +5,14 @@
 
 :host {
   gap: mixins.rem(8);
-  width: calc(100vw - calc(var(--main-padding-horizontal) * 2));
+  left: 50%;
+  width: min(calc(100% - (2 * var(--main-padding-horizontal))), calc(80rem - (2 * var(--main-padding-horizontal))));
   bottom: 0;
   z-index: 2;
   display: flex;
   padding: mixins.rem(12) mixins.rem(16);
   position: fixed;
+  transform: translateX(-50%);
   background: var(--mat-sys-surface-container-high);
   box-shadow: var(--mat-sys-level2);
   align-items: center;
