@@ -59,7 +59,8 @@ export class QrCardListComponent implements OnInit {
     fetchQrCards: FetchQrCardList,
   });
 
-  protected readonly skeletonHeight = computed(() => (this.isSmallScreen() ? '96' : '144'));
+  // prettier-ignore
+  protected readonly skeletonHeight = computed(() => this.isSmallScreen() ? '96' : '144');
 
   protected readonly selectionModel = new SelectionModel(true, this.selectors.selectedQrCardList());
   public readonly selectionChanged = outputFromObservable(
