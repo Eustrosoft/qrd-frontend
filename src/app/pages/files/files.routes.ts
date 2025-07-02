@@ -6,6 +6,7 @@ import { FilesLayoutComponent } from '@app/pages/files/components/files-layout/f
 import { FileViewComponent } from '@app/pages/files/components/file-view/file-view.component';
 import { FileMainComponent } from '@app/pages/files/components/file-main/file-main.component';
 import { FileUsagesComponent } from '@app/pages/files/components/file-usages/file-usages.component';
+import { FileEditComponent } from '@app/pages/files/components/file-edit/file-edit.component';
 
 export const filesRoutes: Routes = [
   {
@@ -35,6 +36,11 @@ export const filesRoutes: Routes = [
             component: FileUsagesComponent,
           },
         ],
+      },
+      {
+        path: `:id/${AppRoutes.edit}`,
+        component: FileEditComponent,
+        title: RouteTitles.file,
       },
     ],
   },

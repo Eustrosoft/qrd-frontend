@@ -11,7 +11,9 @@
       } @else {
         <ui-skeleton height="40" width="116" />
       }
-      <button class="button-md" mat-flat-button>{{ SharedLocalization.edit }}</button>
+      <a [routerLink]="`../${selectors.file()?.id}/${AppRoutes.edit}`" class="button-md" mat-flat-button>
+        {{ SharedLocalization.edit }}
+      </a>
       <button class="button-md" mat-flat-button>{{ SharedLocalization.delete }}</button>
     </ng-container>
   </view-toolbar>

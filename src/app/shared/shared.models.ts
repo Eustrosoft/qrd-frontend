@@ -42,6 +42,7 @@ export type GridJustifyItems =
   | 'revert-layer'
   | 'unset';
 export type GridJustifySelf = GridJustifyItems;
+export type GridAlignSelf = GridJustifyItems;
 export type CursorType =
   | 'auto'
   | 'default'

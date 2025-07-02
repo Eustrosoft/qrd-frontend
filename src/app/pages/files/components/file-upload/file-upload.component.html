@@ -1,0 +1,33 @@
+<mat-nav-list role="list">
+  @for (attachmentMode of attachmentModeList; track attachmentMode.mode) {
+    <button
+      (click)="fileAttachmentMode.set(attachmentMode.mode)"
+      [activated]="fileAttachmentMode() === attachmentMode.mode"
+      mat-list-item
+    >
+      {{ attachmentMode.title }}
+    </button>
+  }
+</mat-nav-list>
+<input #fileInput (change)="fileChanged()" [formControl]="form.controls.file" type="file" hidden />
+@if (fileAttachmentMode() === 'upload') {
+  <button (click)="fileInput.click()" mat-flat-button>{{ FilesLocalization.selectFile }}</button>
+}
+<mat-form-field class="form-field-lg" floatLabel="always">
+  <mat-label> {{ SharedLocalization.name }} </mat-label>
+  <input [formControl]="form.controls.name" matInput placeholder="Placeholder" />
+</mat-form-field>
+<mat-form-field class="form-field-lg">
+  <mat-label> {{ SharedLocalization.description }} </mat-label>
+  <input [formControl]="form.controls.description" matInput placeholder="Placeholder" />
+</mat-form-field>
+@if (fileAttachmentMode() === 'link') {
+  <mat-form-field class="form-field-lg">
+    <mat-label> {{ SharedLocalization.description }} </mat-label>
+    <input [formControl]="form.controls.storagePath" matInput placeholder="Placeholder" />
+  </mat-form-field>
+}
+<ui-flex-block>
+  <mat-slide-toggle class="slide-toggle"> {{ SharedLocalization.isPublic }} </mat-slide-toggle>
+  <mat-slide-toggle class="slide-toggle"> {{ SharedLocalization.isActive }} </mat-slide-toggle>
+</ui-flex-block>

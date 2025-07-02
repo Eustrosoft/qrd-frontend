@@ -9,6 +9,7 @@ export const AppRoutes = {
   files: 'files',
   file: 'file',
   usages: 'usages',
+  edit: 'edit',
   notFound: 'not-found',
   unauthenticated: 'unauthenticated',
   devSandbox: 'dev-sandbox',

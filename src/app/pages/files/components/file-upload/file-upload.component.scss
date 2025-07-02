@@ -1,0 +1,26 @@
+@use '@angular/material' as mat;
+@use 'styles/mixins' as mixins;
+
+:host {
+  gap: mixins.rem(4);
+  display: grid;
+  align-self: start;
+  justify-items: start;
+
+  mat-nav-list {
+    gap: mixins.rem(4);
+    display: flex;
+
+    button {
+      @include mat.list-overrides(
+        (
+          list-item-one-line-container-height: 32px,
+          active-indicator-shape: 8px,
+        )
+      );
+
+      width: auto;
+      border: 0;
+    }
+  }
+}

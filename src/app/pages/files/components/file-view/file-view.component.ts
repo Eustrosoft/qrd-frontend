@@ -56,6 +56,7 @@ export class FileViewComponent implements OnInit {
     { link: AppRoutes.file, title: RouteTitles.file },
     { link: AppRoutes.usages, title: RouteTitles.usages },
   ];
+  protected readonly AppRoutes = AppRoutes;
   protected readonly SharedLocalization = SharedLocalization;
 
   public ngOnInit(): void {

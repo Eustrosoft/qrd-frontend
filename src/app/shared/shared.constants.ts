@@ -87,3 +87,6 @@ export const FileStorageTypeMap = new Map<FileStorageType | null | undefined, Fi
   ['LOCAL', { text: SharedLocalization.storedLocally, icon: 'folder' }],
   ['URL', { text: SharedLocalization.storedExternally, icon: 'http' }],
 ]);
+
+export const WEB_REGEXP =
+  /^(https?:\/\/)?([a-zA-Zа-яёА-ЯЁ0-9-]+\.)+[a-zA-Zа-яёА-ЯЁ]{2,}(\/[a-zA-Zа-яёА-ЯЁ0-9-._~:/?#[\]@!$&'()*+,;=]*)?$/;
