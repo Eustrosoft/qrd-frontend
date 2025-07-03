@@ -12,7 +12,7 @@ export function provideMaterialConfig(): Provider[] {
   return [
     provideMatConfigValue(MAT_FORM_FIELD_DEFAULT_OPTIONS, {
       appearance: 'outline',
-      subscriptSizing: 'fixed',
+      subscriptSizing: 'dynamic',
       hideRequiredMarker: true,
     }),
     provideMatConfigValue(MAT_TOOLTIP_DEFAULT_OPTIONS, {

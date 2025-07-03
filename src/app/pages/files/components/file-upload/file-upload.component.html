@@ -9,25 +9,78 @@
     </button>
   }
 </mat-nav-list>
-<input #fileInput (change)="fileChanged()" [formControl]="form.controls.file" type="file" hidden />
-@if (fileAttachmentMode() === 'upload') {
-  <button (click)="fileInput.click()" mat-flat-button>{{ FilesLocalization.selectFile }}</button>
-}
-<mat-form-field class="form-field-lg" floatLabel="always">
+<mat-form-field class="form-field-lg">
   <mat-label> {{ SharedLocalization.name }} </mat-label>
-  <input [formControl]="form.controls.name" matInput placeholder="Placeholder" />
+  <input [formControl]="form.controls.name" matInput />
+  @if (form.controls.name.touched && form.controls.name.hasError('required')) {
+    <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+  }
+  @if (form.controls.name.touched && form.controls.name.hasError('maxlength')) {
+    <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_NAME_LENGTH }}</mat-error>
+  }
 </mat-form-field>
 <mat-form-field class="form-field-lg">
   <mat-label> {{ SharedLocalization.description }} </mat-label>
-  <input [formControl]="form.controls.description" matInput placeholder="Placeholder" />
+  <textarea [formControl]="form.controls.description" matInput></textarea>
+  @if (form.controls.description.touched && form.controls.description.hasError('required')) {
+    <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+  }
+  @if (form.controls.description.touched && form.controls.description.hasError('maxlength')) {
+    <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_DESCRIPTION_LENGTH }}</mat-error>
+  }
 </mat-form-field>
 @if (fileAttachmentMode() === 'link') {
   <mat-form-field class="form-field-lg">
-    <mat-label> {{ SharedLocalization.description }} </mat-label>
-    <input [formControl]="form.controls.storagePath" matInput placeholder="Placeholder" />
+    <mat-label> {{ FilesLocalization.linkPath }} </mat-label>
+    <input [formControl]="form.controls.storagePath" matInput />
+    @if (form.controls.storagePath.touched && form.controls.storagePath.hasError('required')) {
+      <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+    }
+    @if (form.controls.storagePath.touched && form.controls.storagePath.hasError('maxlength')) {
+      <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_STORAGE_PATH_LENGTH }}</mat-error>
+    }
+    @if (form.controls.storagePath.touched && form.controls.storagePath.hasError('pattern')) {
+      {{ form.controls.storagePath.errors | json }}
+      <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_STORAGE_PATH_LENGTH }}</mat-error>
+    }
   </mat-form-field>
 }
-<ui-flex-block>
+<input #fileInput (change)="fileChanged()" type="file" hidden />
+@if (fileAttachmentMode() === 'upload') {
+  <ui-flex-block gapSize="8" flexAlignItems="center">
+    @if (!form.controls.file.value) {
+      <button
+        (click)="fileInput.click()"
+        (blur)="form.controls.file.markAsTouched()"
+        class="button-secondary"
+        mat-flat-button
+      >
+        {{ FilesLocalization.selectFile }}
+      </button>
+    }
+    <p [title]="form.controls.name.value" ellipsis>{{ form.controls.name.value }}</p>
+    @if (form.controls.file.touched && form.controls.file.hasError('required')) {
+      <mat-error>{{ FilesLocalization.fileRequired }}</mat-error>
+    }
+    @if (form.controls.file.value) {
+      <button (click)="cancelFile()" class="icon-button-sm" mat-icon-button>
+        <mat-icon class="icon-secondary">close</mat-icon>
+      </button>
+    }
+    @if (uploadState()?.isLoading) {
+      <mat-progress-spinner diameter="20" [value]="uploadState()?.progress" />
+    }
+    @if (uploadState()?.isDone) {
+      <mat-icon class="icon-secondary" [matTooltip]="FilesLocalization.uploaded">check_circle</mat-icon>
+    }
+    @if (uploadState()?.isError) {
+      <mat-icon class="icon-error">error</mat-icon>
+    }
+  </ui-flex-block>
+}
+
+<ui-flex-block flexWrap="wrap">
   <mat-slide-toggle class="slide-toggle"> {{ SharedLocalization.isPublic }} </mat-slide-toggle>
   <mat-slide-toggle class="slide-toggle"> {{ SharedLocalization.isActive }} </mat-slide-toggle>
 </ui-flex-block>
+<button (click)="performAction()" mat-flat-button>{{ FilesLocalization.upload }}</button>

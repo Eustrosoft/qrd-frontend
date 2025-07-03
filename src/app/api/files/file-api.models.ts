@@ -11,7 +11,7 @@ export type FileBlobUploadRequest = {
   description: string;
   public: boolean;
   active: boolean;
-  fileId?: number;
+  fileId: number | null;
 };
 export type FileBlobUploadResponse = components['schemas']['FileUploadResponse'];
 export type FileUrlUploadRequest = {
