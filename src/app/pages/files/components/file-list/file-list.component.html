@@ -32,10 +32,10 @@
             <mat-icon>print</mat-icon>
             {{ SharedLocalization.print }}
           </button>
-          <button mat-menu-item>
+          <a [routerLink]="`./${file.id}/${AppRoutes.edit}`" mat-menu-item>
             <mat-icon>edit</mat-icon>
             {{ SharedLocalization.edit }}
-          </button>
+          </a>
           <button (click)="actions.deleteFiles([file.id], destroyRef)" mat-menu-item>
             <mat-icon>delete</mat-icon>
             {{ SharedLocalization.delete }}

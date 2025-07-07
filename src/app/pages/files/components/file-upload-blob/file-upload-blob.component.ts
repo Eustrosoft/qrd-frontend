@@ -90,7 +90,7 @@ export class FileUploadBlobComponent implements OnDestroy {
   );
 
   protected readonly isLoadingEffect = effect(() => {
-    if (this.selectors.uploadState()?.isLoading) {
+    if (this.selectors.uploadState()?.isLoading || this.selectors.isLoading()) {
       this.form.disable();
     } else {
       this.form.enable();

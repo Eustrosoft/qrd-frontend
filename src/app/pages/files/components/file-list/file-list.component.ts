@@ -17,6 +17,7 @@ import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 import { DatePipe } from '@angular/common';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
+import { AppRoutes } from '@app/app.constants';
 
 @Component({
   selector: 'file-list',
@@ -40,7 +41,6 @@ import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 export class FileListComponent implements OnInit {
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly activatedRoute = inject(ActivatedRoute);
-  protected readonly SharedLocalization = SharedLocalization;
   protected readonly selectors = createSelectMap({
     displayType: FilesState.getDisplayType$,
     isFileListLoading: FilesState.isFileListLoading$,
@@ -65,6 +65,9 @@ export class FileListComponent implements OnInit {
       this.selectionModel.clear();
     }
   });
+
+  protected readonly AppRoutes = AppRoutes;
+  protected readonly SharedLocalization = SharedLocalization;
 
   public ngOnInit(): void {
     this.actions.fetchFileList();
