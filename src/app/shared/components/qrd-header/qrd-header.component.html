@@ -48,7 +48,10 @@
         (overlayOutsideClick)="closeCreateOverlay()"
         (detach)="closeCreateOverlay()"
       >
-        <create-menu-overlay [@transformPanel]="isCreateOverlayOpen() ? 'enter' : 'void'" />
+        <create-menu-overlay
+          [@transformPanel]="isCreateOverlayOpen() ? 'enter' : 'void'"
+          (closeOverlay)="closeCreateOverlay()"
+        />
       </ng-template>
     }
     <button

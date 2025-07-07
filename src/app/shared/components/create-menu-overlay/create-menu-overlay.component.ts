@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, output } from '@angular/core';
 import { MatActionList, MatListItem, MatListItemIcon } from '@angular/material/list';
 import { CreateMenuOverlayLocalization } from '@shared/components/create-menu-overlay/create-menu-overlay.constants';
 import { MatIcon } from '@angular/material/icon';
@@ -12,5 +12,6 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateMenuOverlayComponent {
+  public readonly closeOverlay = output<void>();
   protected readonly CreateMenuOverlayLocalization = CreateMenuOverlayLocalization;
 }

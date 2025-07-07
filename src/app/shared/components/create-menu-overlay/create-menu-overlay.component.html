@@ -7,7 +7,7 @@
     <mat-icon matListItemIcon>difference</mat-icon>
     {{ CreateMenuOverlayLocalization.createTemplate }}
   </a>
-  <a routerLink="/files/new" mat-list-item>
+  <a routerLink="/files/new" (click)="closeOverlay.emit()" mat-list-item>
     <mat-icon matListItemIcon>upload_file</mat-icon>
     {{ CreateMenuOverlayLocalization.uploadFile }}
   </a>
