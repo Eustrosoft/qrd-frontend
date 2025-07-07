@@ -16,9 +16,9 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { map, Subject } from 'rxjs';
 import { Actions, createDispatchMap, createSelectMap, ofActionSuccessful } from '@ngxs/store';
-import { FileUploadState } from '@modules/file/state/file-upload.state';
-import { AddFileUrl, UpdateFileMetadata } from '@modules/file/state/file-upload.actions';
-import { FileAsUrlForm } from '@modules/file/file.models';
+import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
+import { AddFileUrl, UpdateFileMetadata } from '@app/pages/files/components/file-upload/state/file-upload.actions';
+import { FileAsUrlForm } from '@app/pages/files/files.models';
 import { FileDto } from '@api/files/file-api.models';
 import { SharedLocalization, WEB_REGEXP } from '@shared/shared.constants';
 import { MatError } from '@angular/material/form-field';
@@ -27,7 +27,7 @@ import {
   MAX_DESCRIPTION_LENGTH,
   MAX_NAME_LENGTH,
   MAX_STORAGE_PATH_LENGTH,
-} from '@modules/file/file.constants';
+} from '@app/pages/files/files.constants';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { outputFromObservable } from '@angular/core/rxjs-interop';

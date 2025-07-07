@@ -23,7 +23,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 import { AuthState } from '@modules/auth/state/auth.state';
 import { httpErrorInterceptor } from '@modules/error/http-error.interceptor';
-import { FileUploadState } from '@modules/file/state/file-upload.state';
+import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
 
 export const appConfig: ApplicationConfig = {
   providers: [

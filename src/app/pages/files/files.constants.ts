@@ -1,4 +1,4 @@
-import { FileUploadStateModel } from '@modules/file/state/file-upload.state';
+import { FileUploadStateModel } from '@app/pages/files/components/file-upload/state/file-upload.state';
 
 export const DEFAULT_FILE_UPLOAD_STATE: FileUploadStateModel = {
   isLoading: false,

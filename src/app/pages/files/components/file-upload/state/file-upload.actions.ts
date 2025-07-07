@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { FileAsUrlFormGroup, FileUploadFormGroup } from '@modules/file/file.models';
+import { FileAsUrlFormGroup, FileUploadFormGroup } from '@app/pages/files/files.models';
 import { DestroyRef } from '@angular/core';
 
 export class UploadBlobByChunks {

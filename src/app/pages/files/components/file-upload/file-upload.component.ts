@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component, input, model, OnDestroy, OnInit, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatListItem, MatNavList } from '@angular/material/list';
-import { AttachmentModeListItem, FileAttachmentMode } from '@modules/file/file.models';
-import { FilesLocalization } from '@modules/file/file.constants';
+import { AttachmentModeListItem, FileAttachmentMode } from '@app/pages/files/files.models';
+import { FilesLocalization } from '@app/pages/files/files.constants';
 import { FileDto } from '@api/files/file-api.models';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
-import { FileUploadState } from '@modules/file/state/file-upload.state';
+import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
 import {
   AddFileUrl,
   ResetFileUploadState,
   UpdateFileMetadata,
   UploadBlobByChunks,
-} from '@modules/file/state/file-upload.actions';
+} from '@app/pages/files/components/file-upload/state/file-upload.actions';
 import { FileUploadBlobComponent } from '@app/pages/files/components/file-upload-blob/file-upload-blob.component';
 import { FileAsUrlComponent } from '@app/pages/files/components/file-add-url/file-as-url.component';
 

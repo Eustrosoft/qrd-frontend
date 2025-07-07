@@ -23,8 +23,8 @@ import {
 import { FileReaderService } from '@app/pages/files/services/file-reader.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SharedLocalization } from '@shared/shared.constants';
-import { FileUploadFormGroup, UploadState } from '@modules/file/file.models';
-import { DEFAULT_CHUNK_SIZE } from '@modules/file/file.constants';
+import { FileUploadFormGroup, UploadState } from '@app/pages/files/files.models';
+import { DEFAULT_CHUNK_SIZE } from '@app/pages/files/files.constants';
 
 @Injectable({
   providedIn: 'root',

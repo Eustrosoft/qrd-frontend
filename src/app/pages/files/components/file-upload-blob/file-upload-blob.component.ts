@@ -13,12 +13,16 @@ import {
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { map, Subject } from 'rxjs';
 import { Actions, createDispatchMap, createSelectMap, ofActionSuccessful } from '@ngxs/store';
-import { FileUploadState } from '@modules/file/state/file-upload.state';
-import { ResetFileUploadState, UpdateFileMetadata, UploadBlobByChunks } from '@modules/file/state/file-upload.actions';
-import { FileUploadForm } from '@modules/file/file.models';
+import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
+import {
+  ResetFileUploadState,
+  UpdateFileMetadata,
+  UploadBlobByChunks,
+} from '@app/pages/files/components/file-upload/state/file-upload.actions';
+import { FileUploadForm } from '@app/pages/files/files.models';
 import { FileDto } from '@api/files/file-api.models';
 import { SharedLocalization } from '@shared/shared.constants';
-import { FilesLocalization, MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@modules/file/file.constants';
+import { FilesLocalization, MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
