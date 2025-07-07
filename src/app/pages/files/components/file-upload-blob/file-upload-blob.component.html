@@ -31,7 +31,9 @@
         {{ FilesLocalization.selectFile }}
       </button>
     }
-    <p [title]="form.controls.name.value" ellipsis>{{ form.controls.name.value }}</p>
+    @if (form.controls.file.value) {
+      <p [title]="form.controls.file.value.name" ellipsis>{{ form.controls.file.value.name }}</p>
+    }
     @if (form.controls.file.touched && form.controls.file.hasError('required')) {
       <mat-error>{{ FilesLocalization.fileRequired }}</mat-error>
     }

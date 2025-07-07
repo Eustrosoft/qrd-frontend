@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { AddFileUrl, ResetFileUploadState, UpdateFileMetadata, UploadBlobByChunks } from './file-upload.actions';
-import { DEFAULT_CHUNK_SIZE, DEFAULT_FILE_UPLOAD_STATE } from '@app/pages/files/files.constants';
+import { DEFAULT_FILE_UPLOAD_STATE } from '@app/pages/files/files.constants';
 import { UploadState } from '@app/pages/files/files.models';
 import { FileReaderService } from '@app/pages/files/services/file-reader.service';
 import { SharedLocalization } from '@shared/shared.constants';
@@ -71,7 +71,9 @@ export class FileUploadState {
           this.filesService
             .uploadBlobFile({
               chunk,
-              chunkSize: DEFAULT_CHUNK_SIZE,
+              originName: file.name,
+              fileSize: file.size,
+              chunkSize: chunk.size,
               no: index + 1,
               total,
               name,

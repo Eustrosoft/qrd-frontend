@@ -6,7 +6,9 @@ export type FileBlobUploadRequest = {
   chunk: Blob;
   no: number;
   total: number;
+  fileSize: number;
   chunkSize: number;
+  originName: string;
   name: string;
   description: string;
   public: boolean;

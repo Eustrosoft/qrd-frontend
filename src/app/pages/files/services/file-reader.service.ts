@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { mergeMap, Observable, of, Subscriber } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 import { DEFAULT_CHUNK_SIZE } from '@app/pages/files/files.constants';
 
@@ -7,38 +7,26 @@ import { DEFAULT_CHUNK_SIZE } from '@app/pages/files/files.constants';
   providedIn: 'root',
 })
 export class FileReaderService {
-  public splitBinary(file: File, chunkSize: number = DEFAULT_CHUNK_SIZE): Observable<Blob[]> {
-    return this.blobToArrayBuffer(file).pipe(
-      mergeMap((buff) => {
-        let startPointer = 0;
-        const endPointer = buff.byteLength;
-        const chunks = [];
-        while (startPointer < endPointer) {
-          const newStartPointer = startPointer + chunkSize;
-          const chunk = buff.slice(startPointer, newStartPointer);
-          chunks.push(new Blob([chunk]));
-          startPointer = newStartPointer;
-        }
-        return of(chunks);
-      }),
-    );
-  }
+  public splitBinary(file: File, chunkSize: number = DEFAULT_CHUNK_SIZE): Observable<readonly Blob[]> {
+    if (!(file instanceof Blob)) {
+      return throwError(() => new Error('Input must be a File or Blob object'));
+    }
 
-  private blobToArrayBuffer(blob: Blob | File): Observable<ArrayBuffer> {
-    return new Observable((obs: Subscriber<ArrayBuffer>) => {
-      if (!(blob instanceof Blob)) {
-        obs.error(new Error('`blob` must be an instance of File or Blob.'));
-        return;
-      }
+    if (chunkSize <= 0) {
+      return throwError(() => new Error('Chunk size must be a positive number'));
+    }
 
-      const reader = new FileReader();
+    return new Observable<readonly Blob[]>((subscriber) => {
+      const fileSize = file.size;
+      const chunkCount = Math.ceil(fileSize / chunkSize);
+      const chunks = Array.from({ length: chunkCount }, (_, i) => {
+        const start = i * chunkSize;
+        const end = Math.min(start + chunkSize, fileSize);
+        return file.slice(start, end);
+      });
 
-      reader.onerror = (err): void => obs.error(err);
-      reader.onabort = (err): void => obs.error(err);
-      reader.onload = (): void => obs.next(<ArrayBuffer>reader.result);
-      reader.onloadend = (): void => obs.complete();
-
-      return reader.readAsArrayBuffer(blob);
+      subscriber.next(chunks);
+      subscriber.complete();
     });
   }
 }
