@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, inputBinding, OnInit } from '@angular/core';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
-import { ScrolledToLastDirective } from '@shared/directives/scrolled-to-last.directive';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { FetchQrCardList, SetQrCardsDataViewDisplayType } from '@app/pages/qr-cards/state/qr-cards.actions';
@@ -26,7 +25,6 @@ import { FallbackPipe } from '@shared/pipe/fallback.pipe';
   selector: 'qr-card-list',
   imports: [
     UiFlexBlockComponent,
-    ScrolledToLastDirective,
     ViewListItemComponent,
     ToHexPipe,
     EllipsisDirective,
@@ -51,6 +49,7 @@ export class QrCardListComponent implements OnInit {
   protected readonly selectors = createSelectMap({
     displayType: QrCardsState.getDisplayType$,
     isQrCardListLoading: QrCardsState.isQrCardListLoading$,
+    qrCardListSkeletonLoaders: QrCardsState.getQrCardListSkeletonLoaders$,
     qrCardList: QrCardsState.getQrCardList$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
   });

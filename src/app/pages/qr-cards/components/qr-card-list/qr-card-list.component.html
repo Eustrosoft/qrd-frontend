@@ -1,10 +1,4 @@
-<ui-flex-block
-  flexDirection="column"
-  scrolledToLast
-  [count]="selectors.qrCardList().length"
-  [isListLoading]="selectors.isQrCardListLoading()"
-  (isLast)="fetchMore()"
->
+<ui-flex-block flexDirection="column">
   @if (!selectors.isQrCardListLoading()) {
     @for (qrCard of selectors.qrCardList(); track qrCard.id) {
       <view-list-item
@@ -59,15 +53,8 @@
       </view-list-item>
     }
   } @else {
-    <ui-skeleton [height]="skeletonHeight()" />
-    <ui-skeleton [height]="skeletonHeight()" />
-    <ui-skeleton [height]="skeletonHeight()" />
-    <ui-skeleton [height]="skeletonHeight()" />
-    <ui-skeleton [height]="skeletonHeight()" />
-    <ui-skeleton [height]="skeletonHeight()" />
-    <ui-skeleton [height]="skeletonHeight()" />
-    <ui-skeleton [height]="skeletonHeight()" />
-    <ui-skeleton [height]="skeletonHeight()" />
-    <ui-skeleton [height]="skeletonHeight()" />
+    @for (sk of selectors.qrCardListSkeletonLoaders(); track sk) {
+      <ui-skeleton [height]="skeletonHeight()" />
+    }
   }
 </ui-flex-block>

@@ -12,13 +12,14 @@ import { patch } from '@ngxs/store/operators';
 import { QRDto } from '@api/qr-cards/qrs-api.models';
 import { catchError, Observable, switchMap, tap, throwError, timer } from 'rxjs';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
-import { QR_API_URL, SKELETON_TIMER } from '@app/app.constants';
+import { DEFAULT_ITEMS_PER_PAGE, QR_API_URL, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 
 export interface QrCardsStateModel {
   displayType: DataViewDisplayType;
   isQrCardListLoading: boolean;
+  qrCardListSkeletonLoaders: number;
   qrCardList: QRDto[];
   selectedQrCardList: number[];
   isQrCardLoading: boolean;
@@ -29,6 +30,7 @@ export interface QrCardsStateModel {
 const defaults: QrCardsStateModel = {
   displayType: 'list',
   isQrCardListLoading: false,
+  qrCardListSkeletonLoaders: DEFAULT_ITEMS_PER_PAGE,
   qrCardList: [],
   selectedQrCardList: [],
   isQrCardLoading: false,
@@ -55,6 +57,11 @@ export class QrCardsState {
   @Selector()
   public static isQrCardListLoading$({ isQrCardListLoading }: QrCardsStateModel): boolean {
     return isQrCardListLoading;
+  }
+
+  @Selector()
+  public static getQrCardListSkeletonLoaders$({ qrCardListSkeletonLoaders }: QrCardsStateModel): number[] {
+    return Array.from({ length: qrCardListSkeletonLoaders }, (_, i) => i);
   }
 
   @Selector()
