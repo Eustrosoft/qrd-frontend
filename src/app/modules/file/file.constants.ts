@@ -1,3 +1,10 @@
+import { FileUploadStateModel } from '@modules/file/state/file-upload.state';
+
+export const DEFAULT_FILE_UPLOAD_STATE: FileUploadStateModel = {
+  isLoading: false,
+  uploadState: null,
+};
+
 export const DEFAULT_CHUNK_SIZE = 1048576; // 1 MB
 export const MAX_NAME_LENGTH = 127;
 export const MAX_DESCRIPTION_LENGTH = 511;

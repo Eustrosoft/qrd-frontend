@@ -13,6 +13,7 @@ export const ErrorsLocalization = {
   pageNotFoundDescription: $localize`:@@errors.pageNotFoundDescription:We do not have the requested page. It may have been deleted or an incorrect address was specified in the request`,
   errorCode: $localize`:@@errors.errorCode:Error code`,
   errorLoadingPreview: $localize`:@@errors.errorLoadingPreview:Error loading preview`,
+  errorUploadingFile: $localize`:@@errors.errorUploadingFile:Error during uploading`,
 } as const;
 
 export const UnknownBackendError: BackendError = {

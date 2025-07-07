@@ -1,0 +1,9 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  gap: mixins.rem(8);
+  display: grid;
+  align-self: start;
+  justify-items: stretch;
+  grid-template-columns: minmax(100px, 528px);
+}

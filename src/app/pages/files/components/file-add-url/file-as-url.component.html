@@ -1,0 +1,56 @@
+<mat-form-field class="form-field-lg">
+  <mat-label> {{ SharedLocalization.name }} </mat-label>
+  <input [formControl]="form.controls.name" matInput />
+  @if (form.controls.name.touched && form.controls.name.hasError('required')) {
+    <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+  }
+  @if (form.controls.name.touched && form.controls.name.hasError('maxlength')) {
+    <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_NAME_LENGTH }}</mat-error>
+  }
+</mat-form-field>
+<mat-form-field class="form-field-lg">
+  <mat-label> {{ SharedLocalization.description }} </mat-label>
+  <textarea [formControl]="form.controls.description" matInput></textarea>
+  @if (form.controls.description.touched && form.controls.description.hasError('required')) {
+    <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+  }
+  @if (form.controls.description.touched && form.controls.description.hasError('maxlength')) {
+    <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_DESCRIPTION_LENGTH }}</mat-error>
+  }
+</mat-form-field>
+<mat-form-field class="form-field-lg">
+  <mat-label> {{ FilesLocalization.linkPath }} </mat-label>
+  <input [formControl]="form.controls.storagePath" matInput />
+  @if (form.controls.storagePath.touched && form.controls.storagePath.hasError('required')) {
+    <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+  }
+  @if (form.controls.storagePath.touched && form.controls.storagePath.hasError('maxlength')) {
+    <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_STORAGE_PATH_LENGTH }}</mat-error>
+  }
+  @if (form.controls.storagePath.touched && form.controls.storagePath.hasError('pattern')) {
+    <mat-error>{{ SharedLocalization.mustBeUrl }}</mat-error>
+  }
+</mat-form-field>
+<ui-flex-block flexWrap="wrap">
+  <mat-slide-toggle [formControl]="form.controls.isPublic" class="slide-toggle">
+    {{ SharedLocalization.isPublic }}
+  </mat-slide-toggle>
+  <mat-slide-toggle [formControl]="form.controls.isActive" class="slide-toggle">
+    {{ SharedLocalization.isActive }}
+  </mat-slide-toggle>
+</ui-flex-block>
+<ui-flex-block>
+  @if (!fileMetadata()) {
+    @if (!selectors.isLoading()) {
+      <button (click)="addFileUrl()" class="button-md" mat-flat-button>{{ SharedLocalization.save }}</button>
+    } @else {
+      <ui-skeleton height="40" width="80" />
+    }
+  } @else {
+    @if (!selectors.isLoading()) {
+      <button (click)="save()" class="button-md" mat-flat-button>{{ SharedLocalization.save }}</button>
+    } @else {
+      <ui-skeleton height="40" width="80" />
+    }
+  }
+</ui-flex-block>

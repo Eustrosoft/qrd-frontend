@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { mergeMap, Observable, of, Subscriber } from 'rxjs';
-import { DEFAULT_CHUNK_SIZE } from '@app/pages/files/files.constants';
+
+import { DEFAULT_CHUNK_SIZE } from '@modules/file/file.constants';
 
 @Injectable({
   providedIn: 'root',

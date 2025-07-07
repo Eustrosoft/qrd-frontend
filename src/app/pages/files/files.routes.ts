@@ -18,6 +18,11 @@ export const filesRoutes: Routes = [
         component: FilesLayoutComponent,
       },
       {
+        path: AppRoutes.new,
+        component: FileEditComponent,
+        title: RouteTitles.file,
+      },
+      {
         path: ':id',
         component: FileViewComponent,
         title: RouteTitles.file,

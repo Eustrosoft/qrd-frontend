@@ -1,5 +1,13 @@
-<card-container [hideHeading]="true">
-  <ng-container content>
-    <file-upload />
-  </ng-container>
-</card-container>
+@if (!selectors.isFileLoading()) {
+  <card-container [hideHeading]="true">
+    <ng-container content>
+      @if (fileId) {
+        <file-upload [fileMetadata]="selectors.file()" />
+      } @else {
+        <file-upload />
+      }
+    </ng-container>
+  </card-container>
+} @else {
+  <ui-skeleton height="280" />
+}

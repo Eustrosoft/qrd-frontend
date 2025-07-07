@@ -50,6 +50,7 @@ export const SharedLocalization = {
   yes: $localize`:@@shared.yes:Yes`,
   no: $localize`:@@shared.no:No`,
   unknown: $localize`:@@shared.unknown:Unknown`,
+  save: $localize`:@@shared.save:Save`,
   close: $localize`:@@shared.close:Close`,
   dev: $localize`:@@shared.dev:Under development`,
 } as const;

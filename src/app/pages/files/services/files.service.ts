@@ -21,10 +21,10 @@ import {
   FileUrlUploadRequest,
 } from '@api/files/file-api.models';
 import { FileReaderService } from '@app/pages/files/services/file-reader.service';
-import { FileFormGroup, UploadState } from '@app/pages/files/files.models';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SharedLocalization } from '@shared/shared.constants';
-import { DEFAULT_CHUNK_SIZE } from '@app/pages/files/files.constants';
+import { FileUploadFormGroup, UploadState } from '@modules/file/file.models';
+import { DEFAULT_CHUNK_SIZE } from '@modules/file/file.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -44,7 +44,7 @@ export class FilesService {
   }
 
   public uploadFile(
-    formValue: ReturnType<FileFormGroup['getRawValue']>,
+    formValue: ReturnType<FileUploadFormGroup['getRawValue']>,
     cancelUpload$: Observable<void>,
   ): Observable<UploadState> {
     const { file, name, description, isPublic, isActive } = formValue;
@@ -82,7 +82,7 @@ export class FilesService {
           ),
         ),
         startWith<UploadState>({
-          progress: 1,
+          progress: 5,
           isDone: false,
           isLoading: true,
           isCancelled: false,
@@ -122,7 +122,7 @@ export class FilesService {
     );
   }
 
-  private uploadBlobFile(formData: FileBlobUploadRequest): Observable<FileBlobUploadResponse> {
+  public uploadBlobFile(formData: FileBlobUploadRequest): Observable<FileBlobUploadResponse> {
     const fd = new FormData();
     fd.append('chunk', formData.chunk);
     fd.append('no', formData.no.toString());
@@ -138,7 +138,7 @@ export class FilesService {
     return this.http.post<FileBlobUploadResponse>('/qrCodeDemo/v1/api/secured/files/upload/blob', fd);
   }
 
-  public addFileUrl(formData: FileUrlUploadRequest): Observable<FileBlobUploadResponse> {
+  public addFileUrl(formData: FileUrlUploadRequest): Observable<FileDto> {
     const fd = new FormData();
     fd.append('storagePath', formData.storagePath);
     fd.append('name', formData.name);
@@ -146,7 +146,11 @@ export class FilesService {
     fd.append('public', formData.public.toString());
     fd.append('active', formData.active.toString());
     fd.append('fileStorageType', formData.fileStorageType);
-    return this.http.post<FileBlobUploadResponse>('/qrCodeDemo/v1/api/secured/files/upload', fd);
+    return this.http.post<FileDto>('/qrCodeDemo/v1/api/secured/files/upload', fd);
+  }
+
+  public updateFileMetadata(id: number, metadata: Partial<FileDto>): Observable<FileDto> {
+    return this.http.put<FileDto>(`/qrCodeDemo/v1/api/secured/files/${id}`, metadata);
   }
 
   public downloadFile(id: number, fileName: string): Observable<HttpResponse<Blob>> {

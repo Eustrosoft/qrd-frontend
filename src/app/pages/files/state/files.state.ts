@@ -102,7 +102,13 @@ export class FilesState {
   }
 
   @Action(FetchFile)
-  public fetchFile({ setState }: StateContext<FilesStateModel>, { id, destroyRef }: FetchFile): Observable<FileDto> {
+  public fetchFile(
+    { getState, setState }: StateContext<FilesStateModel>,
+    { id, destroyRef }: FetchFile,
+  ): Observable<FileDto> {
+    const { file } = getState();
+    console.log(file?.id);
+    console.log(id);
     setState(patch({ isFileLoading: true }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.filesService.getFile(id)),
