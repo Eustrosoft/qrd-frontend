@@ -7,7 +7,6 @@ import {
   inject,
   input,
   OnDestroy,
-  OnInit,
   viewChild,
 } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -36,6 +35,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { outputFromObservable } from '@angular/core/rxjs-interop';
 import { ErrorsLocalization } from '@modules/error/error.constants';
+import { DeleteFiles } from '@app/pages/files/state/files.actions';
 
 @Component({
   selector: 'file-upload-blob',
@@ -63,7 +63,7 @@ import { ErrorsLocalization } from '@modules/error/error.constants';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
 })
-export class FileUploadBlobComponent implements OnInit, OnDestroy {
+export class FileUploadBlobComponent implements OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
   private readonly fb = inject(FormBuilder);
   private readonly actions$ = inject(Actions);
@@ -77,6 +77,7 @@ export class FileUploadBlobComponent implements OnInit, OnDestroy {
   protected readonly actions = createDispatchMap({
     uploadBlobByChunks: UploadBlobByChunks,
     updateFileMetadata: UpdateFileMetadata,
+    deleteFiles: DeleteFiles,
     resetFileUploadState: ResetFileUploadState,
   });
 
@@ -84,9 +85,17 @@ export class FileUploadBlobComponent implements OnInit, OnDestroy {
   public readonly uploadCompleted = outputFromObservable(
     this.actions$.pipe(
       ofActionSuccessful(UploadBlobByChunks),
-      map(() => this.selectors.uploadState()?.fileId ?? null),
+      map(() => this.selectors.uploadState()),
     ),
   );
+
+  protected readonly isLoadingEffect = effect(() => {
+    if (this.selectors.uploadState()?.isLoading) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
+  });
 
   protected readonly fileMetadataEffect = effect(() => {
     const metadata = this.fileMetadata();
@@ -118,10 +127,6 @@ export class FileUploadBlobComponent implements OnInit, OnDestroy {
     isPublic: this.fb.nonNullable.control<boolean>(false),
     file: this.fb.control<File | null>(null, [Validators.required]),
   });
-
-  public ngOnInit(): void {
-    console.log('ngOnInit');
-  }
 
   protected fileChanged(): void {
     const fileList = Array.from(this.fileInput().nativeElement.files ?? []);
@@ -163,6 +168,7 @@ export class FileUploadBlobComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.startUpload$.complete();
+    this.cancelUpload$.next();
     this.cancelUpload$.complete();
   }
 }

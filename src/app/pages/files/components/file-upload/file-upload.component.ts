@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, model, OnDestroy, OnInit, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatListItem, MatNavList } from '@angular/material/list';
-import { AttachmentModeListItem, FileAttachmentMode } from '@app/pages/files/files.models';
+import { AttachmentModeListItem, FileAttachmentMode, UploadState } from '@app/pages/files/files.models';
 import { FilesLocalization } from '@app/pages/files/files.constants';
 import { FileDto } from '@api/files/file-api.models';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
@@ -36,7 +36,7 @@ export class FileUploadComponent implements OnInit, OnDestroy {
 
   public readonly fileAttachmentMode = model<FileAttachmentMode>('upload');
   public readonly fileMetadata = input<FileDto | null>(null);
-  public readonly uploadCompleted = output<number | null>();
+  public readonly uploadCompleted = output<UploadState | null>();
 
   protected readonly attachmentModeList: AttachmentModeListItem[] = [
     {

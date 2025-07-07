@@ -6,6 +6,7 @@ import { FilesState } from '@app/pages/files/state/files.state';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FetchFile } from '@app/pages/files/state/files.actions';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
+import { UploadState } from '@app/pages/files/files.models';
 
 @Component({
   selector: 'file-edit',
@@ -38,10 +39,10 @@ export class FileEditComponent implements OnInit {
     }
   }
 
-  protected goToView(fileId: number | null): void {
-    if (!fileId) {
+  protected goToView(uploadState: UploadState | null): void {
+    if (uploadState?.isCancelled || uploadState?.isError || !uploadState?.fileId) {
       return;
     }
-    this.router.navigate(['../', fileId], { relativeTo: this.activatedRoute });
+    this.router.navigate(['../', uploadState.fileId], { relativeTo: this.activatedRoute });
   }
 }

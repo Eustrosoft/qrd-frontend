@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  effect,
-  inject,
-  input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, input, OnDestroy } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
@@ -52,7 +43,7 @@ import { outputFromObservable } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
 })
-export class FileAsUrlComponent implements OnInit, OnDestroy {
+export class FileAsUrlComponent implements OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
   private readonly fb = inject(FormBuilder);
   private readonly actions$ = inject(Actions);
@@ -72,9 +63,17 @@ export class FileAsUrlComponent implements OnInit, OnDestroy {
   public readonly uploadCompleted = outputFromObservable(
     this.actions$.pipe(
       ofActionSuccessful(AddFileUrl),
-      map(() => this.selectors.uploadState()?.fileId ?? null),
+      map(() => this.selectors.uploadState()),
     ),
   );
+
+  protected readonly isLoadingEffect = effect(() => {
+    if (this.selectors.isLoading()) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
+  });
 
   protected readonly fileMetadataEffect = effect(() => {
     const metadata = this.fileMetadata();
@@ -108,10 +107,6 @@ export class FileAsUrlComponent implements OnInit, OnDestroy {
       Validators.pattern(WEB_REGEXP),
     ]),
   });
-
-  public ngOnInit(): void {
-    console.log('ngOnInit');
-  }
 
   protected addFileUrl(): void {
     this.form.markAllAsTouched();
