@@ -160,6 +160,10 @@ export class FilesService {
     });
   }
 
+  public deleteFile(id: number): Observable<void> {
+    return this.http.delete<void>(`/qrCodeDemo/v1/api/secured/files/${id}`);
+  }
+
   public saveBlobToFile(file: Blob, fileName: string): void {
     const link = this.document.createElement('a');
     const objectUrl = URL.createObjectURL(file);

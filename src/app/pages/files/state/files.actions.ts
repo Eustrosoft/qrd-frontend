@@ -34,3 +34,13 @@ export class DownloadFile {
     readonly fileName: string,
   ) {}
 }
+
+export class DeleteFiles {
+  public static readonly type = '[Files] Delete Files';
+  constructor(
+    readonly idList: number[],
+    readonly destroyRef: DestroyRef,
+    readonly refreshList: boolean = true,
+    readonly returnToList: boolean = false,
+  ) {}
+}

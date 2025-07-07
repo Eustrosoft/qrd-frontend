@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, DOCUMENT, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, DOCUMENT, inject } from '@angular/core';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { FilesState } from '@app/pages/files/state/files.state';
 import {
+  DeleteFiles,
   FetchFileList,
   SelectAllFiles,
   SetFilesDataViewDisplayType,
@@ -14,10 +15,18 @@ import { FileListComponent } from '@app/pages/files/components/file-list/file-li
 import { expandAnimation } from '@shared/shared.animations';
 import { MatMiniFabButton } from '@angular/material/button';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
+import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 
 @Component({
   selector: 'files-layout',
-  imports: [DataViewComponent, SelectionBarComponent, MatIcon, FileListComponent, MatMiniFabButton],
+  imports: [
+    DataViewComponent,
+    SelectionBarComponent,
+    MatIcon,
+    FileListComponent,
+    MatMiniFabButton,
+    UiSkeletonComponent,
+  ],
   animations: [expandAnimation],
   templateUrl: './files-layout.component.html',
   styleUrl: './files-layout.component.scss',
@@ -25,17 +34,20 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 })
 export class FilesLayoutComponent {
   protected readonly uiSidenavService = inject(UiSidenavService);
+  protected readonly destroyRef = inject(DestroyRef);
   protected readonly document = inject(DOCUMENT);
 
   protected readonly selectors = createSelectMap({
     displayType: FilesState.getDisplayType$,
     selectedFileList: FilesState.getSelectedFileList$,
+    isDeleteInProgress: FilesState.isDeleteInProgress$,
   });
   protected readonly actions = createDispatchMap({
     setDisplayType: SetFilesDataViewDisplayType,
     fetchFileList: FetchFileList,
     setSelectedFiles: SetSelectedFiles,
     selectAllFiles: SelectAllFiles,
+    deleteFiles: DeleteFiles,
   });
 
   protected openAdvancedSearch(): void {

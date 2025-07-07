@@ -2,11 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { DataViewDisplayType } from '@shared/shared.models';
 import { FileDto } from '@api/files/file-api.models';
-import { catchError, Observable, switchMap, tap, throwError, timer } from 'rxjs';
+import { catchError, concatMap, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { patch } from '@ngxs/store/operators';
-import { SKELETON_TIMER } from '@app/app.constants';
+import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
+  DeleteFiles,
   DownloadFile,
   FetchFile,
   FetchFileList,
@@ -17,25 +18,30 @@ import {
 import { FilesService } from '@app/pages/files/services/files.service';
 import { HttpResponse } from '@angular/common/http';
 import { ContentDispositionHeaderParsePipe } from '@shared/pipe/content-disposition-header-parse.pipe';
+import { Router } from '@angular/router';
 
 export interface FilesStateModel {
   displayType: DataViewDisplayType;
   isFileListLoading: boolean;
+  fileListSkeletonLoaders: number;
   fileList: FileDto[];
   selectedFileList: number[];
   isFileLoading: boolean;
   file: FileDto | null;
   isFileDownloading: boolean;
+  isDeleteInProgress: boolean;
 }
 
 const defaults: FilesStateModel = {
   displayType: 'list',
   isFileListLoading: false,
+  fileListSkeletonLoaders: DEFAULT_ITEMS_PER_PAGE,
   fileList: [],
   selectedFileList: [],
   isFileLoading: false,
   file: null,
   isFileDownloading: false,
+  isDeleteInProgress: false,
 } as const;
 
 const FILES_STATE_TOKEN: StateToken<FilesStateModel> = new StateToken<FilesStateModel>('files');
@@ -48,6 +54,7 @@ const FILES_STATE_TOKEN: StateToken<FilesStateModel> = new StateToken<FilesState
 export class FilesState {
   private readonly filesService = inject(FilesService);
   private readonly contentDispositionHeaderParsePipe = inject(ContentDispositionHeaderParsePipe);
+  private readonly router = inject(Router);
 
   @Selector()
   public static getDisplayType$({ displayType }: FilesStateModel): DataViewDisplayType {
@@ -57,6 +64,11 @@ export class FilesState {
   @Selector()
   public static isFileListLoading$({ isFileListLoading }: FilesStateModel): boolean {
     return isFileListLoading;
+  }
+
+  @Selector()
+  public static getFileListSkeletonLoaders$({ fileListSkeletonLoaders }: FilesStateModel): number[] {
+    return Array.from({ length: fileListSkeletonLoaders }, (_, i) => i);
   }
 
   @Selector()
@@ -72,6 +84,11 @@ export class FilesState {
   @Selector()
   public static isFileDownloading$({ isFileDownloading }: FilesStateModel): boolean {
     return isFileDownloading;
+  }
+
+  @Selector()
+  public static isDeleteInProgress$({ isDeleteInProgress }: FilesStateModel): boolean {
+    return isDeleteInProgress;
   }
 
   @Selector()
@@ -102,13 +119,7 @@ export class FilesState {
   }
 
   @Action(FetchFile)
-  public fetchFile(
-    { getState, setState }: StateContext<FilesStateModel>,
-    { id, destroyRef }: FetchFile,
-  ): Observable<FileDto> {
-    const { file } = getState();
-    console.log(file?.id);
-    console.log(id);
+  public fetchFile({ setState }: StateContext<FilesStateModel>, { id, destroyRef }: FetchFile): Observable<FileDto> {
     setState(patch({ isFileLoading: true }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.filesService.getFile(id)),
@@ -164,6 +175,36 @@ export class FilesState {
       }),
       catchError((err) => {
         setState(patch({ isFileDownloading: false }));
+        return throwError(() => err);
+      }),
+    );
+  }
+
+  @Action(DeleteFiles)
+  public deleteFiles(
+    { setState, dispatch }: StateContext<FilesStateModel>,
+    { idList, destroyRef, refreshList, returnToList }: DeleteFiles,
+  ): Observable<void[]> {
+    setState(patch({ isDeleteInProgress: true }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => from(idList).pipe(concatMap((id) => this.filesService.deleteFile(id)))),
+      toArray(),
+      tap({
+        next: () => {
+          setState(patch({ isDeleteInProgress: false }));
+          dispatch(new SetSelectedFiles([]));
+          if (refreshList) {
+            dispatch(FetchFileList);
+          }
+          if (returnToList) {
+            this.router.navigate(['/', AppRoutes.files]);
+          }
+        },
+      }),
+      takeUntilDestroyed(destroyRef),
+      catchError((err) => {
+        setState(patch({ isDeleteInProgress: false }));
+        dispatch(new SetSelectedFiles([]));
         return throwError(() => err);
       }),
     );

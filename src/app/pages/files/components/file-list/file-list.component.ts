@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
-import { ScrolledToLastDirective } from '@shared/directives/scrolled-to-last.directive';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { ViewListItemComponent } from '@shared/components/view-list-item/view-list-item.component';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -13,7 +12,7 @@ import { outputFromObservable } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FilesState } from '@app/pages/files/state/files.state';
-import { FetchFileList, SetFilesDataViewDisplayType } from '@app/pages/files/state/files.actions';
+import { DeleteFiles, FetchFileList, SetFilesDataViewDisplayType } from '@app/pages/files/state/files.actions';
 import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 import { DatePipe } from '@angular/common';
@@ -23,7 +22,6 @@ import { FallbackPipe } from '@shared/pipe/fallback.pipe';
   selector: 'file-list',
   imports: [
     UiFlexBlockComponent,
-    ScrolledToLastDirective,
     ViewListItemComponent,
     EllipsisDirective,
     MatMenuItem,
@@ -40,17 +38,20 @@ import { FallbackPipe } from '@shared/pipe/fallback.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileListComponent implements OnInit {
+  protected readonly destroyRef = inject(DestroyRef);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly selectors = createSelectMap({
     displayType: FilesState.getDisplayType$,
     isFileListLoading: FilesState.isFileListLoading$,
+    fileListSkeletonLoaders: FilesState.getFileListSkeletonLoaders$,
     fileList: FilesState.getFileList$,
     selectedFileList: FilesState.getSelectedFileList$,
   });
   protected readonly actions = createDispatchMap({
     setDisplayType: SetFilesDataViewDisplayType,
     fetchFileList: FetchFileList,
+    deleteFiles: DeleteFiles,
   });
 
   protected readonly selectionModel = new SelectionModel(true, this.selectors.selectedFileList());

@@ -14,7 +14,17 @@
       <a [routerLink]="`../${selectors.file()?.id}/${AppRoutes.edit}`" class="button-md" mat-flat-button>
         {{ SharedLocalization.edit }}
       </a>
-      <button class="button-md" mat-flat-button>{{ SharedLocalization.delete }}</button>
+      @if (!selectors.isDeleteInProgress()) {
+        <button
+          (click)="actions.deleteFiles([selectors.file()!.id], destroyRef, false, true)"
+          class="button-md"
+          mat-flat-button
+        >
+          {{ SharedLocalization.delete }}
+        </button>
+      } @else {
+        <ui-skeleton height="40" width="110" />
+      }
     </ng-container>
   </view-toolbar>
   <ui-flex-block>

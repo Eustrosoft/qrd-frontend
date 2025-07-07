@@ -12,7 +12,7 @@ import { TabLink } from '@shared/shared.models';
 import { AppRoutes } from '@app/app.constants';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { FilesState } from '@app/pages/files/state/files.state';
-import { DownloadFile, FetchFile } from '@app/pages/files/state/files.actions';
+import { DeleteFiles, DownloadFile, FetchFile } from '@app/pages/files/state/files.actions';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { WINDOW } from '@cdk/tokens/window.token';
@@ -40,17 +40,19 @@ import { WINDOW } from '@cdk/tokens/window.token';
 })
 export class FileViewComponent implements OnInit {
   private readonly window = inject(WINDOW);
-  private readonly destroyRef = inject(DestroyRef);
+  protected readonly destroyRef = inject(DestroyRef);
   private readonly activatedRoute = inject(ActivatedRoute);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
   protected readonly selectors = createSelectMap({
     isFileLoading: FilesState.isFileLoading$,
     file: FilesState.getFile$,
     isFileDownloading: FilesState.isFileDownloading$,
+    isDeleteInProgress: FilesState.isDeleteInProgress$,
   });
   protected readonly actions = createDispatchMap({
     fetchFile: FetchFile,
     downloadFile: DownloadFile,
+    deleteFiles: DeleteFiles,
   });
   protected readonly tabLinks: TabLink[] = [
     { link: AppRoutes.file, title: RouteTitles.file },

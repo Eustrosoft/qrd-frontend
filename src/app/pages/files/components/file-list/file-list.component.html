@@ -1,10 +1,4 @@
-<ui-flex-block
-  flexDirection="column"
-  scrolledToLast
-  [count]="selectors.fileList().length"
-  [isListLoading]="selectors.isFileListLoading()"
-  (isLast)="fetchMore()"
->
+<ui-flex-block flexDirection="column">
   @if (!selectors.isFileListLoading()) {
     @for (file of selectors.fileList(); track file.id) {
       <view-list-item
@@ -42,7 +36,7 @@
             <mat-icon>edit</mat-icon>
             {{ SharedLocalization.edit }}
           </button>
-          <button mat-menu-item>
+          <button (click)="actions.deleteFiles([file.id], destroyRef)" mat-menu-item>
             <mat-icon>delete</mat-icon>
             {{ SharedLocalization.delete }}
           </button>
@@ -50,15 +44,8 @@
       </view-list-item>
     }
   } @else {
-    <ui-skeleton height="72" />
-    <ui-skeleton height="72" />
-    <ui-skeleton height="72" />
-    <ui-skeleton height="72" />
-    <ui-skeleton height="72" />
-    <ui-skeleton height="72" />
-    <ui-skeleton height="72" />
-    <ui-skeleton height="72" />
-    <ui-skeleton height="72" />
-    <ui-skeleton height="72" />
+    @for (sk of selectors.fileListSkeletonLoaders(); track sk) {
+      <ui-skeleton height="72" />
+    }
   }
 </ui-flex-block>
