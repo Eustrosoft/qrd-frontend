@@ -55,7 +55,7 @@ export class FileUploadState {
 
   @Action(UploadBlobByChunks)
   public uploadBlobByChunks(
-    { getState, setState }: StateContext<FileUploadStateModel>,
+    { setState }: StateContext<FileUploadStateModel>,
     { formValue, cancelUpload$ }: UploadBlobByChunks,
   ): Observable<UploadState> {
     const { file, name, description, isPublic, isActive } = formValue;
@@ -151,7 +151,19 @@ export class FileUploadState {
     { setState }: StateContext<FileUploadStateModel>,
     { formValue, destroyRef }: AddFileUrl,
   ): Observable<FileDto> {
-    setState(patch({ isLoading: true }));
+    setState(
+      patch({
+        isLoading: true,
+        uploadState: {
+          progress: 0,
+          isDone: false,
+          isLoading: true,
+          isCancelled: false,
+          isError: false,
+          fileId: null,
+        },
+      }),
+    );
     const { name, description, isPublic, isActive, storagePath } = formValue;
     return this.filesService
       .addFileUrl({
@@ -164,12 +176,36 @@ export class FileUploadState {
       })
       .pipe(
         tap({
-          next: () => {
-            setState(patch({ isLoading: false }));
+          next: (file: FileDto) => {
+            setState(
+              patch({
+                isLoading: false,
+                uploadState: {
+                  progress: 100,
+                  isDone: true,
+                  isLoading: false,
+                  isCancelled: false,
+                  isError: false,
+                  fileId: file.id,
+                },
+              }),
+            );
           },
         }),
         catchError((err) => {
-          setState(patch({ isLoading: false }));
+          setState(
+            patch({
+              isLoading: false,
+              uploadState: {
+                progress: 0,
+                isDone: false,
+                isLoading: false,
+                isCancelled: false,
+                isError: true,
+                fileId: null,
+              },
+            }),
+          );
           return throwError(() => err);
         }),
         takeUntilDestroyed(destroyRef),

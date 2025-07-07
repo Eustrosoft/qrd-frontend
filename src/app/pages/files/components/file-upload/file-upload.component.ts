@@ -1,12 +1,17 @@
-import { ChangeDetectionStrategy, Component, input, model, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model, OnDestroy, OnInit, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatListItem, MatNavList } from '@angular/material/list';
-import { AttachmentModeListItem, FileAttachmentMode, UploadState } from '@modules/file/file.models';
+import { AttachmentModeListItem, FileAttachmentMode } from '@modules/file/file.models';
 import { FilesLocalization } from '@modules/file/file.constants';
 import { FileDto } from '@api/files/file-api.models';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { FileUploadState } from '@modules/file/state/file-upload.state';
-import { AddFileUrl, UpdateFileMetadata, UploadBlobByChunks } from '@modules/file/state/file-upload.actions';
+import {
+  AddFileUrl,
+  ResetFileUploadState,
+  UpdateFileMetadata,
+  UploadBlobByChunks,
+} from '@modules/file/state/file-upload.actions';
 import { FileUploadBlobComponent } from '@app/pages/files/components/file-upload-blob/file-upload-blob.component';
 import { FileAsUrlComponent } from '@app/pages/files/components/file-add-url/file-as-url.component';
 
@@ -17,7 +22,7 @@ import { FileAsUrlComponent } from '@app/pages/files/components/file-add-url/fil
   styleUrl: './file-upload.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FileUploadComponent implements OnInit {
+export class FileUploadComponent implements OnInit, OnDestroy {
   protected readonly selectors = createSelectMap({
     isLoading: FileUploadState.isLoading$,
     uploadState: FileUploadState.getUploadState$,
@@ -26,10 +31,12 @@ export class FileUploadComponent implements OnInit {
     uploadBlobByChunks: UploadBlobByChunks,
     addFileUrl: AddFileUrl,
     updateFileMetadata: UpdateFileMetadata,
+    resetFileUploadState: ResetFileUploadState,
   });
 
   public readonly fileAttachmentMode = model<FileAttachmentMode>('upload');
   public readonly fileMetadata = input<FileDto | null>(null);
+  public readonly uploadCompleted = output<number | null>();
 
   protected readonly attachmentModeList: AttachmentModeListItem[] = [
     {
@@ -48,7 +55,7 @@ export class FileUploadComponent implements OnInit {
     }
   }
 
-  protected uploadCompleted(event: UploadState | null): void {
-    console.log(event);
+  public ngOnDestroy(): void {
+    this.actions.resetFileUploadState();
   }
 }

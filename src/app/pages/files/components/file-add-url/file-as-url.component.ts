@@ -14,8 +14,8 @@ import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
-import { Subject } from 'rxjs';
-import { createDispatchMap, createSelectMap } from '@ngxs/store';
+import { map, Subject } from 'rxjs';
+import { Actions, createDispatchMap, createSelectMap, ofActionSuccessful } from '@ngxs/store';
 import { FileUploadState } from '@modules/file/state/file-upload.state';
 import { AddFileUrl, UpdateFileMetadata } from '@modules/file/state/file-upload.actions';
 import { FileAsUrlForm } from '@modules/file/file.models';
@@ -30,6 +30,7 @@ import {
 } from '@modules/file/file.constants';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
+import { outputFromObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'file-as-url',
@@ -54,6 +55,7 @@ import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-match
 export class FileAsUrlComponent implements OnInit, OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
   private readonly fb = inject(FormBuilder);
+  private readonly actions$ = inject(Actions);
   private readonly startUpload$ = new Subject<void>();
   private readonly cancelUpload$ = new Subject<void>();
 
@@ -67,6 +69,12 @@ export class FileAsUrlComponent implements OnInit, OnDestroy {
   });
 
   public readonly fileMetadata = input<FileDto | null>(null);
+  public readonly uploadCompleted = outputFromObservable(
+    this.actions$.pipe(
+      ofActionSuccessful(AddFileUrl),
+      map(() => this.selectors.uploadState()?.fileId ?? null),
+    ),
+  );
 
   protected readonly fileMetadataEffect = effect(() => {
     const metadata = this.fileMetadata();

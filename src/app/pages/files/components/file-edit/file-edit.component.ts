@@ -3,7 +3,7 @@ import { FileUploadComponent } from '@app/pages/files/components/file-upload/fil
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { FilesState } from '@app/pages/files/state/files.state';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FetchFile } from '@app/pages/files/state/files.actions';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 
@@ -19,6 +19,7 @@ export class FileEditComponent implements OnInit {
    * TODO Доделать toolbar, fetch файла и прокидывание в file-upload
    */
   private readonly destroyRef = inject(DestroyRef);
+  private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   protected readonly fileId = this.activatedRoute.snapshot.paramMap.get('id');
 
@@ -35,5 +36,12 @@ export class FileEditComponent implements OnInit {
     if (this.fileId) {
       this.actions.fetchFile(+this.fileId, this.destroyRef);
     }
+  }
+
+  protected goToView(fileId: number | null): void {
+    if (!fileId) {
+      return;
+    }
+    this.router.navigate(['../', fileId], { relativeTo: this.activatedRoute });
   }
 }

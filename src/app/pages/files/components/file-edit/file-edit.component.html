@@ -2,9 +2,9 @@
   <card-container [hideHeading]="true">
     <ng-container content>
       @if (fileId) {
-        <file-upload [fileMetadata]="selectors.file()" />
+        <file-upload [fileMetadata]="selectors.file()" (uploadCompleted)="goToView($event)" />
       } @else {
-        <file-upload />
+        <file-upload (uploadCompleted)="goToView($event)" />
       }
     </ng-container>
   </card-container>

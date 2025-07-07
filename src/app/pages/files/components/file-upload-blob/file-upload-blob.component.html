@@ -44,12 +44,12 @@
       <mat-progress-spinner diameter="20" [value]="selectors.uploadState()?.progress" />
     }
     @if (selectors.uploadState()?.isDone) {
-      <mat-icon class="icon-secondary" style="flex: 0 1 auto" [matTooltip]="FilesLocalization.uploaded">
+      <mat-icon class="icon-secondary" style="flex: 1 0 auto" [matTooltip]="FilesLocalization.uploaded">
         check_circle
       </mat-icon>
     }
     @if (selectors.uploadState()?.isError) {
-      <mat-icon class="icon-error" style="flex: 0 1 auto" [matTooltip]="ErrorsLocalization.errorUploadingFile">
+      <mat-icon class="icon-error" style="flex: 1 0 auto" [matTooltip]="ErrorsLocalization.errorUploadingFile">
         error
       </mat-icon>
     }

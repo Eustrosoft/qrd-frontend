@@ -14,7 +14,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { map, Subject } from 'rxjs';
 import { Actions, createDispatchMap, createSelectMap, ofActionSuccessful } from '@ngxs/store';
 import { FileUploadState } from '@modules/file/state/file-upload.state';
-import { UpdateFileMetadata, UploadBlobByChunks } from '@modules/file/state/file-upload.actions';
+import { ResetFileUploadState, UpdateFileMetadata, UploadBlobByChunks } from '@modules/file/state/file-upload.actions';
 import { FileUploadForm } from '@modules/file/file.models';
 import { FileDto } from '@api/files/file-api.models';
 import { SharedLocalization } from '@shared/shared.constants';
@@ -73,13 +73,14 @@ export class FileUploadBlobComponent implements OnInit, OnDestroy {
   protected readonly actions = createDispatchMap({
     uploadBlobByChunks: UploadBlobByChunks,
     updateFileMetadata: UpdateFileMetadata,
+    resetFileUploadState: ResetFileUploadState,
   });
 
   public readonly fileMetadata = input<FileDto | null>(null);
   public readonly uploadCompleted = outputFromObservable(
     this.actions$.pipe(
       ofActionSuccessful(UploadBlobByChunks),
-      map(() => this.selectors.uploadState()),
+      map(() => this.selectors.uploadState()?.fileId ?? null),
     ),
   );
 
@@ -102,6 +103,7 @@ export class FileUploadBlobComponent implements OnInit, OnDestroy {
   protected readonly fileInput = viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
   protected readonly FilesLocalization = FilesLocalization;
   protected readonly SharedLocalization = SharedLocalization;
+  protected readonly ErrorsLocalization = ErrorsLocalization;
   protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
   protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
 
@@ -148,6 +150,7 @@ export class FileUploadBlobComponent implements OnInit, OnDestroy {
     this.clearInput();
     this.form.controls.file.reset();
     this.form.controls.name.reset();
+    this.actions.resetFileUploadState();
   }
 
   private clearInput(): void {
@@ -158,6 +161,4 @@ export class FileUploadBlobComponent implements OnInit, OnDestroy {
     this.startUpload$.complete();
     this.cancelUpload$.complete();
   }
-
-  protected readonly ErrorsLocalization = ErrorsLocalization;
 }

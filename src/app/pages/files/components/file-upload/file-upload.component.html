@@ -12,9 +12,9 @@
   </mat-nav-list>
 }
 @if (fileAttachmentMode() === 'upload') {
-  <file-upload-blob [fileMetadata]="fileMetadata()" (uploadCompleted)="uploadCompleted($event)" />
+  <file-upload-blob [fileMetadata]="fileMetadata()" (uploadCompleted)="uploadCompleted.emit($event)" />
 }
 
 @if (fileAttachmentMode() === 'fileUrl') {
-  <file-as-url [fileMetadata]="fileMetadata()" />
+  <file-as-url [fileMetadata]="fileMetadata()" (uploadCompleted)="uploadCompleted.emit($event)" />
 }
