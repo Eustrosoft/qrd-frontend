@@ -28,12 +28,14 @@ import { FileUploadState } from '@app/pages/files/components/file-upload/state/f
 export const appConfig: ApplicationConfig = {
   providers: [
     provideInitializers(),
+    // TODO Make zoneless, after provideZonelessChangeDetection() will come out from Developer Preview
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,
       withPreloading(PreloadAllModules),
       withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' }),
     ),
+    // TODO Drop animations package https://angular.dev/guide/animations/migration
     provideAnimationsAsync(),
     provideStore(
       [AppState, AuthState, DictionaryRegistryState, FileUploadState],
