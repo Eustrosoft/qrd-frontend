@@ -1,13 +1,27 @@
-<ui-flex-block>
+<ui-flex-block flexAlignItems="center" flexJustifyContent="space-between">
   <h1>{{ dialogData.textContent }}</h1>
-  <mat-icon [mat-dialog-close]="undefined">close</mat-icon>
+  <button [mat-dialog-close]="undefined" class="icon-button-sm" mat-icon-button>
+    <mat-icon class="icon-primary">close</mat-icon>
+  </button>
 </ui-flex-block>
 @if (dialogData.textSubContent) {
   <p>{{ dialogData.textSubContent }}</p>
 }
-<ui-flex-block gapSize="32" flexAlignSelf="flex-end">
-  <button [mat-dialog-close]="false" cdkFocusInitial>
-    {{ dialogData.cancelButtonText }}
-  </button>
-  <button [mat-dialog-close]="true">{{ dialogData.confirmButtonText }}</button>
-</ui-flex-block>
+<ui-grid-block gridTemplateColumns="repeat(auto-fit, minmax(200px, 1fr))" gridJustifyItems="center">
+  <ui-grid-block gridTemplateColumns="repeat(1, 1fr)" gridJustifyItems="center">
+    <button [mat-dialog-close]="false" class="fab-icon-primary-button-xxxl" mat-fab cdkFocusInitial>
+      <mat-icon class="icon-on-primary icon-xxxl">close</mat-icon>
+    </button>
+    <a [mat-dialog-close]="false" class="button-anchor-md" mat-button interactionEffect>
+      {{ dialogData.cancelButtonText }}
+    </a>
+  </ui-grid-block>
+  <ui-grid-block gridTemplateColumns="repeat(1, 1fr)" gridJustifyItems="center">
+    <button [mat-dialog-close]="true" class="fab-icon-primary-button-xxxl" mat-fab>
+      <mat-icon class="icon-on-primary icon-xxxl">done_all</mat-icon>
+    </button>
+    <a [mat-dialog-close]="true" class="button-anchor-md" mat-button interactionEffect>
+      {{ dialogData.confirmButtonText }}
+    </a>
+  </ui-grid-block>
+</ui-grid-block>

@@ -168,6 +168,22 @@
   height: 48px !important;
 }
 
+.fab-icon-primary-button-xxxl {
+  @include mat.fab-overrides(
+    (
+      container-color: var(--mat-sys-secondary),
+      container-shape: 999px,
+      container-elevation-shadow: none,
+      pressed-container-elevation-shadow: none,
+      hover-container-elevation-shadow: none,
+      focus-container-elevation-shadow: none,
+    )
+  );
+
+  width: 200px !important;
+  height: 200px !important;
+}
+
 .icon-button-sm {
   @include mat.icon-button-overrides(
     (

@@ -73,6 +73,7 @@
   @include mat.menu-overrides(
     (
       item-icon-color: var(--mat-sys-primary),
+      container-shape: 16px,
     )
   );
   @include mat.tooltip-overrides(

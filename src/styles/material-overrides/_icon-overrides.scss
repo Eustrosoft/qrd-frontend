@@ -18,6 +18,14 @@
   height: 56px !important;
 }
 
+.icon-xxxl {
+  width: 148px !important;
+  height: 148px !important;
+  font-size: 140px !important;
+  text-align: center;
+  line-height: 148px !important;
+}
+
 .icon-primary {
   @include mat.icon-overrides(
     (

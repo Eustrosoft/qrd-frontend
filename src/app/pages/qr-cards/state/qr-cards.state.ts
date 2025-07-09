@@ -11,14 +11,18 @@ import {
 import { DataViewDisplayType } from '@shared/shared.models';
 import { patch } from '@ngxs/store/operators';
 import { QRDto } from '@api/qr-cards/qrs-api.models';
-import { catchError, concatMap, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
+import { catchError, concatMap, EMPTY, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
 import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, QR_API_URL, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
-import { FetchFileList, SetSelectedFiles } from '@app/pages/files/state/files.actions';
 import { TemplatesStateModel } from '@app/pages/templates/state/templates.state';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
+import { DELETION_DIALOG_DATA } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
+import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 
 export interface QrCardsStateModel {
   displayType: DataViewDisplayType;
@@ -55,6 +59,8 @@ export class QrCardsState {
   private readonly qrCardsService = inject(QrCardsService);
   private readonly router = inject(Router);
   private readonly toHexPipe = inject(ToHexPipe);
+  private readonly pxToRemPipe = inject(PxToRemPipe);
+  private readonly matDialog = inject(MatDialog);
 
   @Selector()
   public static getDisplayType$({ displayType }: QrCardsStateModel): DataViewDisplayType {
@@ -182,25 +188,42 @@ export class QrCardsState {
     { idList, destroyRef, refreshList, returnToList }: DeleteQrCards,
   ): Observable<void[]> {
     setState(patch({ isDeleteInProgress: true }));
-    return timer(SKELETON_TIMER).pipe(
-      switchMap(() => from(idList).pipe(concatMap((id) => this.qrCardsService.deleteQrCard(id)))),
-      toArray(),
-      tap({
-        next: () => {
+
+    const matDialogRef = this.matDialog.open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(
+      ConfirmationDialogComponent,
+      {
+        data: DELETION_DIALOG_DATA,
+        width: this.pxToRemPipe.transform('600'),
+      },
+    );
+
+    return matDialogRef.afterClosed().pipe(
+      switchMap((result) => {
+        if (!result) {
           setState(patch({ isDeleteInProgress: false }));
-          dispatch(new SetSelectedFiles([]));
-          if (refreshList) {
-            dispatch(FetchFileList);
-          }
-          if (returnToList) {
-            this.router.navigate(['/', AppRoutes.qrCards]);
-          }
-        },
+          return EMPTY;
+        }
+        return from(idList).pipe(
+          concatMap((id) => this.qrCardsService.deleteQrCard(id)),
+          toArray(),
+          tap({
+            next: () => {
+              setState(patch({ isDeleteInProgress: false }));
+              dispatch(new SetSelectedQrCards([]));
+              if (refreshList) {
+                dispatch(FetchQrCardList);
+              }
+              if (returnToList) {
+                this.router.navigate(['/', AppRoutes.qrCards]);
+              }
+            },
+          }),
+        );
       }),
       takeUntilDestroyed(destroyRef),
       catchError((err) => {
         setState(patch({ isDeleteInProgress: false }));
-        dispatch(new SetSelectedFiles([]));
+        dispatch(new SetSelectedQrCards([]));
         return throwError(() => err);
       }),
     );
