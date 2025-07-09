@@ -45,7 +45,7 @@
             <mat-icon>edit</mat-icon>
             {{ SharedLocalization.edit }}
           </button>
-          <button mat-menu-item>
+          <button (click)="actions.deleteQrCards([qrCard.id], destroyRef)" mat-menu-item>
             <mat-icon>delete</mat-icon>
             {{ SharedLocalization.delete }}
           </button>

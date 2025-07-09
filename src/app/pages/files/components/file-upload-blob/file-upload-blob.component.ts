@@ -35,7 +35,6 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { outputFromObservable } from '@angular/core/rxjs-interop';
 import { ErrorsLocalization } from '@modules/error/error.constants';
-import { DeleteFiles } from '@app/pages/files/state/files.actions';
 
 @Component({
   selector: 'file-upload-blob',
@@ -77,7 +76,6 @@ export class FileUploadBlobComponent implements OnDestroy {
   protected readonly actions = createDispatchMap({
     uploadBlobByChunks: UploadBlobByChunks,
     updateFileMetadata: UpdateFileMetadata,
-    deleteFiles: DeleteFiles,
     resetFileUploadState: ResetFileUploadState,
   });
 

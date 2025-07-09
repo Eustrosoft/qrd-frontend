@@ -19,6 +19,17 @@
     </ng-container>
     <ng-container action-buttons>
       <button class="button-md" mat-flat-button>{{ SharedLocalization.edit }}</button>
+      @if (!selectors.isDeleteInProgress()) {
+        <button
+          (click)="actions.deleteQrCards([selectors.qrCard()!.id], destroyRef, false, true)"
+          class="button-md"
+          mat-flat-button
+        >
+          {{ SharedLocalization.delete }}
+        </button>
+      } @else {
+        <ui-skeleton height="40" width="110" />
+      }
       <button class="button-md" mat-flat-button>{{ SharedLocalization.delete }}</button>
     </ng-container>
   </toolbar>

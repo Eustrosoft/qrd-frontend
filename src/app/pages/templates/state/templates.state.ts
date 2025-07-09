@@ -97,7 +97,7 @@ export class TemplatesState {
   }
 
   @Action(FetchTemplateList)
-  public fetchFileList({ setState }: StateContext<TemplatesStateModel>): Observable<TemplateDto[]> {
+  public fetchTemplateList({ setState }: StateContext<TemplatesStateModel>): Observable<TemplateDto[]> {
     setState(patch({ isTemplateListLoading: true }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.templatesService.getTemplateList()),
@@ -114,7 +114,7 @@ export class TemplatesState {
   }
 
   @Action(FetchTemplate)
-  public fetchFile(
+  public fetchTemplate(
     { setState }: StateContext<TemplatesStateModel>,
     { id, destroyRef }: FetchFile,
   ): Observable<TemplateDto> {
@@ -143,7 +143,7 @@ export class TemplatesState {
   }
 
   @Action(SelectAllTemplates)
-  public selectedAllFiles({ setState, getState }: StateContext<TemplatesStateModel>): void {
+  public selectedAllTemplates({ setState, getState }: StateContext<TemplatesStateModel>): void {
     const { templateList } = getState();
     setState(patch({ selectedTemplateList: templateList.map((file) => file.id) }));
   }
@@ -156,7 +156,7 @@ export class TemplatesState {
     setState(patch({ displayType }));
   }
   @Action(DeleteTemplates)
-  public deleteFiles(
+  public deleteTemplates(
     { setState, dispatch }: StateContext<TemplatesStateModel>,
     { idList, destroyRef, refreshList, returnToList }: DeleteTemplates,
   ): Observable<void[]> {
@@ -172,7 +172,7 @@ export class TemplatesState {
             dispatch(FetchFileList);
           }
           if (returnToList) {
-            this.router.navigate(['/', AppRoutes.files]);
+            this.router.navigate(['/', AppRoutes.templates]);
           }
         },
       }),

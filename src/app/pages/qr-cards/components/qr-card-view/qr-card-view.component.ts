@@ -8,7 +8,7 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { MatButton } from '@angular/material/button';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
-import { FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
+import { DeleteQrCards, FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
@@ -46,17 +46,19 @@ import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 })
 export class QrCardViewComponent implements OnInit {
   private readonly uiSidenavService = inject(UiSidenavService);
-  private readonly destroyRef = inject(DestroyRef);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly isXSmall = inject(IS_XSMALL);
+  protected readonly destroyRef = inject(DestroyRef);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
   protected readonly selectors = createSelectMap({
     isQrCardLoading: QrCardsState.isQrCardLoading$,
     qrCard: QrCardsState.getQrCard$,
     qrCardPreviewUrl: QrCardsState.getQrCardPreviewUrl$,
+    isDeleteInProgress: QrCardsState.isDeleteInProgress$,
   });
   protected readonly actions = createDispatchMap({
     fetchQrCard: FetchQrCard,
+    deleteQrCards: DeleteQrCards,
   });
   protected readonly tabLinks: TabLink[] = [
     { link: AppRoutes.qrCard, title: RouteTitles.card },

@@ -26,3 +26,13 @@ export class SetQrCardsDataViewDisplayType {
   public static readonly type = '[Qr Cards] Set Cards Display Type';
   constructor(readonly displayType: DataViewDisplayType) {}
 }
+
+export class DeleteQrCards {
+  public static readonly type = '[Qr Cards] Delete Qr Cards';
+  constructor(
+    readonly idList: number[],
+    readonly destroyRef: DestroyRef,
+    readonly refreshList: boolean = true,
+    readonly returnToList: boolean = false,
+  ) {}
+}

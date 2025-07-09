@@ -1,0 +1,13 @@
+<ui-flex-block>
+  <h1>{{ dialogData.textContent }}</h1>
+  <mat-icon [mat-dialog-close]="undefined">close</mat-icon>
+</ui-flex-block>
+@if (dialogData.textSubContent) {
+  <p>{{ dialogData.textSubContent }}</p>
+}
+<ui-flex-block gapSize="32" flexAlignSelf="flex-end">
+  <button [mat-dialog-close]="false" cdkFocusInitial>
+    {{ dialogData.cancelButtonText }}
+  </button>
+  <button [mat-dialog-close]="true">{{ dialogData.confirmButtonText }}</button>
+</ui-flex-block>

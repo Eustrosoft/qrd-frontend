@@ -1,0 +1,9 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  gap: mixins.rem(32);
+  display: grid;
+  padding: mixins.rem(32);
+  align-items: center;
+  flex-direction: column;
+}

@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
-import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
-import { DatePipe } from '@angular/common';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { MatMenuItem } from '@angular/material/menu';
-import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { ViewListItemComponent } from '@shared/components/view-list-item/view-list-item.component';
@@ -26,13 +23,10 @@ import {
 @Component({
   selector: 'template-list',
   imports: [
-    BytesToSizePipe,
-    DatePipe,
     EllipsisDirective,
     FallbackPipe,
     MatIcon,
     MatMenuItem,
-    UiBadgeComponent,
     UiFlexBlockComponent,
     UiSkeletonComponent,
     ViewListItemComponent,

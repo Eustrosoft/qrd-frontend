@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, DOCUMENT, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, DOCUMENT, inject } from '@angular/core';
 import { DataViewComponent } from '@shared/components/data-view/data-view.component';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import {
+  DeleteQrCards,
   FetchQrCardList,
   SelectAllQrCards,
   SetQrCardsDataViewDisplayType,
@@ -15,10 +16,18 @@ import { expandAnimation } from '@shared/shared.animations';
 import { MatMiniFabButton } from '@angular/material/button';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
+import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 
 @Component({
   selector: 'qr-cards-layout',
-  imports: [DataViewComponent, SelectionBarComponent, QrCardListComponent, MatIcon, MatMiniFabButton],
+  imports: [
+    DataViewComponent,
+    SelectionBarComponent,
+    QrCardListComponent,
+    MatIcon,
+    MatMiniFabButton,
+    UiSkeletonComponent,
+  ],
   animations: [expandAnimation],
   templateUrl: './qr-cards-layout.component.html',
   styleUrl: './qr-cards-layout.component.scss',
@@ -28,16 +37,19 @@ export class QrCardsLayoutComponent {
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly uiSidenavService = inject(UiSidenavService);
   protected readonly document = inject(DOCUMENT);
+  protected readonly destroyRef = inject(DestroyRef);
 
   protected readonly selectors = createSelectMap({
     displayType: QrCardsState.getDisplayType$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
+    isDeleteInProgress: QrCardsState.isDeleteInProgress$,
   });
   protected readonly actions = createDispatchMap({
     setDisplayType: SetQrCardsDataViewDisplayType,
     fetchQrCards: FetchQrCardList,
     setSelectedQrCards: SetSelectedQrCards,
     selectedAllQrCards: SelectAllQrCards,
+    deleteQrCards: DeleteQrCards,
   });
 
   protected openAdvancedSearch(): void {

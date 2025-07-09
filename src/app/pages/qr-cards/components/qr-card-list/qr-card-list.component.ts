@@ -1,8 +1,21 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, inputBinding, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  effect,
+  inject,
+  inputBinding,
+  OnInit,
+} from '@angular/core';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
-import { FetchQrCardList, SetQrCardsDataViewDisplayType } from '@app/pages/qr-cards/state/qr-cards.actions';
+import {
+  DeleteQrCards,
+  FetchQrCardList,
+  SetQrCardsDataViewDisplayType,
+} from '@app/pages/qr-cards/state/qr-cards.actions';
 import { ViewListItemComponent } from '@shared/components/view-list-item/view-list-item.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
@@ -44,6 +57,7 @@ export class QrCardListComponent implements OnInit {
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly uiSidenavService = inject(UiSidenavService);
   protected readonly activatedRoute = inject(ActivatedRoute);
+  protected readonly destroyRef = inject(DestroyRef);
   protected readonly QrCardsLocalization = QrCardsLocalization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly selectors = createSelectMap({
@@ -56,6 +70,7 @@ export class QrCardListComponent implements OnInit {
   protected readonly actions = createDispatchMap({
     setDisplayType: SetQrCardsDataViewDisplayType,
     fetchQrCards: FetchQrCardList,
+    deleteQrCards: DeleteQrCards,
   });
 
   // prettier-ignore

@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import {
+  DeleteQrCards,
   FetchQrCard,
   FetchQrCardList,
   SelectAllQrCards,
@@ -10,11 +11,14 @@ import {
 import { DataViewDisplayType } from '@shared/shared.models';
 import { patch } from '@ngxs/store/operators';
 import { QRDto } from '@api/qr-cards/qrs-api.models';
-import { catchError, Observable, switchMap, tap, throwError, timer } from 'rxjs';
+import { catchError, concatMap, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
-import { DEFAULT_ITEMS_PER_PAGE, QR_API_URL, SKELETON_TIMER } from '@app/app.constants';
+import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, QR_API_URL, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
+import { FetchFileList, SetSelectedFiles } from '@app/pages/files/state/files.actions';
+import { TemplatesStateModel } from '@app/pages/templates/state/templates.state';
+import { Router } from '@angular/router';
 
 export interface QrCardsStateModel {
   displayType: DataViewDisplayType;
@@ -25,6 +29,7 @@ export interface QrCardsStateModel {
   isQrCardLoading: boolean;
   qrCard: QRDto | null;
   qrCardPreviewUrl: string;
+  isDeleteInProgress: boolean;
 }
 
 const defaults: QrCardsStateModel = {
@@ -36,6 +41,7 @@ const defaults: QrCardsStateModel = {
   isQrCardLoading: false,
   qrCard: null,
   qrCardPreviewUrl: '',
+  isDeleteInProgress: false,
 } as const;
 
 const QR_CARDS_STATE_TOKEN: StateToken<QrCardsStateModel> = new StateToken<QrCardsStateModel>('qrCards');
@@ -47,6 +53,7 @@ const QR_CARDS_STATE_TOKEN: StateToken<QrCardsStateModel> = new StateToken<QrCar
 @Injectable()
 export class QrCardsState {
   private readonly qrCardsService = inject(QrCardsService);
+  private readonly router = inject(Router);
   private readonly toHexPipe = inject(ToHexPipe);
 
   @Selector()
@@ -87,6 +94,11 @@ export class QrCardsState {
   @Selector()
   public static getSelectedQrCardList$({ selectedQrCardList }: QrCardsStateModel): number[] {
     return selectedQrCardList;
+  }
+
+  @Selector()
+  public static isDeleteInProgress$({ isDeleteInProgress }: QrCardsStateModel): boolean {
+    return isDeleteInProgress;
   }
 
   @Action(FetchQrCardList)
@@ -162,5 +174,35 @@ export class QrCardsState {
     { displayType }: SetQrCardsDataViewDisplayType,
   ): void {
     setState(patch({ displayType }));
+  }
+
+  @Action(DeleteQrCards)
+  public deleteQrCards(
+    { setState, dispatch }: StateContext<TemplatesStateModel>,
+    { idList, destroyRef, refreshList, returnToList }: DeleteQrCards,
+  ): Observable<void[]> {
+    setState(patch({ isDeleteInProgress: true }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => from(idList).pipe(concatMap((id) => this.qrCardsService.deleteQrCard(id)))),
+      toArray(),
+      tap({
+        next: () => {
+          setState(patch({ isDeleteInProgress: false }));
+          dispatch(new SetSelectedFiles([]));
+          if (refreshList) {
+            dispatch(FetchFileList);
+          }
+          if (returnToList) {
+            this.router.navigate(['/', AppRoutes.qrCards]);
+          }
+        },
+      }),
+      takeUntilDestroyed(destroyRef),
+      catchError((err) => {
+        setState(patch({ isDeleteInProgress: false }));
+        dispatch(new SetSelectedFiles([]));
+        return throwError(() => err);
+      }),
+    );
   }
 }
