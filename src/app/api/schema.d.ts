@@ -240,7 +240,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Find all forms for current user */
+        /** Find all templates for current user */
         get: operations["findAll"];
         put?: never;
         /** Create new form */

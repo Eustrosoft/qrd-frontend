@@ -12,6 +12,7 @@ import { provideStates, select } from '@ngxs/store';
 import { AuthState } from '@modules/auth/state/auth.state';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { FilesState } from '@app/pages/files/state/files.state';
+import { TemplatesState } from '@app/pages/templates/state/templates.state';
 
 export const routes: Routes = [
   {
@@ -42,6 +43,7 @@ export const routes: Routes = [
     title: RouteTitles.templates,
     canActivate: [authGuard],
     loadChildren: () => import('@app/pages/templates/templates.routes').then((m) => m.templatesRoutes),
+    providers: [provideStates([TemplatesState])],
   },
   {
     path: AppRoutes.files,

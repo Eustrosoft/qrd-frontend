@@ -1,0 +1,37 @@
+<ui-flex-block flexDirection="column">
+  @if (!selectors.isTemplateListLoading()) {
+    @for (template of selectors.templateList(); track template.id) {
+      <view-list-item
+        [title]="template.name"
+        [navigateTo]="`./${template.id}`"
+        [isPreviewShown]="true"
+        [isSelected]="selectionModel.isSelected(template.id)"
+        (checkboxChanged)="$event ? selectionModel.select(template.id) : selectionModel.deselect(template.id)"
+      >
+        <ng-container content>
+          <p ellipsis>
+            {{ template.description | fallback: SharedLocalization.noDescription }}
+          </p>
+        </ng-container>
+        <ng-container menu-items>
+          <a [routerLink]="`./${template.id}`" [relativeTo]="activatedRoute" mat-menu-item>
+            <mat-icon>outbound</mat-icon>
+            {{ SharedLocalization.open }}
+          </a>
+          <a [routerLink]="`./${template.id}/${AppRoutes.edit}`" mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            {{ SharedLocalization.edit }}
+          </a>
+          <button (click)="actions.deleteTemplates([template.id], destroyRef)" mat-menu-item>
+            <mat-icon>delete</mat-icon>
+            {{ SharedLocalization.delete }}
+          </button>
+        </ng-container>
+      </view-list-item>
+    }
+  } @else {
+    @for (sk of selectors.templateListSkeletonLoaders(); track sk) {
+      <ui-skeleton height="72" />
+    }
+  }
+</ui-flex-block>

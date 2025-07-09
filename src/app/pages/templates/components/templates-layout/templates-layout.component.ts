@@ -1,0 +1,56 @@
+import { ChangeDetectionStrategy, Component, DestroyRef, DOCUMENT, inject } from '@angular/core';
+import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
+import { createDispatchMap, createSelectMap } from '@ngxs/store';
+import { MatIcon } from '@angular/material/icon';
+import { DataViewComponent } from '@shared/components/data-view/data-view.component';
+import { MatMiniFabButton } from '@angular/material/button';
+import { SelectionBarComponent } from '@shared/components/selection-bar/selection-bar.component';
+import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
+import { TemplatesState } from '@app/pages/templates/state/templates.state';
+import {
+  DeleteTemplates,
+  FetchTemplateList,
+  SelectAllTemplates,
+  SetSelectedTemplates,
+  SetTemplatesDataViewDisplayType,
+} from '@app/pages/templates/state/templates.actions';
+import { TemplateListComponent } from '@app/pages/templates/components/template-list/template-list.component';
+
+@Component({
+  selector: 'templates-layout',
+  imports: [
+    DataViewComponent,
+    MatIcon,
+    MatMiniFabButton,
+    SelectionBarComponent,
+    UiSkeletonComponent,
+    TemplateListComponent,
+  ],
+  templateUrl: './templates-layout.component.html',
+  styleUrl: './templates-layout.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class TemplatesLayoutComponent {
+  protected readonly uiSidenavService = inject(UiSidenavService);
+  protected readonly destroyRef = inject(DestroyRef);
+  protected readonly document = inject(DOCUMENT);
+
+  protected readonly selectors = createSelectMap({
+    displayType: TemplatesState.getDisplayType$,
+    selectedTemplateList: TemplatesState.getSelectedTemplateList$,
+    isDeleteInProgress: TemplatesState.isDeleteInProgress$,
+  });
+  protected readonly actions = createDispatchMap({
+    setDisplayType: SetTemplatesDataViewDisplayType,
+    fetchTemplateList: FetchTemplateList,
+    setSelectedTemplates: SetSelectedTemplates,
+    selectAllTemplates: SelectAllTemplates,
+    deleteTemplates: DeleteTemplates,
+  });
+
+  protected openAdvancedSearch(): void {
+    this.uiSidenavService.open(MatIcon, {
+      content: [[this.document.createTextNode('database_search')]],
+    });
+  }
+}

@@ -6,6 +6,7 @@ export const AppRoutes = {
   qrCard: 'qr-card',
   attrs: 'attributes',
   templates: 'templates',
+  template: 'template',
   files: 'files',
   file: 'file',
   usages: 'usages',

@@ -79,6 +79,7 @@ export const RouteTitles = {
   attrs: $localize`:@@routes.attrs:Attributes`,
   usages: $localize`:@@routes.usages:Usages`,
   templates: $localize`:@@routes.templates:Templates`,
+  template: $localize`:@@routes.template:Template`,
   files: $localize`:@@routes.files:Files`,
   file: $localize`:@@routes.file:File`,
   docs: $localize`:@@routes.docs:Docs`,
