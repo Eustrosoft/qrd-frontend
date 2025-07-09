@@ -6,15 +6,16 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 
 @Component({
-  selector: 'view-toolbar',
+  selector: 'toolbar',
   imports: [MatIcon, MatMiniFabButton, RouterLink, UiFlexBlockComponent],
-  templateUrl: './view-toolbar.component.html',
-  styleUrl: './view-toolbar.component.scss',
+  templateUrl: './toolbar.component.html',
+  styleUrl: './toolbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ViewToolbarComponent {
+export class ToolbarComponent {
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
 
   public readonly navigateTo = input<string | UrlTree | null | undefined>('../');
+  public readonly isActionButtonsShown = input<boolean>(true);
 }

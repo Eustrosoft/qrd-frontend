@@ -7,18 +7,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FetchFile } from '@app/pages/files/state/files.actions';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { UploadState } from '@app/pages/files/files.models';
+import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 
 @Component({
   selector: 'file-edit',
-  imports: [FileUploadComponent, CardContainerComponent, UiSkeletonComponent],
+  imports: [FileUploadComponent, CardContainerComponent, UiSkeletonComponent, ToolbarComponent],
   templateUrl: './file-edit.component.html',
   styleUrl: './file-edit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileEditComponent implements OnInit {
-  /**
-   * TODO Доделать toolbar, fetch файла и прокидывание в file-upload
-   */
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);

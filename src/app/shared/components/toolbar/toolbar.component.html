@@ -7,14 +7,16 @@
   >
     <mat-icon class="icon-md icon-on-secondary">chevron_left</mat-icon>
   </a>
-  <ng-content select="[heading]"></ng-content>
+  <ng-content select="[heading]" />
 </ui-flex-block>
-<ui-flex-block
-  [gapSize]="isSmallScreen() ? '8' : '16'"
-  flexAlignItems="center"
-  flexJustifyContent="flex-end"
-  flex="0 1 auto"
-  [flexWrap]="isSmallScreen() ? 'wrap' : 'nowrap'"
->
-  <ng-content select="[action-buttons]"></ng-content>
-</ui-flex-block>
+@if (isActionButtonsShown()) {
+  <ui-flex-block
+    [gapSize]="isSmallScreen() ? '8' : '16'"
+    flexAlignItems="center"
+    flexJustifyContent="flex-end"
+    flex="0 1 auto"
+    [flexWrap]="isSmallScreen() ? 'wrap' : 'nowrap'"
+  >
+    <ng-content select="[action-buttons]" />
+  </ui-flex-block>
+}

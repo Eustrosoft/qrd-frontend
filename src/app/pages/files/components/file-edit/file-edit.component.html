@@ -1,6 +1,11 @@
 @if (!selectors.isFileLoading()) {
   <card-container [hideHeading]="true">
     <ng-container content>
+      <toolbar [isActionButtonsShown]="false" />
+    </ng-container>
+  </card-container>
+  <card-container [hideHeading]="true">
+    <ng-container content>
       @if (fileId) {
         <file-upload [fileMetadata]="selectors.file()" (uploadCompleted)="goToView($event)" />
       } @else {
@@ -9,5 +14,6 @@
     </ng-container>
   </card-container>
 } @else {
+  <ui-skeleton height="88" />
   <ui-skeleton height="280" />
 }

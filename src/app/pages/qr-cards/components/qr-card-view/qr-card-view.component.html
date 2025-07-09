@@ -1,5 +1,5 @@
 @if (!selectors.isQrCardLoading()) {
-  <view-toolbar>
+  <toolbar>
     <ng-container heading>
       <button
         class="button-anchor-md-with-icon"
@@ -21,7 +21,7 @@
       <button class="button-md" mat-flat-button>{{ SharedLocalization.edit }}</button>
       <button class="button-md" mat-flat-button>{{ SharedLocalization.delete }}</button>
     </ng-container>
-  </view-toolbar>
+  </toolbar>
   <ui-flex-block>
     <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="tab-nav-bar">
       @for (link of tabLinks; track link.link) {

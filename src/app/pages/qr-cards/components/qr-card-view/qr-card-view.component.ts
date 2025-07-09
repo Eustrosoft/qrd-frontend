@@ -5,7 +5,6 @@ import { AppRoutes } from '@app/app.constants';
 import { TabLink } from '@shared/shared.models';
 import { UpperCasePipe } from '@angular/common';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
-import { ViewToolbarComponent } from '@shared/components/view-toolbar/view-toolbar.component';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { MatButton } from '@angular/material/button';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
@@ -20,6 +19,7 @@ import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 
 @Component({
   selector: 'qr-card-view',
@@ -30,7 +30,6 @@ import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
     MatTabNavPanel,
     UpperCasePipe,
     UiFlexBlockComponent,
-    ViewToolbarComponent,
     MatButton,
     RouterLink,
     UiSkeletonComponent,
@@ -39,6 +38,7 @@ import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
     TruncateDirective,
     ToHexPipe,
     RouterLinkActive,
+    ToolbarComponent,
   ],
   templateUrl: './qr-card-view.component.html',
   styleUrl: './qr-card-view.component.scss',

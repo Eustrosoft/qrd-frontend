@@ -1,11 +1,11 @@
 @if (!selectors.isFileLoading()) {
-  <view-toolbar>
+  <toolbar>
     <ng-container heading>
       <h1 ellipsis>{{ selectors.file()?.name | fallback: SharedLocalization.noName }}</h1>
     </ng-container>
     <ng-container action-buttons>
       @if (!selectors.isFileDownloading()) {
-        <button (click)="downloadFile()" #button class="button-md" mat-flat-button>
+        <button (click)="downloadFile()" class="button-md" mat-flat-button>
           {{ SharedLocalization.download }}
         </button>
       } @else {
@@ -26,7 +26,7 @@
         <ui-skeleton height="40" width="110" />
       }
     </ng-container>
-  </view-toolbar>
+  </toolbar>
   <ui-flex-block>
     <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="tab-nav-bar">
       @for (link of tabLinks; track link.link) {

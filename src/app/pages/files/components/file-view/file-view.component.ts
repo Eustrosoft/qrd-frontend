@@ -5,7 +5,6 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@ang
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { UpperCasePipe } from '@angular/common';
-import { ViewToolbarComponent } from '@shared/components/view-toolbar/view-toolbar.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { TabLink } from '@shared/shared.models';
@@ -16,6 +15,7 @@ import { DeleteFiles, DownloadFile, FetchFile } from '@app/pages/files/state/fil
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { WINDOW } from '@cdk/tokens/window.token';
+import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 
 @Component({
   selector: 'file-view',
@@ -30,9 +30,9 @@ import { WINDOW } from '@cdk/tokens/window.token';
     UiFlexBlockComponent,
     UiSkeletonComponent,
     UpperCasePipe,
-    ViewToolbarComponent,
     EllipsisDirective,
     FallbackPipe,
+    ToolbarComponent,
   ],
   templateUrl: './file-view.component.html',
   styleUrl: './file-view.component.scss',
