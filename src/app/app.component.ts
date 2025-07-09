@@ -8,10 +8,11 @@ import { QrdFooterComponent } from '@shared/components/qrd-footer/qrd-footer.com
 import { AppState } from '@app/state/app.state';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { HideNgVersionDirective } from '@shared/directives/hide-ng-version.directive';
+import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, UiSidenavComponent, QrdHeaderComponent, QrdFooterComponent],
+  imports: [RouterOutlet, UiSidenavComponent, QrdHeaderComponent, QrdFooterComponent, UiSkeletonComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,8 +32,4 @@ export class AppComponent {
     }
     this.actions.setTheme('system', '');
   });
-  /**
-   * TODO
-   *  locale change + guard integration (guard should prevent}
-   */
 }

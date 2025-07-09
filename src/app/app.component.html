@@ -1,7 +1,15 @@
 <ui-sidenav>
-  <qrd-header />
+  @defer (on immediate) {
+    <qrd-header />
+  } @loading {
+    <ui-skeleton height="64" borderRadius="0" />
+  }
   <main>
     <router-outlet />
   </main>
-  <qrd-footer />
+  @defer (on immediate) {
+    <qrd-footer />
+  } @loading {
+    <ui-skeleton height="220" borderRadius="0" />
+  }
 </ui-sidenav>
