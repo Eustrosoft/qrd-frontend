@@ -15,6 +15,7 @@ import {
   SetTemplatesDataViewDisplayType,
 } from '@app/pages/templates/state/templates.actions';
 import { TemplateListComponent } from '@app/pages/templates/components/template-list/template-list.component';
+import { expandAnimation } from '@shared/shared.animations';
 
 @Component({
   selector: 'templates-layout',
@@ -26,6 +27,7 @@ import { TemplateListComponent } from '@app/pages/templates/components/template-
     UiSkeletonComponent,
     TemplateListComponent,
   ],
+  animations: [expandAnimation],
   templateUrl: './templates-layout.component.html',
   styleUrl: './templates-layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
