@@ -17,6 +17,12 @@ import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
+import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
+import { CHANGE_LOCALE_DIALOG_DATA } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
+import { MatDialog } from '@angular/material/dialog';
+import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
+import { first, tap } from 'rxjs';
 
 @Component({
   selector: 'qrd-footer',
@@ -41,6 +47,8 @@ import { InteractionEffect } from '@shared/directives/text-interaction-effect.di
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrdFooterComponent {
+  private readonly matDialog = inject(MatDialog);
+  private readonly pxToRemPipe = inject(PxToRemPipe);
   private readonly isXSmall = inject(IS_XSMALL);
   private readonly isSmall = inject(IS_SMALL);
   protected readonly selectors = createSelectMap({
@@ -66,10 +74,24 @@ export class QrdFooterComponent {
   protected readonly localeModel = model<Locale>(this.selectors.locale());
 
   protected updateLocale(event: MatSelectChange<Locale>): void {
-    if (confirm($localize`Change of language requires reload, proceed?`)) {
-      this.setLocale(event.value, true);
-      return;
-    }
-    event.source.writeValue(this.selectors.locale());
+    this.matDialog
+      .open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(ConfirmationDialogComponent, {
+        data: CHANGE_LOCALE_DIALOG_DATA,
+        width: this.pxToRemPipe.transform('600'),
+      })
+      .afterClosed()
+      .pipe(
+        tap({
+          next: (result) => {
+            if (!result) {
+              event.source.writeValue(this.selectors.locale());
+              return;
+            }
+            this.setLocale(event.value, true);
+          },
+        }),
+        first(),
+      )
+      .subscribe();
   }
 }
