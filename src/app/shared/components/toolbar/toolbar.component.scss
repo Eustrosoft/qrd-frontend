@@ -8,10 +8,14 @@
   justify-content: space-between;
 
   @media #{map.get(bp.$breakpoints, xsmall)} {
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @media #{map.get(bp.$breakpoints, small)} {
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: repeat(2, 1fr);
   }
 }

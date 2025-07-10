@@ -2,9 +2,11 @@
   <card-container [hideHeading]="true">
     <ng-container content>
       <toolbar>
-        <ng-container heading>
-          <h1>{{ templateId ? TemplatesLocalization.editing : TemplatesLocalization.creation }}</h1>
-        </ng-container>
+        @if (!isSmallScreen()) {
+          <ng-container heading>
+            <h1>{{ templateId ? TemplatesLocalization.editing : TemplatesLocalization.creation }}</h1>
+          </ng-container>
+        }
         <ng-container action-buttons>
           @if (!selectors.isSaveInProgress()) {
             <button (click)="saveData()" class="button-md" mat-flat-button>
