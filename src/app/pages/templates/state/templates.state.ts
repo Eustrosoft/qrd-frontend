@@ -197,11 +197,10 @@ export class TemplatesState {
   ): Observable<TemplateDto> {
     setState(patch({ isSaveInProgress: true }));
     return timer(SKELETON_TIMER).pipe(
-      switchMap(() => this.templatesService.saveTemplate(id, payload)),
+      switchMap(() => this.templatesService.saveTemplate(id, { ...payload, id })),
       tap({
         next: () => {
           setState(patch({ isSaveInProgress: false }));
-          this.router.navigate(['../']);
         },
       }),
       catchError((err) => {

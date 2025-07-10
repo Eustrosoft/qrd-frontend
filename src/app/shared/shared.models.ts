@@ -71,3 +71,9 @@ export type DataViewDisplayType = 'list' | 'table';
 export type TabLink = { link: string; title: string };
 export type FileStorageTypeItem = { text: string; icon: string };
 export type FormMode = 'new' | 'edit';
+export type DictionaryItem = {
+  name: string;
+  code: string;
+  value: string;
+  description: string;
+};

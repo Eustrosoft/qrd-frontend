@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { createSelector, NgxsAfterBootstrap, State, StateContext, StateToken } from '@ngxs/store';
+import { inject, Injectable } from '@angular/core';
+import { Action, createSelector, NgxsAfterBootstrap, State, StateContext, StateToken } from '@ngxs/store';
 import { Dictionaries, DictionaryState } from '@app/app.models';
 import { Option } from '@shared/shared.models';
 import { ThemePickerOverlayLocalization } from '@shared/components/theme-picker-overlay/theme-picker-overlay.constants';
@@ -8,6 +8,10 @@ import { LocalesLocalization, RouteTitles } from '@shared/shared.constants';
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 import { BottomNavbarLink } from '@shared/components/bottom-navbar/bottom-navbar.models';
 import { HeaderNavbarLink } from '@shared/components/qrd-header/qrd-header.models';
+import { FetchDictionaryByName } from '@shared/state/dictionary-registry.actions';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 // eslint-disable-next-line
 export interface DictionaryRegistryStateModel<T = any> {
@@ -27,6 +31,7 @@ const DICTIONARY_REGISTRY_STATE_TOKEN: StateToken<DictionaryRegistryStateModel> 
 })
 @Injectable()
 export class DictionaryRegistryState implements NgxsAfterBootstrap {
+  private readonly http = inject(HttpClient);
   public ngxsAfterBootstrap({ setState }: StateContext<DictionaryRegistryStateModel>): void {
     setState(
       patch({
@@ -147,5 +152,61 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
         }
       );
     });
+  }
+
+  @Action(FetchDictionaryByName)
+  public fetchDictionaryByName(
+    { getState, setState }: StateContext<DictionaryRegistryStateModel>,
+    { dictionaryName, destroyRef }: FetchDictionaryByName,
+  ): Observable<unknown> {
+    if (getState().dictionaries?.[dictionaryName]?.list?.length) {
+      return of();
+    }
+
+    setState(
+      patch({
+        dictionaries: patch({
+          [dictionaryName]: {
+            list: [],
+            isLoading: true,
+            isLoadError: false,
+          },
+        }),
+      }),
+    );
+
+    const params = new HttpParams({ fromObject: { code: dictionaryName } });
+    return this.http.get('/qrCodeDemo/v1/api/secured/dictionaries', { params }).pipe(
+      tap({
+        next: (res) => {
+          setState(
+            patch({
+              dictionaries: patch({
+                [dictionaryName]: {
+                  list: res,
+                  isLoading: false,
+                  isLoadError: false,
+                },
+              }),
+            }),
+          );
+        },
+      }),
+      catchError(() => {
+        setState(
+          patch({
+            dictionaries: patch({
+              [dictionaryName]: {
+                list: [],
+                isLoading: false,
+                isLoadError: true,
+              },
+            }),
+          }),
+        );
+        return EMPTY;
+      }),
+      takeUntilDestroyed(destroyRef),
+    );
   }
 }

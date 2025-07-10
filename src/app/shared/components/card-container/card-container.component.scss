@@ -6,6 +6,7 @@
   gap: mixins.rem(24);
   display: flex;
   padding: mixins.rem(24) mixins.rem(32);
+  overflow: auto;
   background: var(--mat-sys-surface-container-lowest);
   box-shadow: var(--mat-sys-level1);
   border-radius: mixins.rem(12);

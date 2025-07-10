@@ -11,7 +11,7 @@ export type LocaleJson = {
   translations: Record<string, string>;
 };
 export type Icon = 'arrow-bottom' | 'cringe' | 'not-found' | 'palette' | 'timeout' | 'unknown-err';
-export type Dictionaries = 'locales' | 'themes' | 'contrast' | 'headerNavbarLinks' | 'bottomNavbarLinks';
+export type Dictionaries = 'locales' | 'themes' | 'contrast' | 'headerNavbarLinks' | 'bottomNavbarLinks' | 'INPUT_TYPE';
 export type DictionaryState<T> = {
   list: T[];
   isLoading: boolean;

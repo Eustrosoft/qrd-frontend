@@ -41,8 +41,9 @@ export const SharedLocalization = {
   storedInDB: $localize`:@@shared.storedInDB:Stored in database`,
   storedLocally: $localize`:@@shared.storedLocally:Stored locally`,
   storedExternally: $localize`:@@shared.storedExternally:Stored externally`,
-  isPublic: $localize`:@@shared.isPublic:Publicly available`,
-  nonPublic: $localize`:@@shared.nonPublic:Publicly unavailable`,
+  isPubliclyAvailable: $localize`:@@shared.isPubliclyAvailable:Publicly available`,
+  nonPubliclyAvailable: $localize`:@@shared.nonPubliclyAvailable:Publicly unavailable`,
+  isPublic: $localize`:@@shared.isPublic:Public`,
   isStatic: $localize`:@@shared.isStatic:Static`,
   nonStatic: $localize`:@@shared.nonStatic:Non static`,
   isActive: $localize`:@@shared.isActive:Is active`,
@@ -53,6 +54,7 @@ export const SharedLocalization = {
   save: $localize`:@@shared.save:Save`,
   close: $localize`:@@shared.close:Close`,
   add: $localize`:@@shared.add:Add`,
+  value: $localize`:@@shared.value:Value`,
   dev: $localize`:@@shared.dev:Under development`,
 } as const;
 

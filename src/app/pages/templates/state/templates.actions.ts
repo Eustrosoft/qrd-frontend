@@ -1,6 +1,6 @@
 import { DestroyRef } from '@angular/core';
 import { DataViewDisplayType } from '@shared/shared.models';
-import { TemplateDto } from '@api/templates/template-api.models';
+import { TemplateFieldFormGroup } from '@app/pages/templates/templates.models';
 
 export class FetchTemplateList {
   public static readonly type = '[Templates] Fetch Template List';
@@ -31,7 +31,7 @@ export class SetTemplatesDataViewDisplayType {
 export class CreateTemplate {
   public static readonly type = '[Templates] Create Template';
   constructor(
-    readonly payload: Partial<TemplateDto>,
+    readonly payload: Partial<ReturnType<TemplateFieldFormGroup['getRawValue']>>,
     readonly destroyRef: DestroyRef,
   ) {}
 }
@@ -40,7 +40,7 @@ export class SaveTemplate {
   public static readonly type = '[Templates] Save Template';
   constructor(
     readonly id: number,
-    readonly payload: Partial<TemplateDto>,
+    readonly payload: Partial<ReturnType<TemplateFieldFormGroup['getRawValue']>>,
     readonly destroyRef: DestroyRef,
   ) {}
 }
