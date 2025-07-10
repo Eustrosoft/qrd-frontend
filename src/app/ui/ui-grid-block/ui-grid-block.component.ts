@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
-import { GridAlignSelf, GridDisplay, GridJustifyItems } from '@shared/shared.models';
+import { GridAlignItems, GridAlignSelf, GridDisplay, GridJustifyItems } from '@shared/shared.models';
 
 @Component({
   selector: 'ui-grid-block, *[ui-grid-block]',
@@ -14,6 +14,7 @@ import { GridAlignSelf, GridDisplay, GridJustifyItems } from '@shared/shared.mod
     '[style.grid-template-columns]': 'gridTemplateColumns()',
     '[style.grid-template-rows]': 'gridTemplateRows()',
     '[style.justify-items]': 'gridJustifyItems()',
+    '[style.align-items]': 'gridAlignItems()',
     '[style.align-self]': 'gridAlignSelf()',
   },
 })
@@ -26,5 +27,6 @@ export class UiGridBlockComponent {
   public readonly gridTemplateColumns = input<string>('repeat(4, 1fr)');
   public readonly gridTemplateRows = input<string>('1fr');
   public readonly gridJustifyItems = input<GridJustifyItems>('initial');
+  public readonly gridAlignItems = input<GridAlignItems>('initial');
   public readonly gridAlignSelf = input<GridAlignSelf>('initial');
 }

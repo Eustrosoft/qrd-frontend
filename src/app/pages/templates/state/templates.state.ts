@@ -5,13 +5,15 @@ import { catchError, concatMap, EMPTY, from, Observable, switchMap, tap, throwEr
 import { patch } from '@ngxs/store/operators';
 import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FetchFile, SetFilesDataViewDisplayType, SetSelectedFiles } from '@app/pages/files/state/files.actions';
+import { SetFilesDataViewDisplayType, SetSelectedFiles } from '@app/pages/files/state/files.actions';
 import { Router } from '@angular/router';
 import { TemplatesService } from '@app/pages/templates/services/templates.service';
 import {
+  CreateTemplate,
   DeleteTemplates,
   FetchTemplate,
   FetchTemplateList,
+  SaveTemplate,
   SelectAllTemplates,
   SetSelectedTemplates,
   SetTemplatesDataViewDisplayType,
@@ -32,6 +34,7 @@ export interface TemplatesStateModel {
   isTemplateLoading: boolean;
   template: TemplateDto | null;
   isDeleteInProgress: boolean;
+  isSaveInProgress: boolean;
 }
 
 const defaults: TemplatesStateModel = {
@@ -43,6 +46,7 @@ const defaults: TemplatesStateModel = {
   isTemplateLoading: false,
   template: null,
   isDeleteInProgress: false,
+  isSaveInProgress: false,
 } as const;
 
 const TEMPLATES_STATE_TOKEN: StateToken<TemplatesStateModel> = new StateToken<TemplatesStateModel>('templates');
@@ -89,6 +93,11 @@ export class TemplatesState {
   }
 
   @Selector()
+  public static isSaveInProgress$({ isSaveInProgress }: TemplatesStateModel): boolean {
+    return isSaveInProgress;
+  }
+
+  @Selector()
   public static getTemplate$({ template }: TemplatesStateModel): TemplateDto | null {
     return template;
   }
@@ -118,7 +127,7 @@ export class TemplatesState {
   @Action(FetchTemplate)
   public fetchTemplate(
     { setState }: StateContext<TemplatesStateModel>,
-    { id, destroyRef }: FetchFile,
+    { id, destroyRef }: FetchTemplate,
   ): Observable<TemplateDto> {
     setState(patch({ isTemplateLoading: true }));
     return timer(SKELETON_TIMER).pipe(
@@ -157,6 +166,52 @@ export class TemplatesState {
   ): void {
     setState(patch({ displayType }));
   }
+
+  @Action(CreateTemplate)
+  public createTemplate(
+    { setState }: StateContext<TemplatesStateModel>,
+    { payload, destroyRef }: CreateTemplate,
+  ): Observable<TemplateDto> {
+    setState(patch({ isSaveInProgress: true }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.templatesService.createTemplate(payload)),
+      tap({
+        next: (template) => {
+          this.router.navigate([AppRoutes.templates, template.id, AppRoutes.edit]).then(() => {
+            setState(patch({ isSaveInProgress: false }));
+          });
+        },
+      }),
+      catchError((err) => {
+        setState(patch({ isSaveInProgress: false }));
+        return throwError(() => err);
+      }),
+      takeUntilDestroyed(destroyRef),
+    );
+  }
+
+  @Action(SaveTemplate)
+  public saveTemplate(
+    { setState }: StateContext<TemplatesStateModel>,
+    { id, payload, destroyRef }: SaveTemplate,
+  ): Observable<TemplateDto> {
+    setState(patch({ isSaveInProgress: true }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.templatesService.saveTemplate(id, payload)),
+      tap({
+        next: () => {
+          setState(patch({ isSaveInProgress: false }));
+          this.router.navigate(['../']);
+        },
+      }),
+      catchError((err) => {
+        setState(patch({ isSaveInProgress: false }));
+        return throwError(() => err);
+      }),
+      takeUntilDestroyed(destroyRef),
+    );
+  }
+
   @Action(DeleteTemplates)
   public deleteTemplates(
     { setState, dispatch }: StateContext<TemplatesStateModel>,

@@ -1,5 +1,6 @@
 import { DestroyRef } from '@angular/core';
 import { DataViewDisplayType } from '@shared/shared.models';
+import { TemplateDto } from '@api/templates/template-api.models';
 
 export class FetchTemplateList {
   public static readonly type = '[Templates] Fetch Template List';
@@ -25,6 +26,23 @@ export class SelectAllTemplates {
 export class SetTemplatesDataViewDisplayType {
   public static readonly type = '[Templates] Set Templates Display Type';
   constructor(readonly displayType: DataViewDisplayType) {}
+}
+
+export class CreateTemplate {
+  public static readonly type = '[Templates] Create Template';
+  constructor(
+    readonly payload: Partial<TemplateDto>,
+    readonly destroyRef: DestroyRef,
+  ) {}
+}
+
+export class SaveTemplate {
+  public static readonly type = '[Templates] Save Template';
+  constructor(
+    readonly id: number,
+    readonly payload: Partial<TemplateDto>,
+    readonly destroyRef: DestroyRef,
+  ) {}
 }
 
 export class DeleteTemplates {

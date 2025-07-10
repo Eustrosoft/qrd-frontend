@@ -50,7 +50,7 @@ export const templatesRoutes: Routes = [
       {
         path: `:id/${AppRoutes.edit}`,
         component: TemplateEditComponent,
-        title: RouteTitles.file,
+        title: RouteTitles.template,
       },
     ],
   },
