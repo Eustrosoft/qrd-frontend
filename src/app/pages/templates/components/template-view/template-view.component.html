@@ -1,1 +1,39 @@
-<p>template-view works!</p>
+@if (!selectors.isTemplateLoading()) {
+  <toolbar>
+    <ng-container heading>
+      <h1 ellipsis>{{ selectors.template()?.name | fallback: SharedLocalization.noName }}</h1>
+    </ng-container>
+    <ng-container action-buttons>
+      <a [routerLink]="`../${selectors.template()?.id}/${AppRoutes.edit}`" class="button-md" mat-flat-button>
+        {{ SharedLocalization.edit }}
+      </a>
+      @if (!selectors.isDeleteInProgress()) {
+        <button
+          (click)="actions.deleteTemplates([selectors.template()!.id], destroyRef, false, true)"
+          class="button-md"
+          mat-flat-button
+        >
+          {{ SharedLocalization.delete }}
+        </button>
+      } @else {
+        <ui-skeleton height="40" width="110" />
+      }
+    </ng-container>
+  </toolbar>
+  <ui-flex-block>
+    <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="tab-nav-bar">
+      @for (link of tabLinks; track link.link) {
+        <a [routerLink]="link.link" [active]="rla.isActive" #rla="routerLinkActive" routerLinkActive mat-tab-link>
+          {{ link.title | uppercase }}
+        </a>
+      }
+    </nav>
+  </ui-flex-block>
+  <mat-tab-nav-panel #tabPanel>
+    <router-outlet />
+  </mat-tab-nav-panel>
+} @else {
+  <ui-skeleton height="44" />
+  <ui-skeleton height="48" />
+  <ui-skeleton height="220" />
+}

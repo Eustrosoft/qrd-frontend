@@ -11,7 +11,6 @@ import { AttrListItemComponent } from '@shared/components/attr-list-item/attr-li
   selector: 'qr-card-attrs',
   imports: [CardContainerComponent, UiFlexBlockComponent, AttrListItemComponent],
   templateUrl: './qr-card-attrs.component.html',
-  styleUrl: './qr-card-attrs.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrCardAttrsComponent {

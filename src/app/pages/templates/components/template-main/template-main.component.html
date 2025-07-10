@@ -1,1 +1,34 @@
-<p>template-main works!</p>
+<card-container [hideHeading]="true">
+  <ng-container content>
+    <ui-grid-block [gridTemplateColumns]="infoGridTemplateColumns()">
+      <card-field [heading]="`${SharedLocalization.name}:`">
+        {{ selectors.template()?.name | fallback: SharedLocalization.noName }}
+      </card-field>
+      <card-field [heading]="`${SharedLocalization.description}:`">
+        {{ selectors.template()?.description | fallback: SharedLocalization.noDescription }}
+      </card-field>
+    </ui-grid-block>
+  </ng-container>
+</card-container>
+<card-container>
+  <ng-container heading>
+    <h1>{{ RouteTitles.files }}</h1>
+  </ng-container>
+  <ng-container content>
+    <ui-flex-block flexDirection="column">
+      @for (file of selectors.template()?.files; track file.id) {
+        <file-list-item
+          [fileHref]="`files/${file.id}`"
+          [fileStorageType]="file.fileStorageType"
+          [name]="file?.name ?? ''"
+          [fileSize]="file.fileSize | bytesToSize"
+          [isPublic]="file.isPublic"
+          [isActive]="file.isActive"
+          [updated]="(file.updated | date: 'short') ?? ''"
+        />
+      } @empty {
+        {{ SharedLocalization.noFiles }}
+      }
+    </ui-flex-block>
+  </ng-container>
+</card-container>

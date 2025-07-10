@@ -2,6 +2,5 @@
 
 :host {
   gap: mixins.rem(24);
-  display: flex;
-  flex-direction: column;
+  display: grid;
 }

@@ -1,16 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { DataViewDisplayType } from '@shared/shared.models';
-import { catchError, concatMap, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
+import { catchError, concatMap, EMPTY, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { patch } from '@ngxs/store/operators';
 import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  FetchFile,
-  FetchFileList,
-  SetFilesDataViewDisplayType,
-  SetSelectedFiles,
-} from '@app/pages/files/state/files.actions';
+import { FetchFile, SetFilesDataViewDisplayType, SetSelectedFiles } from '@app/pages/files/state/files.actions';
 import { Router } from '@angular/router';
 import { TemplatesService } from '@app/pages/templates/services/templates.service';
 import {
@@ -22,6 +17,11 @@ import {
   SetTemplatesDataViewDisplayType,
 } from '@app/pages/templates/state/templates.actions';
 import { TemplateDto } from '@api/templates/template-api.models';
+import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
+import { DELETION_DIALOG_DATA } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
 
 export interface TemplatesStateModel {
   displayType: DataViewDisplayType;
@@ -55,6 +55,8 @@ const TEMPLATES_STATE_TOKEN: StateToken<TemplatesStateModel> = new StateToken<Te
 export class TemplatesState {
   private readonly router = inject(Router);
   private readonly templatesService = inject(TemplatesService);
+  private readonly pxToRemPipe = inject(PxToRemPipe);
+  private readonly matDialog = inject(MatDialog);
 
   @Selector()
   public static getDisplayType$({ displayType }: TemplatesStateModel): DataViewDisplayType {
@@ -161,20 +163,37 @@ export class TemplatesState {
     { idList, destroyRef, refreshList, returnToList }: DeleteTemplates,
   ): Observable<void[]> {
     setState(patch({ isDeleteInProgress: true }));
-    return timer(SKELETON_TIMER).pipe(
-      switchMap(() => from(idList).pipe(concatMap((id) => this.templatesService.deleteTemplate(id)))),
-      toArray(),
-      tap({
-        next: () => {
+
+    const matDialogRef = this.matDialog.open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(
+      ConfirmationDialogComponent,
+      {
+        data: DELETION_DIALOG_DATA,
+        width: this.pxToRemPipe.transform('600'),
+      },
+    );
+
+    return matDialogRef.afterClosed().pipe(
+      switchMap((result) => {
+        if (!result) {
           setState(patch({ isDeleteInProgress: false }));
-          dispatch(new SetSelectedFiles([]));
-          if (refreshList) {
-            dispatch(FetchFileList);
-          }
-          if (returnToList) {
-            this.router.navigate(['/', AppRoutes.templates]);
-          }
-        },
+          return EMPTY;
+        }
+        return from(idList).pipe(
+          concatMap((id) => this.templatesService.deleteTemplate(id)),
+          toArray(),
+          tap({
+            next: () => {
+              setState(patch({ isDeleteInProgress: false }));
+              dispatch(new SetSelectedTemplates([]));
+              if (refreshList) {
+                dispatch(FetchTemplateList);
+              }
+              if (returnToList) {
+                this.router.navigate(['/', AppRoutes.templates]);
+              }
+            },
+          }),
+        );
       }),
       takeUntilDestroyed(destroyRef),
       catchError((err) => {
