@@ -25,32 +25,50 @@
       <ui-grid-block gridAlignItems="start" [gridTemplateColumns]="gridTemplateColumns()">
         <mat-form-field class="form-field-lg">
           <mat-label> {{ SharedLocalization.name }} </mat-label>
-          <input matInput />
-          <!--          @if (form.controls.name.touched && form.controls.name.hasError('required')) {-->
-          <!--            <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>-->
-          <!--          }-->
-          <!--          @if (form.controls.name.touched && form.controls.name.hasError('maxlength')) {-->
-          <!--            <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_NAME_LENGTH }}</mat-error>-->
-          <!--          }-->
+          <input [formControl]="form.controls.name" matInput />
+          @if (form.controls.name.touched && form.controls.name.hasError('required')) {
+            <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+          }
+          @if (form.controls.name.touched && form.controls.name.hasError('maxlength')) {
+            <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_NAME_LENGTH }}</mat-error>
+          }
         </mat-form-field>
         <mat-form-field class="form-field-lg">
           <mat-label> {{ SharedLocalization.description }} </mat-label>
-          <textarea matInput></textarea>
-          <!--          @if (form.controls.description.touched && form.controls.description.hasError('required')) {-->
-          <!--            <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>-->
-          <!--          }-->
-          <!--          @if (form.controls.description.touched && form.controls.description.hasError('maxlength')) {-->
-          <!--            <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_DESCRIPTION_LENGTH }}</mat-error>-->
-          <!--          }-->
+          <textarea [formControl]="form.controls.description" matInput></textarea>
+          @if (form.controls.description.touched && form.controls.description.hasError('required')) {
+            <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+          }
+          @if (form.controls.description.touched && form.controls.description.hasError('maxlength')) {
+            <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_DESCRIPTION_LENGTH }}</mat-error>
+          }
         </mat-form-field>
       </ui-grid-block>
     </ng-container>
   </card-container>
-  <card-container>
+  <card-container style="overflow: auto">
     <ng-container heading>
       <h1>{{ RouteTitles.attrs }}</h1>
     </ng-container>
-    <ng-container content> </ng-container>
+    <ng-container content>
+      @for (field of form.controls.fields.controls; track field) {
+        <ui-flex-block flexAlignItems="center">
+          <mat-form-field class="form-field-lg" style="flex: 1">
+            <mat-label> {{ SharedLocalization.name }} </mat-label>
+            <input [formControl]="field.controls.caption" matInput />
+          </mat-form-field>
+          <button class="icon-button-sm" mat-icon-button>
+            <mat-icon class="icon-primary">edit_square</mat-icon>
+          </button>
+          <button (click)="deleteField($index)" class="icon-button-sm" mat-icon-button>
+            <mat-icon class="icon-primary">cancel</mat-icon>
+          </button>
+        </ui-flex-block>
+      }
+      <button (click)="addField()" class="button-md button-secondary" mat-flat-button>
+        {{ SharedLocalization.add }}
+      </button>
+    </ng-container>
   </card-container>
   <card-container>
     <ng-container heading>
@@ -59,6 +77,7 @@
     <ng-container content> </ng-container>
   </card-container>
 } @else {
-  <ui-skeleton height="88" />
-  <ui-skeleton height="280" />
+  <ui-skeleton height="176" />
+  <ui-skeleton height="262" />
+  <ui-skeleton height="512" />
 }
