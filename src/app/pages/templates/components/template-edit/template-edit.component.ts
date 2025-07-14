@@ -25,7 +25,7 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
+import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { TemplatesLocalization } from '@app/pages/templates/templates.constants';
 import { TemplateFieldForm, TemplateFieldFormGroup, TemplateForm } from '@app/pages/templates/templates.models';
@@ -74,7 +74,6 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     FileListItemComponent,
     FileUploadComponent,
     MatProgressSpinner,
-    MatSuffix,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './template-edit.component.html',
