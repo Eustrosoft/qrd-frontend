@@ -1,3 +1,6 @@
+import { FormControl, FormGroup } from '@angular/forms';
+import { FileStorageType } from '@api/files/file-api.models';
+
 export type FlexDirection = 'column' | 'row' | 'column-reverse' | 'row-reverse' | '';
 export type Display = 'flex' | 'inline-flex' | 'inline';
 export type FlexAlignItems =
@@ -76,4 +79,15 @@ export type DictionaryItem = {
   code: string;
   value: string;
   description: string;
+};
+
+export type FileFormGroup = FormGroup<FileForm>;
+export type FileForm = {
+  id: FormControl<number>;
+  fileStorageType: FormControl<FileStorageType>;
+  name: FormControl<string>;
+  fileSize: FormControl<number>;
+  isPublic: FormControl<boolean>;
+  isActive: FormControl<boolean>;
+  updated: FormControl<string>;
 };

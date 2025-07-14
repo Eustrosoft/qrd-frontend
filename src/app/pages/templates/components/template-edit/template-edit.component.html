@@ -55,11 +55,11 @@
     <ng-container content>
       @for (field of form.controls.fields.controls; track field) {
         <ui-flex-block flexAlignItems="center">
-          <mat-form-field class="form-field-lg" style="flex: 1">
+          <mat-form-field class="form-field-lg" style="flex: auto">
             <mat-label> {{ SharedLocalization.name }} </mat-label>
             <input [formControl]="field.controls.caption" matInput />
           </mat-form-field>
-          <button (click)="expandedFieldIndex.set($index)" class="icon-button-sm" mat-icon-button>
+          <button (click)="showAdditionalFields($index)" class="icon-button-sm" mat-icon-button>
             <mat-icon class="icon-primary">edit_square</mat-icon>
           </button>
           <button (click)="deleteField($index)" class="icon-button-sm" mat-icon-button>
@@ -108,7 +108,50 @@
     <ng-container heading>
       <h1>{{ RouteTitles.files }}</h1>
     </ng-container>
-    <ng-container content> </ng-container>
+    <ng-container content>
+      @if (!selectors.isFileBeingAdded()) {
+        <ui-grid-block gridTemplateColumns="repeat(1, 1fr)">
+          @for (file of form.controls.files.controls; track file) {
+            <ui-flex-block>
+              <file-list-item
+                [fileHref]="`files/${file.controls.id.value}`"
+                [fileStorageType]="file.controls.fileStorageType.value"
+                [name]="file.controls.name.value"
+                [fileSize]="file.controls.fileSize.value | bytesToSize"
+                [isPublic]="file.controls.isPublic.value"
+                [isActive]="file.controls.isActive.value"
+                [updated]="(file.controls.updated.value | date: 'short') ?? ''"
+                style="flex: auto"
+              />
+              <button (click)="deleteFile($index)" class="icon-button-sm" mat-icon-button>
+                <mat-icon class="icon-primary">delete_forever</mat-icon>
+              </button>
+            </ui-flex-block>
+          } @empty {
+            {{ SharedLocalization.noFiles }}
+          }
+        </ui-grid-block>
+        <button
+          (click)="isFileSelectorVisible.set(false); isUploadVisible.set(!isUploadVisible())"
+          class="button-md button-secondary"
+          mat-flat-button
+        >
+          {{ FilesLocalization.uploadFile }}
+        </button>
+        @if (isUploadVisible()) {
+          <file-upload (uploadCompleted)="updateForm($event)" />
+        }
+        <button
+          (click)="isUploadVisible.set(false); isFileSelectorVisible.set(!isFileSelectorVisible())"
+          class="button-md button-secondary"
+          mat-flat-button
+        >
+          {{ SharedLocalization.selectExisting }}
+        </button>
+      } @else {
+        <ui-skeleton height="512" />
+      }
+    </ng-container>
   </card-container>
 } @else {
   <ui-skeleton height="176" />

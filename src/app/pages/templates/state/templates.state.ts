@@ -9,6 +9,7 @@ import { SetFilesDataViewDisplayType, SetSelectedFiles } from '@app/pages/files/
 import { Router } from '@angular/router';
 import { TemplatesService } from '@app/pages/templates/services/templates.service';
 import {
+  AddFileToTemplate,
   CreateTemplate,
   DeleteTemplates,
   FetchTemplate,
@@ -35,6 +36,7 @@ export interface TemplatesStateModel {
   template: TemplateDto | null;
   isDeleteInProgress: boolean;
   isSaveInProgress: boolean;
+  isFileBeingAdded: boolean;
 }
 
 const defaults: TemplatesStateModel = {
@@ -47,6 +49,7 @@ const defaults: TemplatesStateModel = {
   template: null,
   isDeleteInProgress: false,
   isSaveInProgress: false,
+  isFileBeingAdded: false,
 } as const;
 
 const TEMPLATES_STATE_TOKEN: StateToken<TemplatesStateModel> = new StateToken<TemplatesStateModel>('templates');
@@ -98,6 +101,11 @@ export class TemplatesState {
   }
 
   @Selector()
+  public static isFileBeingAdded$({ isFileBeingAdded }: TemplatesStateModel): boolean {
+    return isFileBeingAdded;
+  }
+
+  @Selector()
   public static getTemplate$({ template }: TemplatesStateModel): TemplateDto | null {
     return template;
   }
@@ -127,9 +135,11 @@ export class TemplatesState {
   @Action(FetchTemplate)
   public fetchTemplate(
     { setState }: StateContext<TemplatesStateModel>,
-    { id, destroyRef }: FetchTemplate,
+    { id, destroyRef, showLoading }: FetchTemplate,
   ): Observable<TemplateDto> {
-    setState(patch({ isTemplateLoading: true }));
+    if (showLoading) {
+      setState(patch({ isTemplateLoading: true }));
+    }
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.templatesService.getTemplate(id)),
       tap({
@@ -205,6 +215,28 @@ export class TemplatesState {
       }),
       catchError((err) => {
         setState(patch({ isSaveInProgress: false }));
+        return throwError(() => err);
+      }),
+      takeUntilDestroyed(destroyRef),
+    );
+  }
+
+  @Action(AddFileToTemplate)
+  public addFileToTemplate(
+    { setState, dispatch }: StateContext<TemplatesStateModel>,
+    { templateId, fileId, destroyRef }: AddFileToTemplate,
+  ): Observable<void> {
+    setState(patch({ isFileBeingAdded: true }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.templatesService.addFileToTemplate(templateId, { id: fileId })),
+      switchMap(() => dispatch(new FetchTemplate(templateId, destroyRef, false))),
+      tap({
+        next: () => {
+          setState(patch({ isFileBeingAdded: false }));
+        },
+      }),
+      catchError((err) => {
+        setState(patch({ isFileBeingAdded: false }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),

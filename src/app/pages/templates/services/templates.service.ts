@@ -25,6 +25,10 @@ export class TemplatesService {
     return this.http.put<TemplateDto>(`/qrCodeDemo/v1/api/secured/forms/${id}`, payload);
   }
 
+  public addFileToTemplate(templateId: number, fileId: { id: number }): Observable<TemplateDto> {
+    return this.http.put<TemplateDto>(`/qrCodeDemo/v1/api/secured/forms/${templateId}/files/choose`, fileId);
+  }
+
   public deleteTemplate(id: number): Observable<void> {
     return this.http.delete<void>(`/qrCodeDemo/v1/api/secured/forms/${id}`);
   }

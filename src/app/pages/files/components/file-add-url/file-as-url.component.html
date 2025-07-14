@@ -33,7 +33,7 @@
 </mat-form-field>
 <ui-flex-block flexWrap="wrap">
   <mat-slide-toggle [formControl]="form.controls.isPublic" class="slide-toggle">
-    {{ SharedLocalization.isPublic }}
+    {{ SharedLocalization.isPubliclyAvailable }}
   </mat-slide-toggle>
   <mat-slide-toggle [formControl]="form.controls.isActive" class="slide-toggle">
     {{ SharedLocalization.isActive }}
@@ -42,13 +42,15 @@
 <ui-flex-block>
   @if (!fileMetadata()) {
     @if (!selectors.isLoading()) {
-      <button (click)="addFileUrl()" class="button-md" mat-flat-button>{{ SharedLocalization.save }}</button>
+      <button (click)="addFileUrl()" class="button-md button-secondary" mat-flat-button>
+        {{ SharedLocalization.save }}
+      </button>
     } @else {
       <ui-skeleton height="40" width="124" />
     }
   } @else {
     @if (!selectors.isLoading()) {
-      <button (click)="save()" class="button-md" mat-flat-button>{{ SharedLocalization.save }}</button>
+      <button (click)="save()" class="button-md button-secondary" mat-flat-button>{{ SharedLocalization.save }}</button>
     } @else {
       <ui-skeleton height="40" width="124" />
     }

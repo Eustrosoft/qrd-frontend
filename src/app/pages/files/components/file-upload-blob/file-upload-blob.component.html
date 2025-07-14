@@ -59,7 +59,7 @@
 }
 <ui-flex-block flexWrap="wrap">
   <mat-slide-toggle [formControl]="form.controls.isPublic" class="slide-toggle">
-    {{ SharedLocalization.isPublic }}
+    {{ SharedLocalization.isPubliclyAvailable }}
   </mat-slide-toggle>
   <mat-slide-toggle [formControl]="form.controls.isActive" class="slide-toggle">
     {{ SharedLocalization.isActive }}
@@ -68,10 +68,14 @@
 <ui-flex-block>
   @if (!selectors.uploadState()?.isLoading) {
     @if (!fileMetadata()) {
-      <button (click)="uploadFile()" class="button-md" mat-flat-button>{{ FilesLocalization.upload }}</button>
+      <button (click)="uploadFile()" class="button-md button-secondary" mat-flat-button>
+        {{ FilesLocalization.upload }}
+      </button>
     } @else {
       @if (!selectors.isLoading()) {
-        <button (click)="updateMetadata()" class="button-md" mat-flat-button>{{ SharedLocalization.save }}</button>
+        <button (click)="updateMetadata()" class="button-md button-secondary" mat-flat-button>
+          {{ SharedLocalization.save }}
+        </button>
       } @else {
         <ui-skeleton height="40" width="124" />
       }

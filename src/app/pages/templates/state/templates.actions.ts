@@ -11,6 +11,7 @@ export class FetchTemplate {
   constructor(
     readonly id: number,
     readonly destroyRef: DestroyRef,
+    readonly showLoading: boolean = true,
   ) {}
 }
 
@@ -41,6 +42,15 @@ export class SaveTemplate {
   constructor(
     readonly id: number,
     readonly payload: Partial<ReturnType<TemplateFieldFormGroup['getRawValue']>>,
+    readonly destroyRef: DestroyRef,
+  ) {}
+}
+
+export class AddFileToTemplate {
+  public static readonly type = '[Templates] Add File To Template';
+  constructor(
+    readonly templateId: number,
+    readonly fileId: number,
     readonly destroyRef: DestroyRef,
   ) {}
 }
