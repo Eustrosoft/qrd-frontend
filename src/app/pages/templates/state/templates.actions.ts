@@ -55,6 +55,11 @@ export class AddFileToTemplate {
   ) {}
 }
 
+export class FetchFileList {
+  public static readonly type = '[Templates] Fetch File List';
+  constructor(readonly destroyRef: DestroyRef) {}
+}
+
 export class DeleteTemplates {
   public static readonly type = '[Templates] Delete Templates';
   constructor(

@@ -56,6 +56,8 @@ export const SharedLocalization = {
   add: $localize`:@@shared.add:Add`,
   value: $localize`:@@shared.value:Value`,
   selectExisting: $localize`:@@shared.selectExisting:Select existing`,
+  pickAFile: $localize`:@@shared.pickAFile:Pick a file`,
+  loading: $localize`:@@shared.loading:Loading...`,
   dev: $localize`:@@shared.dev:Under development`,
 } as const;
 

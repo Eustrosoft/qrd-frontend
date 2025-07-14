@@ -17,6 +17,7 @@ import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import {
   AddFileToTemplate,
   CreateTemplate,
+  FetchFileList,
   FetchTemplate,
   SaveTemplate,
 } from '@app/pages/templates/state/templates.actions';
@@ -24,7 +25,7 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { TemplatesLocalization } from '@app/pages/templates/templates.constants';
 import { TemplateFieldForm, TemplateFieldFormGroup, TemplateForm } from '@app/pages/templates/templates.models';
@@ -46,6 +47,7 @@ import { FileListItemComponent } from '@shared/components/file-list-item/file-li
 import { FileUploadComponent } from '@app/pages/files/components/file-upload/file-upload.component';
 import { UploadState } from '@app/pages/files/files.models';
 import { FileStorageType } from '@api/files/file-api.models';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'template-edit',
@@ -71,6 +73,8 @@ import { FileStorageType } from '@api/files/file-api.models';
     DatePipe,
     FileListItemComponent,
     FileUploadComponent,
+    MatProgressSpinner,
+    MatSuffix,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './template-edit.component.html',
@@ -88,14 +92,17 @@ export class TemplateEditComponent implements OnInit {
     isTemplateLoading: TemplatesState.isTemplateLoading$,
     isSaveInProgress: TemplatesState.isSaveInProgress$,
     isFileBeingAdded: TemplatesState.isFileBeingAdded$,
+    isFileListLoading: TemplatesState.isFileListLoading$,
     template: TemplatesState.getTemplate$,
     inputType: DictionaryRegistryState.getDictionary$<DictionaryItem>('INPUT_TYPE'),
+    fileList: TemplatesState.getFileList$,
   });
   protected readonly actions = createDispatchMap({
     fetchTemplate: FetchTemplate,
     createTemplate: CreateTemplate,
     saveTemplate: SaveTemplate,
     addFileToTemplate: AddFileToTemplate,
+    fetchFileList: FetchFileList,
     fetchDictionaryByName: FetchDictionaryByName,
   });
 
@@ -222,10 +229,28 @@ export class TemplateEditComponent implements OnInit {
     this.expandedFieldIndex.set(index);
   }
 
-  protected updateForm(state: UploadState | null): void {
+  protected showFileUpload(): void {
+    this.isFileSelectorVisible.set(false);
+    this.isUploadVisible.set(!this.isUploadVisible());
+  }
+
+  protected showFileSelection(): void {
+    this.isUploadVisible.set(false);
+    this.isFileSelectorVisible.set(!this.isFileSelectorVisible());
+    this.actions.fetchFileList(this.destroyRef);
+  }
+
+  protected addFileToTemplate(state: UploadState | null): void {
     this.isUploadVisible.set(false);
     if (state?.fileId && this.templateId) {
       this.actions.addFileToTemplate(+this.templateId, state.fileId, this.destroyRef);
+    }
+  }
+
+  protected addExistingFilesToTemplate(fileIdList: number[]): void {
+    this.isFileSelectorVisible.set(false);
+    for (const fileId of fileIdList) {
+      this.actions.addFileToTemplate(+this.templateId!, fileId, this.destroyRef);
     }
   }
 }

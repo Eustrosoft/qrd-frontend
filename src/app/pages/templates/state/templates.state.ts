@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { DataViewDisplayType } from '@shared/shared.models';
-import { catchError, concatMap, EMPTY, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
+import { catchError, concatMap, EMPTY, from, Observable, of, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { patch } from '@ngxs/store/operators';
 import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -12,6 +12,7 @@ import {
   AddFileToTemplate,
   CreateTemplate,
   DeleteTemplates,
+  FetchFileList,
   FetchTemplate,
   FetchTemplateList,
   SaveTemplate,
@@ -25,6 +26,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
 import { DELETION_DIALOG_DATA } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
+import { FileDto } from '@api/files/file-api.models';
+import { FilesService } from '@app/pages/files/services/files.service';
 
 export interface TemplatesStateModel {
   displayType: DataViewDisplayType;
@@ -37,6 +40,8 @@ export interface TemplatesStateModel {
   isDeleteInProgress: boolean;
   isSaveInProgress: boolean;
   isFileBeingAdded: boolean;
+  isFileListLoading: boolean;
+  fileList: FileDto[];
 }
 
 const defaults: TemplatesStateModel = {
@@ -50,6 +55,8 @@ const defaults: TemplatesStateModel = {
   isDeleteInProgress: false,
   isSaveInProgress: false,
   isFileBeingAdded: false,
+  isFileListLoading: false,
+  fileList: [],
 } as const;
 
 const TEMPLATES_STATE_TOKEN: StateToken<TemplatesStateModel> = new StateToken<TemplatesStateModel>('templates');
@@ -62,6 +69,7 @@ const TEMPLATES_STATE_TOKEN: StateToken<TemplatesStateModel> = new StateToken<Te
 export class TemplatesState {
   private readonly router = inject(Router);
   private readonly templatesService = inject(TemplatesService);
+  private readonly filesService = inject(FilesService);
   private readonly pxToRemPipe = inject(PxToRemPipe);
   private readonly matDialog = inject(MatDialog);
 
@@ -106,6 +114,11 @@ export class TemplatesState {
   }
 
   @Selector()
+  public static isFileListLoading$({ isFileListLoading }: TemplatesStateModel): boolean {
+    return isFileListLoading;
+  }
+
+  @Selector()
   public static getTemplate$({ template }: TemplatesStateModel): TemplateDto | null {
     return template;
   }
@@ -113,6 +126,11 @@ export class TemplatesState {
   @Selector()
   public static getSelectedTemplateList$({ selectedTemplateList }: TemplatesStateModel): number[] {
     return selectedTemplateList;
+  }
+
+  @Selector()
+  public static getFileList$({ fileList }: TemplatesStateModel): FileDto[] {
+    return fileList;
   }
 
   @Action(FetchTemplateList)
@@ -237,6 +255,32 @@ export class TemplatesState {
       }),
       catchError((err) => {
         setState(patch({ isFileBeingAdded: false }));
+        return throwError(() => err);
+      }),
+      takeUntilDestroyed(destroyRef),
+    );
+  }
+
+  @Action(FetchFileList)
+  public fetchFileList(
+    { getState, setState }: StateContext<TemplatesStateModel>,
+    { destroyRef }: FetchFileList,
+  ): Observable<FileDto[]> {
+    const { fileList } = getState();
+    if (fileList.length) {
+      return of(fileList);
+    }
+
+    setState(patch({ isFileListLoading: true }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.filesService.getFileList()),
+      tap({
+        next: (fileList) => {
+          setState(patch({ fileList, isFileListLoading: false }));
+        },
+      }),
+      catchError((err) => {
+        setState(patch({ isFileListLoading: false }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),
