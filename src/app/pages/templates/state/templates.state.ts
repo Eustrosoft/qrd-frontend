@@ -3,7 +3,7 @@ import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { DataViewDisplayType } from '@shared/shared.models';
 import { catchError, concatMap, EMPTY, from, Observable, of, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { patch } from '@ngxs/store/operators';
-import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, SKELETON_TIMER } from '@app/app.constants';
+import { AppRoutes, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SetFilesDataViewDisplayType, SetSelectedFiles } from '@app/pages/files/state/files.actions';
 import { Router } from '@angular/router';
@@ -15,6 +15,7 @@ import {
   FetchFileList,
   FetchTemplate,
   FetchTemplateList,
+  ResetTemplatesState,
   SaveTemplate,
   SelectAllTemplates,
   SetSelectedTemplates,
@@ -28,6 +29,7 @@ import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/c
 import { DELETION_DIALOG_DATA } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
 import { FileDto } from '@api/files/file-api.models';
 import { FilesService } from '@app/pages/files/services/files.service';
+import { DEFAULT_TEMPLATE_STATE } from '@app/pages/templates/templates.constants';
 
 export interface TemplatesStateModel {
   displayType: DataViewDisplayType;
@@ -44,26 +46,11 @@ export interface TemplatesStateModel {
   fileList: FileDto[];
 }
 
-const defaults: TemplatesStateModel = {
-  displayType: 'list',
-  isTemplateListLoading: false,
-  templateListSkeletonLoaders: DEFAULT_ITEMS_PER_PAGE,
-  templateList: [],
-  selectedTemplateList: [],
-  isTemplateLoading: false,
-  template: null,
-  isDeleteInProgress: false,
-  isSaveInProgress: false,
-  isFileBeingAdded: false,
-  isFileListLoading: false,
-  fileList: [],
-} as const;
-
 const TEMPLATES_STATE_TOKEN: StateToken<TemplatesStateModel> = new StateToken<TemplatesStateModel>('templates');
 
 @State<TemplatesStateModel>({
   name: TEMPLATES_STATE_TOKEN,
-  defaults,
+  defaults: DEFAULT_TEMPLATE_STATE,
 })
 @Injectable()
 export class TemplatesState {
@@ -332,5 +319,10 @@ export class TemplatesState {
         return throwError(() => err);
       }),
     );
+  }
+
+  @Action(ResetTemplatesState)
+  public resetTemplatesState({ setState }: StateContext<TemplatesStateModel>): void {
+    setState(DEFAULT_TEMPLATE_STATE);
   }
 }

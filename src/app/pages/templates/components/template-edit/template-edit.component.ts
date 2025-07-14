@@ -5,6 +5,7 @@ import {
   DestroyRef,
   effect,
   inject,
+  OnDestroy,
   OnInit,
   signal,
 } from '@angular/core';
@@ -19,6 +20,7 @@ import {
   CreateTemplate,
   FetchFileList,
   FetchTemplate,
+  ResetTemplatesState,
   SaveTemplate,
 } from '@app/pages/templates/state/templates.actions';
 import { MatButton, MatIconButton } from '@angular/material/button';
@@ -80,7 +82,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
   styleUrl: './template-edit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TemplateEditComponent implements OnInit {
+export class TemplateEditComponent implements OnInit, OnDestroy {
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -103,6 +105,7 @@ export class TemplateEditComponent implements OnInit {
     addFileToTemplate: AddFileToTemplate,
     fetchFileList: FetchFileList,
     fetchDictionaryByName: FetchDictionaryByName,
+    resetTemplatesState: ResetTemplatesState,
   });
 
   protected readonly gridTemplateColumns = computed<string>(() => {
@@ -152,6 +155,10 @@ export class TemplateEditComponent implements OnInit {
       this.actions.fetchTemplate(+this.templateId, this.destroyRef);
     }
     this.actions.fetchDictionaryByName('INPUT_TYPE', this.destroyRef);
+  }
+
+  public ngOnDestroy(): void {
+    this.actions.resetTemplatesState();
   }
 
   protected saveData(): void {

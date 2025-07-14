@@ -69,3 +69,7 @@ export class DeleteTemplates {
     readonly returnToList: boolean = false,
   ) {}
 }
+
+export class ResetTemplatesState {
+  public static readonly type = '[Templates] Reset Templates State';
+}
