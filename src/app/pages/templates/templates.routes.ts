@@ -8,6 +8,7 @@ import { TemplateViewComponent } from '@app/pages/templates/components/template-
 import { TemplateMainComponent } from '@app/pages/templates/components/template-main/template-main.component';
 import { TemplateAttrsComponent } from '@app/pages/templates/components/template-attrs/template-attrs.component';
 import { TemplateUsagesComponent } from '@app/pages/templates/components/template-usages/template-usages.component';
+import { unsavedDataGuard } from '@shared/guards/unsaved-data.guard';
 
 export const templatesRoutes: Routes = [
   {
@@ -21,6 +22,7 @@ export const templatesRoutes: Routes = [
       {
         path: AppRoutes.new,
         component: TemplateEditComponent,
+        canDeactivate: [unsavedDataGuard<TemplateEditComponent>()],
         title: RouteTitles.template,
       },
       {
@@ -50,6 +52,7 @@ export const templatesRoutes: Routes = [
       {
         path: `:id/${AppRoutes.edit}`,
         component: TemplateEditComponent,
+        canDeactivate: [unsavedDataGuard<TemplateEditComponent>()],
         title: RouteTitles.template,
       },
     ],

@@ -21,7 +21,7 @@ export class JsonErrorHandlerStrategy implements ErrorHandlerStrategy {
     })) ?? [UnknownBackendError];
     this.matSnackBar.openFromComponent<ErrorMessageSnackbarComponent, BackendError[]>(ErrorMessageSnackbarComponent, {
       data: errors,
-      panelClass: 'error-message-snackbar-panel',
+      panelClass: 'snackbar-panel',
     });
     return throwError(() => err);
   }

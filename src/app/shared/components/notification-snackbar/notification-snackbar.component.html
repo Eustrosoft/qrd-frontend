@@ -1,0 +1,12 @@
+<mat-icon [class]="`icon-md ${data.iconClass}`">{{ data.icon }}</mat-icon>
+<ui-grid-block gridTemplateColumns="repeat(1, 1fr)" gridAlignItems="center" rowGapSize="8">
+  <p>{{ data.title }}</p>
+  @if (data.subtitle) {
+    <p>{{ data.subtitle }}</p>
+  }
+</ui-grid-block>
+@if (!data.hideCloseButton) {
+  <button (click)="matSnackBarRef.dismiss()" class="icon-button-sm" mat-icon-button>
+    <mat-icon class="icon-primary">close</mat-icon>
+  </button>
+}

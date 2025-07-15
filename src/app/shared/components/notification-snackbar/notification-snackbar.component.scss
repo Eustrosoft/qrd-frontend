@@ -1,0 +1,13 @@
+@use '@angular/material' as mat;
+@use 'styles/mixins' as mixins;
+
+:host {
+  gap: mixins.rem(8);
+  display: grid;
+  align-items: flex-start;
+  grid-template-columns: auto 1fr auto;
+
+  ui-grid-block {
+    min-height: mixins.rem(40);
+  }
+}

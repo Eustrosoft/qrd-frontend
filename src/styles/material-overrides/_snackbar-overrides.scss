@@ -2,10 +2,6 @@
 @use 'styles/mixins' as mixins;
 
 .snackbar-panel {
-  white-space: pre-line;
-}
-
-.error-message-snackbar-panel {
   @include mat.snack-bar-overrides(
     (
       container-shape: 12px,
@@ -13,4 +9,6 @@
       supporting-text-color: var(--mat-sys-on-surface-variant),
     )
   );
+
+  white-space: pre-line;
 }

@@ -10,7 +10,7 @@ import {
   signal,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { createDispatchMap, createSelectMap } from '@ngxs/store';
+import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
@@ -50,6 +50,8 @@ import { FileUploadComponent } from '@app/pages/files/components/file-upload/fil
 import { UploadState } from '@app/pages/files/files.models';
 import { FileStorageType } from '@api/files/file-api.models';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
+import { map, merge, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'template-edit',
@@ -83,10 +85,11 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
   styleUrl: './template-edit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TemplateEditComponent implements OnInit, OnDestroy {
+export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDeactivate {
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly actions$ = inject(Actions);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly templateId = this.activatedRoute.snapshot.paramMap.get('id');
 
@@ -130,8 +133,6 @@ export class TemplateEditComponent implements OnInit, OnDestroy {
     files: this.fb.nonNullable.array<FileFormGroup>([]),
   });
 
-  // TODO canDeactivate()
-
   protected readonly templateEff = effect(() => {
     const template = this.selectors.template();
     this.form.patchValue({
@@ -162,6 +163,36 @@ export class TemplateEditComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.actions.resetTemplatesState();
+  }
+
+  public isTouched(): boolean {
+    return this.form.touched;
+  }
+
+  public canDeactivate(isConfirmed?: boolean): Observable<boolean> {
+    if (isConfirmed === undefined) {
+      return of(false);
+    }
+
+    if (!this.form.touched) {
+      return of(true);
+    }
+
+    if (isConfirmed) {
+      this.actions.saveTemplate(+this.templateId!, this.form.getRawValue(), this.destroyRef);
+      return merge(
+        this.actions$.pipe(
+          ofActionSuccessful(SaveTemplate),
+          map(() => true),
+        ),
+        this.actions$.pipe(
+          ofActionErrored(SaveTemplate),
+          map(() => false),
+        ),
+      );
+    }
+
+    return of(true);
   }
 
   protected saveData(): void {

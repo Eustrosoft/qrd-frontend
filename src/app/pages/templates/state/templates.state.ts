@@ -30,6 +30,8 @@ import { DELETION_DIALOG_DATA } from '@shared/components/confirmation-dialog/con
 import { FileDto } from '@api/files/file-api.models';
 import { FilesService } from '@app/pages/files/services/files.service';
 import { DEFAULT_TEMPLATE_STATE } from '@app/pages/templates/templates.constants';
+import { SnackbarService } from '@shared/service/snackbar.service';
+import { NOTIFICATION_SNACKBAR_LOCALIZATION } from '@shared/components/notification-snackbar/notification-snackbar.constants';
 
 export interface TemplatesStateModel {
   displayType: DataViewDisplayType;
@@ -59,6 +61,7 @@ export class TemplatesState {
   private readonly filesService = inject(FilesService);
   private readonly pxToRemPipe = inject(PxToRemPipe);
   private readonly matDialog = inject(MatDialog);
+  private readonly snackbarService = inject(SnackbarService);
 
   @Selector()
   public static getDisplayType$({ displayType }: TemplatesStateModel): DataViewDisplayType {
@@ -215,10 +218,12 @@ export class TemplatesState {
       switchMap(() => this.templatesService.saveTemplate(id, { ...payload, id })),
       tap({
         next: () => {
+          this.snackbarService.success(NOTIFICATION_SNACKBAR_LOCALIZATION.saved);
           setState(patch({ isSaveInProgress: false }));
         },
       }),
       catchError((err) => {
+        this.snackbarService.danger(NOTIFICATION_SNACKBAR_LOCALIZATION.errOnSave);
         setState(patch({ isSaveInProgress: false }));
         return throwError(() => err);
       }),

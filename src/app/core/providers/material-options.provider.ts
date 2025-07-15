@@ -7,6 +7,7 @@ import { MAT_CHECKBOX_DEFAULT_OPTIONS } from '@angular/material/checkbox';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS } from '@angular/material/slide-toggle';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
+import { DEFAULT_SNACKBAR_DURATION } from '@core/core.constants';
 
 export function provideMaterialConfig(): Provider[] {
   return [
@@ -29,7 +30,7 @@ export function provideMaterialConfig(): Provider[] {
     provideMatConfigValue(MAT_SNACK_BAR_DEFAULT_OPTIONS, {
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      duration: 7000,
+      duration: DEFAULT_SNACKBAR_DURATION,
       panelClass: 'snackbar-panel',
     }),
     provideMatConfigValue(MAT_SLIDE_TOGGLE_DEFAULT_OPTIONS, { hideIcon: true }),

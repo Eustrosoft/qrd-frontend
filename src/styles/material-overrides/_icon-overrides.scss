@@ -81,3 +81,11 @@
     )
   );
 }
+
+.icon-success {
+  @include mat.icon-overrides(
+    (
+      color: var(--mat-extended-success-color),
+    )
+  );
+}
