@@ -42,7 +42,7 @@
 <ui-flex-block>
   @if (!fileMetadata()) {
     @if (!selectors.isLoading()) {
-      <button (click)="addFileUrl()" class="button-md button-secondary" mat-flat-button>
+      <button (click)="addFileUrl()" class="button-lg button-secondary" mat-flat-button>
         {{ SharedLocalization.save }}
       </button>
     } @else {
@@ -50,7 +50,7 @@
     }
   } @else {
     @if (!selectors.isLoading()) {
-      <button (click)="save()" class="button-md button-secondary" mat-flat-button>{{ SharedLocalization.save }}</button>
+      <button (click)="save()" class="button-lg button-secondary" mat-flat-button>{{ SharedLocalization.save }}</button>
     } @else {
       <ui-skeleton height="40" width="124" />
     }

@@ -25,7 +25,7 @@
       <button
         (click)="fileInput.click()"
         (blur)="form.controls.file.markAsTouched()"
-        class="button-md button-secondary"
+        class="button-lg button-secondary"
         mat-flat-button
       >
         {{ FilesLocalization.selectFile }}
@@ -68,12 +68,12 @@
 <ui-flex-block>
   @if (!selectors.uploadState()?.isLoading) {
     @if (!fileMetadata()) {
-      <button (click)="uploadFile()" class="button-md button-secondary" mat-flat-button>
+      <button (click)="uploadFile()" class="button-lg button-secondary" mat-flat-button>
         {{ FilesLocalization.upload }}
       </button>
     } @else {
       @if (!selectors.isLoading()) {
-        <button (click)="updateMetadata()" class="button-md button-secondary" mat-flat-button>
+        <button (click)="updateMetadata()" class="button-lg button-secondary" mat-flat-button>
           {{ SharedLocalization.save }}
         </button>
       } @else {

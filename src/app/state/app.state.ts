@@ -1,6 +1,6 @@
 import { DOCUMENT, inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
-import { HtmlLoaderService } from '@shared/service/html-loader.service';
+import { HtmlRendererService } from '@shared/service/html-renderer.service';
 import { LocalStorageService } from '@shared/service/local-storage.service';
 import { Locale, Theme, ThemeContrast } from '@app/app.models';
 import { SetLocale, SetTheme } from '@app/state/app.actions';
@@ -30,7 +30,7 @@ const APP_STATE_TOKEN: StateToken<AppStateModel> = new StateToken<AppStateModel>
 })
 @Injectable()
 export class AppState {
-  private readonly htmlLoaderService = inject(HtmlLoaderService);
+  private readonly htmlLoaderService = inject(HtmlRendererService);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly window = inject(WINDOW);
   private readonly document = inject(DOCUMENT);

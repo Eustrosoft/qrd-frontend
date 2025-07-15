@@ -124,7 +124,7 @@
                 style="flex: auto"
               />
               <button (click)="deleteFile($index)" class="icon-button-sm" mat-icon-button>
-                <mat-icon class="icon-primary">delete_forever</mat-icon>
+                <mat-icon class="icon-primary">link_off</mat-icon>
               </button>
             </ui-flex-block>
           } @empty {
@@ -168,12 +168,21 @@
               class="button-lg button-secondary"
               mat-flat-button
             >
-              {{ SharedLocalization.save }}
+              {{ SharedLocalization.attach }}
             </button>
           </ui-grid-block>
         }
       } @else {
         <ui-skeleton height="512" />
+      }
+      @if (isSmallScreen()) {
+        @if (!selectors.isSaveInProgress()) {
+          <button (click)="saveData()" class="fab-lg fab-primary-container save-fab-btn" mat-fab>
+            <mat-icon class="icon-primary">save</mat-icon>
+          </button>
+        } @else {
+          <ui-skeleton height="56" width="56" borderRadius="50%" class="save-fab-btn" />
+        }
       }
     </ng-container>
   </card-container>

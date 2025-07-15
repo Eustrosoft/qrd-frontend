@@ -16,7 +16,7 @@
     <button
       [matTooltip]="FileStorageTypeMap.get(fileStorageType())?.text ?? ''"
       matTooltipPosition="above"
-      class="mini-fab-icon-primary-button-circle-sm"
+      class="mini-fab-sm mini-fab-primary"
       tabIndex="-1"
       mat-mini-fab
     >
@@ -27,7 +27,7 @@
     <button
       [matTooltip]="isPublic() ? SharedLocalization.isPubliclyAvailable : SharedLocalization.nonPubliclyAvailable"
       matTooltipPosition="above"
-      class="mini-fab-icon-primary-button-circle-sm"
+      class="mini-fab-sm mini-fab-primary"
       tabIndex="-1"
       mat-mini-fab
     >
@@ -38,7 +38,7 @@
     <button
       [matTooltip]="isActive() ? SharedLocalization.isActive : SharedLocalization.isInactive"
       matTooltipPosition="above"
-      class="mini-fab-icon-primary-button-circle-sm"
+      class="mini-fab-sm mini-fab-primary"
       tabIndex="-1"
       mat-mini-fab
     >

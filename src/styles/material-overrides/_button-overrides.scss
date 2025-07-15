@@ -110,7 +110,7 @@
   min-width: auto !important;
 }
 
-.mini-fab-icon-primary-button-circle-sm {
+.mini-fab-sm {
   @include mat.fab-overrides(
     (
       small-container-color: var(--mat-sys-primary),
@@ -126,36 +126,37 @@
   height: 32px !important;
 }
 
-.mini-fab-icon-primary-button-circle-md {
+.mini-fab-md {
+  @include mat.fab-overrides(
+    (
+      small-container-shape: 999px,
+      small-container-elevation-shadow: none,
+      small-pressed-container-elevation-shadow: none,
+      small-hover-container-elevation-shadow: none,
+      small-focus-container-elevation-shadow: none,
+    )
+  );
+}
+
+.mini-fab-primary {
   @include mat.fab-overrides(
     (
       small-container-color: var(--mat-sys-primary),
-      small-container-shape: 999px,
-      small-container-elevation-shadow: none,
-      small-pressed-container-elevation-shadow: none,
-      small-hover-container-elevation-shadow: none,
-      small-focus-container-elevation-shadow: none,
     )
   );
 }
 
-.mini-fab-icon-secondary-button-circle-md {
+.mini-fab-secondary {
   @include mat.fab-overrides(
     (
       small-container-color: var(--mat-sys-secondary),
-      small-container-shape: 999px,
-      small-container-elevation-shadow: none,
-      small-pressed-container-elevation-shadow: none,
-      small-hover-container-elevation-shadow: none,
-      small-focus-container-elevation-shadow: none,
     )
   );
 }
 
-.fab-icon-secondary-button-circle {
+.fab-md {
   @include mat.fab-overrides(
     (
-      container-color: var(--mat-sys-secondary),
       container-shape: 999px,
       container-elevation-shadow: none,
       pressed-container-elevation-shadow: none,
@@ -166,6 +167,45 @@
 
   width: 48px !important;
   height: 48px !important;
+}
+
+.fab-lg {
+  @include mat.fab-overrides(
+    (
+      container-shape: 999px,
+      container-elevation-shadow: none,
+      pressed-container-elevation-shadow: none,
+      hover-container-elevation-shadow: none,
+      focus-container-elevation-shadow: none,
+    )
+  );
+
+  width: 56px !important;
+  height: 56px !important;
+}
+
+.fab-secondary {
+  @include mat.fab-overrides(
+    (
+      container-color: var(--mat-sys-secondary),
+    )
+  );
+}
+
+.fab-tertiary {
+  @include mat.fab-overrides(
+    (
+      container-color: var(--mat-sys-tertiary),
+    )
+  );
+}
+
+.fab-primary-container {
+  @include mat.fab-overrides(
+    (
+      container-color: var(--mat-sys-primary-container),
+    )
+  );
 }
 
 .fab-icon-primary-button-xxxl {

@@ -1,10 +1,5 @@
 <ui-flex-block flexAlignItems="center" overflow="hidden" flexJustifyContent="flex-start" flex="auto">
-  <a
-    [routerLink]="navigateTo()"
-    [relativeTo]="activatedRoute"
-    class="mini-fab-icon-primary-button-circle-md"
-    mat-mini-fab
-  >
+  <a [routerLink]="navigateTo()" [relativeTo]="activatedRoute" class="mini-fab-md mini-fab-primary" mat-mini-fab>
     <mat-icon class="icon-md icon-on-secondary">chevron_left</mat-icon>
   </a>
   <ng-content select="[heading]" />

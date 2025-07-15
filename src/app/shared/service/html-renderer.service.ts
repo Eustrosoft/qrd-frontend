@@ -4,7 +4,7 @@ import { RENDERER2 } from '@cdk/tokens/renderer.token';
 @Injectable({
   providedIn: 'root',
 })
-export class HtmlLoaderService {
+export class HtmlRendererService {
   private readonly document: Document = inject(DOCUMENT);
   private readonly renderer: Renderer2 = inject(RENDERER2);
 

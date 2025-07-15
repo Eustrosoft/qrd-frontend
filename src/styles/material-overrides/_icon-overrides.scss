@@ -58,6 +58,22 @@
   );
 }
 
+.icon-tertiary {
+  @include mat.icon-overrides(
+    (
+      color: var(--mat-sys-tertiary),
+    )
+  );
+}
+
+.icon-on-tertiary {
+  @include mat.icon-overrides(
+    (
+      color: var(--mat-sys-on-tertiary),
+    )
+  );
+}
+
 .icon-error {
   @include mat.icon-overrides(
     (

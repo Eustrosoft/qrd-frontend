@@ -10,6 +10,10 @@
       unselected-pressed-handle-horizontal-margin: 0 8px,
       selected-pressed-handle-horizontal-margin: 0 28px,
       state-layer-size: 0,
+      selected-track-color: var(--mat-sys-secondary),
+      selected-focus-track-color: var(--mat-sys-secondary),
+      selected-hover-track-color: var(--mat-sys-secondary),
+      selected-pressed-track-color: var(--mat-sys-secondary),
     )
   );
 }

@@ -23,7 +23,7 @@ import {
   ResetTemplatesState,
   SaveTemplate,
 } from '@app/pages/templates/state/templates.actions';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -76,6 +76,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     FileListItemComponent,
     FileUploadComponent,
     MatProgressSpinner,
+    MatFabButton,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './template-edit.component.html',
@@ -128,6 +129,8 @@ export class TemplateEditComponent implements OnInit, OnDestroy {
     fields: this.fb.nonNullable.array<TemplateFieldFormGroup>([]),
     files: this.fb.nonNullable.array<FileFormGroup>([]),
   });
+
+  // TODO canDeactivate()
 
   protected readonly templateEff = effect(() => {
     const template = this.selectors.template();
