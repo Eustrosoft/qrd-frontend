@@ -52,6 +52,7 @@ import { FileStorageType } from '@api/files/file-api.models';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
 import { map, merge, Observable, of } from 'rxjs';
+import { ErrorsLocalization } from '@modules/error/error.constants';
 
 @Component({
   selector: 'template-edit',
@@ -87,9 +88,9 @@ import { map, merge, Observable, of } from 'rxjs';
 })
 export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDeactivate {
   private readonly fb = inject(FormBuilder);
-  private readonly destroyRef = inject(DestroyRef);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly actions$ = inject(Actions);
+  protected readonly destroyRef = inject(DestroyRef);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly templateId = this.activatedRoute.snapshot.paramMap.get('id');
 
@@ -97,10 +98,9 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     isTemplateLoading: TemplatesState.isTemplateLoading$,
     isSaveInProgress: TemplatesState.isSaveInProgress$,
     isFileBeingAdded: TemplatesState.isFileBeingAdded$,
-    isFileListLoading: TemplatesState.isFileListLoading$,
     template: TemplatesState.getTemplate$,
     inputType: DictionaryRegistryState.getDictionary$<DictionaryItem>('INPUT_TYPE'),
-    fileList: TemplatesState.getFileList$,
+    filesState: TemplatesState.getFilesState$,
   });
   protected readonly actions = createDispatchMap({
     fetchTemplate: FetchTemplate,
@@ -151,6 +151,7 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
   protected readonly TemplatesLocalization = TemplatesLocalization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly FilesLocalization = FilesLocalization;
+  protected readonly ErrorsLocalization = ErrorsLocalization;
   protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
   protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
 
@@ -165,6 +166,8 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     this.actions.resetTemplatesState();
   }
 
+  // TODO Implement CanComponentDeactivate in FileEdit
+  // TODO Add snackbars notification to every save and delete call
   public isTouched(): boolean {
     return this.form.touched;
   }

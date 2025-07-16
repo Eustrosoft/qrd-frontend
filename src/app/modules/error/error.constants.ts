@@ -14,7 +14,27 @@ export const ErrorsLocalization = {
   errorCode: $localize`:@@errors.errorCode:Error code`,
   errorLoadingPreview: $localize`:@@errors.errorLoadingPreview:Error loading preview`,
   errorUploadingFile: $localize`:@@errors.errorUploadingFile:Error during uploading`,
+  errorDownloadingFile: $localize`:@@errors.errorDownloadingFile:Error during downloading`,
+  errorAddingFileUrl: $localize`:@@errors.errorAddingFileUrl:Error adding file URL`,
+  errorFetchingFileList: $localize`:@@errors.errorFetchingFileList:Error while fetching file list`,
+  errorUpdatingFileMetadata: $localize`:@@errors.errorUpdatingFileMetadata:Error while updating file metadata`,
 } as const;
+
+export const NotificationSnackbarLocalization = {
+  success: $localize`:@@notificationSnackbar.success:Success`,
+  warning: $localize`:@@notificationSnackbar.warning:Warning`,
+  danger: $localize`:@@notificationSnackbar.danger:Danger`,
+  created: $localize`:@@notificationSnackbar.created:Created successfully`,
+  uploaded: $localize`:@@notificationSnackbar.uploaded:Uploaded successfully`,
+  saved: $localize`:@@notificationSnackbar.saved:Saved successfully`,
+  deleted: $localize`:@@notificationSnackbar.deleted:Deleted successfully`,
+  errOnFetch: $localize`:@@notificationSnackbar.errOnFetch:Error occurred while fetching record`,
+  errOnFetchList: $localize`:@@notificationSnackbar.errOnFetchList:Error occurred while fetching record list`,
+  errOnCreate: $localize`:@@notificationSnackbar.errOnCreate:Error occurred while creating record`,
+  errOnSave: $localize`:@@notificationSnackbar.errOnSave:Error occurred while saving`,
+  errOnDelete: $localize`:@@notificationSnackbar.errOnSave:Error occurred while deleting`,
+  errOnAddFile: $localize`:@@notificationSnackbar.errOnAddFile:Error occurred while adding file`,
+};
 
 export const UnknownBackendError: BackendError = {
   title: ErrorsLocalization.unknownErr,

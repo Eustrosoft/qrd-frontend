@@ -21,9 +21,11 @@ import { ContentDispositionHeaderParsePipe } from '@shared/pipe/content-disposit
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
-import { DELETION_DIALOG_DATA } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
+import { DeletionDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 import { MatDialog } from '@angular/material/dialog';
+import { SnackbarService } from '@shared/service/snackbar.service';
+import { ErrorsLocalization, NotificationSnackbarLocalization } from '@modules/error/error.constants';
 
 export interface FilesStateModel {
   displayType: DataViewDisplayType;
@@ -62,6 +64,7 @@ export class FilesState {
   private readonly router = inject(Router);
   private readonly pxToRemPipe = inject(PxToRemPipe);
   private readonly matDialog = inject(MatDialog);
+  private readonly snackbarService = inject(SnackbarService);
 
   @Selector()
   public static getDisplayType$({ displayType }: FilesStateModel): DataViewDisplayType {
@@ -119,6 +122,7 @@ export class FilesState {
         },
       }),
       catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetchList);
         setState(patch({ isFileListLoading: false }));
         return throwError(() => err);
       }),
@@ -136,6 +140,7 @@ export class FilesState {
         },
       }),
       catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
         setState(patch({ isFileLoading: false }));
         return throwError(() => err);
       }),
@@ -181,6 +186,7 @@ export class FilesState {
         },
       }),
       catchError((err) => {
+        this.snackbarService.danger(ErrorsLocalization.errorDownloadingFile);
         setState(patch({ isFileDownloading: false }));
         return throwError(() => err);
       }),
@@ -197,7 +203,7 @@ export class FilesState {
     const matDialogRef = this.matDialog.open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(
       ConfirmationDialogComponent,
       {
-        data: DELETION_DIALOG_DATA,
+        data: DeletionDialogData,
         width: this.pxToRemPipe.transform('600'),
       },
     );
@@ -213,6 +219,7 @@ export class FilesState {
           toArray(),
           tap({
             next: () => {
+              this.snackbarService.success(NotificationSnackbarLocalization.deleted);
               setState(patch({ isDeleteInProgress: false }));
               dispatch(new SetSelectedFiles([]));
               if (refreshList) {
@@ -227,6 +234,7 @@ export class FilesState {
       }),
       takeUntilDestroyed(destroyRef),
       catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnDelete);
         setState(patch({ isDeleteInProgress: false }));
         dispatch(new SetSelectedFiles([]));
         return throwError(() => err);

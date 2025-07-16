@@ -21,8 +21,10 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
-import { DELETION_DIALOG_DATA } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
+import { DeletionDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
+import { SnackbarService } from '@shared/service/snackbar.service';
+import { NotificationSnackbarLocalization } from '@modules/error/error.constants';
 
 export interface QrCardsStateModel {
   displayType: DataViewDisplayType;
@@ -61,6 +63,7 @@ export class QrCardsState {
   private readonly toHexPipe = inject(ToHexPipe);
   private readonly pxToRemPipe = inject(PxToRemPipe);
   private readonly matDialog = inject(MatDialog);
+  private readonly snackbarService = inject(SnackbarService);
 
   @Selector()
   public static getDisplayType$({ displayType }: QrCardsStateModel): DataViewDisplayType {
@@ -126,6 +129,7 @@ export class QrCardsState {
         },
       }),
       catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetchList);
         setState(patch({ isQrCardListLoading: false }));
         return throwError(() => err);
       }),
@@ -153,6 +157,7 @@ export class QrCardsState {
         },
       }),
       catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
         setState(patch({ isQrCardLoading: false }));
         return throwError(() => err);
       }),
@@ -192,7 +197,7 @@ export class QrCardsState {
     const matDialogRef = this.matDialog.open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(
       ConfirmationDialogComponent,
       {
-        data: DELETION_DIALOG_DATA,
+        data: DeletionDialogData,
         width: this.pxToRemPipe.transform('600'),
       },
     );
@@ -208,6 +213,7 @@ export class QrCardsState {
           toArray(),
           tap({
             next: () => {
+              this.snackbarService.success(NotificationSnackbarLocalization.deleted);
               setState(patch({ isDeleteInProgress: false }));
               dispatch(new SetSelectedQrCards([]));
               if (refreshList) {
@@ -222,6 +228,7 @@ export class QrCardsState {
       }),
       takeUntilDestroyed(destroyRef),
       catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnDelete);
         setState(patch({ isDeleteInProgress: false }));
         dispatch(new SetSelectedQrCards([]));
         return throwError(() => err);

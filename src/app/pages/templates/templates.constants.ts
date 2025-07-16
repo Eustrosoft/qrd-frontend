@@ -20,5 +20,6 @@ export const DEFAULT_TEMPLATE_STATE: TemplatesStateModel = {
   isSaveInProgress: false,
   isFileBeingAdded: false,
   isFileListLoading: false,
+  isFileListLoadErr: false,
   fileList: [],
 } as const;

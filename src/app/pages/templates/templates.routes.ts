@@ -22,7 +22,7 @@ export const templatesRoutes: Routes = [
       {
         path: AppRoutes.new,
         component: TemplateEditComponent,
-        canDeactivate: [unsavedDataGuard<TemplateEditComponent>()],
+        canDeactivate: [unsavedDataGuard<TemplateEditComponent>(true)],
         title: RouteTitles.template,
       },
       {

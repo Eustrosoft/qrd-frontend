@@ -26,12 +26,13 @@ import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
-import { DELETION_DIALOG_DATA } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
+import { DeletionDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
 import { FileDto } from '@api/files/file-api.models';
 import { FilesService } from '@app/pages/files/services/files.service';
 import { DEFAULT_TEMPLATE_STATE } from '@app/pages/templates/templates.constants';
 import { SnackbarService } from '@shared/service/snackbar.service';
-import { NOTIFICATION_SNACKBAR_LOCALIZATION } from '@shared/components/notification-snackbar/notification-snackbar.constants';
+
+import { NotificationSnackbarLocalization } from '@modules/error/error.constants';
 
 export interface TemplatesStateModel {
   displayType: DataViewDisplayType;
@@ -45,6 +46,7 @@ export interface TemplatesStateModel {
   isSaveInProgress: boolean;
   isFileBeingAdded: boolean;
   isFileListLoading: boolean;
+  isFileListLoadErr: boolean;
   fileList: FileDto[];
 }
 
@@ -119,8 +121,12 @@ export class TemplatesState {
   }
 
   @Selector()
-  public static getFileList$({ fileList }: TemplatesStateModel): FileDto[] {
-    return fileList;
+  public static getFilesState$({
+    fileList,
+    isFileListLoading,
+    isFileListLoadErr,
+  }: TemplatesStateModel): Pick<TemplatesStateModel, 'fileList' | 'isFileListLoading' | 'isFileListLoadErr'> {
+    return { fileList, isFileListLoading, isFileListLoadErr };
   }
 
   @Action(FetchTemplateList)
@@ -134,6 +140,7 @@ export class TemplatesState {
         },
       }),
       catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetchList);
         setState(patch({ isTemplateListLoading: false }));
         return throwError(() => err);
       }),
@@ -156,6 +163,7 @@ export class TemplatesState {
         },
       }),
       catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
         setState(patch({ isTemplateLoading: false }));
         return throwError(() => err);
       }),
@@ -195,12 +203,14 @@ export class TemplatesState {
       switchMap(() => this.templatesService.createTemplate(payload)),
       tap({
         next: (template) => {
+          this.snackbarService.success(NotificationSnackbarLocalization.saved);
           this.router.navigate([AppRoutes.templates, template.id, AppRoutes.edit]).then(() => {
             setState(patch({ isSaveInProgress: false }));
           });
         },
       }),
       catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnCreate);
         setState(patch({ isSaveInProgress: false }));
         return throwError(() => err);
       }),
@@ -218,12 +228,12 @@ export class TemplatesState {
       switchMap(() => this.templatesService.saveTemplate(id, { ...payload, id })),
       tap({
         next: () => {
-          this.snackbarService.success(NOTIFICATION_SNACKBAR_LOCALIZATION.saved);
+          this.snackbarService.success(NotificationSnackbarLocalization.saved);
           setState(patch({ isSaveInProgress: false }));
         },
       }),
       catchError((err) => {
-        this.snackbarService.danger(NOTIFICATION_SNACKBAR_LOCALIZATION.errOnSave);
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnSave);
         setState(patch({ isSaveInProgress: false }));
         return throwError(() => err);
       }),
@@ -246,6 +256,7 @@ export class TemplatesState {
         },
       }),
       catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnAddFile);
         setState(patch({ isFileBeingAdded: false }));
         return throwError(() => err);
       }),
@@ -263,7 +274,7 @@ export class TemplatesState {
       return of(fileList);
     }
 
-    setState(patch({ isFileListLoading: true }));
+    setState(patch({ isFileListLoading: true, isFileListLoadErr: false }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.filesService.getFileList()),
       tap({
@@ -272,7 +283,7 @@ export class TemplatesState {
         },
       }),
       catchError((err) => {
-        setState(patch({ isFileListLoading: false }));
+        setState(patch({ isFileListLoading: false, isFileListLoadErr: true }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),
@@ -289,7 +300,7 @@ export class TemplatesState {
     const matDialogRef = this.matDialog.open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(
       ConfirmationDialogComponent,
       {
-        data: DELETION_DIALOG_DATA,
+        data: DeletionDialogData,
         width: this.pxToRemPipe.transform('600'),
       },
     );
@@ -305,6 +316,7 @@ export class TemplatesState {
           toArray(),
           tap({
             next: () => {
+              this.snackbarService.success(NotificationSnackbarLocalization.deleted);
               setState(patch({ isDeleteInProgress: false }));
               dispatch(new SetSelectedTemplates([]));
               if (refreshList) {
@@ -319,6 +331,7 @@ export class TemplatesState {
       }),
       takeUntilDestroyed(destroyRef),
       catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnDelete);
         setState(patch({ isDeleteInProgress: false }));
         dispatch(new SetSelectedFiles([]));
         return throwError(() => err);

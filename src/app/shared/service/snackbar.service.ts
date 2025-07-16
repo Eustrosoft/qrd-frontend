@@ -9,7 +9,8 @@ import {
   NotificationSnackbarData,
   SnackbarTask,
 } from '@shared/components/notification-snackbar/notification-snackbar.model';
-import { NOTIFICATION_SNACKBAR_LOCALIZATION } from '@shared/components/notification-snackbar/notification-snackbar.constants';
+
+import { NotificationSnackbarLocalization } from '@modules/error/error.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class SnackbarService {
   }
 
   public success(
-    message: string = NOTIFICATION_SNACKBAR_LOCALIZATION.success,
+    message: string = NotificationSnackbarLocalization.success,
     duration: number = DEFAULT_SNACKBAR_DURATION,
   ): void {
     this.queueTask({
@@ -44,7 +45,7 @@ export class SnackbarService {
   }
 
   public warning(
-    message: string = NOTIFICATION_SNACKBAR_LOCALIZATION.warning,
+    message: string = NotificationSnackbarLocalization.warning,
     duration: number = DEFAULT_SNACKBAR_DURATION,
   ): void {
     this.queueTask({
@@ -54,6 +55,7 @@ export class SnackbarService {
         data: {
           title: message,
           icon: 'warning',
+          iconClass: 'icon-secondary',
           titleFontSize: this.pxToRemPipe.transform('16px'),
         },
         duration,
@@ -63,7 +65,7 @@ export class SnackbarService {
   }
 
   public danger(
-    message: string = NOTIFICATION_SNACKBAR_LOCALIZATION.danger,
+    message: string = NotificationSnackbarLocalization.danger,
     duration: number = DEFAULT_SNACKBAR_DURATION,
   ): void {
     this.queueTask({

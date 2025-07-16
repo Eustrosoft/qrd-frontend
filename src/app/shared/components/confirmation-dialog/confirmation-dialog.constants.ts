@@ -1,7 +1,7 @@
 import { SharedLocalization } from '@shared/shared.constants';
 import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
 
-export const CONFIRMATION_DIALOG_LOCALIZATION = {
+export const ConfirmationDialogLocalization = {
   confirmation: $localize`:@@confirmDialog.confirmation:Confirmation`,
   warning: $localize`:@@confirmDialog.warning:Warning`,
   localeChange: $localize`:@@confirmDialog.localeChange:Change of language requires reload, proceed?`,
@@ -10,23 +10,23 @@ export const CONFIRMATION_DIALOG_LOCALIZATION = {
   saveBeforeExit: $localize`:@@confirmDialog.saveBeforeExit:Save data before exit?`,
 };
 
-export const DELETION_DIALOG_DATA: ConfirmationDialogData = {
-  textContent: CONFIRMATION_DIALOG_LOCALIZATION.deletion,
-  textSubContent: CONFIRMATION_DIALOG_LOCALIZATION.areYouSure,
+export const DeletionDialogData: ConfirmationDialogData = {
+  textContent: ConfirmationDialogLocalization.deletion,
+  textSubContent: ConfirmationDialogLocalization.areYouSure,
   cancelButtonText: SharedLocalization.no,
   confirmButtonText: SharedLocalization.yes,
 };
 
-export const CHANGE_LOCALE_DIALOG_DATA: ConfirmationDialogData = {
-  textContent: CONFIRMATION_DIALOG_LOCALIZATION.confirmation,
-  textSubContent: CONFIRMATION_DIALOG_LOCALIZATION.localeChange,
+export const ChangeLocaleDialogData: ConfirmationDialogData = {
+  textContent: ConfirmationDialogLocalization.confirmation,
+  textSubContent: ConfirmationDialogLocalization.localeChange,
   cancelButtonText: SharedLocalization.no,
   confirmButtonText: SharedLocalization.yes,
 };
 
-export const UNSAVED_FORM_DIALOG_DATA: ConfirmationDialogData = {
-  textContent: CONFIRMATION_DIALOG_LOCALIZATION.warning,
-  textSubContent: CONFIRMATION_DIALOG_LOCALIZATION.saveBeforeExit,
+export const UnsavedFormDialogData: ConfirmationDialogData = {
+  textContent: ConfirmationDialogLocalization.warning,
+  textSubContent: ConfirmationDialogLocalization.saveBeforeExit,
   cancelButtonText: SharedLocalization.no,
   confirmButtonText: SharedLocalization.yes,
 };

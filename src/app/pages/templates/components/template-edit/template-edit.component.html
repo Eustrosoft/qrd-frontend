@@ -145,18 +145,29 @@
         @if (isFileSelectorVisible()) {
           <ui-grid-block gridTemplateColumns="repeat(1, 1fr)">
             <mat-form-field class="form-field-lg">
-              @if (selectors.isFileListLoading()) {
+              @if (selectors.filesState().isFileListLoading) {
                 <mat-label>
-                  <ui-flex-block flexJustifyContent="space-between">
+                  <ui-flex-block>
                     <p>{{ SharedLocalization.loading }}</p>
                     <mat-spinner diameter="24"></mat-spinner>
                   </ui-flex-block>
                 </mat-label>
               } @else {
-                <mat-label>{{ SharedLocalization.pickAFile }}</mat-label>
+                <mat-label>
+                  @if (selectors.filesState().isFileListLoadErr) {
+                    <ui-flex-block flexAlignItems="center">
+                      <p class="error-color">{{ ErrorsLocalization.errorFetchingFileList }}</p>
+                      <button (click)="actions.fetchFileList(destroyRef)" class="icon-button-sm" mat-icon-button>
+                        <mat-icon class="icon-primary">refresh</mat-icon>
+                      </button>
+                    </ui-flex-block>
+                  } @else {
+                    {{ SharedLocalization.pickAFile }}
+                  }
+                </mat-label>
               }
               <mat-select #select multiple>
-                @for (file of selectors.fileList(); track file.id) {
+                @for (file of selectors.filesState().fileList; track file.id) {
                   <mat-option class="option-lg" [value]="file.id">{{ file.name }}</mat-option>
                 } @empty {
                   {{ SharedLocalization.noFiles }}

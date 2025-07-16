@@ -24,9 +24,10 @@ import {
 } from 'rxjs';
 import { FileBlobUploadResponse, FileDto } from '@api/files/file-api.models';
 import { FilesService } from '@app/pages/files/services/files.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { patch } from '@ngxs/store/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SnackbarService } from '@shared/service/snackbar.service';
+import { ErrorsLocalization, NotificationSnackbarLocalization } from '@modules/error/error.constants';
 
 export interface FileUploadStateModel {
   isLoading: boolean;
@@ -41,7 +42,7 @@ export interface FileUploadStateModel {
 export class FileUploadState {
   private readonly fileReaderService = inject(FileReaderService);
   private readonly filesService = inject(FilesService);
-  private readonly matSnackBar = inject(MatSnackBar);
+  private readonly snackbarService = inject(SnackbarService);
 
   @Selector()
   public static isLoading$({ isLoading }: FileUploadStateModel): boolean {
@@ -60,7 +61,7 @@ export class FileUploadState {
   ): Observable<UploadState> {
     const { file, name, description, isPublic, isActive } = formValue;
     if (!file) {
-      this.matSnackBar.open(SharedLocalization.noFiles);
+      this.snackbarService.open(SharedLocalization.noFiles);
       return of();
     }
     let uploadFileId: number | null = null;
@@ -112,16 +113,17 @@ export class FileUploadState {
           isError: false,
           fileId: null,
         }),
-        catchError(() =>
-          of<UploadState>({
+        catchError(() => {
+          this.snackbarService.danger(ErrorsLocalization.errorUploadingFile);
+          return of<UploadState>({
             progress: 0,
             isDone: false,
             isLoading: false,
             isCancelled: false,
             isError: true,
             fileId: uploadFileId,
-          }),
-        ),
+          });
+        }),
         takeUntil(cancelUpload$),
       ),
       cancelUpload$.pipe(
@@ -179,6 +181,7 @@ export class FileUploadState {
       .pipe(
         tap({
           next: (file: FileDto) => {
+            this.snackbarService.danger(NotificationSnackbarLocalization.created);
             setState(
               patch({
                 isLoading: false,
@@ -195,6 +198,7 @@ export class FileUploadState {
           },
         }),
         catchError((err) => {
+          this.snackbarService.danger(ErrorsLocalization.errorAddingFileUrl);
           setState(
             patch({
               isLoading: false,
@@ -232,10 +236,12 @@ export class FileUploadState {
       .pipe(
         tap({
           next: () => {
+            this.snackbarService.success(NotificationSnackbarLocalization.saved);
             setState(patch({ isLoading: false }));
           },
         }),
         catchError((err) => {
+          this.snackbarService.danger(ErrorsLocalization.errorUpdatingFileMetadata);
           setState(patch({ isLoading: false }));
           return throwError(() => err);
         }),

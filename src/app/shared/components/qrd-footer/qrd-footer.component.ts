@@ -19,7 +19,7 @@ import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component'
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
 import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
-import { CHANGE_LOCALE_DIALOG_DATA } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
+import { ChangeLocaleDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
 import { MatDialog } from '@angular/material/dialog';
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 import { first, tap } from 'rxjs';
@@ -76,7 +76,7 @@ export class QrdFooterComponent {
   protected updateLocale(event: MatSelectChange<Locale>): void {
     this.matDialog
       .open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(ConfirmationDialogComponent, {
-        data: CHANGE_LOCALE_DIALOG_DATA,
+        data: ChangeLocaleDialogData,
         width: this.pxToRemPipe.transform('600'),
       })
       .afterClosed()
