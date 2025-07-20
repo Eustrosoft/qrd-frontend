@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, viewChild } from '@angular/core';
 import { FileUploadComponent } from '@app/pages/files/components/file-upload/file-upload.component';
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
 import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
@@ -11,7 +11,7 @@ import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
 import { map, merge, Observable, of } from 'rxjs';
 import { UpdateFileMetadata } from '@app/pages/files/components/file-upload/state/file-upload.actions';
-import { FileUploadFormFactoryService } from '@app/pages/files/components/file-upload/service/file-upload-form-factory.service';
+import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
 
 @Component({
   selector: 'file-edit',
@@ -25,12 +25,12 @@ export class FileEditComponent implements OnInit, CanComponentDeactivate {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly actions$ = inject(Actions);
-  private readonly fileUploadFormFactoryService = inject(FileUploadFormFactoryService);
 
-  protected readonly fileAttachmentMode = this.fileUploadFormFactoryService.getFileAttachmentMode();
   protected readonly fileId = this.activatedRoute.snapshot.paramMap.get('id');
+  protected readonly fileUploadCmp = viewChild(FileUploadComponent);
 
   protected readonly selectors = createSelectMap({
+    fileAttachmentMode: FileUploadState.getFileAttachmentMode$,
     isFileLoading: FilesState.isFileLoading$,
     file: FilesState.getFile$,
     isFileDownloading: FilesState.isFileDownloading$,
@@ -47,11 +47,11 @@ export class FileEditComponent implements OnInit, CanComponentDeactivate {
   }
 
   public isDataSaved(): boolean {
-    if (this.fileAttachmentMode() === 'upload') {
-      return !this.fileUploadFormFactoryService.fileUploadFormHasUnsavedChanges();
+    if (this.selectors.fileAttachmentMode() === 'upload') {
+      return !this.fileUploadCmp()?.fileUploadFormFactoryService.fileUploadFormHasUnsavedChanges();
     }
-    if (this.fileAttachmentMode() === 'fileUrl') {
-      return !this.fileUploadFormFactoryService.fileAsUrlFormHasUnsavedChanges();
+    if (this.selectors.fileAttachmentMode() === 'fileUrl') {
+      return !this.fileUploadCmp()?.fileUploadFormFactoryService.fileAsUrlFormHasUnsavedChanges();
     }
     return false;
   }
@@ -62,17 +62,17 @@ export class FileEditComponent implements OnInit, CanComponentDeactivate {
     }
 
     if (isConfirmed) {
-      if (this.fileAttachmentMode() === 'upload') {
+      if (this.selectors.fileAttachmentMode() === 'upload') {
         this.actions.updateFileMetadata(
           +this.fileId!,
-          this.fileUploadFormFactoryService.fileUploadForm.getRawValue(),
+          this.fileUploadCmp()?.getFileUploadFormRawValue()!,
           this.destroyRef,
         );
       }
-      if (this.fileAttachmentMode() === 'fileUrl') {
+      if (this.selectors.fileAttachmentMode() === 'fileUrl') {
         this.actions.updateFileMetadata(
           +this.fileId!,
-          this.fileUploadFormFactoryService.fileAsUrlForm.getRawValue(),
+          this.fileUploadCmp()?.getFileAsUrlFormRawValue()!,
           this.destroyRef,
         );
       }

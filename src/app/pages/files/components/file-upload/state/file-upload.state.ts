@@ -1,8 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { AddFileUrl, ResetFileUploadState, UpdateFileMetadata, UploadBlobByChunks } from './file-upload.actions';
+import {
+  AddFileUrl,
+  ResetFileUploadState,
+  SetFileAttachmentMode,
+  UpdateFileMetadata,
+  UploadBlobByChunks,
+} from './file-upload.actions';
 import { DEFAULT_FILE_UPLOAD_STATE } from '@app/pages/files/files.constants';
-import { UploadState } from '@app/pages/files/files.models';
+import { FileAttachmentMode, UploadState } from '@app/pages/files/files.models';
 import { FileReaderService } from '@app/pages/files/services/file-reader.service';
 import { SharedLocalization } from '@shared/shared.constants';
 import {
@@ -30,6 +36,7 @@ import { SnackbarService } from '@shared/service/snackbar.service';
 import { ErrorsLocalization, NotificationSnackbarLocalization } from '@modules/error/error.constants';
 
 export interface FileUploadStateModel {
+  fileAttachmentMode: FileAttachmentMode;
   isLoading: boolean;
   uploadState: UploadState | null;
 }
@@ -45,6 +52,11 @@ export class FileUploadState {
   private readonly snackbarService = inject(SnackbarService);
 
   @Selector()
+  public static getFileAttachmentMode$({ fileAttachmentMode }: FileUploadStateModel): FileAttachmentMode {
+    return fileAttachmentMode;
+  }
+
+  @Selector()
   public static isLoading$({ isLoading }: FileUploadStateModel): boolean {
     return isLoading;
   }
@@ -52,6 +64,14 @@ export class FileUploadState {
   @Selector()
   public static getUploadState$({ uploadState }: FileUploadStateModel): UploadState | null {
     return uploadState;
+  }
+
+  @Action(SetFileAttachmentMode)
+  public setFileAttachmentMode(
+    { setState }: StateContext<FileUploadStateModel>,
+    { fileAttachmentMode }: SetFileAttachmentMode,
+  ): void {
+    setState(patch({ fileAttachmentMode }));
   }
 
   @Action(UploadBlobByChunks)

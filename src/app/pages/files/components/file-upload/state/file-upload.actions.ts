@@ -1,6 +1,11 @@
 import { Observable } from 'rxjs';
-import { FileAsUrlFormGroup, FileUploadFormGroup } from '@app/pages/files/files.models';
+import { FileAsUrlFormGroup, FileAttachmentMode, FileUploadFormGroup } from '@app/pages/files/files.models';
 import { DestroyRef } from '@angular/core';
+
+export class SetFileAttachmentMode {
+  public static readonly type = '[FileUpload] Set File Attachment Mode';
+  constructor(readonly fileAttachmentMode: FileAttachmentMode) {}
+}
 
 export class UploadBlobByChunks {
   public static readonly type = '[FileUpload] Upload Blob By Chunks';

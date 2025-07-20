@@ -2,8 +2,8 @@
   <mat-nav-list role="list">
     @for (attachmentMode of attachmentModeList; track attachmentMode.mode) {
       <button
-        (click)="fileUploadFormFactoryService.setFileAttachmentMode(attachmentMode.mode)"
-        [activated]="fileAttachmentMode() === attachmentMode.mode"
+        (click)="actions.setFileAttachmentMode(attachmentMode.mode)"
+        [activated]="selectors.fileAttachmentMode() === attachmentMode.mode"
         mat-list-item
       >
         {{ attachmentMode.title }}
@@ -11,10 +11,10 @@
     }
   </mat-nav-list>
 }
-@if (fileAttachmentMode() === 'upload') {
+@if (selectors.fileAttachmentMode() === 'upload') {
   <file-upload-blob [fileMetadata]="fileMetadata()" (uploadCompleted)="uploadCompleted.emit($event)" />
 }
 
-@if (fileAttachmentMode() === 'fileUrl') {
+@if (selectors.fileAttachmentMode() === 'fileUrl') {
   <file-as-url [fileMetadata]="fileMetadata()" (uploadCompleted)="uploadCompleted.emit($event)" />
 }

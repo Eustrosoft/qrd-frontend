@@ -3,6 +3,7 @@ import { FileUploadStateModel } from '@app/pages/files/components/file-upload/st
 export const DEFAULT_FILE_UPLOAD_STATE: FileUploadStateModel = {
   isLoading: false,
   uploadState: null,
+  fileAttachmentMode: 'upload',
 };
 
 export const DEFAULT_CHUNK_SIZE = 1048576; // 1 MB
