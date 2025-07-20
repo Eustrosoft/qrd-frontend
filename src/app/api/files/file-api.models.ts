@@ -24,3 +24,7 @@ export type FileUrlUploadRequest = {
   active: boolean;
   fileStorageType: string;
 };
+export type FileEditableMetadata = Pick<
+  FileDto,
+  'id' | 'name' | 'description' | 'isActive' | 'isPublic' | 'storagePath'
+>;

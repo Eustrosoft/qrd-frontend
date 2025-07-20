@@ -120,6 +120,8 @@ export class TemplateFormFactoryService {
       id: this.fb.nonNullable.control<number>(initial?.id ?? -1),
       fileStorageType: this.fb.nonNullable.control<FileStorageType>(initial?.fileStorageType ?? 'DB'),
       name: this.fb.nonNullable.control<string>(initial?.name ?? ''),
+      description: this.fb.nonNullable.control<string>(initial?.description ?? ''),
+      storagePath: this.fb.nonNullable.control<string>(initial?.storagePath ?? ''),
       fileSize: this.fb.nonNullable.control<number>(initial?.fileSize ?? 0),
       isPublic: this.fb.nonNullable.control<boolean>(initial?.isPublic ?? false),
       isActive: this.fb.nonNullable.control<boolean>(initial?.isActive ?? false),

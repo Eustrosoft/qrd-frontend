@@ -8,7 +8,7 @@ import {
   UploadState,
 } from '@app/pages/files/files.models';
 import { FilesLocalization } from '@app/pages/files/files.constants';
-import { FileDto } from '@api/files/file-api.models';
+import { FileEditableMetadata } from '@api/files/file-api.models';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
 import {
@@ -40,8 +40,9 @@ export class FileUploadComponent implements OnInit, OnDestroy {
     resetFileUploadState: ResetFileUploadState,
   });
 
-  public readonly fileMetadata = input<FileDto | null>(null);
+  public readonly fileMetadata = input<FileEditableMetadata | null>(null);
   public readonly uploadCompleted = output<UploadState | null>();
+  public readonly saveCompleted = output<void>();
 
   protected readonly attachmentModeList: AttachmentModeListItem[] = [
     {

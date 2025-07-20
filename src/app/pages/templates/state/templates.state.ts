@@ -45,7 +45,7 @@ export interface TemplatesStateModel {
   template: TemplateDto | null;
   isDeleteInProgress: boolean;
   isSaveInProgress: boolean;
-  isFileBeingAdded: boolean;
+  isTemplateFilesLoading: boolean;
   isFileListLoading: boolean;
   isFileListLoadErr: boolean;
   fileList: FileDto[];
@@ -107,8 +107,8 @@ export class TemplatesState {
   }
 
   @Selector()
-  public static isFileBeingAdded$({ isFileBeingAdded }: TemplatesStateModel): boolean {
-    return isFileBeingAdded;
+  public static isTemplateFilesLoading$({ isTemplateFilesLoading }: TemplatesStateModel): boolean {
+    return isTemplateFilesLoading;
   }
 
   @Selector()
@@ -156,21 +156,21 @@ export class TemplatesState {
   @Action(FetchTemplate)
   public fetchTemplate(
     { setState }: StateContext<TemplatesStateModel>,
-    { id, destroyRef, showLoading }: FetchTemplate,
+    { id, destroyRef, showLoading, storeProp }: FetchTemplate,
   ): Observable<TemplateDto> {
     if (showLoading) {
-      setState(patch({ isTemplateLoading: true }));
+      setState(patch({ [storeProp]: true }));
     }
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.templatesService.getTemplate(id)),
       tap({
         next: (file) => {
-          setState(patch({ template: file, isTemplateLoading: false }));
+          setState(patch({ template: file, [storeProp]: false }));
         },
       }),
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
-        setState(patch({ isTemplateLoading: false, templateLoadErr: true }));
+        setState(patch({ [storeProp]: false, templateLoadErr: true }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),
@@ -252,18 +252,18 @@ export class TemplatesState {
     { setState, dispatch }: StateContext<TemplatesStateModel>,
     { templateId, fileId, destroyRef }: AddFileToTemplate,
   ): Observable<void> {
-    setState(patch({ isFileBeingAdded: true }));
+    setState(patch({ isTemplateFilesLoading: true }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.templatesService.addFileToTemplate(templateId, { id: fileId })),
       switchMap(() => dispatch(new FetchTemplate(templateId, destroyRef, false))),
       tap({
         next: () => {
-          setState(patch({ isFileBeingAdded: false }));
+          setState(patch({ isTemplateFilesLoading: false }));
         },
       }),
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnAddFile);
-        setState(patch({ isFileBeingAdded: false }));
+        setState(patch({ isTemplateFilesLoading: false }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),

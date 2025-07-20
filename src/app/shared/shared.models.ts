@@ -73,7 +73,6 @@ export type Option<T> = { value: T; viewValue: string };
 export type DataViewDisplayType = 'list' | 'table';
 export type TabLink = { link: string; title: string };
 export type FileStorageTypeItem = { text: string; icon: string };
-export type FormMode = 'new' | 'edit';
 export type DictionaryItem = {
   name: string;
   code: string;
@@ -87,6 +86,8 @@ export type FileForm = {
   id: FormControl<number>;
   fileStorageType: FormControl<FileStorageType>;
   name: FormControl<string>;
+  description: FormControl<string>;
+  storagePath: FormControl<string>;
   fileSize: FormControl<number>;
   isPublic: FormControl<boolean>;
   isActive: FormControl<boolean>;

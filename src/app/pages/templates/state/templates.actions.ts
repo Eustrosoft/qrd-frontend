@@ -1,6 +1,7 @@
 import { DestroyRef } from '@angular/core';
 import { DataViewDisplayType } from '@shared/shared.models';
 import { TemplateFieldFormGroup } from '@app/pages/templates/templates.models';
+import { TemplatesStateModel } from '@app/pages/templates/state/templates.state';
 
 export class FetchTemplateList {
   public static readonly type = '[Templates] Fetch Template List';
@@ -12,6 +13,7 @@ export class FetchTemplate {
     readonly id: number,
     readonly destroyRef?: DestroyRef,
     readonly showLoading: boolean = true,
+    readonly storeProp: keyof TemplatesStateModel = 'isTemplateLoading',
   ) {}
 }
 

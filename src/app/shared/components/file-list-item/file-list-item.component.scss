@@ -14,13 +14,11 @@
 
   @media #{map.get(bp.$breakpoints, xsmall)} {
     gap: mixins.rem(8);
-    flex-flow: column;
-    align-items: start;
+    display: grid;
   }
 
   @media #{map.get(bp.$breakpoints, small)} {
     gap: mixins.rem(8);
-    flex-flow: column;
-    align-items: start;
+    display: grid;
   }
 }

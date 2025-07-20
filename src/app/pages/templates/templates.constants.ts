@@ -19,7 +19,7 @@ export const DEFAULT_TEMPLATE_STATE: TemplatesStateModel = {
   template: null,
   isDeleteInProgress: false,
   isSaveInProgress: false,
-  isFileBeingAdded: false,
+  isTemplateFilesLoading: false,
   isFileListLoading: false,
   isFileListLoadErr: false,
   fileList: [],

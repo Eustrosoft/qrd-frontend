@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { FileAsUrlForm, FileAsUrlFormGroup, FileUploadForm, FileUploadFormGroup } from '@app/pages/files/files.models';
 import { WEB_REGEXP } from '@shared/shared.constants';
 import { MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH, MAX_STORAGE_PATH_LENGTH } from '@app/pages/files/files.constants';
-import { distinctUntilChanged, map, pairwise, startWith, Subject, takeUntil, tap } from 'rxjs';
+import { distinctUntilChanged, map, pairwise, startWith, Subject, takeUntil } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
 
@@ -28,11 +28,9 @@ export class FileUploadFormFactoryService {
   public fileUploadFormHasUnsavedChanges = toSignal(
     this.fileUploadForm.valueChanges.pipe(
       startWith(this.fileUploadForm.getRawValue()),
-      tap(console.log),
       map((value) => easyHash(value)),
       pairwise(),
       map(([prev, current]) => prev !== current),
-      tap(console.log),
       distinctUntilChanged(),
       takeUntil(this.destroy$),
     ),

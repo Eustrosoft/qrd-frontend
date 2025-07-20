@@ -18,7 +18,7 @@ import {
   UpdateFileMetadata,
   UploadBlobByChunks,
 } from '@app/pages/files/components/file-upload/state/file-upload.actions';
-import { FileDto } from '@api/files/file-api.models';
+import { FileEditableMetadata } from '@api/files/file-api.models';
 import { SharedLocalization } from '@shared/shared.constants';
 import { FilesLocalization, MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
@@ -81,11 +81,17 @@ export class FileUploadBlobComponent implements OnDestroy {
     resetFileUploadState: ResetFileUploadState,
   });
 
-  public readonly fileMetadata = input<FileDto | null>(null);
+  public readonly fileMetadata = input<FileEditableMetadata | null>(null);
   public readonly uploadCompleted = outputFromObservable(
     this.actions$.pipe(
       ofActionSuccessful(UploadBlobByChunks),
       map(() => this.selectors.uploadState()),
+    ),
+  );
+  public readonly saveCompleted = outputFromObservable<void>(
+    this.actions$.pipe(
+      ofActionSuccessful(UpdateFileMetadata),
+      map(() => undefined),
     ),
   );
 

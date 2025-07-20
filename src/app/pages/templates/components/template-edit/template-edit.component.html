@@ -61,7 +61,9 @@
               <input [formControl]="field.controls.caption" matInput />
             </mat-form-field>
             <button (click)="showAdditionalFields($index)" class="icon-button-sm" mat-icon-button>
-              <mat-icon class="icon-primary">edit_square</mat-icon>
+              <mat-icon class="icon-primary">
+                {{ expandedFieldIndex() === $index ? 'edit_off' : 'edit_square' }}
+              </mat-icon>
             </button>
             <button (click)="deleteField($index)" class="icon-button-sm" mat-icon-button>
               <mat-icon class="icon-primary">delete_forever</mat-icon>
@@ -110,7 +112,7 @@
         <h1>{{ RouteTitles.files }}</h1>
       </ng-container>
       <ng-container content>
-        @if (!selectors.isFileBeingAdded()) {
+        @if (!selectors.isTemplateFilesLoading()) {
           <ui-grid-block gridTemplateColumns="repeat(1, 1fr)">
             @for (file of form().controls.files.controls; track file) {
               <ui-flex-block flexAlignItems="center">
@@ -124,10 +126,18 @@
                   [updated]="(file.controls.updated.value | date: 'short') ?? ''"
                   style="flex: auto"
                 />
+                <button (click)="showFileEdit(file.getRawValue(), $index)" class="icon-button-sm" mat-icon-button>
+                  <mat-icon class="icon-primary">
+                    {{ fileInEditIndex() === $index ? 'edit_off' : 'edit_square' }}
+                  </mat-icon>
+                </button>
                 <button (click)="deleteFile($index)" class="icon-button-sm" mat-icon-button>
                   <mat-icon class="icon-primary">link_off</mat-icon>
                 </button>
               </ui-flex-block>
+              @if (fileInEditIndex() === $index) {
+                <file-upload [fileMetadata]="fileInEditMetadata()" (saveCompleted)="fileMetadataUpdated()" />
+              }
             } @empty {
               {{ SharedLocalization.noFiles }}
             }

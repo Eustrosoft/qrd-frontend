@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   DestroyRef,
+  effect,
   inject,
   OnDestroy,
   OnInit,
@@ -53,6 +54,7 @@ import { TemplateFormFactoryService } from '@app/pages/templates/services/templa
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { TemplateFormGroup } from '@app/pages/templates/templates.models';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
+import { FileEditableMetadata } from '@api/files/file-api.models';
 
 @Component({
   selector: 'template-edit',
@@ -118,7 +120,8 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     isTemplateLoading: TemplatesState.isTemplateLoading$,
     templateLoadErr: TemplatesState.templateLoadErr$,
     isSaveInProgress: TemplatesState.isSaveInProgress$,
-    isFileBeingAdded: TemplatesState.isFileBeingAdded$,
+    isTemplateFilesLoading: TemplatesState.isTemplateFilesLoading$,
+    template: TemplatesState.getTemplate$,
     inputType: DictionaryRegistryState.getDictionary$<DictionaryItem>('INPUT_TYPE'),
     filesState: TemplatesState.getFilesState$,
   });
@@ -146,9 +149,25 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     return 'repeat(3, 1fr)';
   });
 
+  protected readonly templateEff = effect(() => {
+    const template = this.selectors.template();
+    this.templateFormFactoryService.patchTemplateForm(
+      {
+        name: template?.name ?? '',
+        description: template?.description ?? '',
+      },
+      false,
+    );
+    this.templateFormFactoryService.patchFields(template?.fields ?? [], false);
+    this.templateFormFactoryService.patchFiles(template?.files ?? [], false);
+  });
+
   protected readonly expandedFieldIndex = signal<number | null>(null);
   protected readonly isUploadVisible = signal<boolean>(false);
   protected readonly isFileSelectorVisible = signal<boolean>(false);
+
+  protected readonly fileInEditIndex = signal<number | null>(null);
+  protected readonly fileInEditMetadata = signal<FileEditableMetadata | null>(null);
 
   protected readonly RouteTitles = RouteTitles;
   protected readonly TemplatesLocalization = TemplatesLocalization;
@@ -159,9 +178,6 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
   protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
 
   public ngOnInit(): void {
-    if (this.templateId) {
-      this.actions.fetchTemplate(+this.templateId, this.destroyRef);
-    }
     this.actions.fetchDictionaryByName('INPUT_TYPE', this.destroyRef);
   }
 
@@ -229,6 +245,21 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
   protected showFileUpload(): void {
     this.isFileSelectorVisible.set(false);
     this.isUploadVisible.set(!this.isUploadVisible());
+  }
+
+  protected showFileEdit(metadata: FileEditableMetadata, index: number): void {
+    this.fileInEditMetadata.set(metadata);
+    if (index === this.fileInEditIndex()) {
+      this.fileInEditIndex.set(null);
+      return;
+    }
+    this.fileInEditIndex.set(index);
+  }
+
+  protected fileMetadataUpdated(): void {
+    this.fileInEditIndex.set(null);
+    this.fileInEditMetadata.set(null);
+    this.actions.fetchTemplate(+this.templateId!, this.destroyRef, true, 'isTemplateFilesLoading');
   }
 
   protected showFileSelection(): void {

@@ -9,7 +9,7 @@ import { map, Subject } from 'rxjs';
 import { Actions, createDispatchMap, createSelectMap, ofActionSuccessful } from '@ngxs/store';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
 import { AddFileUrl, UpdateFileMetadata } from '@app/pages/files/components/file-upload/state/file-upload.actions';
-import { FileDto } from '@api/files/file-api.models';
+import { FileEditableMetadata } from '@api/files/file-api.models';
 import { SharedLocalization } from '@shared/shared.constants';
 import { MatError } from '@angular/material/form-field';
 import {
@@ -61,11 +61,17 @@ export class FileAsUrlComponent implements OnDestroy {
     updateFileMetadata: UpdateFileMetadata,
   });
 
-  public readonly fileMetadata = input<FileDto | null>(null);
+  public readonly fileMetadata = input<FileEditableMetadata | null>(null);
   public readonly uploadCompleted = outputFromObservable(
     this.actions$.pipe(
       ofActionSuccessful(AddFileUrl),
       map(() => this.selectors.uploadState()),
+    ),
+  );
+  public readonly saveCompleted = outputFromObservable<void>(
+    this.actions$.pipe(
+      ofActionSuccessful(UpdateFileMetadata),
+      map(() => undefined),
     ),
   );
 
