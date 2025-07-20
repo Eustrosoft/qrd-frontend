@@ -15,6 +15,7 @@ export const DEFAULT_TEMPLATE_STATE: TemplatesStateModel = {
   templateList: [],
   selectedTemplateList: [],
   isTemplateLoading: false,
+  templateLoadErr: false,
   template: null,
   isDeleteInProgress: false,
   isSaveInProgress: false,

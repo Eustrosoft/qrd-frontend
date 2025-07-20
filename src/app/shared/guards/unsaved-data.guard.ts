@@ -9,12 +9,12 @@ import { UnsavedFormDialogData } from '@shared/components/confirmation-dialog/co
 
 export interface CanComponentDeactivate {
   canDeactivate: (isConfirmed?: boolean) => Observable<boolean>;
-  isTouched: () => boolean;
+  isDataSaved: () => boolean;
 }
 
-export const unsavedDataGuard = <T extends CanComponentDeactivate>(isNew: boolean = false): CanDeactivateFn<T> => {
+export const unsavedDataGuard = <T extends CanComponentDeactivate>(): CanDeactivateFn<T> => {
   return (component: T) => {
-    if (isNew || !component.isTouched()) {
+    if (component.isDataSaved()) {
       return of(true);
     }
 

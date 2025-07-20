@@ -9,7 +9,7 @@ import {
   OnDestroy,
   viewChild,
 } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { map, Subject } from 'rxjs';
 import { Actions, createDispatchMap, createSelectMap, ofActionSuccessful } from '@ngxs/store';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
@@ -18,7 +18,6 @@ import {
   UpdateFileMetadata,
   UploadBlobByChunks,
 } from '@app/pages/files/components/file-upload/state/file-upload.actions';
-import { FileUploadForm } from '@app/pages/files/files.models';
 import { FileDto } from '@api/files/file-api.models';
 import { SharedLocalization } from '@shared/shared.constants';
 import { FilesLocalization, MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
@@ -35,6 +34,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { outputFromObservable } from '@angular/core/rxjs-interop';
 import { ErrorsLocalization } from '@modules/error/error.constants';
+import { FileUploadFormFactoryService } from '@app/pages/files/components/file-upload/service/file-upload-form-factory.service';
 
 @Component({
   selector: 'file-upload-blob',
@@ -64,11 +64,13 @@ import { ErrorsLocalization } from '@modules/error/error.constants';
 })
 export class FileUploadBlobComponent implements OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
-  private readonly fb = inject(FormBuilder);
   private readonly actions$ = inject(Actions);
+  private readonly fileUploadFormFactoryService = inject(FileUploadFormFactoryService);
+
   private readonly startUpload$ = new Subject<void>();
   private readonly cancelUpload$ = new Subject<void>();
 
+  protected readonly form = this.fileUploadFormFactoryService.fileUploadForm;
   protected readonly selectors = createSelectMap({
     isLoading: FileUploadState.isLoading$,
     uploadState: FileUploadState.getUploadState$,
@@ -103,12 +105,15 @@ export class FileUploadBlobComponent implements OnDestroy {
     this.form.controls.file.removeValidators(Validators.required);
     this.form.controls.file.updateValueAndValidity();
 
-    this.form.patchValue({
-      name: metadata.name,
-      description: metadata.description,
-      isActive: metadata.isActive,
-      isPublic: metadata.isPublic,
-    });
+    this.fileUploadFormFactoryService.patchFileUploadForm(
+      {
+        name: metadata.name,
+        description: metadata.description,
+        isActive: metadata.isActive,
+        isPublic: metadata.isPublic,
+      },
+      false,
+    );
   });
 
   protected readonly fileInput = viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
@@ -118,22 +123,16 @@ export class FileUploadBlobComponent implements OnDestroy {
   protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
   protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
 
-  protected readonly form = this.fb.group<FileUploadForm>({
-    name: this.fb.nonNullable.control<string>('', [Validators.required, Validators.maxLength(MAX_NAME_LENGTH)]),
-    description: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_DESCRIPTION_LENGTH)]),
-    isActive: this.fb.nonNullable.control<boolean>(false),
-    isPublic: this.fb.nonNullable.control<boolean>(false),
-    file: this.fb.control<File | null>(null, [Validators.required]),
-  });
-
   protected fileChanged(): void {
     const fileList = Array.from(this.fileInput().nativeElement.files ?? []);
     if (!fileList.length) {
       return;
     }
     const file = fileList[0];
-    this.form.controls.name.patchValue(file.name);
-    this.form.controls.file.patchValue(file);
+    this.fileUploadFormFactoryService.patchFileUploadForm({
+      name: file.name,
+      file,
+    });
   }
 
   protected uploadFile(): void {
@@ -155,8 +154,7 @@ export class FileUploadBlobComponent implements OnDestroy {
   protected cancelFile(): void {
     this.cancelUpload$.next();
     this.clearInput();
-    this.form.controls.file.reset();
-    this.form.controls.name.reset();
+    this.fileUploadFormFactoryService.resetFileUploadForm();
     this.actions.resetFileUploadState();
   }
 
@@ -168,5 +166,6 @@ export class FileUploadBlobComponent implements OnDestroy {
     this.startUpload$.complete();
     this.cancelUpload$.next();
     this.cancelUpload$.complete();
+    this.fileUploadFormFactoryService.resetFileUploadForm();
   }
 }

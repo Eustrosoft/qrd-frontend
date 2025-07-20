@@ -10,7 +10,7 @@ export class FetchTemplate {
   public static readonly type = '[Templates] Fetch Template';
   constructor(
     readonly id: number,
-    readonly destroyRef: DestroyRef,
+    readonly destroyRef?: DestroyRef,
     readonly showLoading: boolean = true,
   ) {}
 }

@@ -9,6 +9,7 @@ import { TemplateMainComponent } from '@app/pages/templates/components/template-
 import { TemplateAttrsComponent } from '@app/pages/templates/components/template-attrs/template-attrs.component';
 import { TemplateUsagesComponent } from '@app/pages/templates/components/template-usages/template-usages.component';
 import { unsavedDataGuard } from '@shared/guards/unsaved-data.guard';
+import { templateFormResolver } from '@app/pages/templates/resolvers/template-form.resolver';
 
 export const templatesRoutes: Routes = [
   {
@@ -22,7 +23,6 @@ export const templatesRoutes: Routes = [
       {
         path: AppRoutes.new,
         component: TemplateEditComponent,
-        canDeactivate: [unsavedDataGuard<TemplateEditComponent>(true)],
         title: RouteTitles.template,
       },
       {
@@ -53,6 +53,7 @@ export const templatesRoutes: Routes = [
         path: `:id/${AppRoutes.edit}`,
         component: TemplateEditComponent,
         canDeactivate: [unsavedDataGuard<TemplateEditComponent>()],
+        resolve: { templateForm: templateFormResolver },
         title: RouteTitles.template,
       },
     ],

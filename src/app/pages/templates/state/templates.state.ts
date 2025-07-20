@@ -41,6 +41,7 @@ export interface TemplatesStateModel {
   templateList: TemplateDto[];
   selectedTemplateList: number[];
   isTemplateLoading: boolean;
+  templateLoadErr: boolean;
   template: TemplateDto | null;
   isDeleteInProgress: boolean;
   isSaveInProgress: boolean;
@@ -88,6 +89,11 @@ export class TemplatesState {
   @Selector()
   public static isTemplateLoading$({ isTemplateLoading }: TemplatesStateModel): boolean {
     return isTemplateLoading;
+  }
+
+  @Selector()
+  public static templateLoadErr$({ templateLoadErr }: TemplatesStateModel): boolean {
+    return templateLoadErr;
   }
 
   @Selector()
@@ -164,7 +170,7 @@ export class TemplatesState {
       }),
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
-        setState(patch({ isTemplateLoading: false }));
+        setState(patch({ isTemplateLoading: false, templateLoadErr: true }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),

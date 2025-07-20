@@ -1,15 +1,16 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { FieldType } from '@api/templates/template-api.models';
-import { FileFormGroup } from '@shared/shared.models';
+import { FileFormGroupArray } from '@shared/shared.models';
 
 export type TemplateFormGroup = FormGroup<TemplateForm>;
 export type TemplateForm = {
   name: FormControl<string>;
   description: FormControl<string>;
-  fields: FormArray<TemplateFieldFormGroup>;
-  files: FormArray<FileFormGroup>;
+  fields: TemplateFieldFormGroupArray;
+  files: FileFormGroupArray;
 };
 
+export type TemplateFieldFormGroupArray = FormArray<TemplateFieldFormGroup>;
 export type TemplateFieldFormGroup = FormGroup<TemplateFieldForm>;
 export type TemplateFieldForm = {
   caption: FormControl<string>;

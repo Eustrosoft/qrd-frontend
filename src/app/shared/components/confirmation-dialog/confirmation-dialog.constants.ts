@@ -7,7 +7,7 @@ export const ConfirmationDialogLocalization = {
   localeChange: $localize`:@@confirmDialog.localeChange:Change of language requires reload, proceed?`,
   deletion: $localize`:@@confirmDialog.deletion:Deletion`,
   areYouSure: $localize`:@@confirmDialog.areYouSure:Are you sure?`,
-  saveBeforeExit: $localize`:@@confirmDialog.saveBeforeExit:Save data before exit?`,
+  saveBeforeExit: $localize`:@@confirmDialog.saveBeforeExit:Looks like form contains unsaved changes. Save data before exit?`,
 };
 
 export const DeletionDialogData: ConfirmationDialogData = {

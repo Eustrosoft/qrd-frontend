@@ -1,4 +1,4 @@
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { FileStorageType } from '@api/files/file-api.models';
 
 export type FlexDirection = 'column' | 'row' | 'column-reverse' | 'row-reverse' | '';
@@ -81,6 +81,7 @@ export type DictionaryItem = {
   description: string;
 };
 
+export type FileFormGroupArray = FormArray<FileFormGroup>;
 export type FileFormGroup = FormGroup<FileForm>;
 export type FileForm = {
   id: FormControl<number>;

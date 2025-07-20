@@ -2,7 +2,7 @@
   <mat-nav-list role="list">
     @for (attachmentMode of attachmentModeList; track attachmentMode.mode) {
       <button
-        (click)="fileAttachmentMode.set(attachmentMode.mode)"
+        (click)="fileUploadFormFactoryService.setFileAttachmentMode(attachmentMode.mode)"
         [activated]="fileAttachmentMode() === attachmentMode.mode"
         mat-list-item
       >

@@ -1,19 +1,15 @@
-import { ChangeDetectionStrategy, Component, input, model, OnDestroy, OnInit, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnDestroy, OnInit, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatListItem, MatNavList } from '@angular/material/list';
-import { AttachmentModeListItem, FileAttachmentMode, UploadState } from '@app/pages/files/files.models';
+import { AttachmentModeListItem, UploadState } from '@app/pages/files/files.models';
 import { FilesLocalization } from '@app/pages/files/files.constants';
 import { FileDto } from '@api/files/file-api.models';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
-import {
-  AddFileUrl,
-  ResetFileUploadState,
-  UpdateFileMetadata,
-  UploadBlobByChunks,
-} from '@app/pages/files/components/file-upload/state/file-upload.actions';
+import { ResetFileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.actions';
 import { FileUploadBlobComponent } from '@app/pages/files/components/file-upload-blob/file-upload-blob.component';
-import { FileAsUrlComponent } from '@app/pages/files/components/file-add-url/file-as-url.component';
+import { FileAsUrlComponent } from '@app/pages/files/components/file-as-url/file-as-url.component';
+import { FileUploadFormFactoryService } from '@app/pages/files/components/file-upload/service/file-upload-form-factory.service';
 
 @Component({
   selector: 'file-upload',
@@ -23,18 +19,17 @@ import { FileAsUrlComponent } from '@app/pages/files/components/file-add-url/fil
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileUploadComponent implements OnInit, OnDestroy {
+  protected readonly fileUploadFormFactoryService = inject(FileUploadFormFactoryService);
+
   protected readonly selectors = createSelectMap({
     isLoading: FileUploadState.isLoading$,
     uploadState: FileUploadState.getUploadState$,
   });
   protected readonly actions = createDispatchMap({
-    uploadBlobByChunks: UploadBlobByChunks,
-    addFileUrl: AddFileUrl,
-    updateFileMetadata: UpdateFileMetadata,
     resetFileUploadState: ResetFileUploadState,
   });
 
-  public readonly fileAttachmentMode = model<FileAttachmentMode>('upload');
+  protected readonly fileAttachmentMode = this.fileUploadFormFactoryService.getFileAttachmentMode();
   public readonly fileMetadata = input<FileDto | null>(null);
   public readonly uploadCompleted = output<UploadState | null>();
 
@@ -51,11 +46,14 @@ export class FileUploadComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     if (this.fileMetadata()?.storagePath) {
-      this.fileAttachmentMode.set('fileUrl');
+      this.fileUploadFormFactoryService.setFileAttachmentMode('fileUrl');
+    } else {
+      this.fileUploadFormFactoryService.setFileAttachmentMode('upload');
     }
   }
 
   public ngOnDestroy(): void {
     this.actions.resetFileUploadState();
+    this.fileUploadFormFactoryService.dispose();
   }
 }

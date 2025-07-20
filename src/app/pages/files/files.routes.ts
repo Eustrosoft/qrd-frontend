@@ -7,6 +7,7 @@ import { FileViewComponent } from '@app/pages/files/components/file-view/file-vi
 import { FileMainComponent } from '@app/pages/files/components/file-main/file-main.component';
 import { FileUsagesComponent } from '@app/pages/files/components/file-usages/file-usages.component';
 import { FileEditComponent } from '@app/pages/files/components/file-edit/file-edit.component';
+import { unsavedDataGuard } from '@shared/guards/unsaved-data.guard';
 
 export const filesRoutes: Routes = [
   {
@@ -45,6 +46,7 @@ export const filesRoutes: Routes = [
       {
         path: `:id/${AppRoutes.edit}`,
         component: FileEditComponent,
+        canDeactivate: [unsavedDataGuard<FileEditComponent>()],
         title: RouteTitles.file,
       },
     ],
