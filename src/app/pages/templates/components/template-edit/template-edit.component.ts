@@ -23,12 +23,12 @@ import {
   ResetTemplatesState,
   SaveTemplate,
 } from '@app/pages/templates/state/templates.actions';
-import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
+import { MatButton, MatFabButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
-import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
+import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
+import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { TemplatesLocalization } from '@app/pages/templates/templates.constants';
 import { FilesLocalization, MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
 import { ErrorStateMatcher, MatOption } from '@angular/material/core';
@@ -55,6 +55,8 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { TemplateFormGroup } from '@app/pages/templates/templates.models';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
 import { FileEditableMetadata } from '@api/files/file-api.models';
+import { MatTooltip } from '@angular/material/tooltip';
+import { BannerComponent } from '@shared/components/banner/banner.component';
 
 @Component({
   selector: 'template-edit',
@@ -82,6 +84,10 @@ import { FileEditableMetadata } from '@api/files/file-api.models';
     FileUploadComponent,
     MatProgressSpinner,
     MatFabButton,
+    MatSuffix,
+    MatTooltip,
+    MatMiniFabButton,
+    BannerComponent,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './template-edit.component.html',
@@ -93,6 +99,7 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly actions$ = inject(Actions);
   protected readonly destroyRef = inject(DestroyRef);
+  protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly templateId = this.activatedRoute.snapshot.paramMap.get('id');
   protected readonly form = toSignal<TemplateFormGroup>(
@@ -148,6 +155,13 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
       return 'repeat(1, 1fr)';
     }
     return 'repeat(3, 1fr)';
+  });
+
+  protected readonly slideTogglesGridTemplateColumns = computed<string>(() => {
+    if (this.isXSmall()) {
+      return 'repeat(1, 1fr)';
+    }
+    return 'repeat(2, 1fr)';
   });
 
   protected readonly templateEff = effect(() => {
@@ -241,7 +255,7 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     this.actions.createTemplate(this.form().getRawValue(), this.destroyRef);
   }
 
-  protected showAdditionalFields(index: number): void {
+  protected toggleAdditionalFields(index: number): void {
     if (index === this.expandedFieldIndex()) {
       this.expandedFieldIndex.set(null);
       return;
