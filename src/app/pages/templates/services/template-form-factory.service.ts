@@ -13,9 +13,7 @@ import { FileStorageType } from '@api/files/file-api.models';
 import { MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
 import { Subject } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class TemplateFormFactoryService {
   private readonly fb = inject(FormBuilder);
   private readonly destroy$ = new Subject<void>();

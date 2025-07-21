@@ -7,32 +7,41 @@ import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { TemplateFormFactoryService } from '@app/pages/templates/services/template-form-factory.service';
 import { TemplateFormGroup } from '@app/pages/templates/templates.models';
 
-export const templateFormResolver: ResolveFn<Observable<TemplateFormGroup>> = (route, state) => {
-  const actions$ = inject(Actions);
-  const templateFormFactoryService = inject(TemplateFormFactoryService);
-  const templateId = route.paramMap.get('id')!;
-  const template = select(TemplatesState.getTemplate$);
-  if (template()) {
-    templateFormFactoryService.initialize({
-      name: template()?.name ?? '',
-      description: template()?.description ?? '',
-      fields: template()?.fields ?? [],
-      files: template()?.files ?? [],
-    });
-    return of(templateFormFactoryService.form);
-  }
+export const templateFormResolver = (isNew = false): ResolveFn<Observable<TemplateFormGroup>> => {
+  return (route, state) => {
+    const actions$ = inject(Actions);
+    const templateFormFactoryService = inject(TemplateFormFactoryService);
 
-  dispatch(FetchTemplate)(+templateId);
-  return actions$.pipe(
-    ofActionCompleted(FetchTemplate),
-    map(() => {
+    if (isNew) {
+      templateFormFactoryService.initialize();
+      return of(templateFormFactoryService.form);
+    }
+
+    const templateId = route.paramMap.get('id')!;
+    const template = select(TemplatesState.getTemplate$);
+
+    if (template()) {
       templateFormFactoryService.initialize({
         name: template()?.name ?? '',
         description: template()?.description ?? '',
         fields: template()?.fields ?? [],
         files: template()?.files ?? [],
       });
-      return templateFormFactoryService.form;
-    }),
-  );
+      return of(templateFormFactoryService.form);
+    }
+
+    dispatch(FetchTemplate)(+templateId);
+    return actions$.pipe(
+      ofActionCompleted(FetchTemplate),
+      map(() => {
+        templateFormFactoryService.initialize({
+          name: template()?.name ?? '',
+          description: template()?.description ?? '',
+          fields: template()?.fields ?? [],
+          files: template()?.files ?? [],
+        });
+        return templateFormFactoryService.form;
+      }),
+    );
+  };
 };

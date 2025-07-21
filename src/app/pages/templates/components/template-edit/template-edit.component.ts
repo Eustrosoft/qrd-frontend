@@ -178,6 +178,9 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
   protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
 
   public ngOnInit(): void {
+    if (this.templateId && !this.selectors.template()) {
+      this.actions.fetchTemplate(+this.templateId, this.destroyRef);
+    }
     this.actions.fetchDictionaryByName('INPUT_TYPE', this.destroyRef);
   }
 
