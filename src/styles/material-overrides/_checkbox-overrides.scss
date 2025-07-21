@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+
+.checkbox-invalid {
+  @include mat.checkbox-overrides(
+    (
+      unselected-icon-color: var(--mat-sys-error),
+      unselected-focus-icon-color: var(--mat-sys-error),
+      unselected-hover-icon-color: var(--mat-sys-error),
+    )
+  );
+}

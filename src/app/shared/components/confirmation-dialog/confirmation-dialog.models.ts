@@ -3,4 +3,6 @@ export interface ConfirmationDialogData {
   textSubContent: string;
   cancelButtonText: string;
   confirmButtonText: string;
+  showConfirmationCheckbox?: boolean;
+  confirmationCheckboxText?: string;
 }

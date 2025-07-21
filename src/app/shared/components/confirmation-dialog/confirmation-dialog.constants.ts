@@ -3,18 +3,22 @@ import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/c
 
 export const ConfirmationDialogLocalization = {
   confirmation: $localize`:@@confirmDialog.confirmation:Confirmation`,
+  confirmationRequired: $localize`:@@confirmDialog.confirmationRequired:Confirmation required`,
   warning: $localize`:@@confirmDialog.warning:Warning`,
   localeChange: $localize`:@@confirmDialog.localeChange:Change of language requires reload, proceed?`,
   deletion: $localize`:@@confirmDialog.deletion:Deletion`,
   areYouSure: $localize`:@@confirmDialog.areYouSure:Are you sure?`,
+  sure: $localize`:@@confirmDialog.sure:Yes, I am sure`,
   saveBeforeExit: $localize`:@@confirmDialog.saveBeforeExit:Looks like form contains unsaved changes. Save data before exit?`,
 };
 
 export const DeletionDialogData: ConfirmationDialogData = {
   textContent: ConfirmationDialogLocalization.deletion,
   textSubContent: ConfirmationDialogLocalization.areYouSure,
-  cancelButtonText: SharedLocalization.no,
-  confirmButtonText: SharedLocalization.yes,
+  cancelButtonText: SharedLocalization.cancel,
+  confirmButtonText: SharedLocalization.delete,
+  showConfirmationCheckbox: true,
+  confirmationCheckboxText: ConfirmationDialogLocalization.sure,
 };
 
 export const ChangeLocaleDialogData: ConfirmationDialogData = {

@@ -7,6 +7,19 @@
 @if (dialogData.textSubContent) {
   <p>{{ dialogData.textSubContent }}</p>
 }
+@if (dialogData.showConfirmationCheckbox) {
+  <mat-checkbox
+    [formControl]="checkboxControl"
+    [class.checkbox-invalid]="checkboxControl.invalid && checkboxControl.touched"
+  >
+    <ui-flex-block>
+      {{ dialogData.confirmationCheckboxText }}
+      @if (checkboxControl.invalid && checkboxControl.touched) {
+        <mat-error> {{ ConfirmationDialogLocalization.confirmationRequired }} </mat-error>
+      }
+    </ui-flex-block>
+  </mat-checkbox>
+}
 <ui-grid-block gridTemplateColumns="repeat(auto-fit, minmax(200px, 1fr))" gridJustifyItems="center">
   <ui-grid-block gridTemplateColumns="repeat(1, 1fr)" gridJustifyItems="center">
     <button [mat-dialog-close]="false" class="fab-icon-primary-button-xxxl" mat-fab cdkFocusInitial>
@@ -17,11 +30,11 @@
     </a>
   </ui-grid-block>
   <ui-grid-block gridTemplateColumns="repeat(1, 1fr)" gridJustifyItems="center">
-    <button [mat-dialog-close]="true" class="fab-icon-primary-button-xxxl" mat-fab>
+    <button (click)="confirm()" class="fab-icon-primary-button-xxxl" mat-fab>
       <mat-icon class="icon-on-primary icon-xxxl">done_all</mat-icon>
     </button>
-    <a [mat-dialog-close]="true" class="button-anchor-md" mat-button interactionEffect>
+    <button (click)="confirm()" class="button-anchor-md" mat-button interactionEffect>
       {{ dialogData.confirmButtonText }}
-    </a>
+    </button>
   </ui-grid-block>
 </ui-grid-block>

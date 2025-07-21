@@ -38,7 +38,7 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 import { MatIcon } from '@angular/material/icon';
 import { FetchDictionaryByName } from '@shared/state/dictionary-registry.actions';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
-import { DictionaryItem } from '@shared/shared.models';
+import { DictionaryItem, FormMode } from '@shared/shared.models';
 import { MatSelect } from '@angular/material/select';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
@@ -99,6 +99,7 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     this.activatedRoute.data.pipe(map((data) => data['templateForm'])),
     { requireSync: true },
   );
+  protected readonly formMode: FormMode = this.activatedRoute.snapshot.data['mode'];
 
   public formHasUnsavedChanges = toSignal<boolean, boolean>(
     merge(
@@ -150,6 +151,9 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
   });
 
   protected readonly templateEff = effect(() => {
+    if (this.formMode === 'new') {
+      return;
+    }
     const template = this.selectors.template();
     this.templateFormFactoryService.patchTemplateForm(
       {

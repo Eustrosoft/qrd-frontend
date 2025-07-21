@@ -54,6 +54,7 @@ export const SharedLocalization = {
   attach: $localize`:@@shared.attach:Attach`,
   save: $localize`:@@shared.save:Save`,
   close: $localize`:@@shared.close:Close`,
+  cancel: $localize`:@@shared.cancel:Cancel`,
   add: $localize`:@@shared.add:Add`,
   value: $localize`:@@shared.value:Value`,
   selectExisting: $localize`:@@shared.selectExisting:Select existing`,
