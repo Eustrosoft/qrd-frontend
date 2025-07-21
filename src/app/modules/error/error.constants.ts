@@ -33,7 +33,7 @@ export const NotificationSnackbarLocalization = {
   errOnFetchList: $localize`:@@notificationSnackbar.errOnFetchList:Error occurred while fetching record list`,
   errOnCreate: $localize`:@@notificationSnackbar.errOnCreate:Error occurred while creating record`,
   errOnSave: $localize`:@@notificationSnackbar.errOnSave:Error occurred while saving`,
-  errOnDelete: $localize`:@@notificationSnackbar.errOnSave:Error occurred while deleting`,
+  errOnDelete: $localize`:@@notificationSnackbar.errOnDelete:Error occurred while deleting`,
   errOnAddFile: $localize`:@@notificationSnackbar.errOnAddFile:Error occurred while adding file`,
 };
 
