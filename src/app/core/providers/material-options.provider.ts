@@ -24,7 +24,7 @@ export function provideMaterialConfig(): Provider[] {
     }),
     provideMatConfigValue(MAT_SELECT_CONFIG, {
       typeaheadDebounceInterval: 150,
-      panelWidth: null,
+      panelWidth: 'auto',
     }),
     provideMatConfigValue(MAT_CHECKBOX_DEFAULT_OPTIONS, { disabledInteractive: false }),
     provideMatConfigValue(MAT_SNACK_BAR_DEFAULT_OPTIONS, {
