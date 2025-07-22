@@ -116,6 +116,7 @@
     "shared.edit": "Edit",
     "shared.print": "Print",
     "shared.delete": "Delete",
+    "shared.deleteRelation": "Delete relation",
     "shared.selected": "Selected",
     "shared.selectAll": "Select all",
     "shared.createDate": "Created at",

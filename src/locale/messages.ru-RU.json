@@ -116,6 +116,7 @@
     "shared.edit": "Редактировать",
     "shared.print": "Печать",
     "shared.delete": "Удалить",
+    "shared.deleteRelation": "Удалить связь",
     "shared.selected": "Выбрано",
     "shared.selectAll": "Выбрать всё",
     "shared.createDate": "Создано",
