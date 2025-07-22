@@ -4,17 +4,10 @@
 @use 'sass:map';
 
 :host {
-  gap: mixins.rem(8);
-  display: grid;
-  align-self: start;
-  justify-items: stretch;
-  grid-template-columns: minmax(100px, 528px);
-
   mat-nav-list {
     gap: mixins.rem(4);
     display: flex;
     padding: 0;
-    flex-flow: row wrap;
     align-items: start;
 
     button {
@@ -31,12 +24,6 @@
   }
 
   @media #{map.get(bp.$breakpoints, xsmall)} {
-    mat-nav-list {
-      flex-flow: column nowrap;
-    }
-  }
-
-  @media #{map.get(bp.$breakpoints, small)} {
     mat-nav-list {
       flex-flow: column nowrap;
     }

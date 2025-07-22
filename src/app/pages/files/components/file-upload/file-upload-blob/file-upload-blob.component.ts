@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   DestroyRef,
   effect,
   ElementRef,
@@ -14,6 +15,7 @@ import { map, Subject } from 'rxjs';
 import { Actions, createDispatchMap, createSelectMap, ofActionSuccessful } from '@ngxs/store';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
 import {
+  ClearFileUploadState,
   ResetFileUploadState,
   UpdateFileMetadata,
   UploadBlobByChunks,
@@ -35,6 +37,9 @@ import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-match
 import { outputFromObservable } from '@angular/core/rxjs-interop';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { FileUploadFormFactoryService } from '@app/pages/files/components/file-upload/service/file-upload-form-factory.service';
+import { FileUploadFormGroup } from '@app/pages/files/files.models';
+import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
+import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 
 @Component({
   selector: 'file-upload-blob',
@@ -56,11 +61,12 @@ import { FileUploadFormFactoryService } from '@app/pages/files/components/file-u
     ReactiveFormsModule,
     MatProgressSpinner,
     MatTooltip,
+    UiGridBlockComponent,
   ],
   templateUrl: './file-upload-blob.component.html',
   styleUrl: './file-upload-blob.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
+  providers: [FileUploadFormFactoryService, { provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
 })
 export class FileUploadBlobComponent implements OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
@@ -70,6 +76,14 @@ export class FileUploadBlobComponent implements OnDestroy {
   private readonly startUpload$ = new Subject<void>();
   private readonly cancelUpload$ = new Subject<void>();
 
+  protected readonly isXSmall = inject(IS_XSMALL);
+  protected readonly gridCols = computed<string>(() => {
+    if (this.isXSmall()) {
+      return 'repeat(1, 1fr)';
+    }
+    return 'repeat(2, 1fr)';
+  });
+
   protected readonly form = this.fileUploadFormFactoryService.fileUploadForm;
   protected readonly selectors = createSelectMap({
     isLoading: FileUploadState.isLoading$,
@@ -78,9 +92,11 @@ export class FileUploadBlobComponent implements OnDestroy {
   protected readonly actions = createDispatchMap({
     uploadBlobByChunks: UploadBlobByChunks,
     updateFileMetadata: UpdateFileMetadata,
+    clearFileUploadState: ClearFileUploadState,
     resetFileUploadState: ResetFileUploadState,
   });
 
+  public readonly hasUnsavedChanges = this.fileUploadFormFactoryService.fileUploadFormHasUnsavedChanges;
   public readonly fileMetadata = input<FileEditableMetadata | null>(null);
   public readonly uploadCompleted = outputFromObservable(
     this.actions$.pipe(
@@ -168,10 +184,15 @@ export class FileUploadBlobComponent implements OnDestroy {
     this.fileInput().nativeElement.files = new DataTransfer().files;
   }
 
+  public getRawValue(): ReturnType<FileUploadFormGroup['getRawValue']> {
+    return this.form.getRawValue();
+  }
+
   public ngOnDestroy(): void {
     this.startUpload$.complete();
     this.cancelUpload$.next();
     this.cancelUpload$.complete();
-    this.fileUploadFormFactoryService.resetFileUploadForm();
+    this.actions.clearFileUploadState();
+    this.fileUploadFormFactoryService.dispose();
   }
 }

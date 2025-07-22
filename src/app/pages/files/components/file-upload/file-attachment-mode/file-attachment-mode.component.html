@@ -1,0 +1,11 @@
+<mat-nav-list role="list">
+  @for (attachmentMode of attachmentModeList; track attachmentMode.mode) {
+    <button
+      (click)="actions.setFileAttachmentMode(attachmentMode.mode)"
+      [activated]="selectors.fileAttachmentMode() === attachmentMode.mode"
+      mat-list-item
+    >
+      {{ attachmentMode.title }}
+    </button>
+  }
+</mat-nav-list>

@@ -85,10 +85,6 @@ export class FileUploadFormFactoryService {
     this.fileUploadForm.reset();
   }
 
-  public resetFileAsUrlForm(): void {
-    this.fileAsUrlForm.reset();
-  }
-
   public dispose(): void {
     this.destroy$.next();
     this.destroy$.complete();

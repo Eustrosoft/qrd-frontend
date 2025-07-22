@@ -34,6 +34,10 @@ export class UpdateFileMetadata {
   ) {}
 }
 
+export class ClearFileUploadState {
+  public static readonly type = '[FileUpload] Clear File Upload State';
+}
+
 export class ResetFileUploadState {
   public static readonly type = '[FileUpload] Reset File Upload State';
 }

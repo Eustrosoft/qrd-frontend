@@ -8,17 +8,21 @@
   <p>{{ dialogData.textSubContent }}</p>
 }
 @if (dialogData.showConfirmationCheckbox) {
-  <mat-checkbox
-    [formControl]="checkboxControl"
-    [class.checkbox-invalid]="checkboxControl.invalid && checkboxControl.touched"
+  <ui-flex-block
+    gapSize="4"
+    [flexAlignItems]="isXSmall() ? 'flex-start' : 'center'"
+    [flexDirection]="isXSmall() ? 'column' : 'row'"
   >
-    <ui-flex-block>
+    <mat-checkbox
+      [formControl]="checkboxControl"
+      [class.checkbox-invalid]="checkboxControl.invalid && checkboxControl.touched"
+    >
       {{ dialogData.confirmationCheckboxText }}
-      @if (checkboxControl.invalid && checkboxControl.touched) {
-        <mat-error> {{ ConfirmationDialogLocalization.confirmationRequired }} </mat-error>
-      }
-    </ui-flex-block>
-  </mat-checkbox>
+    </mat-checkbox>
+    @if (checkboxControl.invalid && checkboxControl.touched) {
+      <mat-error> {{ ConfirmationDialogLocalization.confirmationRequired }} </mat-error>
+    }
+  </ui-flex-block>
 }
 <ui-grid-block gridTemplateColumns="repeat(auto-fit, minmax(200px, 1fr))" gridJustifyItems="center">
   <ui-grid-block gridTemplateColumns="repeat(1, 1fr)" gridJustifyItems="center">

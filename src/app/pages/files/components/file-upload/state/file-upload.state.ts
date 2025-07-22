@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import {
   AddFileUrl,
+  ClearFileUploadState,
   ResetFileUploadState,
   SetFileAttachmentMode,
   UpdateFileMetadata,
@@ -267,6 +268,11 @@ export class FileUploadState {
         }),
         takeUntilDestroyed(destroyRef),
       );
+  }
+
+  @Action(ClearFileUploadState)
+  public clearFileUploadState({ setState }: StateContext<FileUploadStateModel>): void {
+    setState(patch({ uploadState: null }));
   }
 
   @Action(ResetFileUploadState)

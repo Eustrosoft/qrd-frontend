@@ -172,12 +172,21 @@
                     {{ fileInEditIndex() === $index ? 'edit_off' : 'edit_square' }}
                   </mat-icon>
                 </button>
-                <button (click)="deleteFile($index)" class="icon-button-sm" mat-icon-button>
-                  <mat-icon class="icon-primary">link_off</mat-icon>
-                </button>
               </ui-flex-block>
               @if (fileInEditIndex() === $index) {
-                <file-upload [fileMetadata]="fileInEditMetadata()" (saveCompleted)="fileMetadataUpdated()" />
+                @if (fileInEditMetadata()?.storagePath) {
+                  <file-as-url [fileMetadata]="fileInEditMetadata()" (saveCompleted)="fileMetadataUpdated()">
+                    <button (click)="unlinkFile($index)" class="button-lg button-secondary" mat-flat-button>
+                      {{ SharedLocalization.deleteRelation }}
+                    </button>
+                  </file-as-url>
+                } @else {
+                  <file-upload-blob [fileMetadata]="fileInEditMetadata()" (saveCompleted)="fileMetadataUpdated()">
+                    <button (click)="unlinkFile($index)" class="button-lg button-secondary" mat-flat-button>
+                      {{ SharedLocalization.deleteRelation }}
+                    </button>
+                  </file-upload-blob>
+                }
               }
             } @empty {
               {{ SharedLocalization.noFiles }}
@@ -192,7 +201,13 @@
             </button>
           </ui-flex-block>
           @if (isUploadVisible()) {
-            <file-upload (uploadCompleted)="addFileToTemplate($event)" />
+            <file-attachment-mode />
+            @if (selectors.fileAttachmentMode() === 'upload') {
+              <file-upload-blob (uploadCompleted)="addFileToTemplate($event)" />
+            }
+            @if (selectors.fileAttachmentMode() === 'fileUrl') {
+              <file-as-url (uploadCompleted)="addFileToTemplate($event)" />
+            }
           }
           @if (isFileSelectorVisible()) {
             <ui-grid-block gridTemplateColumns="repeat(1, 1fr)">

@@ -31,28 +31,33 @@
     <mat-error>{{ SharedLocalization.mustBeUrl }}</mat-error>
   }
 </mat-form-field>
-<ui-flex-block flexWrap="wrap">
-  <mat-slide-toggle [formControl]="form.controls.isPublic" class="slide-toggle">
-    {{ SharedLocalization.isPubliclyAvailable }}
-  </mat-slide-toggle>
-  <mat-slide-toggle [formControl]="form.controls.isActive" class="slide-toggle">
-    {{ SharedLocalization.isActive }}
-  </mat-slide-toggle>
-</ui-flex-block>
-<ui-flex-block>
-  @if (!fileMetadata()) {
-    @if (!selectors.isLoading()) {
-      <button (click)="addFileUrl()" class="button-lg button-secondary" mat-flat-button>
-        {{ SharedLocalization.save }}
-      </button>
+<ui-grid-block [gridTemplateColumns]="gridCols()" gridAlignItems="center">
+  <ui-grid-block [gridTemplateColumns]="gridCols()">
+    <mat-slide-toggle [formControl]="form.controls.isPublic" class="slide-toggle">
+      {{ SharedLocalization.isPubliclyAvailable }}
+    </mat-slide-toggle>
+    <mat-slide-toggle [formControl]="form.controls.isActive" class="slide-toggle">
+      {{ SharedLocalization.isActive }}
+    </mat-slide-toggle>
+  </ui-grid-block>
+  <ui-grid-block gridTemplateColumns="repeat(auto-fit, minmax(100px, 1fr))" gridAlignItems="center">
+    <ng-content />
+    @if (!fileMetadata()) {
+      @if (!selectors.isLoading()) {
+        <button (click)="addFileUrl()" class="button-lg button-secondary" mat-flat-button>
+          {{ SharedLocalization.save }}
+        </button>
+      } @else {
+        <ui-skeleton height="40" width="124" />
+      }
     } @else {
-      <ui-skeleton height="40" width="124" />
+      @if (!selectors.isLoading()) {
+        <button (click)="save()" class="button-lg button-secondary" mat-flat-button>
+          {{ SharedLocalization.save }}
+        </button>
+      } @else {
+        <ui-skeleton height="40" width="124" />
+      }
     }
-  } @else {
-    @if (!selectors.isLoading()) {
-      <button (click)="save()" class="button-lg button-secondary" mat-flat-button>{{ SharedLocalization.save }}</button>
-    } @else {
-      <ui-skeleton height="40" width="124" />
-    }
-  }
-</ui-flex-block>
+  </ui-grid-block>
+</ui-grid-block>

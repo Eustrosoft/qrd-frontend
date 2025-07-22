@@ -44,7 +44,6 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 import { DatePipe } from '@angular/common';
 import { FileListItemComponent } from '@shared/components/file-list-item/file-list-item.component';
-import { FileUploadComponent } from '@app/pages/files/components/file-upload/file-upload.component';
 import { UploadState } from '@app/pages/files/files.models';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
@@ -57,6 +56,10 @@ import { easyHash } from '@shared/utils/functions/easy-hash.function';
 import { FileEditableMetadata } from '@api/files/file-api.models';
 import { MatTooltip } from '@angular/material/tooltip';
 import { BannerComponent } from '@shared/components/banner/banner.component';
+import { FileAsUrlComponent } from '@app/pages/files/components/file-upload/file-as-url/file-as-url.component';
+import { FileUploadBlobComponent } from '@app/pages/files/components/file-upload/file-upload-blob/file-upload-blob.component';
+import { FileAttachmentModeComponent } from '@app/pages/files/components/file-upload/file-attachment-mode/file-attachment-mode.component';
+import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
 
 @Component({
   selector: 'template-edit',
@@ -81,13 +84,15 @@ import { BannerComponent } from '@shared/components/banner/banner.component';
     BytesToSizePipe,
     DatePipe,
     FileListItemComponent,
-    FileUploadComponent,
     MatProgressSpinner,
     MatFabButton,
     MatSuffix,
     MatTooltip,
     MatMiniFabButton,
     BannerComponent,
+    FileAsUrlComponent,
+    FileUploadBlobComponent,
+    FileAttachmentModeComponent,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './template-edit.component.html',
@@ -132,6 +137,7 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     template: TemplatesState.getTemplate$,
     inputType: DictionaryRegistryState.getDictionary$<DictionaryItem>('INPUT_TYPE'),
     filesState: TemplatesState.getFilesState$,
+    fileAttachmentMode: FileUploadState.getFileAttachmentMode$,
   });
   protected readonly actions = createDispatchMap({
     fetchTemplate: FetchTemplate,
@@ -216,8 +222,10 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     this.templateFormFactoryService.deleteField(index);
   }
 
-  protected deleteFile(index: number): void {
-    this.templateFormFactoryService.deleteFile(index);
+  protected unlinkFile(index: number): void {
+    this.fileInEditIndex.set(null);
+    this.fileInEditMetadata.set(null);
+    this.templateFormFactoryService.removeFile(index);
   }
 
   public isDataSaved(): boolean {

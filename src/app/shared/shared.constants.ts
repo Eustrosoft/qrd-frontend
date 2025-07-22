@@ -32,6 +32,7 @@ export const SharedLocalization = {
   edit: $localize`:@@shared.edit:Edit`,
   print: $localize`:@@shared.print:Print`,
   delete: $localize`:@@shared.delete:Delete`,
+  deleteRelation: $localize`:@@shared.deleteRelation:Delete relation`,
   selected: $localize`:@@shared.selected:Selected`,
   selectAll: $localize`:@@shared.selectAll:Select all`,
   createDate: $localize`:@@shared.createDate:Created at`,

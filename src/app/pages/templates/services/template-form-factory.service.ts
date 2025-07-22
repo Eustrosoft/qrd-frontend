@@ -82,7 +82,7 @@ export class TemplateFormFactoryService {
     }
   }
 
-  public deleteFile(index: number): void {
+  public removeFile(index: number): void {
     this.form.controls.files.removeAt(index);
   }
 

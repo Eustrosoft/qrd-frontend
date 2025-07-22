@@ -7,9 +7,20 @@
   <card-container [hideHeading]="true">
     <ng-container content>
       @if (fileId) {
-        <file-upload [fileMetadata]="selectors.file()" (uploadCompleted)="goToView($event)" />
+        @if (selectors.fileAttachmentMode() === 'upload') {
+          <file-upload-blob [fileMetadata]="selectors.file()" />
+        }
+        @if (selectors.fileAttachmentMode() === 'fileUrl') {
+          <file-as-url [fileMetadata]="selectors.file()" />
+        }
       } @else {
-        <file-upload (uploadCompleted)="goToView($event)" />
+        <file-attachment-mode />
+        @if (selectors.fileAttachmentMode() === 'upload') {
+          <file-upload-blob (uploadCompleted)="goToView($event)" />
+        }
+        @if (selectors.fileAttachmentMode() === 'fileUrl') {
+          <file-as-url (uploadCompleted)="goToView($event)" />
+        }
       }
     </ng-container>
   </card-container>

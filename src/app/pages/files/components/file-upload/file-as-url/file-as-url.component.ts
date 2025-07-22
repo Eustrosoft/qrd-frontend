@@ -1,8 +1,16 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, input, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  effect,
+  inject,
+  input,
+  OnDestroy,
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
-import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { map, Subject } from 'rxjs';
@@ -22,6 +30,9 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { outputFromObservable } from '@angular/core/rxjs-interop';
 import { FileUploadFormFactoryService } from '@app/pages/files/components/file-upload/service/file-upload-form-factory.service';
+import { FileAsUrlFormGroup } from '@app/pages/files/files.models';
+import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 
 @Component({
   selector: 'file-as-url',
@@ -33,15 +44,15 @@ import { FileUploadFormFactoryService } from '@app/pages/files/components/file-u
     MatInput,
     MatLabel,
     MatFormField,
-    UiFlexBlockComponent,
     MatSlideToggle,
     UiSkeletonComponent,
     ReactiveFormsModule,
+    UiGridBlockComponent,
   ],
   templateUrl: './file-as-url.component.html',
   styleUrl: './file-as-url.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
+  providers: [FileUploadFormFactoryService, { provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
 })
 export class FileAsUrlComponent implements OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
@@ -50,6 +61,14 @@ export class FileAsUrlComponent implements OnDestroy {
 
   private readonly startUpload$ = new Subject<void>();
   private readonly cancelUpload$ = new Subject<void>();
+
+  protected readonly isXSmall = inject(IS_XSMALL);
+  protected readonly gridCols = computed<string>(() => {
+    if (this.isXSmall()) {
+      return 'repeat(1, 1fr)';
+    }
+    return 'repeat(2, 1fr)';
+  });
 
   protected readonly form = this.fileUploadFormFactoryService.fileAsUrlForm;
   protected readonly selectors = createSelectMap({
@@ -61,6 +80,7 @@ export class FileAsUrlComponent implements OnDestroy {
     updateFileMetadata: UpdateFileMetadata,
   });
 
+  public readonly hasUnsavedChanges = this.fileUploadFormFactoryService.fileAsUrlFormHasUnsavedChanges;
   public readonly fileMetadata = input<FileEditableMetadata | null>(null);
   public readonly uploadCompleted = outputFromObservable(
     this.actions$.pipe(
@@ -123,9 +143,13 @@ export class FileAsUrlComponent implements OnDestroy {
     this.actions.updateFileMetadata(this.fileMetadata()!.id, this.form.getRawValue(), this.destroyRef);
   }
 
+  public getRawValue(): ReturnType<FileAsUrlFormGroup['getRawValue']> {
+    return this.form.getRawValue();
+  }
+
   public ngOnDestroy(): void {
     this.startUpload$.complete();
     this.cancelUpload$.complete();
-    this.fileUploadFormFactoryService.resetFileAsUrlForm();
+    this.fileUploadFormFactoryService.dispose();
   }
 }
