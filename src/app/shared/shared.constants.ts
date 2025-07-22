@@ -60,6 +60,7 @@ export const SharedLocalization = {
   add: $localize`:@@shared.add:Add`,
   ok: $localize`:@@shared.ok:OK`,
   value: $localize`:@@shared.value:Value`,
+  placeholder: $localize`:@@shared.placeholder:Placeholder`,
   selectExisting: $localize`:@@shared.selectExisting:Select existing`,
   pickAFile: $localize`:@@shared.pickAFile:Pick a file`,
   loading: $localize`:@@shared.loading:Loading...`,

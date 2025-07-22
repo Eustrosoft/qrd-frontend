@@ -100,7 +100,7 @@
             <ui-grid-block
               gridAlignItems="center"
               [gridTemplateColumns]="expandedFieldsGridTemplateColumns()"
-              class="expanded-fields-block"
+              class="expanded-block"
             >
               <mat-form-field class="form-field-lg">
                 <mat-label>{{ TemplatesLocalization.dataType }}</mat-label>
@@ -113,7 +113,7 @@
                 </mat-select>
               </mat-form-field>
               <mat-form-field class="form-field-lg">
-                <mat-label>{{ SharedLocalization.value }}</mat-label>
+                <mat-label>{{ SharedLocalization.placeholder }}</mat-label>
                 <input [formControl]="field.controls.placeholder" matInput />
               </mat-form-field>
               <mat-form-field class="form-field-lg">
@@ -175,13 +175,21 @@
               </ui-flex-block>
               @if (fileInEditIndex() === $index) {
                 @if (fileInEditMetadata()?.storagePath) {
-                  <file-as-url [fileMetadata]="fileInEditMetadata()" (saveCompleted)="fileMetadataUpdated()">
+                  <file-as-url
+                    [fileMetadata]="fileInEditMetadata()"
+                    (saveCompleted)="fileMetadataUpdated()"
+                    class="expanded-block"
+                  >
                     <button (click)="unlinkFile($index)" class="button-lg button-secondary" mat-flat-button>
                       {{ SharedLocalization.deleteRelation }}
                     </button>
                   </file-as-url>
                 } @else {
-                  <file-upload-blob [fileMetadata]="fileInEditMetadata()" (saveCompleted)="fileMetadataUpdated()">
+                  <file-upload-blob
+                    [fileMetadata]="fileInEditMetadata()"
+                    (saveCompleted)="fileMetadataUpdated()"
+                    class="expanded-block"
+                  >
                     <button (click)="unlinkFile($index)" class="button-lg button-secondary" mat-flat-button>
                       {{ SharedLocalization.deleteRelation }}
                     </button>

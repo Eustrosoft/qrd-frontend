@@ -144,6 +144,7 @@
     "shared.add": "Add",
     "shared.ok": "OK",
     "shared.value": "Value",
+    "shared.placeholder": "Placeholder",
     "shared.selectExisting": "Select existing",
     "shared.pickAFile": "Pick a file",
     "shared.loading": "Loading...",
