@@ -1,25 +1,30 @@
 <p [title]="caption()" ellipsis>{{ caption() }}</p>
-@if (isTextLike()) {
-  <p [title]="value()" ellipsis>{{ value() }}</p>
+@if (value()) {
+  @if (isTextLike()) {
+    <p [title]="value()" ellipsis>{{ value() }}</p>
+  }
+  @if (type() === 'TEXTAREA') {
+    <p style="white-space: pre-line; word-wrap: break-word; hyphens: auto">{{ value() }}</p>
+  }
+  @if (type() === 'DATE') {
+    <p ellipsis>{{ (value() | date: 'shortDate') ?? value() }}</p>
+  }
+  @if (type() === 'EMAIL') {
+    <a
+      [title]="value()"
+      [href]="`mailto:${value()}`"
+      class="button-anchor-md"
+      style="display: inline"
+      mat-button
+      interactionEffect
+      ellipsis
+    >
+      {{ value() }}
+    </a>
+  }
 }
-@if (type() === 'TEXTAREA') {
-  <p style="white-space: pre-line; word-wrap: break-word; hyphens: auto">{{ value() }}</p>
-}
-@if (type() === 'DATE') {
-  <p ellipsis>{{ value() | date: 'shortDate' }}</p>
-}
-@if (type() === 'EMAIL') {
-  <a
-    [title]="value()"
-    [href]="`mailto:${value()}`"
-    class="button-anchor-md"
-    style="display: inline"
-    mat-button
-    interactionEffect
-    ellipsis
-  >
-    {{ value() }}
-  </a>
+@if (placeholder()) {
+  <p [title]="placeholder()" ellipsis>{{ placeholder() }}</p>
 }
 @if (!hideIconAttrs()) {
   <ui-flex-block flexWrap="wrap">

@@ -19,6 +19,7 @@
     )
   );
 
+  width: fit-content;
   box-shadow: var(--mat-sys-level1);
   border-radius: mixins.rem(12);
 
@@ -27,6 +28,8 @@
   }
 
   @media #{map.get(bp.$breakpoints, xsmall)} {
+    width: auto;
+
     a {
       padding: 0 mixins.rem(24);
     }

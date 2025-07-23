@@ -4,7 +4,7 @@
       @for (field of selectors.template()?.fields; track field.id) {
         <attr-list-item
           [caption]="field.caption"
-          [value]="field.placeholder | fallback: SharedLocalization.empty"
+          [placeholder]="field.placeholder | fallback: SharedLocalization.empty"
           [type]="field.fieldType"
           [isPublic]="field.isPublic"
           [isStatic]="field.isStatic"
