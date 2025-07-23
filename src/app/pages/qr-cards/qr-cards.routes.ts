@@ -6,6 +6,11 @@ import { AppRoutes } from '@app/app.constants';
 import { QrCardMainComponent } from '@app/pages/qr-cards/components/qr-card-main/qr-card-main.component';
 import { QrCardAttrsComponent } from '@app/pages/qr-cards/components/qr-card-attrs/qr-card-attrs.component';
 import { RouteTitles } from '@shared/shared.constants';
+import { QrCardEditComponent } from '@app/pages/qr-cards/components/qr-card-edit/qr-card-edit.component';
+import { QrCardFormFactoryService } from '@app/pages/qr-cards/services/qr-card-form-factory.service';
+import { qrCardFormResolver } from '@app/pages/qr-cards/resolvers/qr-card-form.resolver';
+import { unsavedDataGuard } from '@shared/guards/unsaved-data.guard';
+import { QrCardCreateComponent } from '@app/pages/qr-cards/components/qr-card-create/qr-card-create.component';
 
 export const qrCardsRoutes: Routes = [
   {
@@ -15,6 +20,11 @@ export const qrCardsRoutes: Routes = [
       {
         path: '',
         component: QrCardsLayoutComponent,
+      },
+      {
+        path: AppRoutes.new,
+        component: QrCardCreateComponent,
+        title: RouteTitles.card,
       },
       {
         path: ':code',
@@ -35,6 +45,15 @@ export const qrCardsRoutes: Routes = [
             component: QrCardAttrsComponent,
           },
         ],
+      },
+      {
+        path: `:code/${AppRoutes.edit}`,
+        component: QrCardEditComponent,
+        canDeactivate: [unsavedDataGuard<QrCardEditComponent>()],
+        resolve: { qrCardForm: qrCardFormResolver() },
+        data: { mode: 'edit' },
+        providers: [QrCardFormFactoryService],
+        title: RouteTitles.card,
       },
     ],
   },

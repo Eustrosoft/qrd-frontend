@@ -1,5 +1,5 @@
 <mat-action-list class="create-action-list">
-  <a mat-list-item>
+  <a routerLink="/qr-cards/new" (click)="closeOverlay.emit()" mat-list-item>
     <mat-icon matListItemIcon>article</mat-icon>
     {{ CreateMenuOverlayLocalization.createCard }}
   </a>

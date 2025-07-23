@@ -4,7 +4,6 @@ import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
 import { AppRoutes } from '@app/app.constants';
 import { TabLink } from '@shared/shared.models';
 import { UpperCasePipe } from '@angular/common';
-import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { MatButton } from '@angular/material/button';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
@@ -29,7 +28,6 @@ import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
     MatTabLink,
     MatTabNavPanel,
     UpperCasePipe,
-    UiFlexBlockComponent,
     MatButton,
     RouterLink,
     UiSkeletonComponent,
@@ -65,6 +63,7 @@ export class QrCardViewComponent implements OnInit {
     { link: AppRoutes.attrs, title: RouteTitles.attrs },
   ];
   protected readonly SharedLocalization = SharedLocalization;
+  protected readonly AppRoutes = AppRoutes;
 
   public ngOnInit(): void {
     this.actions.fetchQrCard(this.routeParams()['code'], this.destroyRef);

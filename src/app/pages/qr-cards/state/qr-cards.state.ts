@@ -1,9 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import {
+  AddFileToQrCard,
+  CreateQrCard,
   DeleteQrCards,
   FetchQrCard,
   FetchQrCardList,
+  FetchTemplateList,
+  ResetQrCardsState,
+  SaveQrCard,
   SelectAllQrCards,
   SetQrCardsDataViewDisplayType,
   SetSelectedQrCards,
@@ -25,6 +30,11 @@ import { DeletionDialogData } from '@shared/components/confirmation-dialog/confi
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 import { SnackbarService } from '@shared/service/snackbar.service';
 import { NotificationSnackbarLocalization } from '@modules/error/error.constants';
+import { FileDto } from '@api/files/file-api.models';
+import { FetchFileList } from '@app/pages/qr-cards/state/qr-cards.actions';
+import { FilesService } from '@app/pages/files/services/files.service';
+import { TemplateDto } from '@api/templates/template-api.models';
+import { TemplatesService } from '@app/pages/templates/services/templates.service';
 
 export interface QrCardsStateModel {
   displayType: DataViewDisplayType;
@@ -33,9 +43,18 @@ export interface QrCardsStateModel {
   qrCardList: QRDto[];
   selectedQrCardList: number[];
   isQrCardLoading: boolean;
+  qrCardLoadErr: boolean;
   qrCard: QRDto | null;
   qrCardPreviewUrl: string;
   isDeleteInProgress: boolean;
+  isSaveInProgress: boolean;
+  isTemplateListLoading: boolean;
+  isTemplateListLoadErr: boolean;
+  templateList: TemplateDto[];
+  isQrCardFilesLoading: boolean;
+  isFileListLoading: boolean;
+  isFileListLoadErr: boolean;
+  fileList: FileDto[];
 }
 
 const defaults: QrCardsStateModel = {
@@ -45,9 +64,18 @@ const defaults: QrCardsStateModel = {
   qrCardList: [],
   selectedQrCardList: [],
   isQrCardLoading: false,
+  qrCardLoadErr: false,
   qrCard: null,
   qrCardPreviewUrl: '',
   isDeleteInProgress: false,
+  isSaveInProgress: false,
+  isTemplateListLoading: false,
+  isTemplateListLoadErr: false,
+  templateList: [],
+  isQrCardFilesLoading: false,
+  isFileListLoading: false,
+  isFileListLoadErr: false,
+  fileList: [],
 } as const;
 
 const QR_CARDS_STATE_TOKEN: StateToken<QrCardsStateModel> = new StateToken<QrCardsStateModel>('qrCards');
@@ -59,6 +87,8 @@ const QR_CARDS_STATE_TOKEN: StateToken<QrCardsStateModel> = new StateToken<QrCar
 @Injectable()
 export class QrCardsState {
   private readonly qrCardsService = inject(QrCardsService);
+  private readonly templatesService = inject(TemplatesService);
+  private readonly filesService = inject(FilesService);
   private readonly router = inject(Router);
   private readonly toHexPipe = inject(ToHexPipe);
   private readonly pxToRemPipe = inject(PxToRemPipe);
@@ -91,6 +121,11 @@ export class QrCardsState {
   }
 
   @Selector()
+  public static qrCardLoadErr$({ qrCardLoadErr }: QrCardsStateModel): boolean {
+    return qrCardLoadErr;
+  }
+
+  @Selector()
   public static getQrCard$({ qrCard }: QrCardsStateModel): QRDto | null {
     return qrCard;
   }
@@ -108,6 +143,34 @@ export class QrCardsState {
   @Selector()
   public static isDeleteInProgress$({ isDeleteInProgress }: QrCardsStateModel): boolean {
     return isDeleteInProgress;
+  }
+
+  @Selector()
+  public static isSaveInProgress$({ isSaveInProgress }: QrCardsStateModel): boolean {
+    return isSaveInProgress;
+  }
+
+  @Selector()
+  public static getTemplatesState$({
+    templateList,
+    isTemplateListLoading,
+    isTemplateListLoadErr,
+  }: QrCardsStateModel): Pick<QrCardsStateModel, 'templateList' | 'isTemplateListLoading' | 'isTemplateListLoadErr'> {
+    return { templateList, isTemplateListLoading, isTemplateListLoadErr };
+  }
+
+  @Selector()
+  public static isQrCardFilesLoading$({ isQrCardFilesLoading }: QrCardsStateModel): boolean {
+    return isQrCardFilesLoading;
+  }
+
+  @Selector()
+  public static getFilesState$({
+    fileList,
+    isFileListLoading,
+    isFileListLoadErr,
+  }: QrCardsStateModel): Pick<QrCardsStateModel, 'fileList' | 'isFileListLoading' | 'isFileListLoadErr'> {
+    return { fileList, isFileListLoading, isFileListLoadErr };
   }
 
   @Action(FetchQrCardList)
@@ -139,9 +202,11 @@ export class QrCardsState {
   @Action(FetchQrCard)
   public fetchQrCard(
     { setState }: StateContext<QrCardsStateModel>,
-    { code, destroyRef }: FetchQrCard,
+    { code, destroyRef, showLoading, storeProp }: FetchQrCard,
   ): Observable<QRDto> {
-    setState(patch({ isQrCardLoading: true }));
+    if (showLoading) {
+      setState(patch({ [storeProp]: true, qrCardLoadErr: false }));
+    }
     const qrHexCode = this.toHexPipe.transform(code);
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.qrCardsService.getQrCard(qrHexCode)),
@@ -151,14 +216,14 @@ export class QrCardsState {
             patch({
               qrCard,
               qrCardPreviewUrl: `${QR_API_URL}${qrHexCode}`,
-              isQrCardLoading: false,
+              [storeProp]: false,
             }),
           );
         },
       }),
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
-        setState(patch({ isQrCardLoading: false }));
+        setState(patch({ [storeProp]: false, qrCardLoadErr: true }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),
@@ -185,6 +250,119 @@ export class QrCardsState {
     { displayType }: SetQrCardsDataViewDisplayType,
   ): void {
     setState(patch({ displayType }));
+  }
+
+  @Action(CreateQrCard)
+  public createQrCard(
+    { setState }: StateContext<QrCardsStateModel>,
+    { payload, destroyRef }: CreateQrCard,
+  ): Observable<QRDto> {
+    setState(patch({ isSaveInProgress: true }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.qrCardsService.createQrCard(payload)),
+      tap({
+        next: (qrCard) => {
+          this.snackbarService.success(NotificationSnackbarLocalization.saved);
+          this.router.navigate([AppRoutes.qrCards, qrCard.id, AppRoutes.edit]).then(() => {
+            setState(patch({ isSaveInProgress: false }));
+          });
+        },
+      }),
+      catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnCreate);
+        setState(patch({ isSaveInProgress: false }));
+        return throwError(() => err);
+      }),
+      takeUntilDestroyed(destroyRef),
+    );
+  }
+
+  @Action(SaveQrCard)
+  public saveQrCard(
+    { setState }: StateContext<QrCardsStateModel>,
+    { payload, destroyRef }: SaveQrCard,
+  ): Observable<QRDto> {
+    setState(patch({ isSaveInProgress: true }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.qrCardsService.saveQrCard(payload)),
+      tap({
+        next: () => {
+          this.snackbarService.success(NotificationSnackbarLocalization.saved);
+          setState(patch({ isSaveInProgress: false }));
+        },
+      }),
+      catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnSave);
+        setState(patch({ isSaveInProgress: false }));
+        return throwError(() => err);
+      }),
+      takeUntilDestroyed(destroyRef),
+    );
+  }
+
+  @Action(AddFileToQrCard)
+  public addFileToTemplate(
+    { setState, dispatch }: StateContext<QrCardsStateModel>,
+    { qrCardId, qrCardCode, fileId, destroyRef }: AddFileToQrCard,
+  ): Observable<void> {
+    setState(patch({ isQrCardFilesLoading: true }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.qrCardsService.addFileToQrCard(qrCardId, { id: fileId })),
+      switchMap(() => dispatch(new FetchQrCard(qrCardCode, destroyRef, false))),
+      tap({
+        next: () => {
+          setState(patch({ isQrCardFilesLoading: false }));
+        },
+      }),
+      catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnAddFile);
+        setState(patch({ isQrCardFilesLoading: false }));
+        return throwError(() => err);
+      }),
+      takeUntilDestroyed(destroyRef),
+    );
+  }
+
+  @Action(FetchTemplateList)
+  public fetchTemplateList(
+    { setState }: StateContext<QrCardsStateModel>,
+    { destroyRef }: FetchTemplateList,
+  ): Observable<TemplateDto[]> {
+    setState(patch({ isTemplateListLoading: true, isTemplateListLoadErr: false }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.templatesService.getTemplateList()),
+      tap({
+        next: (templateList) => {
+          setState(patch({ templateList, isTemplateListLoading: false }));
+        },
+      }),
+      catchError((err) => {
+        setState(patch({ isTemplateListLoading: false, isTemplateListLoadErr: true }));
+        return throwError(() => err);
+      }),
+      takeUntilDestroyed(destroyRef),
+    );
+  }
+
+  @Action(FetchFileList)
+  public fetchFileList(
+    { setState }: StateContext<QrCardsStateModel>,
+    { destroyRef }: FetchFileList,
+  ): Observable<FileDto[]> {
+    setState(patch({ isFileListLoading: true, isFileListLoadErr: false }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.filesService.getFileList()),
+      tap({
+        next: (fileList) => {
+          setState(patch({ fileList, isFileListLoading: false }));
+        },
+      }),
+      catchError((err) => {
+        setState(patch({ isFileListLoading: false, isFileListLoadErr: true }));
+        return throwError(() => err);
+      }),
+      takeUntilDestroyed(destroyRef),
+    );
   }
 
   @Action(DeleteQrCards)
@@ -234,5 +412,10 @@ export class QrCardsState {
         return throwError(() => err);
       }),
     );
+  }
+
+  @Action(ResetQrCardsState)
+  public resetQrCardsState({ setState }: StateContext<QrCardsStateModel>): void {
+    setState(defaults);
   }
 }

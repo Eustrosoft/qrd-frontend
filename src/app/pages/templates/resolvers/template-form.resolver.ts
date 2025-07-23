@@ -8,7 +8,7 @@ import { TemplateFormFactoryService } from '@app/pages/templates/services/templa
 import { TemplateFormGroup } from '@app/pages/templates/templates.models';
 
 export const templateFormResolver = (isNew = false): ResolveFn<Observable<TemplateFormGroup>> => {
-  return (route, state) => {
+  return (route) => {
     const actions$ = inject(Actions);
     const templateFormFactoryService = inject(TemplateFormFactoryService);
 

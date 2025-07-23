@@ -1,16 +1,16 @@
 <card-container [hideHeading]="true">
   <ng-container content>
     <ui-grid-block [gridTemplateColumns]="infoGridTemplateColumns()">
-      @if (selectors.qrCard()?.form?.name) {
+      @if (selectors.qrCard()?.form?.id) {
         <card-field [heading]="`${SharedLocalization.template}:`">
           <a
-            routerLink="./"
+            [routerLink]="`/${AppRoutes.templates}/${selectors.qrCard()?.form?.id}`"
             class="button-anchor-md-with-icon"
             interactionEffect
             [targetSelectors]="['p', 'mat-icon']"
             mat-button
           >
-            <p>{{ selectors.qrCard()?.form?.name }}</p>
+            <p>{{ selectors.qrCard()?.form?.name | fallback: SharedLocalization.noName }}</p>
             <mat-icon class="icon-primary">open_in_new</mat-icon>
           </a>
         </card-field>

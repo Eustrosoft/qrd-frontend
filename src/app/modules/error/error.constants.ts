@@ -18,6 +18,7 @@ export const ErrorsLocalization = {
   errorAddingFileUrl: $localize`:@@errors.errorAddingFileUrl:Error adding file URL`,
   errorFetchingFileList: $localize`:@@errors.errorFetchingFileList:Error while fetching file list`,
   errorFetchingTemplate: $localize`:@@errors.errorFetchingTemplate:Error while fetching template`,
+  errorFetchingTemplateList: $localize`:@@errors.errorFetchingTemplateList:Error while fetching template list`,
   errorUpdatingFileMetadata: $localize`:@@errors.errorUpdatingFileMetadata:Error while updating file metadata`,
 } as const;
 

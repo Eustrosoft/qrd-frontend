@@ -18,6 +18,7 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
+import { AppRoutes } from '@app/app.constants';
 
 @Component({
   selector: 'qr-card-main',
@@ -51,6 +52,7 @@ export class QrCardMainComponent {
 
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly RouteTitles = RouteTitles;
+  protected readonly AppRoutes = AppRoutes;
 
   protected readonly infoGridTemplateColumns = computed<string>(() => {
     if (this.isSmallScreen()) {

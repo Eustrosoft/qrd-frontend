@@ -210,7 +210,6 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
 
   public ngOnDestroy(): void {
     this.actions.resetTemplatesState();
-    this.templateFormFactoryService.dispose();
   }
 
   protected addField(): void {

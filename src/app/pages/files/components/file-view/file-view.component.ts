@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '
 import { MatButton } from '@angular/material/button';
 import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { UpperCasePipe } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -27,7 +26,6 @@ import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
     RouterLink,
     RouterLinkActive,
     RouterOutlet,
-    UiFlexBlockComponent,
     UiSkeletonComponent,
     UpperCasePipe,
     EllipsisDirective,

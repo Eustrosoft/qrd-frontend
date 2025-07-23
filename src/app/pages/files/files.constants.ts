@@ -9,7 +9,7 @@ export const DEFAULT_FILE_UPLOAD_STATE: FileUploadStateModel = {
 export const DEFAULT_CHUNK_SIZE = 1048576; // 1 MB
 export const MAX_NAME_LENGTH = 127;
 export const MAX_DESCRIPTION_LENGTH = 511;
-export const MAX_STORAGE_PATH_LENGTH = 2048;
+export const MAX_URL_LENGTH = 2048;
 
 export const FilesLocalization = {
   selectFile: $localize`:@@files.selectFile:Select file`,

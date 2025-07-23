@@ -5,7 +5,6 @@ import { MatButton } from '@angular/material/button';
 import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
-import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { UpperCasePipe } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -28,7 +27,6 @@ import { TemplatesState } from '@app/pages/templates/state/templates.state';
     RouterLinkActive,
     RouterOutlet,
     ToolbarComponent,
-    UiFlexBlockComponent,
     UiSkeletonComponent,
     UpperCasePipe,
     RouterLink,

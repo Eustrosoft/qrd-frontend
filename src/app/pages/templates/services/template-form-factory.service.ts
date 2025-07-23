@@ -7,16 +7,15 @@ import {
   TemplateForm,
   TemplateFormGroup,
 } from '@app/pages/templates/templates.models';
-import { FileForm, FileFormGroup, FileFormGroupArray } from '@shared/shared.models';
+import { FileFormGroup } from '@shared/shared.models';
 import { FieldType } from '@api/templates/template-api.models';
-import { FileStorageType } from '@api/files/file-api.models';
 import { MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
-import { Subject } from 'rxjs';
+import { SharedFormFactoryService } from '@shared/service/shared-form-factory.service';
 
 @Injectable()
 export class TemplateFormFactoryService {
   private readonly fb = inject(FormBuilder);
-  private readonly destroy$ = new Subject<void>();
+  private readonly sharedFormFactoryService = inject(SharedFormFactoryService);
 
   private _form: TemplateFormGroup | null = null;
   private _isInitialized = false;
@@ -45,7 +44,7 @@ export class TemplateFormFactoryService {
         Validators.maxLength(MAX_DESCRIPTION_LENGTH),
       ]),
       fields: this.makeFieldFormGroupArray(initialData?.fields ?? []),
-      files: this.makeFileFormGroupArray(initialData?.files ?? []),
+      files: this.sharedFormFactoryService.makeFileFormGroupArray(initialData?.files ?? []),
     });
   }
 
@@ -72,7 +71,7 @@ export class TemplateFormFactoryService {
   }
 
   public addFile(initial: Partial<ReturnType<FileFormGroup['getRawValue']>> = {}, emitEvent = true): void {
-    this.form.controls.files.push(this.makeFileFormGroup(initial), { emitEvent });
+    this.form.controls.files.push(this.sharedFormFactoryService.makeFileFormGroup(initial), { emitEvent });
   }
 
   public patchFiles(fileList: Partial<ReturnType<FileFormGroup['getRawValue']>>[] = [], emitEvent = true): void {
@@ -105,30 +104,5 @@ export class TemplateFormFactoryService {
       name: this.fb.nonNullable.control<string>(initial?.name ?? `FN${last}`),
       placeholder: this.fb.nonNullable.control<string>(initial?.placeholder ?? ''),
     });
-  }
-
-  protected makeFileFormGroupArray(
-    fileList: Partial<ReturnType<FileFormGroupArray['getRawValue']>> = [],
-  ): FileFormGroupArray {
-    return this.fb.array(fileList.map((field) => this.makeFileFormGroup(field)));
-  }
-
-  protected makeFileFormGroup(initial: Partial<ReturnType<FileFormGroup['getRawValue']>> = {}): FileFormGroup {
-    return this.fb.group<FileForm>({
-      id: this.fb.nonNullable.control<number>(initial?.id ?? -1),
-      fileStorageType: this.fb.nonNullable.control<FileStorageType>(initial?.fileStorageType ?? 'DB'),
-      name: this.fb.nonNullable.control<string>(initial?.name ?? ''),
-      description: this.fb.nonNullable.control<string>(initial?.description ?? ''),
-      storagePath: this.fb.nonNullable.control<string>(initial?.storagePath ?? ''),
-      fileSize: this.fb.nonNullable.control<number>(initial?.fileSize ?? 0),
-      isPublic: this.fb.nonNullable.control<boolean>(initial?.isPublic ?? false),
-      isActive: this.fb.nonNullable.control<boolean>(initial?.isActive ?? false),
-      updated: this.fb.nonNullable.control<string>(initial?.updated ?? ''),
-    });
-  }
-
-  public dispose(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

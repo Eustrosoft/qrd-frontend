@@ -36,4 +36,8 @@ p {
 
 small {
   font: var(--mat-sys-body-small);
+
+  &.bold {
+    font-weight: 700;
+  }
 }

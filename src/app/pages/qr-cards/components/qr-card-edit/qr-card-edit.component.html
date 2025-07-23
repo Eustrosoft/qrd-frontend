@@ -1,0 +1,251 @@
+@if (!selectors.qrCardLoadErr()) {
+  @if (!selectors.isQrCardLoading()) {
+    <card-container [hideHeading]="true">
+      <ng-container content>
+        <toolbar>
+          @if (!isSmallScreen()) {
+            <ng-container heading>
+              <h1>{{ QrCardsLocalization.editing }}</h1>
+            </ng-container>
+          }
+          <ng-container action-buttons>
+            @if (!selectors.isSaveInProgress()) {
+              <button (click)="saveData()" class="button-md" mat-flat-button>
+                {{ SharedLocalization.save }}
+              </button>
+            } @else {
+              <ui-skeleton height="40" width="128" />
+            }
+          </ng-container>
+        </toolbar>
+      </ng-container>
+    </card-container>
+    <card-container>
+      <ng-container heading>
+        <h1>{{ RouteTitles.card }}</h1>
+      </ng-container>
+      <ng-container content>
+        <ui-grid-block gridAlignItems="start" [gridTemplateColumns]="gridTemplateColumns()">
+          <mat-form-field class="form-field-lg">
+            @if (selectors.templatesState().isTemplateListLoading) {
+              <mat-label>
+                <ui-flex-block>
+                  <p>{{ SharedLocalization.loading }}</p>
+                  <mat-spinner diameter="24"></mat-spinner>
+                </ui-flex-block>
+              </mat-label>
+            } @else {
+              <mat-label>
+                @if (selectors.templatesState().isTemplateListLoadErr) {
+                  <ui-flex-block flexAlignItems="center">
+                    <p class="error-color">{{ ErrorsLocalization.errorFetchingTemplateList }}</p>
+                    <button (click)="actions.fetchTemplateList(destroyRef)" class="icon-button-sm" mat-icon-button>
+                      <mat-icon class="icon-primary">refresh</mat-icon>
+                    </button>
+                  </ui-flex-block>
+                } @else {
+                  {{ SharedLocalization.template }}
+                }
+              </mat-label>
+            }
+            <mat-hint>
+              <a class="button-anchor-sm" href="https://qxyz.ru" target="_blank" mat-button interactionEffect>
+                <small class="bold">{{ SharedLocalization.openTemplate }}</small>
+              </a>
+            </mat-hint>
+            <mat-select [formControl]="form().controls.formId">
+              @for (template of selectors.templatesState().templateList; track template.id) {
+                <mat-option class="option-lg" [value]="template.id">{{ template.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ SharedLocalization.name }} </mat-label>
+            <input [formControl]="form().controls.name" matInput />
+            @if (form().controls.name.touched && form().controls.name.hasError('required')) {
+              <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+            }
+            @if (form().controls.name.touched && form().controls.name.hasError('maxlength')) {
+              <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_NAME_LENGTH }}</mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ SharedLocalization.description }} </mat-label>
+            <textarea [formControl]="form().controls.description" matInput></textarea>
+            @if (form().controls.description.touched && form().controls.description.hasError('required')) {
+              <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+            }
+            @if (form().controls.description.touched && form().controls.description.hasError('maxlength')) {
+              <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_DESCRIPTION_LENGTH }}</mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field class="form-field-lg">
+            <mat-label>
+              {{ SharedLocalization.action }}
+            </mat-label>
+            <mat-select [formControl]="form().controls.action">
+              @for (action of selectors.qrCardActions().list; track action.value) {
+                <mat-option class="option-lg" [value]="action.value">{{ action.description }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ SharedLocalization.redirectLink }} </mat-label>
+            <input [formControl]="form().controls.redirect" matInput />
+            @if (form().controls.redirect.touched && form().controls.redirect.hasError('maxlength')) {
+              <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_STORAGE_PATH_LENGTH }}</mat-error>
+            }
+            @if (form().controls.redirect.touched && form().controls.redirect.hasError('pattern')) {
+              <mat-error>{{ SharedLocalization.mustBeUrl }}</mat-error>
+            }
+          </mat-form-field>
+        </ui-grid-block>
+      </ng-container>
+    </card-container>
+    <card-container>
+      <ng-container heading>
+        <h1>{{ RouteTitles.attrs }}</h1>
+      </ng-container>
+      <ng-container content>
+        <!--        @for (field of form().controls.fields.controls; track field) {-->
+        <!--          <ui-flex-block flexAlignItems="center">-->
+        <!--            <mat-form-field class="form-field-lg" style="flex: auto">-->
+        <!--              <mat-label> {{ SharedLocalization.name }} </mat-label>-->
+        <!--              <input [formControl]="field.controls.caption" matInput />-->
+        <!--            </mat-form-field>-->
+        <!--          </ui-flex-block>-->
+        <!--        }-->
+      </ng-container>
+    </card-container>
+    <card-container>
+      <ng-container heading>
+        <h1>{{ RouteTitles.files }}</h1>
+      </ng-container>
+      <ng-container content>
+        @if (!selectors.isTemplateFilesLoading()) {
+          <ui-grid-block gridTemplateColumns="repeat(1, 1fr)">
+            @for (file of form().controls.files.controls; track file) {
+              <ui-flex-block flexAlignItems="center">
+                <file-list-item
+                  [fileHref]="`files/${file.controls.id.value}`"
+                  [fileStorageType]="file.controls.fileStorageType.value"
+                  [name]="file.controls.name.value"
+                  [fileSize]="file.controls.fileSize.value | bytesToSize"
+                  [isPublic]="file.controls.isPublic.value"
+                  [isActive]="file.controls.isActive.value"
+                  [updated]="(file.controls.updated.value | date: 'short') ?? ''"
+                  style="flex: auto"
+                />
+                <button (click)="showFileEdit(file.getRawValue(), $index)" class="icon-button-sm" mat-icon-button>
+                  <mat-icon class="icon-primary">
+                    {{ fileInEditIndex() === $index ? 'edit_off' : 'edit_square' }}
+                  </mat-icon>
+                </button>
+              </ui-flex-block>
+              @if (fileInEditIndex() === $index) {
+                @if (fileInEditMetadata()?.storagePath) {
+                  <file-as-url
+                    [fileMetadata]="fileInEditMetadata()"
+                    (saveCompleted)="fileMetadataUpdated()"
+                    class="expanded-block"
+                  >
+                    <button (click)="unlinkFile($index)" class="button-lg button-secondary" mat-flat-button>
+                      {{ SharedLocalization.deleteRelation }}
+                    </button>
+                  </file-as-url>
+                } @else {
+                  <file-upload-blob
+                    [fileMetadata]="fileInEditMetadata()"
+                    (saveCompleted)="fileMetadataUpdated()"
+                    class="expanded-block"
+                  >
+                    <button (click)="unlinkFile($index)" class="button-lg button-secondary" mat-flat-button>
+                      {{ SharedLocalization.deleteRelation }}
+                    </button>
+                  </file-upload-blob>
+                }
+              }
+            } @empty {
+              {{ SharedLocalization.noFiles }}
+            }
+          </ui-grid-block>
+          <ui-flex-block>
+            <button (click)="showFileUpload()" class="button-lg button-secondary" mat-flat-button>
+              {{ FilesLocalization.uploadFile }}
+            </button>
+            <button (click)="showFileSelection()" class="button-lg button-secondary" mat-flat-button>
+              {{ SharedLocalization.selectExisting }}
+            </button>
+          </ui-flex-block>
+          @if (isUploadVisible()) {
+            <file-attachment-mode />
+            @if (selectors.fileAttachmentMode() === 'upload') {
+              <file-upload-blob (uploadCompleted)="addFileToTemplate($event)" />
+            }
+            @if (selectors.fileAttachmentMode() === 'fileUrl') {
+              <file-as-url (uploadCompleted)="addFileToTemplate($event)" />
+            }
+          }
+          @if (isFileSelectorVisible()) {
+            <ui-grid-block gridTemplateColumns="repeat(1, 1fr)">
+              <mat-form-field class="form-field-lg">
+                @if (selectors.filesState().isFileListLoading) {
+                  <mat-label>
+                    <ui-flex-block>
+                      <p>{{ SharedLocalization.loading }}</p>
+                      <mat-spinner diameter="24"></mat-spinner>
+                    </ui-flex-block>
+                  </mat-label>
+                } @else {
+                  <mat-label>
+                    @if (selectors.filesState().isFileListLoadErr) {
+                      <ui-flex-block flexAlignItems="center">
+                        <p class="error-color">{{ ErrorsLocalization.errorFetchingFileList }}</p>
+                        <button (click)="actions.fetchFileList(destroyRef)" class="icon-button-sm" mat-icon-button>
+                          <mat-icon class="icon-primary">refresh</mat-icon>
+                        </button>
+                      </ui-flex-block>
+                    } @else {
+                      {{ SharedLocalization.pickAFile }}
+                    }
+                  </mat-label>
+                }
+                <mat-select #select multiple>
+                  @for (file of selectors.filesState().fileList; track file.id) {
+                    <mat-option class="option-lg" [value]="file.id">{{ file.name }}</mat-option>
+                  } @empty {
+                    {{ SharedLocalization.noFiles }}
+                  }
+                </mat-select>
+              </mat-form-field>
+              <button
+                (click)="addExistingFilesToTemplate(select.value ?? [])"
+                class="button-lg button-secondary"
+                mat-flat-button
+              >
+                {{ SharedLocalization.attach }}
+              </button>
+            </ui-grid-block>
+          }
+        } @else {
+          <ui-skeleton height="512" />
+        }
+        @if (isSmallScreen()) {
+          @if (!selectors.isSaveInProgress()) {
+            <button (click)="saveData()" class="fab-lg fab-primary-container save-fab-btn" mat-fab>
+              <mat-icon class="icon-primary">save</mat-icon>
+            </button>
+          } @else {
+            <ui-skeleton height="56" width="56" borderRadius="50%" class="save-fab-btn" />
+          }
+        }
+      </ng-container>
+    </card-container>
+  } @else {
+    <ui-skeleton height="176" />
+    <ui-skeleton height="262" />
+    <ui-skeleton height="512" />
+  }
+} @else {
+  <banner [title]="ErrorsLocalization.errorFetchingTemplate" />
+}

@@ -25,7 +25,7 @@
     <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
   }
   @if (form.controls.storagePath.touched && form.controls.storagePath.hasError('maxlength')) {
-    <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_STORAGE_PATH_LENGTH }}</mat-error>
+    <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_URL_LENGTH }}</mat-error>
   }
   @if (form.controls.storagePath.touched && form.controls.storagePath.hasError('pattern')) {
     <mat-error>{{ SharedLocalization.mustBeUrl }}</mat-error>

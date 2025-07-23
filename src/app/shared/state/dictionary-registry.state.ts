@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, createSelector, NgxsAfterBootstrap, State, StateContext, StateToken } from '@ngxs/store';
 import { Dictionaries, DictionaryState } from '@app/app.models';
-import { Option } from '@shared/shared.models';
+import { DictionaryItem, Option } from '@shared/shared.models';
 import { ThemePickerOverlayLocalization } from '@shared/components/theme-picker-overlay/theme-picker-overlay.constants';
 import { patch } from '@ngxs/store/operators';
 import { LocalesLocalization, RouteTitles } from '@shared/shared.constants';
@@ -12,6 +12,7 @@ import { FetchDictionaryByName } from '@shared/state/dictionary-registry.actions
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { QrCardActionsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
 
 // eslint-disable-next-line
 export interface DictionaryRegistryStateModel<T = any> {
@@ -130,6 +131,36 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
                 icon: 'note_add',
                 route: '/not-found',
                 title: RouteTitles.docs,
+              },
+            ],
+            isLoading: false,
+            isLoadError: false,
+          }),
+          qrCardActions: patch<DictionaryState<DictionaryItem>>({
+            list: [
+              {
+                name: '',
+                code: '',
+                value: 'STD',
+                description: QrCardActionsLocalization.std,
+              },
+              {
+                name: '',
+                code: '',
+                value: 'REDIRECT',
+                description: QrCardActionsLocalization.redirect,
+              },
+              {
+                name: '',
+                code: '',
+                value: 'REDIRECT_QR_SVC',
+                description: QrCardActionsLocalization.redirectQrSvc,
+              },
+              {
+                name: '',
+                code: '',
+                value: 'HIDE',
+                description: QrCardActionsLocalization.hide,
               },
             ],
             isLoading: false,

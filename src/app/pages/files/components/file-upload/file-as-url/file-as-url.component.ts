@@ -24,7 +24,7 @@ import {
   FilesLocalization,
   MAX_DESCRIPTION_LENGTH,
   MAX_NAME_LENGTH,
-  MAX_STORAGE_PATH_LENGTH,
+  MAX_URL_LENGTH,
 } from '@app/pages/files/files.constants';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
@@ -125,7 +125,7 @@ export class FileAsUrlComponent implements OnDestroy {
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
   protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
-  protected readonly MAX_STORAGE_PATH_LENGTH = MAX_STORAGE_PATH_LENGTH;
+  protected readonly MAX_URL_LENGTH = MAX_URL_LENGTH;
 
   protected addFileUrl(): void {
     this.form.markAllAsTouched();

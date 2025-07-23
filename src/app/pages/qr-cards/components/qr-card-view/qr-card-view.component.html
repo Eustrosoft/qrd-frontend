@@ -18,7 +18,9 @@
       </button>
     </ng-container>
     <ng-container action-buttons>
-      <button class="button-md" mat-flat-button>{{ SharedLocalization.edit }}</button>
+      <a [routerLink]="`../${selectors.qrCard()?.code}/${AppRoutes.edit}`" class="button-md" mat-flat-button>
+        {{ SharedLocalization.edit }}
+      </a>
       @if (!selectors.isDeleteInProgress()) {
         <button
           (click)="actions.deleteQrCards([selectors.qrCard()!.id], destroyRef, false, true)"
