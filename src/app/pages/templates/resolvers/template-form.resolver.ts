@@ -12,6 +12,8 @@ export const templateFormResolver = (isNew = false): ResolveFn<Observable<Templa
     const actions$ = inject(Actions);
     const templateFormFactoryService = inject(TemplateFormFactoryService);
 
+    templateFormFactoryService.reset();
+
     if (isNew) {
       templateFormFactoryService.initialize();
       return of(templateFormFactoryService.form);

@@ -17,6 +17,10 @@ export class FetchQrCard {
   ) {}
 }
 
+export class ClearQrCard {
+  public static readonly type = '[Qr Cards] Clear Qr Card';
+}
+
 export class SetSelectedQrCards {
   public static readonly type = '[Qr Cards] Set Selected Qr Cards';
   constructor(readonly selectedQrCardList: number[]) {}
@@ -42,8 +46,7 @@ export class CreateQrCard {
 export class SaveQrCard {
   public static readonly type = '[Qr Cards] Save v';
   constructor(
-    readonly id: number,
-    readonly payload: Partial<ReturnType<QrCardFormGroup['getRawValue']>>,
+    readonly formValue: Partial<ReturnType<QrCardFormGroup['getRawValue']>>,
     readonly destroyRef: DestroyRef,
   ) {}
 }

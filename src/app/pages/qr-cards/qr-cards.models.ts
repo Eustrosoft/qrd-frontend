@@ -5,6 +5,8 @@ export type QrCardAction = 'STD' | 'REDIRECT' | 'REDIRECT_QR_SVC' | 'HIDE';
 
 export type QrCardFormGroup = FormGroup<QrCardForm>;
 export type QrCardForm = {
+  id: FormControl<number>;
+  code: FormControl<number>;
   formId: FormControl<number>;
   name: FormControl<string>;
   description: FormControl<string>;

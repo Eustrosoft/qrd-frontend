@@ -16,6 +16,7 @@ export const qrCardsRoutes: Routes = [
   {
     path: '',
     component: QrCardsComponent,
+    providers: [QrCardFormFactoryService],
     children: [
       {
         path: '',
@@ -52,7 +53,6 @@ export const qrCardsRoutes: Routes = [
         canDeactivate: [unsavedDataGuard<QrCardEditComponent>()],
         resolve: { qrCardForm: qrCardFormResolver() },
         data: { mode: 'edit' },
-        providers: [QrCardFormFactoryService],
         title: RouteTitles.card,
       },
     ],

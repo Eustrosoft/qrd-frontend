@@ -27,7 +27,7 @@ import { InteractionEffect } from '@shared/directives/text-interaction-effect.di
 })
 export class AttrListItemComponent {
   public readonly caption = input<string>('');
-  public readonly value = input<string>('');
+  public readonly value = input<string | null>(null);
   public readonly placeholder = input<string>('');
   public readonly type = input<FieldType>('TEXT');
   public readonly isPublic = input<boolean>(false);
@@ -36,6 +36,6 @@ export class AttrListItemComponent {
 
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly isTextLike = computed<boolean>(() =>
-    Array.from<FieldType>(['TEXT', 'NUMBER', 'URL', 'PHONE']).includes(this.type()),
+    Array.from<FieldType>(['TEXT', 'NUMBER', 'URL', 'PHONE', 'EDIT']).includes(this.type()),
   );
 }

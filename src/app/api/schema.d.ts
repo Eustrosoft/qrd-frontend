@@ -240,7 +240,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Find all templates for current user */
+        /** Find all forms for current user */
         get: operations["findAll"];
         put?: never;
         /** Create new form */
@@ -1042,7 +1042,9 @@ export interface components {
             description: string;
             /** Format: int64 */
             code: number;
-            data: string;
+            data: {
+                [key: string]: Record<string, never>;
+            };
             /** @enum {string} */
             action: "STD" | "REDIRECT" | "REDIRECT_QR_SVC" | "HIDE";
             redirect: string;
@@ -1571,12 +1573,12 @@ export interface components {
             roles: components["schemas"]["Role"][];
             username: string;
             active: boolean;
+            email: string;
+            lei: string;
             organization: string;
             website: string;
             banned: boolean;
             ranges: components["schemas"]["QRRange"][];
-            email: string;
-            lei: string;
             description: string;
             name: string;
             /** Format: int64 */

@@ -15,15 +15,19 @@ export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup>> => 
     const code = route.paramMap.get('code')!;
     const qrCard = select(QrCardsState.getQrCard$);
 
+    qrCardFormFactoryService.reset();
+
     if (qrCard()) {
       qrCardFormFactoryService.initialize(
         {
+          id: qrCard()?.id ?? -1,
+          code: qrCard()?.code ?? -1,
           formId: qrCard()?.form?.id ?? -1,
           name: qrCard()?.name ?? '',
           description: qrCard()?.description ?? '',
           action: qrCard()?.action ?? 'STD',
           redirect: qrCard()?.redirect ?? '',
-          data: qrCard()?.data ?? [],
+          data: qrCard()?.data ?? {},
           // eslint-disable-next-line no-extra-parens
           files: [...(qrCard()?.files ?? []), ...(qrCard()?.form?.files ?? [])],
         },
@@ -38,12 +42,14 @@ export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup>> => 
       map(() => {
         qrCardFormFactoryService.initialize(
           {
+            id: qrCard()?.id ?? -1,
+            code: qrCard()?.code ?? -1,
             formId: qrCard()?.form?.id ?? -1,
             name: qrCard()?.name ?? '',
             description: qrCard()?.description ?? '',
             action: qrCard()?.action ?? 'STD',
             redirect: qrCard()?.redirect ?? '',
-            data: qrCard()?.data ?? [],
+            data: qrCard()?.data ?? {},
             // eslint-disable-next-line no-extra-parens
             files: [...(qrCard()?.files ?? []), ...(qrCard()?.form?.files ?? [])],
           },

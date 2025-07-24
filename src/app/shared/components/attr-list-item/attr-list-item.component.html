@@ -1,5 +1,5 @@
 <p [title]="caption()" ellipsis>{{ caption() }}</p>
-@if (value()) {
+@if (value() !== null) {
   @if (isTextLike()) {
     <p [title]="value()" ellipsis>{{ value() }}</p>
   }

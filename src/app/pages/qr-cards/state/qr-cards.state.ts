@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import {
   AddFileToQrCard,
+  ClearQrCard,
   CreateQrCard,
   DeleteQrCards,
   FetchQrCard,
@@ -15,7 +16,7 @@ import {
 } from './qr-cards.actions';
 import { DataViewDisplayType } from '@shared/shared.models';
 import { patch } from '@ngxs/store/operators';
-import { QRDto } from '@api/qr-cards/qrs-api.models';
+import { QRChangeDto, QRDto } from '@api/qr-cards/qrs-api.models';
 import { catchError, concatMap, EMPTY, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
 import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, QR_API_URL, SKELETON_TIMER } from '@app/app.constants';
@@ -230,6 +231,11 @@ export class QrCardsState {
     );
   }
 
+  @Action(ClearQrCard)
+  public clearQrCard({ setState }: StateContext<QrCardsStateModel>): void {
+    setState(patch({ qrCard: null, qrCardLoadErr: false, isQrCardLoading: false }));
+  }
+
   @Action(SetSelectedQrCards)
   public setSelectedQrCards(
     { setState }: StateContext<QrCardsStateModel>,
@@ -280,9 +286,15 @@ export class QrCardsState {
   @Action(SaveQrCard)
   public saveQrCard(
     { setState }: StateContext<QrCardsStateModel>,
-    { payload, destroyRef }: SaveQrCard,
+    { formValue, destroyRef }: SaveQrCard,
   ): Observable<QRDto> {
     setState(patch({ isSaveInProgress: true }));
+    const filesIds = formValue.files?.map((file) => file.id.toString()) ?? [];
+    delete formValue.files;
+    const payload: Partial<QRChangeDto> = {
+      ...formValue,
+      filesIds,
+    };
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.qrCardsService.saveQrCard(payload)),
       tap({

@@ -34,20 +34,6 @@ export class TemplateFormFactoryService {
     return this._form;
   }
 
-  private makeTemplateForm(initialData: Partial<ReturnType<TemplateFormGroup['getRawValue']>> = {}): TemplateFormGroup {
-    return this.fb.group<TemplateForm>({
-      name: this.fb.nonNullable.control<string>(initialData?.name ?? '', [
-        Validators.required,
-        Validators.maxLength(MAX_NAME_LENGTH),
-      ]),
-      description: this.fb.nonNullable.control<string>(initialData?.description ?? '', [
-        Validators.maxLength(MAX_DESCRIPTION_LENGTH),
-      ]),
-      fields: this.makeFieldFormGroupArray(initialData?.fields ?? []),
-      files: this.sharedFormFactoryService.makeFileFormGroupArray(initialData?.files ?? []),
-    });
-  }
-
   public patchTemplateForm(value: Partial<TemplateFormGroup['getRawValue']>, emitEvent = true): void {
     this.form.patchValue(value, { emitEvent });
   }
@@ -85,13 +71,34 @@ export class TemplateFormFactoryService {
     this.form.controls.files.removeAt(index);
   }
 
-  protected makeFieldFormGroupArray(
+  public reset(): void {
+    if (this._isInitialized) {
+      this._isInitialized = false;
+      this._form = null;
+    }
+  }
+
+  private makeTemplateForm(initialData: Partial<ReturnType<TemplateFormGroup['getRawValue']>> = {}): TemplateFormGroup {
+    return this.fb.group<TemplateForm>({
+      name: this.fb.nonNullable.control<string>(initialData?.name ?? '', [
+        Validators.required,
+        Validators.maxLength(MAX_NAME_LENGTH),
+      ]),
+      description: this.fb.nonNullable.control<string>(initialData?.description ?? '', [
+        Validators.maxLength(MAX_DESCRIPTION_LENGTH),
+      ]),
+      fields: this.makeFieldFormGroupArray(initialData?.fields ?? []),
+      files: this.sharedFormFactoryService.makeFileFormGroupArray(initialData?.files ?? []),
+    });
+  }
+
+  private makeFieldFormGroupArray(
     fieldList: Partial<ReturnType<TemplateFieldFormGroupArray['getRawValue']>> = [],
   ): TemplateFieldFormGroupArray {
     return this.fb.array(fieldList.map((field) => this.makeFieldFormGroup(field)));
   }
 
-  protected makeFieldFormGroup(
+  private makeFieldFormGroup(
     initial: Partial<ReturnType<TemplateFieldFormGroup['getRawValue']>> = {},
   ): TemplateFieldFormGroup {
     const last = this._form ? this._form.controls.fields.length + 1 : 1;

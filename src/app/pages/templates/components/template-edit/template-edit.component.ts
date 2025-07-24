@@ -17,10 +17,10 @@ import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import {
   AddFileToTemplate,
+  ClearTemplate,
   CreateTemplate,
   FetchFileList,
   FetchTemplate,
-  ResetTemplatesState,
   SaveTemplate,
 } from '@app/pages/templates/state/templates.actions';
 import { MatButton, MatFabButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
@@ -146,7 +146,7 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     addFileToTemplate: AddFileToTemplate,
     fetchFileList: FetchFileList,
     fetchDictionaryByName: FetchDictionaryByName,
-    resetTemplatesState: ResetTemplatesState,
+    clearTemplate: ClearTemplate,
   });
 
   protected readonly gridTemplateColumns = computed<string>(() => {
@@ -202,14 +202,13 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
   protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
 
   public ngOnInit(): void {
-    if (this.templateId && !this.selectors.template()) {
-      this.actions.fetchTemplate(+this.templateId, this.destroyRef);
-    }
     this.actions.fetchDictionaryByName('INPUT_TYPE', this.destroyRef);
   }
 
   public ngOnDestroy(): void {
-    this.actions.resetTemplatesState();
+    if (this.formMode === 'edit') {
+      this.actions.clearTemplate();
+    }
   }
 
   protected addField(): void {
@@ -255,6 +254,9 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
 
   protected saveData(): void {
     this.form().markAllAsTouched();
+    if (this.form().invalid) {
+      return;
+    }
     if (this.templateId) {
       this.actions.saveTemplate(+this.templateId, this.form().getRawValue(), this.destroyRef);
       return;

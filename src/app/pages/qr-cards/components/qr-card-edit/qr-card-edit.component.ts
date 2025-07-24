@@ -14,7 +14,7 @@ import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionS
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, map, merge, Observable, of, pairwise, startWith } from 'rxjs';
-import { DictionaryItem, FormMode } from '@shared/shared.models';
+import { DictionaryItem } from '@shared/shared.models';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
 import { FileEditableMetadata } from '@api/files/file-api.models';
@@ -32,11 +32,11 @@ import {
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import {
   AddFileToQrCard,
+  ClearQrCard,
   CreateQrCard,
   FetchFileList,
   FetchQrCard,
   FetchTemplateList,
-  ResetQrCardsState,
   SaveQrCard,
 } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { QrCardFormFactoryService } from '@app/pages/qr-cards/services/qr-card-form-factory.service';
@@ -52,7 +52,7 @@ import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
-import { MatFormField, MatHint, MatInput, MatLabel } from '@angular/material/input';
+import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { MatIcon } from '@angular/material/icon';
@@ -62,6 +62,7 @@ import { MatError } from '@angular/material/form-field';
 import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
+import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
 
 @Component({
   selector: 'qr-card-edit',
@@ -92,6 +93,10 @@ import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state
     MatIconButton,
     MatHint,
     InteractionEffect,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatDatepickerInput,
+    MatSuffix,
   ],
   templateUrl: './qr-card-edit.component.html',
   styleUrl: './qr-card-edit.component.scss',
@@ -109,7 +114,6 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
     this.activatedRoute.data.pipe(map((data) => data['qrCardForm'])),
     { requireSync: true },
   );
-  protected readonly formMode: FormMode = this.activatedRoute.snapshot.data['mode'];
 
   public formHasUnsavedChanges = toSignal<boolean, boolean>(
     merge(
@@ -138,6 +142,7 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
     filesState: QrCardsState.getFilesState$,
     fileAttachmentMode: FileUploadState.getFileAttachmentMode$,
   });
+
   protected readonly actions = createDispatchMap({
     fetchQrCard: FetchQrCard,
     createQrCard: CreateQrCard,
@@ -145,7 +150,14 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
     addFileToQrCard: AddFileToQrCard,
     fetchTemplateList: FetchTemplateList,
     fetchFileList: FetchFileList,
-    resetQrCardsState: ResetQrCardsState,
+    clearQrCard: ClearQrCard,
+  });
+
+  protected readonly fieldsGridTemplateColumns = computed<string>(() => {
+    if (this.isSmallScreen()) {
+      return '';
+    }
+    return '1fr 2fr';
   });
 
   protected readonly gridTemplateColumns = computed<string>(() => {
@@ -156,12 +168,10 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
   });
 
   protected readonly qrCardEff = effect(() => {
-    if (this.formMode === 'new') {
-      return;
-    }
     const qrCard = this.selectors.qrCard();
     this.qrCardFormFactoryService.patchQrCardForm(
       {
+        formId: qrCard?.form?.id ?? -1,
         name: qrCard?.name ?? '',
         description: qrCard?.description ?? '',
         action: qrCard?.action ?? 'STD',
@@ -186,16 +196,14 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
   protected readonly ErrorsLocalization = ErrorsLocalization;
   protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
   protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
+  protected readonly MAX_URL_LENGTH = MAX_URL_LENGTH;
 
   public ngOnInit(): void {
-    if (this.qrCardCode && !this.selectors.qrCard()) {
-      this.actions.fetchQrCard(this.qrCardCode, this.destroyRef);
-    }
     this.actions.fetchTemplateList(this.destroyRef);
   }
 
   public ngOnDestroy(): void {
-    this.actions.resetQrCardsState();
+    this.actions.clearQrCard();
   }
 
   protected unlinkFile(index: number): void {
@@ -214,7 +222,7 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
     }
 
     if (isConfirmed) {
-      this.actions.saveQrCard(+this.qrCardCode!, this.form().getRawValue(), this.destroyRef);
+      this.actions.saveQrCard(this.form().getRawValue(), this.destroyRef);
       return merge(
         this.actions$.pipe(
           ofActionSuccessful(SaveQrCard),
@@ -232,11 +240,10 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
 
   protected saveData(): void {
     this.form().markAllAsTouched();
-    if (this.qrCardCode) {
-      this.actions.saveQrCard(+this.qrCardCode, this.form().getRawValue(), this.destroyRef);
+    if (this.form().invalid) {
       return;
     }
-    this.actions.createQrCard(this.form().getRawValue(), this.destroyRef);
+    this.actions.saveQrCard(this.form().getRawValue(), this.destroyRef);
   }
 
   protected showFileUpload(): void {
@@ -288,6 +295,4 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
       );
     }
   }
-
-  protected readonly MAX_STORAGE_PATH_LENGTH = MAX_URL_LENGTH;
 }

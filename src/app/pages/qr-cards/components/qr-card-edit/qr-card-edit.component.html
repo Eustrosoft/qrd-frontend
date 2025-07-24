@@ -93,7 +93,7 @@
             <mat-label> {{ SharedLocalization.redirectLink }} </mat-label>
             <input [formControl]="form().controls.redirect" matInput />
             @if (form().controls.redirect.touched && form().controls.redirect.hasError('maxlength')) {
-              <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_STORAGE_PATH_LENGTH }}</mat-error>
+              <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_URL_LENGTH }}</mat-error>
             }
             @if (form().controls.redirect.touched && form().controls.redirect.hasError('pattern')) {
               <mat-error>{{ SharedLocalization.mustBeUrl }}</mat-error>
@@ -107,14 +107,53 @@
         <h1>{{ RouteTitles.attrs }}</h1>
       </ng-container>
       <ng-container content>
-        <!--        @for (field of form().controls.fields.controls; track field) {-->
-        <!--          <ui-flex-block flexAlignItems="center">-->
-        <!--            <mat-form-field class="form-field-lg" style="flex: auto">-->
-        <!--              <mat-label> {{ SharedLocalization.name }} </mat-label>-->
-        <!--              <input [formControl]="field.controls.caption" matInput />-->
-        <!--            </mat-form-field>-->
-        <!--          </ui-flex-block>-->
-        <!--        }-->
+        @for (field of selectors.qrCard()?.form?.fields; track field) {
+          <ui-grid-block [gridTemplateColumns]="fieldsGridTemplateColumns()" gridAlignItems="center">
+            <p>{{ field.caption }}</p>
+            @if (
+              field.fieldType === 'TEXT' ||
+              field.fieldType === 'URL' ||
+              field.fieldType === 'EMAIL' ||
+              field.fieldType === 'NUMBER' ||
+              field.fieldType === 'PHONE' ||
+              field.fieldType === 'EDIT'
+            ) {
+              <mat-form-field class="form-field-lg" floatLabel="always">
+                <mat-label> {{ SharedLocalization.value }} </mat-label>
+                <input
+                  [formControl]="form().controls.data.controls[field.name]"
+                  [placeholder]="field.placeholder ?? ''"
+                  type="text"
+                  matInput
+                />
+              </mat-form-field>
+            }
+            @if (field.fieldType === 'TEXTAREA') {
+              <mat-form-field class="form-field-lg" floatLabel="always">
+                <mat-label> {{ SharedLocalization.value }} </mat-label>
+                <textarea
+                  [formControl]="form().controls.data.controls[field.name]"
+                  [placeholder]="field.placeholder ?? ''"
+                  type="text"
+                  matInput
+                ></textarea>
+              </mat-form-field>
+            }
+            @if (field.fieldType === 'DATE') {
+              <mat-form-field class="form-field-lg" floatLabel="always">
+                <mat-label>{{ SharedLocalization.value }}</mat-label>
+                <input
+                  [formControl]="form().controls.data.controls[field.name]"
+                  [placeholder]="field.placeholder ?? ''"
+                  [matDatepicker]="datepicker"
+                  matInput
+                />
+                <mat-datepicker-toggle matIconSuffix [for]="datepicker" />
+                <mat-datepicker #datepicker />
+              </mat-form-field>
+            }
+          </ui-grid-block>
+        }
       </ng-container>
     </card-container>
     <card-container>

@@ -55,11 +55,20 @@ export class QrCardFormFactoryService {
     this.form.controls.data.setParent(this.makeDataFormRecord(fieldList, emitEvent));
   }
 
+  public reset(): void {
+    if (this._isInitialized) {
+      this._isInitialized = false;
+      this._form = null;
+    }
+  }
+
   private makeQrCardForm(
     initialData: Partial<ReturnType<QrCardFormGroup['getRawValue']>> = {},
     fieldList: TemplateField[] = [],
   ): QrCardFormGroup {
     return this.fb.group<QrCardForm>({
+      id: this.fb.nonNullable.control<number>(initialData?.id ?? -1),
+      code: this.fb.nonNullable.control<number>(initialData?.code ?? -1),
       formId: this.fb.nonNullable.control<number>(initialData?.formId ?? -1),
       name: this.fb.nonNullable.control<string>(initialData?.name ?? '', [
         Validators.required,
@@ -78,11 +87,11 @@ export class QrCardFormFactoryService {
     });
   }
 
-  protected makeDataFormRecord(fieldList: TemplateField[], emitEvent = true): QrCardDataFormRecord {
+  private makeDataFormRecord(fieldList: TemplateField[], emitEvent = true): QrCardDataFormRecord {
     const formRecord = this.fb.record({});
 
     fieldList.forEach((field) => {
-      formRecord.addControl(field.name, this.fb.control(null), { emitEvent });
+      formRecord.addControl(field.name, this.fb.control(''), { emitEvent });
     });
 
     return formRecord;

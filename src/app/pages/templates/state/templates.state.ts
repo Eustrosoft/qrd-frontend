@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { TemplatesService } from '@app/pages/templates/services/templates.service';
 import {
   AddFileToTemplate,
+  ClearTemplate,
   CreateTemplate,
   DeleteTemplates,
   FetchFileList,
@@ -180,8 +181,8 @@ export class TemplatesState {
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.templatesService.getTemplate(id)),
       tap({
-        next: (file) => {
-          setState(patch({ template: file, [storeProp]: false }));
+        next: (template) => {
+          setState(patch({ template, [storeProp]: false }));
         },
       }),
       catchError((err) => {
@@ -191,6 +192,11 @@ export class TemplatesState {
       }),
       takeUntilDestroyed(destroyRef),
     );
+  }
+
+  @Action(ClearTemplate)
+  public clearTemplate({ setState }: StateContext<TemplatesStateModel>): void {
+    setState(patch({ template: null, templateLoadErr: false, isTemplateLoading: false }));
   }
 
   @Action(SetSelectedTemplates)

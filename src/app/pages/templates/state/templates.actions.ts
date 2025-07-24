@@ -17,6 +17,10 @@ export class FetchTemplate {
   ) {}
 }
 
+export class ClearTemplate {
+  public static readonly type = '[Templates] Clear Template';
+}
+
 export class SetSelectedTemplates {
   public static readonly type = '[Templates] Set Selected Templates';
   constructor(readonly selectedTemplateList: number[]) {}

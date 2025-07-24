@@ -5,7 +5,16 @@ import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 import { BoolToTextPipe } from '@shared/pipe/bool-to-text.pipe';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { ContentDispositionHeaderParsePipe } from '@shared/pipe/content-disposition-header-parse.pipe';
+import { RuDateAdapterParsePipe } from '@shared/pipe/ru-adapter-parse.pipe';
 
 export function providePipes(): Provider[] {
-  return [PxToRemPipe, ToHexPipe, BytesToSizePipe, BoolToTextPipe, FallbackPipe, ContentDispositionHeaderParsePipe];
+  return [
+    PxToRemPipe,
+    ToHexPipe,
+    BytesToSizePipe,
+    BoolToTextPipe,
+    FallbackPipe,
+    ContentDispositionHeaderParsePipe,
+    RuDateAdapterParsePipe,
+  ];
 }

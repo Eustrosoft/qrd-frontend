@@ -16,6 +16,7 @@ export const templatesRoutes: Routes = [
   {
     path: '',
     component: TemplatesComponent,
+    providers: [TemplateFormFactoryService],
     children: [
       {
         path: '',
@@ -26,7 +27,6 @@ export const templatesRoutes: Routes = [
         component: TemplateEditComponent,
         resolve: { templateForm: templateFormResolver(true) },
         data: { mode: 'new' },
-        providers: [TemplateFormFactoryService],
         title: RouteTitles.template,
       },
       {
@@ -59,7 +59,6 @@ export const templatesRoutes: Routes = [
         canDeactivate: [unsavedDataGuard<TemplateEditComponent>()],
         resolve: { templateForm: templateFormResolver() },
         data: { mode: 'edit' },
-        providers: [TemplateFormFactoryService],
         title: RouteTitles.template,
       },
     ],
