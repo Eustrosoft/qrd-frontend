@@ -33,6 +33,7 @@ import { FileUploadFormFactoryService } from '@app/pages/files/components/file-u
 import { FileAsUrlFormGroup } from '@app/pages/files/files.models';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
+import { IndicatorComponent } from '@shared/components/indicator/indicator.component';
 
 @Component({
   selector: 'file-as-url',
@@ -48,6 +49,7 @@ import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component'
     UiSkeletonComponent,
     ReactiveFormsModule,
     UiGridBlockComponent,
+    IndicatorComponent,
   ],
   templateUrl: './file-as-url.component.html',
   styleUrl: './file-as-url.component.scss',

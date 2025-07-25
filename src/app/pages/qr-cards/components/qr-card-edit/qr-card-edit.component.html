@@ -9,9 +9,15 @@
             </ng-container>
           }
           <ng-container action-buttons>
+            <button (click)="openCardPreview()" class="button-md" mat-flat-button>
+              {{ SharedLocalization.cardPreview }}
+            </button>
             @if (!selectors.isSaveInProgress()) {
               <button (click)="saveData()" class="button-md" mat-flat-button>
                 {{ SharedLocalization.save }}
+                @if (formHasUnsavedChanges()) {
+                  <indicator />
+                }
               </button>
             } @else {
               <ui-skeleton height="40" width="128" />
@@ -49,13 +55,20 @@
               </mat-label>
             }
             <mat-hint>
-              <a class="button-anchor-sm" href="https://qxyz.ru" target="_blank" mat-button interactionEffect>
+              <a
+                [routerLink]="`/templates/${form().controls.formId.value}`"
+                class="button-anchor-sm"
+                mat-button
+                interactionEffect
+              >
                 <small class="bold">{{ SharedLocalization.openTemplate }}</small>
               </a>
             </mat-hint>
             <mat-select [formControl]="form().controls.formId">
               @for (template of selectors.templatesState().templateList; track template.id) {
                 <mat-option class="option-lg" [value]="template.id">{{ template.name }}</mat-option>
+              } @empty {
+                <mat-option class="option-lg" disabled> {{ SharedLocalization.noTemplates }}</mat-option>
               }
             </mat-select>
           </mat-form-field>
@@ -72,9 +85,6 @@
           <mat-form-field class="form-field-lg">
             <mat-label> {{ SharedLocalization.description }} </mat-label>
             <textarea [formControl]="form().controls.description" matInput></textarea>
-            @if (form().controls.description.touched && form().controls.description.hasError('required')) {
-              <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
-            }
             @if (form().controls.description.touched && form().controls.description.hasError('maxlength')) {
               <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_DESCRIPTION_LENGTH }}</mat-error>
             }
@@ -122,7 +132,7 @@
                 <mat-label> {{ SharedLocalization.value }} </mat-label>
                 <input
                   [formControl]="form().controls.data.controls[field.name]"
-                  [placeholder]="field.placeholder ?? ''"
+                  [placeholder]="field.placeholder"
                   type="text"
                   matInput
                 />
@@ -133,7 +143,7 @@
                 <mat-label> {{ SharedLocalization.value }} </mat-label>
                 <textarea
                   [formControl]="form().controls.data.controls[field.name]"
-                  [placeholder]="field.placeholder ?? ''"
+                  [placeholder]="field.placeholder"
                   type="text"
                   matInput
                 ></textarea>
@@ -144,7 +154,7 @@
                 <mat-label>{{ SharedLocalization.value }}</mat-label>
                 <input
                   [formControl]="form().controls.data.controls[field.name]"
-                  [placeholder]="field.placeholder ?? ''"
+                  [placeholder]="field.placeholder"
                   [matDatepicker]="datepicker"
                   matInput
                 />
@@ -166,7 +176,7 @@
             @for (file of form().controls.files.controls; track file) {
               <ui-flex-block flexAlignItems="center">
                 <file-list-item
-                  [fileHref]="`files/${file.controls.id.value}`"
+                  [fileLink]="`/files/${file.controls.id.value}`"
                   [fileStorageType]="file.controls.fileStorageType.value"
                   [name]="file.controls.name.value"
                   [fileSize]="file.controls.fileSize.value | bytesToSize"
@@ -286,5 +296,5 @@
     <ui-skeleton height="512" />
   }
 } @else {
-  <banner [title]="ErrorsLocalization.errorFetchingTemplate" />
+  <banner [title]="ErrorsLocalization.errorFetchingCard" />
 }

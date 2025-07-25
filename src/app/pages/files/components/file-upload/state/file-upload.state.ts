@@ -202,7 +202,7 @@ export class FileUploadState {
       .pipe(
         tap({
           next: (file: FileDto) => {
-            this.snackbarService.danger(NotificationSnackbarLocalization.created);
+            this.snackbarService.success(NotificationSnackbarLocalization.created);
             setState(
               patch({
                 isLoading: false,

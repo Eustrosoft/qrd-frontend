@@ -16,4 +16,11 @@ export type QrCardForm = {
   files: FileFormGroupArray;
 };
 
+export type QrCardCreationFormGroup = FormGroup<QrCardCreationForm>;
+export type QrCardCreationForm = {
+  name: FormControl<string>;
+  description: FormControl<string>;
+  formId: FormControl<number | null>;
+  rangeId: FormControl<number | null>;
+};
 export type QrCardDataFormRecord = FormRecord<FormControl<unknown>>;

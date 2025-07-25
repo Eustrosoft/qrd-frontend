@@ -3,7 +3,7 @@ import { MatSnackBar, MatSnackBarConfig, MatSnackBarDismiss } from '@angular/mat
 import { concatMap, Observable, Subject } from 'rxjs';
 import { ComponentType } from '@angular/cdk/portal';
 import { PxToRemPipe } from '@app/shared/pipe/px-to-rem.pipe';
-import { DEFAULT_SNACKBAR_DURATION } from '@core/core.constants';
+import { DEFAULT_SNACKBAR_DURATION, DEFAULT_SUCCESS_SNACKBAR_DURATION } from '@core/core.constants';
 import { NotificationSnackbarComponent } from '@shared/components/notification-snackbar/notification-snackbar.component';
 import {
   NotificationSnackbarData,
@@ -26,7 +26,7 @@ export class SnackbarService {
 
   public success(
     message: string = NotificationSnackbarLocalization.success,
-    duration: number = DEFAULT_SNACKBAR_DURATION,
+    duration: number = DEFAULT_SUCCESS_SNACKBAR_DURATION,
   ): void {
     this.queueTask({
       type: 'component',

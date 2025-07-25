@@ -5,11 +5,12 @@ import {
   DestroyRef,
   effect,
   inject,
+  inputBinding,
   OnDestroy,
   OnInit,
   signal,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
@@ -33,7 +34,6 @@ import { ErrorsLocalization } from '@modules/error/error.constants';
 import {
   AddFileToQrCard,
   ClearQrCard,
-  CreateQrCard,
   FetchFileList,
   FetchQrCard,
   FetchTemplateList,
@@ -63,6 +63,11 @@ import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
+import { IndicatorComponent } from '@shared/components/indicator/indicator.component';
+import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
+import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 
 @Component({
   selector: 'qr-card-edit',
@@ -97,7 +102,10 @@ import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular
     MatDatepicker,
     MatDatepickerInput,
     MatSuffix,
+    IndicatorComponent,
+    RouterLink,
   ],
+  providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './qr-card-edit.component.html',
   styleUrl: './qr-card-edit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -106,6 +114,7 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
   private readonly qrCardFormFactoryService = inject(QrCardFormFactoryService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly actions$ = inject(Actions);
+  private readonly uiSidenavService = inject(UiSidenavService);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
@@ -138,6 +147,7 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
     isSaveInProgress: QrCardsState.isSaveInProgress$,
     isTemplateFilesLoading: QrCardsState.isQrCardFilesLoading$,
     qrCard: QrCardsState.getQrCard$,
+    qrCardPreviewUrl: QrCardsState.getQrCardPreviewUrl$,
     templatesState: QrCardsState.getTemplatesState$,
     filesState: QrCardsState.getFilesState$,
     fileAttachmentMode: FileUploadState.getFileAttachmentMode$,
@@ -145,7 +155,6 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
 
   protected readonly actions = createDispatchMap({
     fetchQrCard: FetchQrCard,
-    createQrCard: CreateQrCard,
     saveQrCard: SaveQrCard,
     addFileToQrCard: AddFileToQrCard,
     fetchTemplateList: FetchTemplateList,
@@ -236,6 +245,15 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
     }
 
     return of(true);
+  }
+
+  protected openCardPreview(): void {
+    this.uiSidenavService.open(QrViewComponent, {
+      bindings: [inputBinding('iframeSrc', this.selectors.qrCardPreviewUrl)],
+      position: 'end',
+      width: this.isXSmall() ? 'full' : 'sm',
+      isFixed: true,
+    });
   }
 
   protected saveData(): void {

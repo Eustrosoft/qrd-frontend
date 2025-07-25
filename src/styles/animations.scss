@@ -1,0 +1,16 @@
+@keyframes blink {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.25);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+.is-unsaved {
+  animation: blink 1.8s infinite ease-in-out;
+  position: relative;
+}

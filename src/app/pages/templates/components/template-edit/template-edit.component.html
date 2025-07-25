@@ -12,6 +12,9 @@
             @if (!selectors.isSaveInProgress()) {
               <button (click)="saveData()" class="button-md" mat-flat-button>
                 {{ SharedLocalization.save }}
+                @if (formHasUnsavedChanges()) {
+                  <indicator />
+                }
               </button>
             } @else {
               <ui-skeleton height="40" width="128" />
@@ -158,7 +161,7 @@
             @for (file of form().controls.files.controls; track file) {
               <ui-flex-block flexAlignItems="center">
                 <file-list-item
-                  [fileHref]="`files/${file.controls.id.value}`"
+                  [fileLink]="`/files/${file.controls.id.value}`"
                   [fileStorageType]="file.controls.fileStorageType.value"
                   [name]="file.controls.name.value"
                   [fileSize]="file.controls.fileSize.value | bytesToSize"

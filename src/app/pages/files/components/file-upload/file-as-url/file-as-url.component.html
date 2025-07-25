@@ -48,15 +48,18 @@
           {{ SharedLocalization.save }}
         </button>
       } @else {
-        <ui-skeleton height="40" width="124" />
+        <ui-skeleton height="48" width="100%" />
       }
     } @else {
       @if (!selectors.isLoading()) {
         <button (click)="save()" class="button-lg button-secondary" mat-flat-button>
           {{ SharedLocalization.save }}
+          @if (hasUnsavedChanges()) {
+            <indicator />
+          }
         </button>
       } @else {
-        <ui-skeleton height="40" width="124" />
+        <ui-skeleton height="48" width="100%" />
       }
     }
   </ui-grid-block>

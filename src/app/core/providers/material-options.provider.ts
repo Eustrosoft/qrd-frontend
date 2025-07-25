@@ -28,7 +28,7 @@ export function provideMaterialConfig(): Provider[] {
     }),
     provideMatConfigValue(MAT_CHECKBOX_DEFAULT_OPTIONS, { disabledInteractive: false }),
     provideMatConfigValue(MAT_SNACK_BAR_DEFAULT_OPTIONS, {
-      horizontalPosition: 'center',
+      horizontalPosition: 'start',
       verticalPosition: 'top',
       duration: DEFAULT_SNACKBAR_DURATION,
       panelClass: 'snackbar-panel',

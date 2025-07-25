@@ -40,6 +40,7 @@ import { FileUploadFormFactoryService } from '@app/pages/files/components/file-u
 import { FileUploadFormGroup } from '@app/pages/files/files.models';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { IndicatorComponent } from '@shared/components/indicator/indicator.component';
 
 @Component({
   selector: 'file-upload-blob',
@@ -62,6 +63,7 @@ import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
     MatProgressSpinner,
     MatTooltip,
     UiGridBlockComponent,
+    IndicatorComponent,
   ],
   templateUrl: './file-upload-blob.component.html',
   styleUrl: './file-upload-blob.component.scss',

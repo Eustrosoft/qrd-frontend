@@ -4,6 +4,7 @@
 @forward 'styles/reset';
 @forward 'styles/global';
 @forward 'styles/typography';
+@forward 'styles/animations';
 @forward 'styles/fonts';
 @forward 'styles/material-overrides';
 @use 'styles/themes/theme' as theme;

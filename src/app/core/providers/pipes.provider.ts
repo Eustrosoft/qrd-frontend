@@ -6,11 +6,13 @@ import { BoolToTextPipe } from '@shared/pipe/bool-to-text.pipe';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { ContentDispositionHeaderParsePipe } from '@shared/pipe/content-disposition-header-parse.pipe';
 import { RuDateAdapterParsePipe } from '@shared/pipe/ru-adapter-parse.pipe';
+import { QrRangePipe } from '@shared/pipe/qr-range.pipe';
 
 export function providePipes(): Provider[] {
   return [
     PxToRemPipe,
     ToHexPipe,
+    QrRangePipe,
     BytesToSizePipe,
     BoolToTextPipe,
     FallbackPipe,

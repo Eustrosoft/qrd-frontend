@@ -1,1 +1,115 @@
-<p>qr-card-create works!</p>
+<card-container [hideHeading]="true">
+  <ng-container content>
+    <toolbar>
+      @if (!isSmallScreen()) {
+        <ng-container heading>
+          <h1>{{ QrCardsLocalization.creation }}</h1>
+        </ng-container>
+      }
+      <ng-container action-buttons>
+        @if (!selectors.isSaveInProgress()) {
+          <button (click)="createQrCard()" class="button-md" mat-flat-button>
+            {{ SharedLocalization.create }}
+          </button>
+        } @else {
+          <ui-skeleton height="40" width="96" />
+        }
+      </ng-container>
+    </toolbar>
+  </ng-container>
+</card-container>
+<card-container>
+  <ng-container heading>
+    <h1>{{ RouteTitles.card }}</h1>
+  </ng-container>
+  <ng-container content>
+    <ui-grid-block gridAlignItems="start" [gridTemplateColumns]="gridTemplateColumns()">
+      <mat-form-field class="form-field-lg">
+        <mat-label> {{ SharedLocalization.name }} </mat-label>
+        <input [formControl]="form.controls.name" matInput />
+        @if (form.controls.name.touched && form.controls.name.hasError('required')) {
+          <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+        }
+        @if (form.controls.name.touched && form.controls.name.hasError('maxlength')) {
+          <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_NAME_LENGTH }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="form-field-lg">
+        @if (selectors.templatesState().isTemplateListLoading) {
+          <mat-label>
+            <ui-flex-block>
+              <p>{{ SharedLocalization.loading }}</p>
+              <mat-spinner diameter="24"></mat-spinner>
+            </ui-flex-block>
+          </mat-label>
+        } @else {
+          <mat-label>
+            @if (selectors.templatesState().isTemplateListLoadErr) {
+              <ui-flex-block flexAlignItems="center">
+                <p class="error-color">{{ ErrorsLocalization.errorFetchingTemplateList }}</p>
+                <button (click)="actions.fetchTemplateList(destroyRef)" class="icon-button-sm" mat-icon-button>
+                  <mat-icon class="icon-primary">refresh</mat-icon>
+                </button>
+              </ui-flex-block>
+            } @else {
+              {{ SharedLocalization.template }}
+            }
+          </mat-label>
+        }
+        <mat-select [formControl]="form.controls.formId">
+          @for (template of selectors.templatesState().templateList; track template.id) {
+            <mat-option class="option-lg" [value]="template.id">{{ template.name }}</mat-option>
+          } @empty {
+            <mat-option class="option-lg" disabled> {{ SharedLocalization.noTemplates }}</mat-option>
+          }
+        </mat-select>
+        @if (form.controls.formId.touched && form.controls.formId.hasError('required')) {
+          <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="form-field-lg">
+        @if (selectors.qrRangesState().isQrRangeListLoading) {
+          <mat-label>
+            <ui-flex-block>
+              <p>{{ SharedLocalization.loading }}</p>
+              <mat-spinner diameter="24"></mat-spinner>
+            </ui-flex-block>
+          </mat-label>
+        } @else {
+          <mat-label>
+            @if (selectors.qrRangesState().isQrRangeListLoadErr) {
+              <ui-flex-block flexAlignItems="center">
+                <p class="error-color">{{ ErrorsLocalization.errorFetchingRangeList }}</p>
+                <button (click)="actions.fetchTemplateList(destroyRef)" class="icon-button-sm" mat-icon-button>
+                  <mat-icon class="icon-primary">refresh</mat-icon>
+                </button>
+              </ui-flex-block>
+            } @else {
+              {{ SharedLocalization.range }}
+            }
+          </mat-label>
+        }
+        <mat-select [formControl]="form.controls.rangeId">
+          @for (range of selectors.qrRangesState().qrRangeList; track range.id) {
+            <mat-option class="option-lg" [value]="range.id">
+              {{ range.name | fallback: SharedLocalization.emptyName }}
+              {{ range.from | qrRange: range.to }}
+            </mat-option>
+          } @empty {
+            <mat-option class="option-lg" disabled> {{ SharedLocalization.noRanges }}</mat-option>
+          }
+        </mat-select>
+        @if (form.controls.rangeId.touched && form.controls.rangeId.hasError('required')) {
+          <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="form-field-lg">
+        <mat-label> {{ SharedLocalization.description }} </mat-label>
+        <textarea [formControl]="form.controls.description" matInput></textarea>
+        @if (form.controls.description.touched && form.controls.description.hasError('maxlength')) {
+          <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_DESCRIPTION_LENGTH }}</mat-error>
+        }
+      </mat-form-field>
+    </ui-grid-block>
+  </ng-container>
+</card-container>

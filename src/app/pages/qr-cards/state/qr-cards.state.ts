@@ -7,6 +7,7 @@ import {
   DeleteQrCards,
   FetchQrCard,
   FetchQrCardList,
+  FetchQrRangeList,
   FetchTemplateList,
   ResetQrCardsState,
   SaveQrCard,
@@ -36,6 +37,7 @@ import { FetchFileList } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { FilesService } from '@app/pages/files/services/files.service';
 import { TemplateDto } from '@api/templates/template-api.models';
 import { TemplatesService } from '@app/pages/templates/services/templates.service';
+import { QRRangeDto } from '@api/ranges/ranges-api.models';
 
 export interface QrCardsStateModel {
   displayType: DataViewDisplayType;
@@ -56,6 +58,9 @@ export interface QrCardsStateModel {
   isFileListLoading: boolean;
   isFileListLoadErr: boolean;
   fileList: FileDto[];
+  isQrRangeListLoading: boolean;
+  isQrRangeListLoadErr: boolean;
+  qrRangeList: QRRangeDto[];
 }
 
 const defaults: QrCardsStateModel = {
@@ -77,6 +82,9 @@ const defaults: QrCardsStateModel = {
   isFileListLoading: false,
   isFileListLoadErr: false,
   fileList: [],
+  isQrRangeListLoading: false,
+  isQrRangeListLoadErr: false,
+  qrRangeList: [],
 } as const;
 
 const QR_CARDS_STATE_TOKEN: StateToken<QrCardsStateModel> = new StateToken<QrCardsStateModel>('qrCards');
@@ -158,6 +166,15 @@ export class QrCardsState {
     isTemplateListLoadErr,
   }: QrCardsStateModel): Pick<QrCardsStateModel, 'templateList' | 'isTemplateListLoading' | 'isTemplateListLoadErr'> {
     return { templateList, isTemplateListLoading, isTemplateListLoadErr };
+  }
+
+  @Selector()
+  public static getQrRangesState$({
+    qrRangeList,
+    isQrRangeListLoading,
+    isQrRangeListLoadErr,
+  }: QrCardsStateModel): Pick<QrCardsStateModel, 'qrRangeList' | 'isQrRangeListLoading' | 'isQrRangeListLoadErr'> {
+    return { qrRangeList, isQrRangeListLoading, isQrRangeListLoadErr };
   }
 
   @Selector()
@@ -265,11 +282,17 @@ export class QrCardsState {
   ): Observable<QRDto> {
     setState(patch({ isSaveInProgress: true }));
     return timer(SKELETON_TIMER).pipe(
-      switchMap(() => this.qrCardsService.createQrCard(payload)),
+      switchMap(() =>
+        this.qrCardsService.createQrCard({
+          ...payload,
+          formId: payload.formId!,
+          rangeId: payload.rangeId!,
+        }),
+      ),
       tap({
         next: (qrCard) => {
           this.snackbarService.success(NotificationSnackbarLocalization.saved);
-          this.router.navigate([AppRoutes.qrCards, qrCard.id, AppRoutes.edit]).then(() => {
+          this.router.navigate([AppRoutes.qrCards, qrCard.code, AppRoutes.edit]).then(() => {
             setState(patch({ isSaveInProgress: false }));
           });
         },
@@ -350,6 +373,27 @@ export class QrCardsState {
       }),
       catchError((err) => {
         setState(patch({ isTemplateListLoading: false, isTemplateListLoadErr: true }));
+        return throwError(() => err);
+      }),
+      takeUntilDestroyed(destroyRef),
+    );
+  }
+
+  @Action(FetchQrRangeList)
+  public fetchQrRangeList(
+    { setState }: StateContext<QrCardsStateModel>,
+    { destroyRef }: FetchQrRangeList,
+  ): Observable<QRRangeDto[]> {
+    setState(patch({ isQrRangeListLoading: true, isQrRangeListLoadErr: false }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.qrCardsService.getQrRangeList()),
+      tap({
+        next: (qrRangeList) => {
+          setState(patch({ qrRangeList, isQrRangeListLoading: false }));
+        },
+      }),
+      catchError((err) => {
+        setState(patch({ isQrRangeListLoading: false, isQrRangeListLoadErr: true }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),

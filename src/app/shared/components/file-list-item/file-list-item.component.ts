@@ -8,10 +8,19 @@ import { FileStorageTypeMap, SharedLocalization } from '@shared/shared.constants
 import { MatTooltip } from '@angular/material/tooltip';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'file-list-item',
-  imports: [UiFlexBlockComponent, UiBadgeComponent, MatIcon, MatMiniFabButton, MatTooltip, EllipsisDirective],
+  imports: [
+    UiFlexBlockComponent,
+    UiBadgeComponent,
+    MatIcon,
+    MatMiniFabButton,
+    MatTooltip,
+    EllipsisDirective,
+    RouterLink,
+  ],
   templateUrl: './file-list-item.component.html',
   styleUrl: './file-list-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,7 +30,7 @@ export class FileListItemComponent {
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly FileStorageTypeMap = FileStorageTypeMap;
 
-  public readonly fileHref = input<string>('#');
+  public readonly fileLink = input<string>('#');
   public readonly fileStorageType = input<FileStorageType | null>(null);
   public readonly name = input<string>('');
   public readonly fileSize = input<string | null>(null);

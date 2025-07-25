@@ -60,6 +60,7 @@ import { FileAsUrlComponent } from '@app/pages/files/components/file-upload/file
 import { FileUploadBlobComponent } from '@app/pages/files/components/file-upload/file-upload-blob/file-upload-blob.component';
 import { FileAttachmentModeComponent } from '@app/pages/files/components/file-upload/file-attachment-mode/file-attachment-mode.component';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
+import { IndicatorComponent } from '@shared/components/indicator/indicator.component';
 
 @Component({
   selector: 'template-edit',
@@ -93,6 +94,7 @@ import { FileUploadState } from '@app/pages/files/components/file-upload/state/f
     FileAsUrlComponent,
     FileUploadBlobComponent,
     FileAttachmentModeComponent,
+    IndicatorComponent,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './template-edit.component.html',

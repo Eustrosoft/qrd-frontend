@@ -44,7 +44,7 @@
     <ui-flex-block flexDirection="column">
       @for (file of selectors.qrCard()?.files; track file.id) {
         <file-list-item
-          [fileHref]="`files/${file.id}`"
+          [fileLink]="`/files/${file.id}`"
           [fileStorageType]="file.fileStorageType"
           [name]="file?.name ?? ''"
           [fileSize]="file.fileSize | bytesToSize"

@@ -6,6 +6,7 @@ export type QRDto = Omit<components['schemas']['QRDto'], 'data'> & {
 };
 
 export type QRCreationDto = Pick<components['schemas']['QRCreationDto'], 'name' | 'description' | 'formId' | 'rangeId'>;
+
 export type QRChangeDto = Omit<components['schemas']['QRChangeDto'], 'data' | 'filesIds'> & {
   data: Record<string, unknown>;
   filesIds: string[];

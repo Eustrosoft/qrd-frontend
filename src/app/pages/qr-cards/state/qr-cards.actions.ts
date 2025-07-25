@@ -1,6 +1,6 @@
 import { DataViewDisplayType } from '@shared/shared.models';
 import { DestroyRef } from '@angular/core';
-import { QrCardFormGroup } from '@app/pages/qr-cards/qr-cards.models';
+import { QrCardCreationFormGroup, QrCardFormGroup } from '@app/pages/qr-cards/qr-cards.models';
 import { QrCardsStateModel } from '@app/pages/qr-cards/state/qr-cards.state';
 
 export class FetchQrCardList {
@@ -38,7 +38,7 @@ export class SetQrCardsDataViewDisplayType {
 export class CreateQrCard {
   public static readonly type = '[Qr Cards] Create Qr Card';
   constructor(
-    readonly payload: Partial<ReturnType<QrCardFormGroup['getRawValue']>>,
+    readonly payload: ReturnType<QrCardCreationFormGroup['getRawValue']>,
     readonly destroyRef: DestroyRef,
   ) {}
 }
@@ -63,6 +63,11 @@ export class AddFileToQrCard {
 
 export class FetchTemplateList {
   public static readonly type = '[Qr Cards] Fetch Template List';
+  constructor(readonly destroyRef: DestroyRef) {}
+}
+
+export class FetchQrRangeList {
+  public static readonly type = '[Qr Cards] Fetch Qr Range List';
   constructor(readonly destroyRef: DestroyRef) {}
 }
 
