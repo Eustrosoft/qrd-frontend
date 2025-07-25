@@ -60,7 +60,7 @@
           @for (template of selectors.templatesState().templateList; track template.id) {
             <mat-option class="option-lg" [value]="template.id">{{ template.name }}</mat-option>
           } @empty {
-            <mat-option class="option-lg" disabled> {{ SharedLocalization.noTemplates }}</mat-option>
+            <mat-option class="option-lg" disabled> {{ SharedLocalization.emptyList }}</mat-option>
           }
         </mat-select>
         @if (form.controls.formId.touched && form.controls.formId.hasError('required')) {
@@ -96,7 +96,7 @@
               {{ range.from | qrRange: range.to }}
             </mat-option>
           } @empty {
-            <mat-option class="option-lg" disabled> {{ SharedLocalization.noRanges }}</mat-option>
+            <mat-option class="option-lg" disabled> {{ SharedLocalization.emptyList }}</mat-option>
           }
         </mat-select>
         @if (form.controls.rangeId.touched && form.controls.rangeId.hasError('required')) {

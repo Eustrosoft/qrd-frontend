@@ -200,7 +200,7 @@
                 }
               }
             } @empty {
-              {{ SharedLocalization.noFiles }}
+              {{ SharedLocalization.emptyList }}
             }
           </ui-grid-block>
           <ui-flex-block>
@@ -248,7 +248,7 @@
                   @for (file of selectors.filesState().fileList; track file.id) {
                     <mat-option class="option-lg" [value]="file.id">{{ file.name }}</mat-option>
                   } @empty {
-                    {{ SharedLocalization.noFiles }}
+                    {{ SharedLocalization.emptyList }}
                   }
                 </mat-select>
               </mat-form-field>
