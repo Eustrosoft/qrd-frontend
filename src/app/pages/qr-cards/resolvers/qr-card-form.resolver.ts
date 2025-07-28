@@ -6,6 +6,7 @@ import { QrCardFormFactoryService } from '@app/pages/qr-cards/services/qr-card-f
 import { QrCardFormGroup } from '@app/pages/qr-cards/qr-cards.models';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
+import { uniq } from '@shared/utils/functions/uniq.function';
 
 export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup>> => {
   return (route) => {
@@ -17,7 +18,7 @@ export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup>> => 
 
     qrCardFormFactoryService.reset();
 
-    if (qrCard()) {
+    const initializeForm = (): QrCardFormGroup => {
       qrCardFormFactoryService.initialize(
         {
           id: qrCard()?.id ?? -1,
@@ -29,34 +30,21 @@ export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup>> => 
           redirect: qrCard()?.redirect ?? '',
           data: qrCard()?.data ?? {},
           // eslint-disable-next-line no-extra-parens
-          files: [...(qrCard()?.files ?? []), ...(qrCard()?.form?.files ?? [])],
+          files: uniq([...(qrCard()?.files ?? []), ...(qrCard()?.form?.files ?? [])], 'id'),
         },
         qrCard()?.form?.fields,
       );
-      return of(qrCardFormFactoryService.form);
+      return qrCardFormFactoryService.form;
+    };
+
+    if (qrCard()) {
+      return of(initializeForm());
     }
 
     dispatch(FetchQrCard)(code);
     return actions$.pipe(
       ofActionCompleted(FetchQrCard),
-      map(() => {
-        qrCardFormFactoryService.initialize(
-          {
-            id: qrCard()?.id ?? -1,
-            code: qrCard()?.code ?? -1,
-            formId: qrCard()?.form?.id ?? -1,
-            name: qrCard()?.name ?? '',
-            description: qrCard()?.description ?? '',
-            action: qrCard()?.action ?? 'STD',
-            redirect: qrCard()?.redirect ?? '',
-            data: qrCard()?.data ?? {},
-            // eslint-disable-next-line no-extra-parens
-            files: [...(qrCard()?.files ?? []), ...(qrCard()?.form?.files ?? [])],
-          },
-          qrCard()?.form?.fields,
-        );
-        return qrCardFormFactoryService.form;
-      }),
+      map(() => initializeForm()),
     );
   };
 };

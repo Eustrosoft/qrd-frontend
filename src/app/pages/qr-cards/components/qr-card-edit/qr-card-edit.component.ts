@@ -68,6 +68,7 @@ import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
+import { uniq } from '@shared/utils/functions/uniq.function';
 
 @Component({
   selector: 'qr-card-edit',
@@ -178,8 +179,12 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
 
   protected readonly qrCardEff = effect(() => {
     const qrCard = this.selectors.qrCard();
+    const files = qrCard?.files ?? [];
+    const templateFiles = qrCard?.form?.files ?? [];
     this.qrCardFormFactoryService.patchQrCardForm(
       {
+        id: qrCard?.id ?? -1,
+        code: qrCard?.code ?? -1,
         formId: qrCard?.form?.id ?? -1,
         name: qrCard?.name ?? '',
         description: qrCard?.description ?? '',
@@ -189,7 +194,7 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
       },
       false,
     );
-    this.qrCardFormFactoryService.patchFiles(qrCard?.files ?? [], false);
+    this.qrCardFormFactoryService.patchFiles(uniq([...files, ...templateFiles], 'id'), false);
   });
 
   protected readonly isUploadVisible = signal<boolean>(false);
