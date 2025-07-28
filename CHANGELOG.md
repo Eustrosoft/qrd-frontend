@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.3.0...v1.4.0) (2025-07-28)
+
+
+### Features
+
+* **qr:** доработано положение поля описания ([3869cd9](https://github.com/Eustrosoft/qrd-frontend/commit/3869cd9be525be9295e4ded1a1122b677706576b))
+* **version:** добавлено отображение версии ([0c5e629](https://github.com/Eustrosoft/qrd-frontend/commit/0c5e62914e177072e0c2161f675b60110d3a8126))
+
+
+### Bug Fixes
+
+* **qr:** доработан функционал выбора добавления файлов к карточке ([62f3643](https://github.com/Eustrosoft/qrd-frontend/commit/62f364317b14218ddcac16aef28582e760dc89fa))
+* **qr:** исправлено положение кнопки сохранить в адаптивной версии ([105f615](https://github.com/Eustrosoft/qrd-frontend/commit/105f6159910331a04b77d7164dfd6c0119ef8761))
+
 ## [1.3.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.2.0...v1.3.0) (2025-07-25)
 
 

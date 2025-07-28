@@ -1,6 +1,6 @@
 {
   "name": "qrd-frontend",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "scripts": {
     "start": "npx eslint ./src && npm run set-version && ng serve --configuration=development",
     "build:production": "npm run set-version && ng build --configuration production",
