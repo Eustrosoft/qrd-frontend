@@ -103,6 +103,8 @@
           <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
         }
       </mat-form-field>
+    </ui-grid-block>
+    <ui-grid-block gridTemplateColumns="1fr">
       <mat-form-field class="form-field-lg">
         <mat-label> {{ SharedLocalization.description }} </mat-label>
         <textarea [formControl]="form.controls.description" matInput></textarea>
