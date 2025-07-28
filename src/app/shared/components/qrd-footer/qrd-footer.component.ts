@@ -23,6 +23,7 @@ import { ChangeLocaleDialogData } from '@shared/components/confirmation-dialog/c
 import { MatDialog } from '@angular/material/dialog';
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 import { first, tap } from 'rxjs';
+import { VERSION } from '@cdk/tokens/version.token';
 
 @Component({
   selector: 'qrd-footer',
@@ -57,6 +58,7 @@ export class QrdFooterComponent {
   });
   protected readonly setLocale = dispatch(SetLocale);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
+  protected readonly version = inject(VERSION);
   protected readonly FooterLocalization = FooterLocalization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly currentYear = new Date().getFullYear();
