@@ -12,11 +12,11 @@ let content = fs.readFileSync(indexFilePath, 'utf-8');
 // Check if the version meta tag already exists
 if (content.includes('name="version"')) {
   // If it exists, replace it
-  const regex = /<meta name="version" content="([^"]+)">/;
-  content = content.replace(regex, `<meta name="version" content="${version}">`);
+  const regex = /<meta\s+name="version"\s+content="([^"]*)"\s*\/?>/i;
+  content = content.replace(regex, `<meta name="version" content="${version}" />`);
 } else {
   // If it doesn't exist, add it to the head
-  const metaTag = `    <meta name="version" content="${version}">\n`;
+  const metaTag = `    <meta name="version" content="${version}" />\n`;
   const insertAt = content.indexOf('</head>');
   content = content.slice(0, insertAt) + metaTag + content.slice(insertAt);
 }
