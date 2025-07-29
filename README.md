@@ -1,5 +1,8 @@
 # qrd-frontend
 
+## Changelog
+[Changelog](CHANGELOG.md)
+
 ## Design
 [Figma](https://www.figma.com/design/BIFVJAKf1wMzM9sTM4AXJi/QRDemo)
 
