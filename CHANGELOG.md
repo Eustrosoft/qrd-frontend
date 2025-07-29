@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.3](https://github.com/Eustrosoft/qrd-frontend/compare/v1.4.2...v1.4.3) (2025-07-29)
+
+
+### Bug Fixes
+
+* **ver:** исправлено обновление версии в index.html при релизе ([22e708b](https://github.com/Eustrosoft/qrd-frontend/commit/22e708b91d6eb15d7a1ca62fedf553ed6e2c62c2))
+
 ### [1.4.2](https://github.com/Eustrosoft/qrd-frontend/compare/v1.4.1...v1.4.2) (2025-07-29)
 
 
