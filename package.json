@@ -65,7 +65,7 @@
   },
   "standard-version": {
     "scripts": {
-      "prerelease": "npm run set-version && git add src/index.html"
+      "postbump": "npm run set-version && git add src/index.html"
     }
   }
 }
