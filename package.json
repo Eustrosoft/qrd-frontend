@@ -14,7 +14,7 @@
     "stylelint": "npx stylelint \"**/*.scss\" --fix",
     "lint-staged": "npm run lint && npm run stylelint",
     "prepare": "husky",
-    "release": "standard-version"
+    "release": "standard-version -a"
   },
   "private": true,
   "dependencies": {
