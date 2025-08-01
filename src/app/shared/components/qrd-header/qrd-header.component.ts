@@ -7,7 +7,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { HeaderNavbarLink } from '@shared/components/qrd-header/qrd-header.models';
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, Overlay } from '@angular/cdk/overlay';
 import { ThemePickerOverlayComponent } from '@shared/components/theme-picker-overlay/theme-picker-overlay.component';
-import { overlayAnimation } from '@shared/shared.animations';
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component';
 import { MatListItem, MatNavList } from '@angular/material/list';
@@ -21,6 +20,7 @@ import { MiniProfileInfoComponent } from '@modules/auth/components/mini-profile-
 import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overlay/create-menu-overlay.component';
 import { MatIcon } from '@angular/material/icon';
 import { CardFieldComponent } from '@shared/components/card-field/card-field.component';
+import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
 
 @Component({
   selector: 'qrd-header',
@@ -41,8 +41,8 @@ import { CardFieldComponent } from '@shared/components/card-field/card-field.com
     MiniProfileInfoComponent,
     CreateMenuOverlayComponent,
     MatIcon,
+    OverlayAnimationDirective,
   ],
-  animations: [overlayAnimation],
   templateUrl: './qrd-header.component.html',
   styleUrl: './qrd-header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -67,8 +67,6 @@ export class QrdHeaderComponent {
     return '16';
   });
 
-  protected readonly isThemeOverlayOpen = signal<boolean>(false);
-  protected readonly themeOverlayScrollStrategy = this.overlay.scrollStrategies.close();
   protected readonly overlayPositions = computed<ConnectedPosition[]>(() => [
     {
       originX: 'end',
@@ -81,9 +79,34 @@ export class QrdHeaderComponent {
   ]);
 
   protected readonly isCreateOverlayOpen = signal<boolean>(false);
+  protected readonly isCreateOverlayAttached = signal<boolean>(false);
   protected readonly createOverlayScrollStrategy = this.overlay.scrollStrategies.close();
 
+  protected readonly isThemeOverlayOpen = signal<boolean>(false);
+  protected readonly isThemeOverlayAttached = signal<boolean>(false);
+  protected readonly themeOverlayScrollStrategy = this.overlay.scrollStrategies.close();
+
+  protected openCreateOverlay(): void {
+    this.isCreateOverlayAttached.set(true);
+    this.isCreateOverlayOpen.set(true);
+  }
+
+  protected closeCreateOverlay(): void {
+    this.isCreateOverlayOpen.set(false);
+  }
+
+  protected onCreateOverlayClosed(): void {
+    if (!this.isCreateOverlayOpen()) {
+      this.isCreateOverlayAttached.set(false);
+    }
+  }
+
+  protected detachCreateOverlay(): void {
+    this.isCreateOverlayAttached.set(false);
+  }
+
   protected openThemeOverlay(): void {
+    this.isThemeOverlayAttached.set(true);
     this.isThemeOverlayOpen.set(true);
   }
 
@@ -91,12 +114,14 @@ export class QrdHeaderComponent {
     this.isThemeOverlayOpen.set(false);
   }
 
-  protected openCreateOverlay(): void {
-    this.isCreateOverlayOpen.set(true);
+  protected onThemeOverlayClosed(): void {
+    if (!this.isThemeOverlayOpen()) {
+      this.isThemeOverlayAttached.set(false);
+    }
   }
 
-  protected closeCreateOverlay(): void {
-    this.isCreateOverlayOpen.set(false);
+  protected detachThemeOverlay(): void {
+    this.isThemeOverlayAttached.set(false);
   }
 
   protected openSidenavMenu(): void {

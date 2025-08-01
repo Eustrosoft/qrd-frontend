@@ -1,6 +1,9 @@
 @use 'styles/mixins' as mixins;
+@use 'styles/animations' as anim;
 
 :host {
+  @include anim.overlay-animation;
+
   gap: mixins.rem(8);
   width: 100%;
   color: var(--mat-sys-on-surface);

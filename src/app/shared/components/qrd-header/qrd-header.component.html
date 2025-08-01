@@ -41,15 +41,17 @@
       <ng-template
         cdkConnectedOverlay
         [cdkConnectedOverlayOrigin]="createTrigger"
-        [cdkConnectedOverlayOpen]="isCreateOverlayOpen()"
+        [cdkConnectedOverlayOpen]="isCreateOverlayAttached()"
         [cdkConnectedOverlayPositions]="overlayPositions()"
         [cdkConnectedOverlayScrollStrategy]="createOverlayScrollStrategy"
         [cdkConnectedOverlayWidth]="220"
         (overlayOutsideClick)="closeCreateOverlay()"
-        (detach)="closeCreateOverlay()"
+        (detach)="detachCreateOverlay()"
       >
         <create-menu-overlay
-          [@transformPanel]="isCreateOverlayOpen() ? 'enter' : 'void'"
+          overlayAnimation
+          [isOpen]="isCreateOverlayOpen()"
+          (animationDone)="onCreateOverlayClosed()"
           (closeOverlay)="closeCreateOverlay()"
         />
       </ng-template>
@@ -67,15 +69,17 @@
     <ng-template
       cdkConnectedOverlay
       [cdkConnectedOverlayOrigin]="themeTrigger"
-      [cdkConnectedOverlayOpen]="isThemeOverlayOpen()"
+      [cdkConnectedOverlayOpen]="isThemeOverlayAttached()"
       [cdkConnectedOverlayPositions]="overlayPositions()"
       [cdkConnectedOverlayScrollStrategy]="themeOverlayScrollStrategy"
       [cdkConnectedOverlayWidth]="240"
       (overlayOutsideClick)="closeThemeOverlay()"
-      (detach)="closeThemeOverlay()"
+      (detach)="detachThemeOverlay()"
     >
       <theme-picker-overlay
-        [@transformPanel]="isThemeOverlayOpen() ? 'enter' : 'void'"
+        overlayAnimation
+        [isOpen]="isThemeOverlayOpen()"
+        (animationDone)="onThemeOverlayClosed()"
         (closeClick)="closeThemeOverlay()"
       />
     </ng-template>
