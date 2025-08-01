@@ -8,15 +8,11 @@
   gap: mixins.rem(8);
   width: 100%;
   color: var(--mat-sys-on-surface);
-  display: flex;
+  display: grid;
   background: var(--mat-sys-surface-container);
   box-shadow: var(--mat-sys-level2);
   border-radius: mixins.rem(16);
-  flex-direction: column;
   transform-origin: top left;
-  animation-fill-mode: forwards;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
 
   .create-action-list {
     @include mat.list-overrides(

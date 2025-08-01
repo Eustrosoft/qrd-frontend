@@ -7,11 +7,10 @@
   gap: mixins.rem(8);
   width: 100%;
   color: var(--mat-sys-on-surface);
-  display: flex;
+  display: grid;
   padding: mixins.rem(8) mixins.rem(16);
   background: var(--mat-sys-surface-container);
   box-shadow: var(--mat-sys-level2);
   border-radius: mixins.rem(16);
-  flex-direction: column;
   transform-origin: top left;
 }

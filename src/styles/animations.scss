@@ -51,4 +51,8 @@
   &:not(.is-open) {
     animation: overlay-close 100ms linear;
   }
+
+  animation-fill-mode: forwards;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
