@@ -15,7 +15,7 @@ import {
   SetTemplatesDataViewDisplayType,
 } from '@app/pages/templates/state/templates.actions';
 import { TemplateListComponent } from '@app/pages/templates/components/template-list/template-list.component';
-import { expandAnimation } from '@shared/shared.animations';
+import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
 
 @Component({
   selector: 'templates-layout',
@@ -26,8 +26,8 @@ import { expandAnimation } from '@shared/shared.animations';
     SelectionBarComponent,
     UiSkeletonComponent,
     TemplateListComponent,
+    AnimatedIfDirective,
   ],
-  animations: [expandAnimation],
   templateUrl: './templates-layout.component.html',
   styleUrl: './templates-layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

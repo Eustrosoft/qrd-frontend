@@ -7,7 +7,8 @@ export class OverlayAnimationDirective implements OnDestroy {
   public readonly isOpen = input<boolean>(false);
   public readonly animationDone = output<void>();
 
-  @HostBinding('class.is-open') get isOpenClass(): boolean {
+  @HostBinding('class.is-open')
+  get isOpenClass(): boolean {
     return this.isOpen();
   }
 

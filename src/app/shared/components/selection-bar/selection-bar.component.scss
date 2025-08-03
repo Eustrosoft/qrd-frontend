@@ -4,6 +4,34 @@
 @use 'sass:map';
 
 :host {
+  @keyframes selection-bar-enter {
+    from {
+      padding: 0;
+      opacity: 0;
+      transform: translateX(-50%) translateY(100%);
+    }
+
+    to {
+      padding: mixins.rem(12) mixins.rem(16);
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  @keyframes selection-bar-leave {
+    from {
+      padding: mixins.rem(12) mixins.rem(16);
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    to {
+      padding: 0;
+      opacity: 0;
+      transform: translateX(-50%) translateY(100%);
+    }
+  }
+
   gap: mixins.rem(8);
   left: 50%;
   width: min(calc(100% - (2 * var(--main-padding-horizontal))), calc(80rem - (2 * var(--main-padding-horizontal))));
@@ -11,13 +39,25 @@
   z-index: 2;
   display: flex;
   padding: mixins.rem(12) mixins.rem(16);
+  opacity: 0;
   position: fixed;
   transform: translateX(-50%);
   background: var(--mat-sys-surface-container-high);
   box-shadow: var(--mat-sys-level2);
   align-items: center;
   border-radius: mixins.rem(12);
+  pointer-events: none;
   justify-content: space-between;
+
+  &.animate-enter {
+    animation: selection-bar-enter 300ms ease-out forwards;
+    pointer-events: auto;
+  }
+
+  &.animate-leave {
+    animation: selection-bar-leave 300ms ease-in forwards;
+    pointer-events: none;
+  }
 
   @media #{map.get(bp.$breakpoints, xsmall)} {
     width: calc(100vw - calc(var(--main-padding-horizontal) * 2));

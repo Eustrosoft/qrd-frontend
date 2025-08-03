@@ -12,11 +12,11 @@ import {
 import { SelectionBarComponent } from '@shared/components/selection-bar/selection-bar.component';
 import { QrCardListComponent } from '@app/pages/qr-cards/components/qr-card-list/qr-card-list.component';
 import { MatIcon } from '@angular/material/icon';
-import { expandAnimation } from '@shared/shared.animations';
 import { MatMiniFabButton } from '@angular/material/button';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
+import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
 
 @Component({
   selector: 'qr-cards-layout',
@@ -27,8 +27,8 @@ import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
     MatIcon,
     MatMiniFabButton,
     UiSkeletonComponent,
+    AnimatedIfDirective,
   ],
-  animations: [expandAnimation],
   templateUrl: './qr-cards-layout.component.html',
   styleUrl: './qr-cards-layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

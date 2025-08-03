@@ -12,10 +12,10 @@ import { DataViewComponent } from '@shared/components/data-view/data-view.compon
 import { SelectionBarComponent } from '@shared/components/selection-bar/selection-bar.component';
 import { MatIcon } from '@angular/material/icon';
 import { FileListComponent } from '@app/pages/files/components/file-list/file-list.component';
-import { expandAnimation } from '@shared/shared.animations';
 import { MatMiniFabButton } from '@angular/material/button';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
+import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
 
 @Component({
   selector: 'files-layout',
@@ -26,8 +26,8 @@ import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
     FileListComponent,
     MatMiniFabButton,
     UiSkeletonComponent,
+    AnimatedIfDirective,
   ],
-  animations: [expandAnimation],
   templateUrl: './files-layout.component.html',
   styleUrl: './files-layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

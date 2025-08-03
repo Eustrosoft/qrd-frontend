@@ -3,26 +3,24 @@
   (displayTypeChange)="actions.setDisplayType($event.value)"
   (advancedSearchClicked)="openAdvancedSearch()"
 >
-  @if (selectors.selectedFileList().length) {
-    <selection-bar
-      [count]="selectors.selectedFileList().length"
-      (onSelectAll)="actions.selectAllFiles()"
-      (onClose)="actions.setSelectedFiles([])"
-      [@expandFade]
-    >
-      @if (!selectors.isDeleteInProgress()) {
-        <button
-          (click)="actions.deleteFiles(selectors.selectedFileList(), destroyRef)"
-          class="mini-fab-md mini-fab-secondary"
-          mat-mini-fab
-        >
-          <mat-icon class="icon-on-secondary">delete</mat-icon>
-        </button>
-      } @else {
-        <ui-skeleton width="40" height="40" borderRadius="50%" />
-      }
-    </selection-bar>
-  }
+  <selection-bar
+    *animatedIf="!!selectors.selectedFileList().length"
+    [count]="selectors.selectedFileList().length"
+    (onSelectAll)="actions.selectAllFiles()"
+    (onClose)="actions.setSelectedFiles([])"
+  >
+    @if (!selectors.isDeleteInProgress()) {
+      <button
+        (click)="actions.deleteFiles(selectors.selectedFileList(), destroyRef)"
+        class="mini-fab-md mini-fab-secondary"
+        mat-mini-fab
+      >
+        <mat-icon class="icon-on-secondary">delete</mat-icon>
+      </button>
+    } @else {
+      <ui-skeleton width="40" height="40" borderRadius="50%" />
+    }
+  </selection-bar>
   @if (selectors.displayType() === 'list') {
     <file-list (selectionChanged)="actions.setSelectedFiles($event)" />
   }
