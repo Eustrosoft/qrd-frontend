@@ -4,5 +4,5 @@ export const environment: Environment = {
   name: 'stage',
   production: false,
   stage: true,
-  baseHref: '/v2/',
+  baseHref: '/lk/v2/',
 };
