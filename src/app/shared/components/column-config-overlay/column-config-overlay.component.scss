@@ -1,5 +1,6 @@
 @use 'styles/mixins' as mixins;
 @use 'styles/animations' as anim;
+@use '@angular/material' as mat;
 
 :host {
   @include anim.overlay-animation;
@@ -15,6 +16,12 @@
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
 
   mat-list {
+    @include mat.list-overrides(
+      (
+        list-item-leading-avatar-color: transparent,
+      )
+    );
+
     border: 1px solid var(--mat-sys-outline);
     padding: 0;
     border-radius: mixins.rem(8);
@@ -22,10 +29,20 @@
 
   mat-list-item {
     cursor: move;
+
+    button {
+      cursor: pointer;
+    }
   }
 }
 
 .cdk-drag-preview {
+  @include mat.list-overrides(
+    (
+      list-item-leading-avatar-color: transparent,
+    )
+  );
+
   box-sizing: border-box;
   background: var(--mat-sys-surface-container);
   box-shadow: var(--mat-sys-level2);

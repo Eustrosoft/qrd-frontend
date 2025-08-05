@@ -1,7 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, model, output } from '@angular/core';
-import { MatDivider, MatList, MatListItem, MatListSubheaderCssMatStyler } from '@angular/material/list';
+import { ChangeDetectionStrategy, Component, computed, input, model, output } from '@angular/core';
+import {
+  MatDivider,
+  MatList,
+  MatListItem,
+  MatListItemAvatar,
+  MatListSubheaderCssMatStyler,
+} from '@angular/material/list';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
-import { MatMiniFabButton } from '@angular/material/button';
+import { MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Column } from '@api/settings/settings-api.models';
 import {
@@ -13,6 +19,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { ColumnConfigOverlayLocalization } from '@shared/components/column-config-overlay/column-config-overlay.constants';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 
 @Component({
   selector: 'column-config-overlay',
@@ -26,6 +33,9 @@ import { ColumnConfigOverlayLocalization } from '@shared/components/column-confi
     CdkDrag,
     MatListSubheaderCssMatStyler,
     MatDivider,
+    MatIconButton,
+    UiFlexBlockComponent,
+    MatListItemAvatar,
   ],
   templateUrl: './column-config-overlay.component.html',
   styleUrl: './column-config-overlay.component.scss',
@@ -35,6 +45,7 @@ import { ColumnConfigOverlayLocalization } from '@shared/components/column-confi
 export class ColumnConfigOverlayComponent {
   public readonly allCols = model<Column[]>([]);
   public readonly selectedCols = model<Column[]>([]);
+  public readonly isDisabled = input<boolean>(false);
   public readonly selectedColsChange = output<Column[]>();
   public readonly closeOverlay = output<void>();
 
@@ -61,23 +72,35 @@ export class ColumnConfigOverlayComponent {
       const containerArr = [...event.container.data];
       transferArrayItem(previousContainerArr, containerArr, event.previousIndex, event.currentIndex);
       if (container === 'all') {
-        this.allCols.set(containerArr);
         this.selectedCols.set(previousContainerArr);
         this.selectedColsChange.emit(previousContainerArr);
       }
       if (container === 'selected') {
-        this.allCols.set(previousContainerArr);
         this.selectedCols.set(containerArr);
         this.selectedColsChange.emit(containerArr);
       }
     }
   }
 
-  protected moveAllToRight(): void {}
+  protected moveAllToSelected(): void {
+    const newSelected = [...this.selectedCols(), ...this.filteredCols()];
+    this.selectedCols.set(newSelected);
+    this.selectedColsChange.emit(newSelected);
+  }
 
-  protected moveFirstToRight(): void {}
+  protected moveAllToList(): void {
+    const newSelected: Column[] = [];
+    this.selectedCols.set(newSelected);
+    this.selectedColsChange.emit(newSelected);
+  }
 
-  protected moveAllToLeft(): void {}
+  protected toSelected(col: Column): void {
+    this.selectedCols.update((selected) => [...selected, col]);
+    this.selectedColsChange.emit(this.selectedCols());
+  }
 
-  protected moveFirstToLeft(): void {}
+  protected toList(index: number): void {
+    this.selectedCols.update((selected) => selected.filter((_, idx) => index !== idx));
+    this.selectedColsChange.emit(this.selectedCols());
+  }
 }

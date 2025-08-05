@@ -144,11 +144,19 @@ export class AppState {
 
   @Action(PatchSettings)
   public patchSettings(
-    { setState, dispatch }: StateContext<AppStateModel>,
+    { getState, setState, dispatch }: StateContext<AppStateModel>,
     { payload }: PatchSettings,
   ): Observable<unknown> {
     setState(patch({ isSavingSettings: true }));
-    return this.settingsService.patchSettings(payload).pipe(
+    const { locale } = getState();
+    const settings: SettingsDto['settings'] = {
+      language: payload?.language ?? locale,
+      qrTableColumns: payload?.qrTableColumns ?? DEFAULT_SETTINGS.qrTableColumns,
+      defaultQrPrintText: payload?.defaultQrPrintText ?? DEFAULT_SETTINGS.defaultQrPrintText,
+      defaultQrPrintTextDown: payload?.defaultQrPrintTextDown ?? DEFAULT_SETTINGS.defaultQrPrintTextDown,
+      checkUploadSize: payload?.checkUploadSize ?? DEFAULT_SETTINGS.checkUploadSize,
+    };
+    return this.settingsService.patchSettings(settings).pipe(
       switchMap(() => {
         setState(patch({ isSavingSettings: false }));
         return dispatch(FetchSettings);
