@@ -1,51 +1,49 @@
-<ui-flex-block flexDirection="column">
-  @if (!selectors.isFileListLoading()) {
-    @for (file of selectors.fileList(); track file.id) {
-      <view-list-item
-        [title]="file.name"
-        [navigateTo]="`./${file.id}`"
-        [isPreviewShown]="true"
-        [isSelected]="selectionModel.isSelected(file.id)"
-        (checkboxChanged)="$event ? selectionModel.select(file.id) : selectionModel.deselect(file.id)"
-      >
-        <ng-container content>
-          <p ellipsis>
-            {{ file.description | fallback: SharedLocalization.noDescription }}
-          </p>
-        </ng-container>
-        <ng-container attributes>
-          <ui-flex-block gapSize="4" flexAlignItems="center" flexWrap="wrap">
-            <ui-badge>
-              <small>{{ file.fileSize | bytesToSize }}</small>
-            </ui-badge>
-            <ui-badge>
-              <small>{{ (file.updated | date: 'short') ?? '' }}</small>
-            </ui-badge>
-          </ui-flex-block>
-        </ng-container>
-        <ng-container menu-items>
-          <a [routerLink]="`./${file.id}`" [relativeTo]="activatedRoute" mat-menu-item>
-            <mat-icon>outbound</mat-icon>
-            {{ SharedLocalization.open }}
-          </a>
-          <button mat-menu-item>
-            <mat-icon>print</mat-icon>
-            {{ SharedLocalization.print }}
-          </button>
-          <a [routerLink]="`./${file.id}/${AppRoutes.edit}`" mat-menu-item>
-            <mat-icon>edit</mat-icon>
-            {{ SharedLocalization.edit }}
-          </a>
-          <button (click)="actions.deleteFiles([file.id], destroyRef)" mat-menu-item>
-            <mat-icon>delete</mat-icon>
-            {{ SharedLocalization.delete }}
-          </button>
-        </ng-container>
-      </view-list-item>
-    }
-  } @else {
-    @for (sk of selectors.fileListSkeletonLoaders(); track sk) {
-      <ui-skeleton height="72" />
-    }
+@if (!selectors.isFileListLoading()) {
+  @for (file of selectors.fileList(); track file.id) {
+    <view-list-item
+      [title]="file.name"
+      [navigateTo]="`./${file.id}`"
+      [isPreviewShown]="true"
+      [isSelected]="selectionModel.isSelected(file.id)"
+      (checkboxChanged)="$event ? selectionModel.select(file.id) : selectionModel.deselect(file.id)"
+    >
+      <ng-container content>
+        <p ellipsis>
+          {{ file.description | fallback: SharedLocalization.noDescription }}
+        </p>
+      </ng-container>
+      <ng-container attributes>
+        <ui-flex-block gapSize="4" flexAlignItems="center" flexWrap="wrap">
+          <ui-badge>
+            <small>{{ file.fileSize | bytesToSize }}</small>
+          </ui-badge>
+          <ui-badge>
+            <small>{{ (file.updated | date: 'short') ?? '' }}</small>
+          </ui-badge>
+        </ui-flex-block>
+      </ng-container>
+      <ng-container menu-items>
+        <a [routerLink]="`./${file.id}`" [relativeTo]="activatedRoute" mat-menu-item>
+          <mat-icon>outbound</mat-icon>
+          {{ SharedLocalization.open }}
+        </a>
+        <button mat-menu-item>
+          <mat-icon>print</mat-icon>
+          {{ SharedLocalization.print }}
+        </button>
+        <a [routerLink]="`./${file.id}/${AppRoutes.edit}`" mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          {{ SharedLocalization.edit }}
+        </a>
+        <button (click)="actions.deleteFiles([file.id], destroyRef)" mat-menu-item>
+          <mat-icon>delete</mat-icon>
+          {{ SharedLocalization.delete }}
+        </button>
+      </ng-container>
+    </view-list-item>
   }
-</ui-flex-block>
+} @else {
+  @for (sk of selectors.fileListSkeletonLoaders(); track sk) {
+    <ui-skeleton height="72" />
+  }
+}

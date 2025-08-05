@@ -20,7 +20,7 @@ import {
   UpdateFileMetadata,
   UploadBlobByChunks,
 } from '@app/pages/files/components/file-upload/state/file-upload.actions';
-import { FileEditableMetadata } from '@api/files/file-api.models';
+import { FileEditableMetadata } from '@api/files/files-api.models';
 import { SharedLocalization } from '@shared/shared.constants';
 import { FilesLocalization, MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';

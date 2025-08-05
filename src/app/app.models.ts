@@ -2,6 +2,7 @@ export type Environment = {
   name: string;
   production: boolean;
   stage: boolean;
+  baseHref: string;
 };
 export type Theme = 'system' | 'light' | 'dark';
 export type ThemeContrast = '' | '-mc' | '-hc';

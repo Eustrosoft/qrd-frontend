@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FileForm, FileFormGroup, FileFormGroupArray } from '@shared/shared.models';
-import { FileStorageType } from '@api/files/file-api.models';
+import { FileStorageType } from '@api/files/files-api.models';
 import { FormBuilder } from '@angular/forms';
 
 @Injectable({

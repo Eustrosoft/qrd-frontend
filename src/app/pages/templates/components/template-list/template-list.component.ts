@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, OnInit 
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { MatMenuItem } from '@angular/material/menu';
-import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { ViewListItemComponent } from '@shared/components/view-list-item/view-list-item.component';
 import { MatIcon } from '@angular/material/icon';
@@ -27,7 +26,6 @@ import {
     FallbackPipe,
     MatIcon,
     MatMenuItem,
-    UiFlexBlockComponent,
     UiSkeletonComponent,
     ViewListItemComponent,
     RouterLink,

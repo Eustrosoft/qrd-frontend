@@ -1,60 +1,58 @@
-<ui-flex-block flexDirection="column">
-  @if (!selectors.isQrCardListLoading()) {
-    @for (qrCard of selectors.qrCardList(); track qrCard.id) {
-      <view-list-item
-        [title]="qrCard.code | toHex"
-        [navigateTo]="`./${qrCard.code}`"
-        [isPreviewShown]="true"
-        [isSelected]="selectionModel.isSelected(qrCard.id)"
-        (checkboxChanged)="$event ? selectionModel.select(qrCard.id) : selectionModel.deselect(qrCard.id)"
-      >
-        <ng-container preview>
-          <img
-            [src]="`https://qrgen.qxyz.ru/generate?q=${qrCard.code | toHex}&amp;color=%23000000&amp;background=%23ffffff&amp;x=128&amp;fileType=SVG&amp;correctionLevel=L`"
-            alt="qr code"
-            imgLoadState
-            #imgLoadState="imgLoadState"
-            [hidden]="!imgLoadState.isLoaded"
-          />
-          @if (!imgLoadState.isLoaded) {
-            <ui-skeleton [style.flex]="'0 0 128px'" width="128" height="128" />
-          }
-        </ng-container>
-        <ng-container content>
-          <p ellipsis>
-            {{ qrCard.name | fallback: SharedLocalization.noName }}
-          </p>
-          <p ellipsis>
-            {{ qrCard.description | fallback: SharedLocalization.noDescription }}
-          </p>
-        </ng-container>
-        <ng-container menu-items>
-          <a [routerLink]="`./${qrCard.code}`" [relativeTo]="activatedRoute" mat-menu-item>
-            <mat-icon>outbound</mat-icon>
-            {{ SharedLocalization.open }}
-          </a>
-          <button (click)="openCardPreview(qrCard.qrCardPreviewUrl)" mat-menu-item>
-            <mat-icon>open_in_new</mat-icon>
-            {{ QrCardsLocalization.viewCard }}
-          </button>
-          <button mat-menu-item>
-            <mat-icon>print</mat-icon>
-            {{ SharedLocalization.print }}
-          </button>
-          <button mat-menu-item>
-            <mat-icon>edit</mat-icon>
-            {{ SharedLocalization.edit }}
-          </button>
-          <button (click)="actions.deleteQrCards([qrCard.id], destroyRef)" mat-menu-item>
-            <mat-icon>delete</mat-icon>
-            {{ SharedLocalization.delete }}
-          </button>
-        </ng-container>
-      </view-list-item>
-    }
-  } @else {
-    @for (sk of selectors.qrCardListSkeletonLoaders(); track sk) {
-      <ui-skeleton [height]="skeletonHeight()" />
-    }
+@if (!selectors.isQrCardListLoading()) {
+  @for (qrCard of selectors.qrCardList(); track qrCard.id) {
+    <view-list-item
+      [title]="qrCard.code | toHex"
+      [navigateTo]="`./${qrCard.code}`"
+      [isPreviewShown]="true"
+      [isSelected]="selectionModel.isSelected(qrCard.id)"
+      (checkboxChanged)="$event ? selectionModel.select(qrCard.id) : selectionModel.deselect(qrCard.id)"
+    >
+      <ng-container preview>
+        <img
+          [src]="`https://qrgen.qxyz.ru/generate?q=${qrCard.code | toHex}&amp;color=%23000000&amp;background=%23ffffff&amp;x=128&amp;fileType=SVG&amp;correctionLevel=L`"
+          alt="qr code"
+          imgLoadState
+          #imgLoadState="imgLoadState"
+          [hidden]="!imgLoadState.isLoaded"
+        />
+        @if (!imgLoadState.isLoaded) {
+          <ui-skeleton [style.flex]="'0 0 128px'" width="128" height="128" />
+        }
+      </ng-container>
+      <ng-container content>
+        <p ellipsis>
+          {{ qrCard.name | fallback: SharedLocalization.noName }}
+        </p>
+        <p ellipsis>
+          {{ qrCard.description | fallback: SharedLocalization.noDescription }}
+        </p>
+      </ng-container>
+      <ng-container menu-items>
+        <a [routerLink]="`./${qrCard.code}`" [relativeTo]="activatedRoute" mat-menu-item>
+          <mat-icon>outbound</mat-icon>
+          {{ SharedLocalization.open }}
+        </a>
+        <button (click)="openCardPreview(qrCard.qrCardPreviewUrl)" mat-menu-item>
+          <mat-icon>open_in_new</mat-icon>
+          {{ QrCardsLocalization.viewCard }}
+        </button>
+        <button mat-menu-item>
+          <mat-icon>print</mat-icon>
+          {{ SharedLocalization.print }}
+        </button>
+        <button mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          {{ SharedLocalization.edit }}
+        </button>
+        <button (click)="actions.deleteQrCards([qrCard.id], destroyRef)" mat-menu-item>
+          <mat-icon>delete</mat-icon>
+          {{ SharedLocalization.delete }}
+        </button>
+      </ng-container>
+    </view-list-item>
   }
-</ui-flex-block>
+} @else {
+  @for (sk of selectors.qrCardListSkeletonLoaders(); track sk) {
+    <ui-skeleton [height]="skeletonHeight()" />
+  }
+}

@@ -29,7 +29,7 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { FileBlobUploadResponse, FileDto } from '@api/files/file-api.models';
+import { FileBlobUploadResponse, FileDto } from '@api/files/files-api.models';
 import { FilesService } from '@app/pages/files/services/files.service';
 import { patch } from '@ngxs/store/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

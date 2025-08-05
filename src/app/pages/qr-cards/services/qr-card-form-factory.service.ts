@@ -4,7 +4,7 @@ import { QrCardAction, QrCardDataFormRecord, QrCardForm, QrCardFormGroup } from 
 import { MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH, MAX_URL_LENGTH } from '@app/pages/files/files.constants';
 import { SharedFormFactoryService } from '@shared/service/shared-form-factory.service';
 import { FileFormGroup } from '@shared/shared.models';
-import { TemplateField } from '@api/templates/template-api.models';
+import { TemplateField } from '@api/templates/templates-api.models';
 import { WEB_REGEXP } from '@shared/shared.constants';
 
 @Injectable()

@@ -3,6 +3,21 @@
   (displayTypeChange)="actions.setDisplayType($event.value)"
   (advancedSearchClicked)="openAdvancedSearch()"
 >
+  <ng-content view-settings>
+    @if (!isSmallScreen()) {
+      <view-mode-settings #vmSettings="vmSettings">
+        <column-config-overlay
+          [allCols]="ALL_QR_TABLE_COLS"
+          [selectedCols]="selectors.settingsState().settings.qrTableColumns"
+          (selectedColsChange)="actions.patchSettings({ qrTableColumns: $event })"
+          overlayAnimation
+          [isOpen]="vmSettings.isOverlayOpen()"
+          (animationDone)="vmSettings.onOverlayClosed()"
+          (closeOverlay)="vmSettings.onOverlayClosed()"
+        />
+      </view-mode-settings>
+    }
+  </ng-content>
   <selection-bar
     *animatedIf="!!selectors.selectedQrCardList().length"
     [count]="selectors.selectedQrCardList().length"

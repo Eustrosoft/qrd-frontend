@@ -1,10 +1,5 @@
-<ui-flex-block
-  class="toolbar"
-  flex="0 1 auto"
-  [flexDirection]="isSmallScreen() ? 'column' : 'row'"
-  flexJustifyContent="space-between"
->
-  <ui-flex-block gapSize="8" flex="0 1 70%">
+<ui-grid-block [gridTemplateColumns]="isSmallScreen() ? '1fr' : '1fr auto'">
+  <ui-flex-block gapSize="8">
     <mat-form-field class="form-field-md search-bar" subscriptSizing="dynamic">
       <input
         [value]="searchValue()"
@@ -29,11 +24,19 @@
         <mat-icon class="icon-primary">search</mat-icon>
       </button>
     </mat-form-field>
-    <button (click)="advancedSearchClicked.emit()" class="fab-md fab-secondary" mat-fab>
-      <mat-icon class="icon-on-secondary">manage_search</mat-icon>
-    </button>
+    @if (!isSmallScreen()) {
+      <button (click)="advancedSearchClicked.emit()" class="fab-md fab-secondary" mat-fab>
+        <mat-icon class="icon-on-secondary">manage_search</mat-icon>
+      </button>
+    }
+    <ng-content select="[view-settings]" />
   </ui-flex-block>
-  <ui-flex-block>
+  <ui-flex-block gapSize="8" flexJustifyContent="flex-end">
+    @if (isSmallScreen()) {
+      <button (click)="advancedSearchClicked.emit()" class="fab-md fab-secondary" mat-fab>
+        <mat-icon class="icon-on-secondary">manage_search</mat-icon>
+      </button>
+    }
     <mat-button-toggle-group
       [value]="displayType()"
       (change)="displayTypeChange.emit($event)"
@@ -53,5 +56,5 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
   </ui-flex-block>
-</ui-flex-block>
+</ui-grid-block>
 <ng-content />

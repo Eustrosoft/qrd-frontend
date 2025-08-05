@@ -1,5 +1,5 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { FileStorageType } from '@api/files/file-api.models';
+import { FileStorageType } from '@api/files/files-api.models';
 
 export type FlexDirection = 'column' | 'row' | 'column-reverse' | 'row-reverse' | '';
 export type Display = 'flex' | 'inline-flex' | 'inline';

@@ -8,7 +8,6 @@ import {
   inputBinding,
   OnInit,
 } from '@angular/core';
-import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import {
@@ -37,7 +36,6 @@ import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 @Component({
   selector: 'qr-card-list',
   imports: [
-    UiFlexBlockComponent,
     ViewListItemComponent,
     ToHexPipe,
     EllipsisDirective,

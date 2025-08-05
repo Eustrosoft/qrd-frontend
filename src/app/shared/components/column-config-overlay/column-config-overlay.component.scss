@@ -1,0 +1,45 @@
+@use 'styles/mixins' as mixins;
+@use 'styles/animations' as anim;
+
+:host {
+  @include anim.overlay-animation;
+
+  gap: mixins.rem(8);
+  color: var(--mat-sys-on-surface);
+  display: grid;
+  padding: mixins.rem(8) mixins.rem(8);
+  background: var(--mat-sys-surface-container);
+  box-shadow: var(--mat-sys-level2);
+  border-radius: mixins.rem(16);
+  transform-origin: top left;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+
+  mat-list {
+    border: 1px solid var(--mat-sys-outline);
+    padding: 0;
+    border-radius: mixins.rem(8);
+  }
+
+  mat-list-item {
+    cursor: move;
+  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  background: var(--mat-sys-surface-container);
+  box-shadow: var(--mat-sys-level2);
+  border-radius: mixins.rem(8);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+mat-list .cdk-drop-list-dragging mat-list-item:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

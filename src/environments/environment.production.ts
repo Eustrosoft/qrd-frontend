@@ -4,4 +4,5 @@ export const environment: Environment = {
   name: 'production',
   production: true,
   stage: false,
+  baseHref: '/',
 };

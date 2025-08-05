@@ -6,7 +6,7 @@ import {
   FileBlobUploadResponse,
   FileDto,
   FileUrlUploadRequest,
-} from '@api/files/file-api.models';
+} from '@api/files/files-api.models';
 
 @Injectable({
   providedIn: 'root',

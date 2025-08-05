@@ -14,7 +14,7 @@ export class FetchAuthInfo {
 }
 
 export class RestoreAuth {
-  public static readonly type = '[Auth] Set Is Authenticated';
+  public static readonly type = '[Auth] Restore Auth';
 }
 
 export class ResetAuthState {

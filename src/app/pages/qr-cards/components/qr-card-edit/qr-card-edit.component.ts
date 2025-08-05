@@ -18,7 +18,7 @@ import { distinctUntilChanged, map, merge, Observable, of, pairwise, startWith }
 import { DictionaryItem } from '@shared/shared.models';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
-import { FileEditableMetadata } from '@api/files/file-api.models';
+import { FileEditableMetadata } from '@api/files/files-api.models';
 import { UploadState } from '@app/pages/files/files.models';
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
 import { QrCardFormGroup } from '@app/pages/qr-cards/qr-cards.models';

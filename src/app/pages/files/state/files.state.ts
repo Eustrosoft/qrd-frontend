@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { DataViewDisplayType } from '@shared/shared.models';
-import { FileDto } from '@api/files/file-api.models';
+import { FileDto } from '@api/files/files-api.models';
 import { catchError, concatMap, EMPTY, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { patch } from '@ngxs/store/operators';
 import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, SKELETON_TIMER } from '@app/app.constants';

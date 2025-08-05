@@ -8,7 +8,7 @@ import {
   TemplateFormGroup,
 } from '@app/pages/templates/templates.models';
 import { FileFormGroup } from '@shared/shared.models';
-import { FieldType } from '@api/templates/template-api.models';
+import { FieldType } from '@api/templates/templates-api.models';
 import { MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
 import { SharedFormFactoryService } from '@shared/service/shared-form-factory.service';
 

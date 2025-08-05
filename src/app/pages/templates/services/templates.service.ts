@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TemplateDto } from '@api/templates/template-api.models';
+import { TemplateDto } from '@api/templates/templates-api.models';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

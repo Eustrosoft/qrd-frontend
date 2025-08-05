@@ -17,7 +17,7 @@ import { map, Subject } from 'rxjs';
 import { Actions, createDispatchMap, createSelectMap, ofActionSuccessful } from '@ngxs/store';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
 import { AddFileUrl, UpdateFileMetadata } from '@app/pages/files/components/file-upload/state/file-upload.actions';
-import { FileEditableMetadata } from '@api/files/file-api.models';
+import { FileEditableMetadata } from '@api/files/files-api.models';
 import { SharedLocalization } from '@shared/shared.constants';
 import { MatError } from '@angular/material/form-field';
 import {

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { FileStorageType } from '@api/files/file-api.models';
+import { FileStorageType } from '@api/files/files-api.models';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
 import { MatIcon } from '@angular/material/icon';

@@ -32,10 +32,10 @@ import { DeletionDialogData } from '@shared/components/confirmation-dialog/confi
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 import { SnackbarService } from '@shared/service/snackbar.service';
 import { NotificationSnackbarLocalization } from '@modules/error/error.constants';
-import { FileDto } from '@api/files/file-api.models';
+import { FileDto } from '@api/files/files-api.models';
 import { FetchFileList } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { FilesService } from '@app/pages/files/services/files.service';
-import { TemplateDto } from '@api/templates/template-api.models';
+import { TemplateDto } from '@api/templates/templates-api.models';
 import { TemplatesService } from '@app/pages/templates/services/templates.service';
 import { QRRangeDto } from '@api/ranges/ranges-api.models';
 

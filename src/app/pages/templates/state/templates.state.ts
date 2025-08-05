@@ -22,13 +22,13 @@ import {
   SetSelectedTemplates,
   SetTemplatesDataViewDisplayType,
 } from '@app/pages/templates/state/templates.actions';
-import { TemplateDto } from '@api/templates/template-api.models';
+import { TemplateDto } from '@api/templates/templates-api.models';
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
 import { DeletionDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
-import { FileDto } from '@api/files/file-api.models';
+import { FileDto } from '@api/files/files-api.models';
 import { FilesService } from '@app/pages/files/services/files.service';
 import { SnackbarService } from '@shared/service/snackbar.service';
 

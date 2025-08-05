@@ -9,6 +9,7 @@ import { MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup } from '@a
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { DataViewDisplayType } from '@shared/shared.models';
 import { ToggleVisibilityDirective } from '@shared/directives/toggle-visibility.directive';
+import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 
 @Component({
   selector: 'data-view',
@@ -24,6 +25,7 @@ import { ToggleVisibilityDirective } from '@shared/directives/toggle-visibility.
     MatButtonToggle,
     MatButtonToggleGroup,
     ToggleVisibilityDirective,
+    UiGridBlockComponent,
   ],
   templateUrl: './data-view.component.html',
   styleUrl: './data-view.component.scss',

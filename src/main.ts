@@ -1,6 +1,6 @@
 /// <reference types="@angular/localize" />
 import { bootstrapApplication } from '@angular/platform-browser';
-import { registerLocaleData } from '@angular/common';
+import { APP_BASE_HREF, registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import localeRuExtra from '@angular/common/locales/extra/ru';
 import localeEn from '@angular/common/locales/en';
@@ -14,6 +14,7 @@ import { loadTranslations } from '@angular/localize';
 import { Locale } from '@app/app.models';
 import { HttpClient } from '@angular/common/http';
 import { httpClient } from '@cdk/factories/before-bootstrap-http.factory';
+import { environment } from '@environment';
 
 registerLocaleData(localeRu, 'ru-RU', localeRuExtra);
 registerLocaleData(localeEn, 'en-US', localeEnExtra);
@@ -21,6 +22,7 @@ registerLocaleData(localeEn, 'en-US', localeEnExtra);
 async function initApp(): Promise<void> {
   const injector = Injector.create({
     providers: [
+      { provide: APP_BASE_HREF, useValue: environment.baseHref },
       { provide: LocalStorageService, useClass: LocalStorageService },
       { provide: LocaleLoaderService, useClass: LocaleLoaderService },
       { provide: HttpClient, useValue: httpClient },

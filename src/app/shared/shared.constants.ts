@@ -1,4 +1,4 @@
-import { FileStorageType } from '@api/files/file-api.models';
+import { FileStorageType } from '@api/files/files-api.models';
 import { FileStorageTypeItem } from '@shared/shared.models';
 
 export const SharedLocalization = {

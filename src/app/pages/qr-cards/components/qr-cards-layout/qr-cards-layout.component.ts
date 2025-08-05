@@ -17,6 +17,12 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
+import { ViewModeSettingsComponent } from '@shared/components/view-mode-settings/view-mode-settings.component';
+import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
+import { ALL_QR_TABLE_COLS } from '@app/app.constants';
+import { AppState } from '@app/state/app.state';
+import { PatchSettings } from '@app/state/app.actions';
+import { ColumnConfigOverlayComponent } from '@shared/components/column-config-overlay/column-config-overlay.component';
 
 @Component({
   selector: 'qr-cards-layout',
@@ -28,6 +34,9 @@ import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
     MatMiniFabButton,
     UiSkeletonComponent,
     AnimatedIfDirective,
+    ViewModeSettingsComponent,
+    OverlayAnimationDirective,
+    ColumnConfigOverlayComponent,
   ],
   templateUrl: './qr-cards-layout.component.html',
   styleUrl: './qr-cards-layout.component.scss',
@@ -39,8 +48,11 @@ export class QrCardsLayoutComponent {
   protected readonly document = inject(DOCUMENT);
   protected readonly destroyRef = inject(DestroyRef);
 
+  protected readonly ALL_QR_TABLE_COLS = ALL_QR_TABLE_COLS;
+
   protected readonly selectors = createSelectMap({
     displayType: QrCardsState.getDisplayType$,
+    settingsState: AppState.getSettingsState$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
     isDeleteInProgress: QrCardsState.isDeleteInProgress$,
   });
@@ -50,6 +62,7 @@ export class QrCardsLayoutComponent {
     setSelectedQrCards: SetSelectedQrCards,
     selectedAllQrCards: SelectAllQrCards,
     deleteQrCards: DeleteQrCards,
+    patchSettings: PatchSettings,
   });
 
   protected openAdvancedSearch(): void {

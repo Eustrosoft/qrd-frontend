@@ -24,6 +24,8 @@ import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state
 import { AuthState } from '@modules/auth/state/auth.state';
 import { httpErrorInterceptor } from '@modules/error/http-error.interceptor';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
+import { APP_BASE_HREF, LocationStrategy } from '@angular/common';
+import { CustomLocationStrategy } from '@cdk/classes/custom-location-strategy.class';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -62,5 +64,7 @@ export const appConfig: ApplicationConfig = {
       deps: [LOCALE_ID, RuDateAdapterParsePipe],
     },
     { provide: TitleStrategy, useClass: TemplatePageTitleStrategy },
+    { provide: APP_BASE_HREF, useValue: environment.baseHref },
+    { provide: LocationStrategy, useClass: CustomLocationStrategy },
   ],
 };

@@ -5,7 +5,7 @@ import { SharedLocalization } from '@shared/shared.constants';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
-import { FieldType } from '@api/templates/template-api.models';
+import { FieldType } from '@api/templates/templates-api.models';
 import { DatePipe } from '@angular/common';
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
 
