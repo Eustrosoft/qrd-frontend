@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.5.0...v1.6.0) (2025-08-05)
+
+
+### Features
+
+* **baseHref:** доработана конфигурация baseHref ([0bba3f7](https://github.com/Eustrosoft/qrd-frontend/commit/0bba3f73f6f48243bcc2e713c05d0d21a6adb886))
+
 ## [1.5.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.4.3...v1.5.0) (2025-08-05)
 
 
