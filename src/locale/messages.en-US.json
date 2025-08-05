@@ -65,6 +65,8 @@
     "templates.editing": "Edit template",
     "templates.dataType": "Data type",
     "templates.pos": "Position",
+    "columnConfigOverlay.allCols": "All columns",
+    "columnConfigOverlay.selectedCols": "Selected columns",
     "confirmDialog.confirmation": "Confirmation",
     "confirmDialog.confirmationRequired": "Confirmation required",
     "confirmDialog.warning": "Warning",

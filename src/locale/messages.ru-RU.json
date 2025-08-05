@@ -65,6 +65,8 @@
     "templates.editing": "Редактирование шаблона",
     "templates.dataType": "Тип данных",
     "templates.pos": "Позиция",
+    "columnConfigOverlay.allCols": "Все поля",
+    "columnConfigOverlay.selectedCols": "Выбранные",
     "confirmDialog.confirmation": "Подтверждение",
     "confirmDialog.confirmationRequired": "Необходимо подтверждение",
     "confirmDialog.warning": "Предупреждение",

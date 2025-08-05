@@ -11,4 +11,9 @@ export class ImgLoadStateDirective {
   public onLoad(): void {
     this.isLoaded = true;
   }
+
+  @HostListener('error', ['$event'])
+  public onError(event: Event): void {
+    (<HTMLImageElement>event.target).src = 'public/icons/fallback-qr-img.svg';
+  }
 }
