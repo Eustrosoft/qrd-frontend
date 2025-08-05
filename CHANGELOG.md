@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.4.3...v1.5.0) (2025-08-05)
+
+
+### Features
+
+* **core:** добавлены настройки, location strategy, baseHref ([fac6924](https://github.com/Eustrosoft/qrd-frontend/commit/fac6924382c294e0048c0e5f47aeacb74e1fb0e4))
+* **img:** добавлена заглушка fallback-qr-img, локализация ([a0db04d](https://github.com/Eustrosoft/qrd-frontend/commit/a0db04d62d67350ce3722d0ccf9755517834a9f2))
+
 ### [1.4.3](https://github.com/Eustrosoft/qrd-frontend/compare/v1.4.2...v1.4.3) (2025-07-29)
 
 
