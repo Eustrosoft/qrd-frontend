@@ -1,5 +1,4 @@
 import { Directive, ElementRef, inject, input, Renderer2 } from '@angular/core';
-import { animate, AnimationBuilder, AnimationPlayer, style } from '@angular/animations';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { tap } from 'rxjs';
 
@@ -9,44 +8,44 @@ import { tap } from 'rxjs';
   exportAs: 'toggleVisibility',
 })
 export class ToggleVisibilityDirective {
-  private readonly elRef = inject(ElementRef);
-  private readonly animationBuilder = inject(AnimationBuilder);
+  private readonly elRef = inject(ElementRef<HTMLElement>);
   private readonly renderer = inject(Renderer2);
+  private currentAnimation: Animation | null = null;
 
-  private player: AnimationPlayer | null = null;
   public readonly toggleVisibility = input<boolean>(false);
 
   constructor() {
-    this.renderer.setStyle(this.elRef.nativeElement, 'opacity', this.toggleVisibility() ? '1' : '0');
-    this.renderer.setStyle(this.elRef.nativeElement, 'display', this.toggleVisibility() ? 'inline-block' : 'none');
+    const el = this.elRef.nativeElement;
+    const initialVisible = this.toggleVisibility();
+
+    this.renderer.setStyle(el, 'opacity', initialVisible ? '1' : '0');
+    this.renderer.setStyle(el, 'display', initialVisible ? 'inline-block' : 'none');
 
     toObservable(this.toggleVisibility)
-      .pipe(
-        tap((isVisible) => this.updateAnimation(isVisible)),
-        takeUntilDestroyed(),
-      )
+      .pipe(tap({ next: (visible) => this.animateVisibility(visible) }), takeUntilDestroyed())
       .subscribe();
   }
 
-  private updateAnimation(isVisible: boolean): void {
-    this.player?.destroy();
+  private animateVisibility(visible: boolean): void {
+    const el = this.elRef.nativeElement;
 
-    // Перед анимацией показываем элемент (если нужно)
-    if (isVisible) {
-      this.renderer.setStyle(this.elRef.nativeElement, 'display', 'inline-block');
+    this.currentAnimation?.cancel();
+
+    if (visible) {
+      this.renderer.setStyle(el, 'display', 'inline-block');
     }
 
-    const animation = this.animationBuilder.build([
-      style({ opacity: isVisible ? 0 : 1 }),
-      animate('300ms', style({ opacity: isVisible ? 1 : 0 })),
-    ]);
-
-    this.player = animation.create(this.elRef.nativeElement);
-    this.player.onDone(() => {
-      if (!isVisible) {
-        this.renderer.setStyle(this.elRef.nativeElement, 'display', 'none');
-      }
+    this.currentAnimation = el.animate([{ opacity: visible ? 0 : 1 }, { opacity: visible ? 1 : 0 }], {
+      duration: 300,
+      fill: 'forwards',
+      easing: 'ease',
     });
-    this.player.play();
+
+    this.currentAnimation!.onfinish = (): void => {
+      if (!visible) {
+        this.renderer.setStyle(el, 'display', 'none');
+      }
+      this.currentAnimation = null;
+    };
   }
 }

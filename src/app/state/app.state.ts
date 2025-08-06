@@ -148,15 +148,17 @@ export class AppState {
     { payload }: PatchSettings,
   ): Observable<unknown> {
     setState(patch({ isSavingSettings: true }));
-    const { locale } = getState();
-    const settings: SettingsDto['settings'] = {
+    const { locale, settings } = getState();
+    const settingsPayload: SettingsDto['settings'] = {
       language: payload?.language ?? locale,
-      qrTableColumns: payload?.qrTableColumns ?? DEFAULT_SETTINGS.qrTableColumns,
-      defaultQrPrintText: payload?.defaultQrPrintText ?? DEFAULT_SETTINGS.defaultQrPrintText,
-      defaultQrPrintTextDown: payload?.defaultQrPrintTextDown ?? DEFAULT_SETTINGS.defaultQrPrintTextDown,
-      checkUploadSize: payload?.checkUploadSize ?? DEFAULT_SETTINGS.checkUploadSize,
+      qrTableColumns: payload?.qrTableColumns ?? settings?.qrTableColumns ?? DEFAULT_SETTINGS.qrTableColumns,
+      defaultQrPrintText:
+        payload?.defaultQrPrintText ?? settings?.defaultQrPrintText ?? DEFAULT_SETTINGS.defaultQrPrintText,
+      defaultQrPrintTextDown:
+        payload?.defaultQrPrintTextDown ?? settings?.defaultQrPrintTextDown ?? DEFAULT_SETTINGS.defaultQrPrintTextDown,
+      checkUploadSize: payload?.checkUploadSize ?? settings?.checkUploadSize ?? DEFAULT_SETTINGS.checkUploadSize,
     };
-    return this.settingsService.patchSettings(settings).pipe(
+    return this.settingsService.patchSettings(settingsPayload).pipe(
       switchMap(() => {
         setState(patch({ isSavingSettings: false }));
         return dispatch(FetchSettings);

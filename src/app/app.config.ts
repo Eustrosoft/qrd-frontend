@@ -19,7 +19,6 @@ import { localizedDateAdapterFactory } from '@cdk/factories/localized-date-adapt
 import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { RuDateAdapterParsePipe } from '@shared/pipe/ru-adapter-parse.pipe';
 import { TemplatePageTitleStrategy } from '@cdk/classes/title-strategy.class';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 import { AuthState } from '@modules/auth/state/auth.state';
 import { httpErrorInterceptor } from '@modules/error/http-error.interceptor';
@@ -37,8 +36,6 @@ export const appConfig: ApplicationConfig = {
       withPreloading(PreloadAllModules),
       withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' }),
     ),
-    // TODO Drop animations package https://angular.dev/guide/animations/migration
-    provideAnimationsAsync(),
     provideStore(
       [AppState, AuthState, DictionaryRegistryState, FileUploadState],
       {
