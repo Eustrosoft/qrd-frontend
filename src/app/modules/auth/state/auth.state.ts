@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { patch } from '@ngxs/store/operators';
 import { LocalStorageService } from '@shared/service/local-storage.service';
 import { ParticipantDto } from '@api/api.models';
+import { FetchSettings } from '@app/state/app.actions';
 
 export interface AuthStateModel {
   isAuthenticated: boolean;
@@ -60,6 +61,7 @@ export class AuthState {
         },
       }),
       switchMap(() => dispatch(FetchAuthInfo)),
+      switchMap(() => dispatch(FetchSettings)),
       catchError((err) => {
         setState(patch({ isAuthInfoLoading: false }));
         return throwError(() => err);

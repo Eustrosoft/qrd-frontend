@@ -18,6 +18,8 @@ import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 import { DatePipe } from '@angular/common';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { AppRoutes } from '@app/app.constants';
+import { FileDto } from '@api/files/files-api.models';
+import { RangeSelectorService } from '@shared/service/range-selector.service';
 
 @Component({
   selector: 'file-list',
@@ -37,9 +39,11 @@ import { AppRoutes } from '@app/app.constants';
   templateUrl: './file-list.component.html',
   styleUrl: './file-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [RangeSelectorService],
 })
 export class FileListComponent implements OnInit {
   protected readonly destroyRef = inject(DestroyRef);
+  protected readonly rangeSelectorService = inject(RangeSelectorService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly selectors = createSelectMap({
     displayType: FilesState.getDisplayType$,
@@ -58,9 +62,10 @@ export class FileListComponent implements OnInit {
   public readonly selectionChanged = outputFromObservable(
     this.selectionModel.changed.asObservable().pipe(map(() => this.selectionModel.selected)),
   );
-  private readonly selectionEffect = effect(() => {
+  private readonly selEff = effect(() => {
     const selectedValues = this.selectors.selectedFileList();
     this.selectionModel.select(...selectedValues);
+    this.rangeSelectorService.updateLastSelectedId(this.selectionModel);
     if (!selectedValues.length) {
       this.selectionModel.clear();
     }
@@ -71,6 +76,10 @@ export class FileListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.actions.fetchFileList();
+  }
+
+  protected makeSelect(item: FileDto): void {
+    this.rangeSelectorService.selectItemOrRange(this.selectors.fileList(), this.selectionModel, item);
   }
 
   protected fetchMore(): void {

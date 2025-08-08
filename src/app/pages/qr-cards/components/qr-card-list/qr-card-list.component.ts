@@ -33,6 +33,8 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { AppState } from '@app/state/app.state';
+import { RangeSelectorService } from '@shared/service/range-selector.service';
+import { QRDto } from '@api/qr-cards/qrs-api.models';
 
 @Component({
   selector: 'qr-card-list',
@@ -50,6 +52,7 @@ import { AppState } from '@app/state/app.state';
   templateUrl: './qr-card-list.component.html',
   styleUrl: './qr-card-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [RangeSelectorService],
 })
 export class QrCardListComponent implements OnInit {
   protected readonly isXSmall = inject(IS_XSMALL);
@@ -57,6 +60,7 @@ export class QrCardListComponent implements OnInit {
   protected readonly uiSidenavService = inject(UiSidenavService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly destroyRef = inject(DestroyRef);
+  protected readonly rangeSelectorService = inject(RangeSelectorService);
   protected readonly QrCardsLocalization = QrCardsLocalization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly selectors = createSelectMap({
@@ -84,6 +88,7 @@ export class QrCardListComponent implements OnInit {
   private readonly selEff = effect(() => {
     const selectedValues = this.selectors.selectedQrCardList();
     this.selectionModel.select(...selectedValues);
+    this.rangeSelectorService.updateLastSelectedId(this.selectionModel);
     if (!selectedValues.length) {
       this.selectionModel.clear();
     }
@@ -91,6 +96,10 @@ export class QrCardListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.actions.fetchQrCards();
+  }
+
+  protected makeSelect(item: QRDto): void {
+    this.rangeSelectorService.selectItemOrRange(this.selectors.qrCardList(), this.selectionModel, item);
   }
 
   protected openCardPreview(previewUrl: string): void {

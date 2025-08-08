@@ -22,7 +22,6 @@ export class AnimatedIfDirective {
   private animationEndListener: (() => void) | null = null;
 
   public readonly animatedIf = input.required<boolean>();
-  public readonly animationDuration = input<number>(300);
 
   private readonly animatedIfEff = effect(() => {
     const animatedIf = this.animatedIf();

@@ -5,7 +5,7 @@
       [navigateTo]="`./${template.id}`"
       [isPreviewShown]="true"
       [isSelected]="selectionModel.isSelected(template.id)"
-      (checkboxChanged)="$event ? selectionModel.select(template.id) : selectionModel.deselect(template.id)"
+      (checkboxChanged)="makeSelect(template)"
     >
       <ng-container content>
         <p ellipsis>

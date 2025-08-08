@@ -5,7 +5,7 @@
       [navigateTo]="`./${file.id}`"
       [isPreviewShown]="true"
       [isSelected]="selectionModel.isSelected(file.id)"
-      (checkboxChanged)="$event ? selectionModel.select(file.id) : selectionModel.deselect(file.id)"
+      (checkboxChanged)="makeSelect(file)"
     >
       <ng-container content>
         <p ellipsis>

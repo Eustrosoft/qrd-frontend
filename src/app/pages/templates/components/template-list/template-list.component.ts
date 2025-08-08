@@ -18,6 +18,8 @@ import {
   FetchTemplateList,
   SetTemplatesDataViewDisplayType,
 } from '@app/pages/templates/state/templates.actions';
+import { RangeSelectorService } from '@shared/service/range-selector.service';
+import { TemplateDto } from '@api/templates/templates-api.models';
 
 @Component({
   selector: 'template-list',
@@ -33,9 +35,11 @@ import {
   templateUrl: './template-list.component.html',
   styleUrl: './template-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [RangeSelectorService],
 })
 export class TemplateListComponent implements OnInit {
   protected readonly destroyRef = inject(DestroyRef);
+  protected readonly rangeSelectorService = inject(RangeSelectorService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly selectors = createSelectMap({
     displayType: TemplatesState.getDisplayType$,
@@ -54,9 +58,10 @@ export class TemplateListComponent implements OnInit {
   public readonly selectionChanged = outputFromObservable(
     this.selectionModel.changed.asObservable().pipe(map(() => this.selectionModel.selected)),
   );
-  private readonly selectionEffect = effect(() => {
+  private readonly selEff = effect(() => {
     const selectedValues = this.selectors.selectedTemplateList();
     this.selectionModel.select(...selectedValues);
+    this.rangeSelectorService.updateLastSelectedId(this.selectionModel);
     if (!selectedValues.length) {
       this.selectionModel.clear();
     }
@@ -67,6 +72,10 @@ export class TemplateListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.actions.fetchTemplateList();
+  }
+
+  protected makeSelect(item: TemplateDto): void {
+    this.rangeSelectorService.selectItemOrRange(this.selectors.templateList(), this.selectionModel, item);
   }
 
   protected fetchMore(): void {

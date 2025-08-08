@@ -5,7 +5,7 @@
       [navigateTo]="`./${qrCard.code}`"
       [isPreviewShown]="true"
       [isSelected]="selectionModel.isSelected(qrCard.id)"
-      (checkboxChanged)="selectionModel.toggle(qrCard.id)"
+      (checkboxChanged)="makeSelect(qrCard)"
     >
       <ng-container preview>
         @if (selectors.qrTableColumnVisibility().code_picture) {
