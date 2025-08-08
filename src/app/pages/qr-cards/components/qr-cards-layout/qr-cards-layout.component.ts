@@ -60,7 +60,7 @@ export class QrCardsLayoutComponent {
     setDisplayType: SetQrCardsDataViewDisplayType,
     fetchQrCards: FetchQrCardList,
     setSelectedQrCards: SetSelectedQrCards,
-    selectedAllQrCards: SelectAllQrCards,
+    selectAllQrCards: SelectAllQrCards,
     deleteQrCards: DeleteQrCards,
     patchSettings: PatchSettings,
   });

@@ -9,7 +9,7 @@ import { DEFAULT_LOCALE, DEFAULT_SETTINGS, LOCALE_KEY, THEME_CONTRAST_KEY, THEME
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
-import { SettingsDto } from '@api/settings/settings-api.models';
+import { QrTableColumnFieldName, SettingsDto } from '@api/settings/settings-api.models';
 import { SettingsService } from '@shared/service/settings.service';
 import { catchError, Observable, of, switchMap, tap } from 'rxjs';
 
@@ -69,6 +69,20 @@ export class AppState {
     settings,
   }: AppStateModel): Pick<AppStateModel, 'isLoadingSettings' | 'isSavingSettings' | 'settings'> {
     return { isLoadingSettings, isSavingSettings, settings };
+  }
+
+  @Selector()
+  public static qrTableColumnVisibility$({ settings }: AppStateModel): Record<QrTableColumnFieldName, boolean> {
+    const columns = settings.qrTableColumns;
+
+    return {
+      code_picture: columns.some((col) => col.fieldName === 'code_picture'),
+      code: columns.some((col) => col.fieldName === 'code'),
+      name: columns.some((col) => col.fieldName === 'name'),
+      description: columns.some((col) => col.fieldName === 'description'),
+      created: columns.some((col) => col.fieldName === 'created'),
+      updated: columns.some((col) => col.fieldName === 'updated'),
+    };
   }
 
   @Action(SetTheme)

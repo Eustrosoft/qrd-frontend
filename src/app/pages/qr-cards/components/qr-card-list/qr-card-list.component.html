@@ -5,27 +5,33 @@
       [navigateTo]="`./${qrCard.code}`"
       [isPreviewShown]="true"
       [isSelected]="selectionModel.isSelected(qrCard.id)"
-      (checkboxChanged)="$event ? selectionModel.select(qrCard.id) : selectionModel.deselect(qrCard.id)"
+      (checkboxChanged)="selectionModel.toggle(qrCard.id)"
     >
       <ng-container preview>
-        <img
-          [src]="`https://qrgen.qxyz.ru/generate?q=${qrCard.code | toHex}&amp;color=%23000000&amp;background=%23ffffff&amp;x=128&amp;fileType=SVG&amp;correctionLevel=L`"
-          alt="qr code"
-          imgLoadState
-          #imgLoadState="imgLoadState"
-          [hidden]="!imgLoadState.isLoaded"
-        />
-        @if (!imgLoadState.isLoaded) {
-          <ui-skeleton [style.flex]="'0 0 128px'" width="128" height="128" />
+        @if (selectors.qrTableColumnVisibility().code_picture) {
+          <img
+            [src]="`https://qrgen.qxyz.ru/generate?q=${qrCard.code | toHex}&amp;color=%23000000&amp;background=%23ffffff&amp;x=128&amp;fileType=SVG&amp;correctionLevel=L`"
+            alt="qr code"
+            imgLoadState
+            #imgLoadState="imgLoadState"
+            [hidden]="!imgLoadState.isLoaded"
+          />
+          @if (!imgLoadState.isLoaded) {
+            <ui-skeleton [style.flex]="'0 0 128px'" width="128" height="128" />
+          }
         }
       </ng-container>
       <ng-container content>
-        <p ellipsis>
-          {{ qrCard.name | fallback: SharedLocalization.noName }}
-        </p>
-        <p ellipsis>
-          {{ qrCard.description | fallback: SharedLocalization.noDescription }}
-        </p>
+        @if (selectors.qrTableColumnVisibility().name) {
+          <p ellipsis>
+            {{ qrCard.name | fallback: SharedLocalization.noName }}
+          </p>
+        }
+        @if (selectors.qrTableColumnVisibility().description) {
+          <p ellipsis>
+            {{ qrCard.description | fallback: SharedLocalization.noDescription }}
+          </p>
+        }
       </ng-container>
       <ng-container menu-items>
         <a [routerLink]="`./${qrCard.code}`" [relativeTo]="activatedRoute" mat-menu-item>

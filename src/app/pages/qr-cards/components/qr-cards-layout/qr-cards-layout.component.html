@@ -22,7 +22,7 @@
   <selection-bar
     *animatedIf="!!selectors.selectedQrCardList().length"
     [count]="selectors.selectedQrCardList().length"
-    (onSelectAll)="actions.selectedAllQrCards()"
+    (onSelectAll)="actions.selectAllQrCards()"
     (onClose)="actions.setSelectedQrCards([])"
   >
     @if (!selectors.isDeleteInProgress()) {

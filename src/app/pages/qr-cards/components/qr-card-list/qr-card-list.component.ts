@@ -32,6 +32,7 @@ import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
+import { AppState } from '@app/state/app.state';
 
 @Component({
   selector: 'qr-card-list',
@@ -64,6 +65,7 @@ export class QrCardListComponent implements OnInit {
     qrCardListSkeletonLoaders: QrCardsState.getQrCardListSkeletonLoaders$,
     qrCardList: QrCardsState.getQrCardList$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
+    qrTableColumnVisibility: AppState.qrTableColumnVisibility$,
   });
   protected readonly actions = createDispatchMap({
     setDisplayType: SetQrCardsDataViewDisplayType,
@@ -78,7 +80,8 @@ export class QrCardListComponent implements OnInit {
   public readonly selectionChanged = outputFromObservable(
     this.selectionModel.changed.asObservable().pipe(map(() => this.selectionModel.selected)),
   );
-  private readonly selectionEffect = effect(() => {
+
+  private readonly selEff = effect(() => {
     const selectedValues = this.selectors.selectedQrCardList();
     this.selectionModel.select(...selectedValues);
     if (!selectedValues.length) {
