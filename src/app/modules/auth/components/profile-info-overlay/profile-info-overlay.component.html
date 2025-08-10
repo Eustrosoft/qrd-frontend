@@ -8,18 +8,34 @@
   <p>{{ email() }}</p>
 }
 <hr />
-<ui-flex-block flex="auto" flexAlignItems="flex-start" gapSize="8" flexDirection="column">
+<ui-grid-block gridTemplateColumns="1fr" rowGapSize="8" gridJustifyItems="start">
   <a class="button-anchor-md" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.aboutService }}</a>
-  <a class="button-anchor-md" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.versionHistory }}</a>
+  <a
+    href="https://github.com/Eustrosoft/qrd-frontend/blob/master/CHANGELOG.md"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="button-anchor-md"
+    mat-button
+    textInteractionEffect
+  >
+    {{ ProfileInfoOverlayLocalization.versionHistory }}
+  </a>
   <a class="button-anchor-md" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.feedback }}</a>
   <a class="button-anchor-md" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.help }}</a>
-  <hr ui-flex-block flexAlignSelf="normal" />
+  <hr />
   <a class="button-anchor-md" mat-button textInteractionEffect>{{ SharedLocalization.settings }}</a>
-  <hr ui-flex-block flexAlignSelf="normal" />
-  <a class="button-anchor-md" href="https://qrdemo.qxyz.ru/" mat-button textInteractionEffect>{{
-    ProfileInfoOverlayLocalization.oldApp
-  }}</a>
-  <hr ui-flex-block flexAlignSelf="normal" />
-</ui-flex-block>
+  <hr />
+  <a
+    href="https://qrdemo.qxyz.ru/"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="button-anchor-md"
+    mat-button
+    textInteractionEffect
+  >
+    {{ ProfileInfoOverlayLocalization.oldApp }}
+  </a>
+  <hr />
+</ui-grid-block>
 
 <button (click)="logout()" class="button-md" mat-flat-button>{{ SharedLocalization.logout }}</button>

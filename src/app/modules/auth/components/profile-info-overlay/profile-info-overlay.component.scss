@@ -13,4 +13,8 @@
   box-shadow: var(--mat-sys-level2);
   border-radius: mixins.rem(16);
   transform-origin: top left;
+
+  hr {
+    justify-self: stretch;
+  }
 }

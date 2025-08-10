@@ -6,10 +6,11 @@ import { SharedLocalization } from '@shared/shared.constants';
 import { dispatch } from '@ngxs/store';
 import { Logout } from '@modules/auth/state/auth.actions';
 import { MatIcon } from '@angular/material/icon';
+import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 
 @Component({
   selector: 'profile-info-overlay',
-  imports: [MatIconButton, UiFlexBlockComponent, MatAnchor, MatButton, MatIcon],
+  imports: [MatIconButton, UiFlexBlockComponent, MatAnchor, MatButton, MatIcon, UiGridBlockComponent],
   templateUrl: './profile-info-overlay.component.html',
   styleUrl: './profile-info-overlay.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
