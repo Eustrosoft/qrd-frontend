@@ -46,10 +46,10 @@
           <mat-icon>print</mat-icon>
           {{ SharedLocalization.print }}
         </button>
-        <button mat-menu-item>
+        <a [routerLink]="`./${qrCard.code}/${AppRoutes.edit}`" [relativeTo]="activatedRoute" mat-menu-item>
           <mat-icon>edit</mat-icon>
           {{ SharedLocalization.edit }}
-        </button>
+        </a>
         <button (click)="actions.deleteQrCards([qrCard.id], destroyRef)" mat-menu-item>
           <mat-icon>delete</mat-icon>
           {{ SharedLocalization.delete }}

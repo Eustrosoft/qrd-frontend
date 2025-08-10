@@ -35,6 +35,7 @@ import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { AppState } from '@app/state/app.state';
 import { RangeSelectorService } from '@shared/service/range-selector.service';
 import { QRDto } from '@api/qr-cards/qrs-api.models';
+import { AppRoutes } from '@app/app.constants';
 
 @Component({
   selector: 'qr-card-list',
@@ -114,4 +115,6 @@ export class QrCardListComponent implements OnInit {
   protected fetchMore(): void {
     throw new Error('Not implemented');
   }
+
+  protected readonly AppRoutes = AppRoutes;
 }
