@@ -76,10 +76,12 @@
       } @else {
         @if (!selectors.isLoading()) {
           <button (click)="updateMetadata()" class="button-lg button-secondary" mat-flat-button>
-            {{ SharedLocalization.save }}
-            @if (hasUnsavedChanges()) {
-              <indicator />
-            }
+            <ui-flex-block gapSize="4">
+              {{ SharedLocalization.save }}
+              @if (hasUnsavedChanges()) {
+                <indicator />
+              }
+            </ui-flex-block>
           </button>
         } @else {
           <ui-skeleton height="48" width="100%" />

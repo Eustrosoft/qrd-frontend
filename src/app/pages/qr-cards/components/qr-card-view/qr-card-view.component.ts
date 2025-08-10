@@ -45,7 +45,7 @@ import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 export class QrCardViewComponent implements OnInit {
   private readonly uiSidenavService = inject(UiSidenavService);
   private readonly activatedRoute = inject(ActivatedRoute);
-  private readonly isXSmall = inject(IS_XSMALL);
+  protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
   protected readonly selectors = createSelectMap({

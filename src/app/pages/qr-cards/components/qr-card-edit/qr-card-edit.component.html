@@ -14,10 +14,12 @@
             </button>
             @if (!selectors.isSaveInProgress()) {
               <button (click)="saveData()" class="button-md" mat-flat-button>
-                {{ SharedLocalization.save }}
-                @if (formHasUnsavedChanges()) {
-                  <indicator />
-                }
+                <ui-flex-block gapSize="4">
+                  {{ SharedLocalization.save }}
+                  @if (formHasUnsavedChanges()) {
+                    <indicator />
+                  }
+                </ui-flex-block>
               </button>
             } @else {
               <ui-skeleton height="40" width="128" />
@@ -218,7 +220,7 @@
               {{ SharedLocalization.emptyList }}
             }
           </ui-grid-block>
-          <ui-flex-block>
+          <ui-flex-block flexWrap="wrap">
             <button (click)="showFileUpload()" class="button-lg button-secondary" mat-flat-button>
               {{ FilesLocalization.uploadFile }}
             </button>

@@ -1,5 +1,5 @@
-<ui-flex-block flexAlignItems="center" flexJustifyContent="space-between">
-  <h1>{{ dialogData.textContent }}</h1>
+<ui-flex-block flexAlignItems="center" flexJustifyContent="space-between" overflow="hidden">
+  <h1 ellipsis>{{ dialogData.textContent }}</h1>
   <button [mat-dialog-close]="undefined" class="icon-button-sm" mat-icon-button>
     <mat-icon class="icon-primary">close</mat-icon>
   </button>

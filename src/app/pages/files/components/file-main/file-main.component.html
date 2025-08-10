@@ -1,28 +1,28 @@
 <card-container [hideHeading]="true">
   <ng-container content>
     <ui-grid-block [gridTemplateColumns]="infoGridTemplateColumns()">
-      <card-field [heading]="`${SharedLocalization.name}:`">
+      <card-field [caption]="`${SharedLocalization.name}:`">
         {{ selectors.file()?.name | fallback: SharedLocalization.noName }}
       </card-field>
-      <card-field [heading]="`${SharedLocalization.originalName}:`">
+      <card-field [caption]="`${SharedLocalization.originalName}:`">
         {{ selectors.file()?.fileName | fallback: SharedLocalization.noOriginalName }}
       </card-field>
-      <card-field [heading]="`${SharedLocalization.description}:`">
+      <card-field [caption]="`${SharedLocalization.description}:`">
         {{ selectors.file()?.description | fallback: SharedLocalization.noDescription }}
       </card-field>
-      <card-field [heading]="`${SharedLocalization.isPublic}:`">
+      <card-field [caption]="`${SharedLocalization.isPublic}:`">
         {{ selectors.file()?.isPublic | boolToText }}
       </card-field>
-      <card-field [heading]="`${SharedLocalization.isActive}:`">
+      <card-field [caption]="`${SharedLocalization.isActive}:`">
         {{ selectors.file()?.isActive | boolToText }}
       </card-field>
-      <card-field [heading]="`${SharedLocalization.fileLocation}:`">
+      <card-field [caption]="`${SharedLocalization.fileLocation}:`">
         {{ FileStorageTypeMap.get(selectors.file()?.fileStorageType)?.text ?? '' }}
       </card-field>
-      <card-field [heading]="`${SharedLocalization.createDate}:`">
+      <card-field [caption]="`${SharedLocalization.createDate}:`">
         {{ selectors.file()?.created | date: 'short' }}
       </card-field>
-      <card-field [heading]="`${SharedLocalization.updateDate}:`">
+      <card-field [caption]="`${SharedLocalization.updateDate}:`">
         {{ selectors.file()?.updated | date: 'short' }}
       </card-field>
     </ui-grid-block>

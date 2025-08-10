@@ -34,6 +34,7 @@ import { FileAsUrlFormGroup } from '@app/pages/files/files.models';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { IndicatorComponent } from '@shared/components/indicator/indicator.component';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 
 @Component({
   selector: 'file-as-url',
@@ -50,6 +51,7 @@ import { IndicatorComponent } from '@shared/components/indicator/indicator.compo
     ReactiveFormsModule,
     UiGridBlockComponent,
     IndicatorComponent,
+    UiFlexBlockComponent,
   ],
   templateUrl: './file-as-url.component.html',
   styleUrl: './file-as-url.component.scss',

@@ -14,6 +14,7 @@ import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { AppRoutes } from '@app/app.constants';
 import { DeleteTemplates, FetchTemplate } from '@app/pages/templates/state/templates.actions';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
+import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 
 @Component({
   selector: 'template-view',
@@ -36,8 +37,9 @@ import { TemplatesState } from '@app/pages/templates/state/templates.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TemplateViewComponent implements OnInit {
-  protected readonly destroyRef = inject(DestroyRef);
   private readonly activatedRoute = inject(ActivatedRoute);
+  protected readonly destroyRef = inject(DestroyRef);
+  protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
   protected readonly selectors = createSelectMap({
     isTemplateLoading: TemplatesState.isTemplateLoading$,

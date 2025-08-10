@@ -6,6 +6,7 @@
 
   .expanded-block {
     padding: mixins.rem(12);
+    background: var(--mat-sys-surface-container-low);
     box-shadow: var(--mat-sys-level3);
     border-radius: mixins.rem(12);
   }

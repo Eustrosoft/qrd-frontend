@@ -11,6 +11,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError } from '@angular/material/form-field';
 import { ConfirmationDialogLocalization } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 
 @Component({
   selector: 'confirmation-dialog',
@@ -27,6 +28,7 @@ import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
     MatCheckbox,
     ReactiveFormsModule,
     MatError,
+    EllipsisDirective,
   ],
   templateUrl: './confirmation-dialog.component.html',
   styleUrl: './confirmation-dialog.component.scss',

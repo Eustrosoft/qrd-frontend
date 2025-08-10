@@ -10,7 +10,7 @@
 @media #{map.get(bp.$breakpoints, xsmall)} {
   :root {
     --main-padding-vertical: 0.75rem;
-    --main-padding-horizontal: 1rem;
+    --main-padding-horizontal: 0.5rem;
   }
 }
 

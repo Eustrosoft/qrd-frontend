@@ -71,9 +71,10 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               {
-                "glob": "**/*",
                 "input": "public",
-                "output": "/public"
+                "glob": "**/*",
+                "output": "/public",
+                "ignore": ["*.webmanifest"]
               },
               {
                 "input": "src/styles/themes",
@@ -84,6 +85,11 @@
                 "input": "src/locale",
                 "glob": "*.json",
                 "output": "/locale"
+              },
+              {
+                "input": "public",
+                "glob": "*.webmanifest",
+                "output": "/"
               }
             ],
             "styles": ["src/styles.scss"],

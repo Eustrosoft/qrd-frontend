@@ -2,7 +2,7 @@
   <ng-container content>
     <ui-grid-block [gridTemplateColumns]="infoGridTemplateColumns()">
       @if (selectors.qrCard()?.form?.id) {
-        <card-field [heading]="`${SharedLocalization.template}:`">
+        <card-field [caption]="`${SharedLocalization.template}:`">
           <a
             [routerLink]="`/${AppRoutes.templates}/${selectors.qrCard()?.form?.id}`"
             class="button-anchor-md-with-icon"
@@ -15,7 +15,7 @@
           </a>
         </card-field>
       }
-      <card-field [heading]="`${SharedLocalization.cardPreview}:`">
+      <card-field [caption]="`${SharedLocalization.cardPreview}:`">
         <button
           class="button-anchor-md-with-icon"
           mat-button
@@ -27,10 +27,10 @@
           <mat-icon class="icon-primary">open_in_new</mat-icon>
         </button>
       </card-field>
-      <card-field [heading]="`${SharedLocalization.name}:`">
+      <card-field [caption]="`${SharedLocalization.name}:`">
         {{ selectors.qrCard()?.name | fallback: SharedLocalization.noName }}
       </card-field>
-      <card-field [heading]="`${SharedLocalization.description}:`">
+      <card-field [caption]="`${SharedLocalization.description}:`">
         {{ selectors.qrCard()?.description | fallback: SharedLocalization.noDescription }}
       </card-field>
     </ui-grid-block>

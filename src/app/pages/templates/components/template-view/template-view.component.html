@@ -1,7 +1,9 @@
 @if (!selectors.isTemplateLoading()) {
   <toolbar>
     <ng-container heading>
-      <h1 ellipsis>{{ selectors.template()?.name | fallback: SharedLocalization.noName }}</h1>
+      @if (!isXSmall()) {
+        <h1 ellipsis>{{ selectors.template()?.name | fallback: SharedLocalization.noName }}</h1>
+      }
     </ng-container>
     <ng-container action-buttons>
       <a [routerLink]="`../${selectors.template()?.id}/${AppRoutes.edit}`" class="button-md" mat-flat-button>

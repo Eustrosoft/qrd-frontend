@@ -1,21 +1,23 @@
 @if (!selectors.isQrCardLoading()) {
   <toolbar>
     <ng-container heading>
-      <button
-        class="button-anchor-md-with-icon"
-        mat-button
-        interactionEffect
-        [targetSelectors]="['h1', 'mat-icon']"
-        [style.height]="'auto'"
-        [style.flex]="'auto'"
-        [style.justify-content]="'start'"
-        [style.overflow]="'hidden'"
-        #anchor
-        (click)="openCardPreview()"
-      >
-        <h1 [truncate]="anchor._elementRef.nativeElement">QR №{{ selectors.qrCard()?.code | toHex }}</h1>
-        <mat-icon class="icon-primary">open_in_new</mat-icon>
-      </button>
+      @if (!isXSmall()) {
+        <button
+          class="button-anchor-md-with-icon"
+          mat-button
+          interactionEffect
+          [targetSelectors]="['h1', 'mat-icon']"
+          [style.height]="'auto'"
+          [style.flex]="'auto'"
+          [style.justify-content]="'start'"
+          [style.overflow]="'hidden'"
+          #anchor
+          (click)="openCardPreview()"
+        >
+          <h1 [truncate]="anchor._elementRef.nativeElement">QR №{{ selectors.qrCard()?.code | toHex }}</h1>
+          <mat-icon class="icon-primary">open_in_new</mat-icon>
+        </button>
+      }
     </ng-container>
     <ng-container action-buttons>
       <a [routerLink]="`../${selectors.qrCard()?.code}/${AppRoutes.edit}`" class="button-md" mat-flat-button>

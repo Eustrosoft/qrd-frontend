@@ -1,10 +1,10 @@
 <card-container [hideHeading]="true">
   <ng-container content>
     <ui-grid-block [gridTemplateColumns]="infoGridTemplateColumns()">
-      <card-field [heading]="`${SharedLocalization.name}:`">
+      <card-field [caption]="`${SharedLocalization.name}:`">
         {{ selectors.template()?.name | fallback: SharedLocalization.noName }}
       </card-field>
-      <card-field [heading]="`${SharedLocalization.description}:`">
+      <card-field [caption]="`${SharedLocalization.description}:`">
         {{ selectors.template()?.description | fallback: SharedLocalization.noDescription }}
       </card-field>
     </ui-grid-block>
