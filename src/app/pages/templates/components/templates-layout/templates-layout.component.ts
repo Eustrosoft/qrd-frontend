@@ -3,7 +3,7 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { MatIcon } from '@angular/material/icon';
 import { DataViewComponent } from '@shared/components/data-view/data-view.component';
-import { MatMiniFabButton } from '@angular/material/button';
+import { MatButton, MatMiniFabButton } from '@angular/material/button';
 import { SelectionBarComponent } from '@shared/components/selection-bar/selection-bar.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
@@ -16,6 +16,7 @@ import {
 } from '@app/pages/templates/state/templates.actions';
 import { TemplateListComponent } from '@app/pages/templates/components/template-list/template-list.component';
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
+import { SharedLocalization } from '@shared/shared.constants';
 
 @Component({
   selector: 'templates-layout',
@@ -51,8 +52,14 @@ export class TemplatesLayoutComponent {
   });
 
   protected openAdvancedSearch(): void {
-    this.uiSidenavService.open(MatIcon, {
-      content: [[this.document.createTextNode('database_search')]],
+    this.uiSidenavService.open(MatButton, {
+      content: [[this.document.createTextNode(SharedLocalization.close)]],
+      position: 'end',
     });
+    const closeAction = (): void => {
+      this.uiSidenavService.close();
+      this.uiSidenavService.sidenavCmpRef()?.location.nativeElement.removeEventListener('click', closeAction);
+    };
+    this.uiSidenavService.sidenavCmpRef()?.location.nativeElement.addEventListener('click', closeAction);
   }
 }

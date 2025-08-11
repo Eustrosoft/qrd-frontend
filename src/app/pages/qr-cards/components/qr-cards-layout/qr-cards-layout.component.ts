@@ -12,7 +12,7 @@ import {
 import { SelectionBarComponent } from '@shared/components/selection-bar/selection-bar.component';
 import { QrCardListComponent } from '@app/pages/qr-cards/components/qr-card-list/qr-card-list.component';
 import { MatIcon } from '@angular/material/icon';
-import { MatMiniFabButton } from '@angular/material/button';
+import { MatButton, MatMiniFabButton } from '@angular/material/button';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
@@ -23,6 +23,7 @@ import { ALL_QR_TABLE_COLS } from '@app/app.constants';
 import { AppState } from '@app/state/app.state';
 import { PatchSettings } from '@app/state/app.actions';
 import { ColumnConfigOverlayComponent } from '@shared/components/column-config-overlay/column-config-overlay.component';
+import { SharedLocalization } from '@shared/shared.constants';
 
 @Component({
   selector: 'qr-cards-layout',
@@ -66,10 +67,15 @@ export class QrCardsLayoutComponent {
   });
 
   protected openAdvancedSearch(): void {
-    this.uiSidenavService.open(MatIcon, {
-      content: [[this.document.createTextNode('database_search')]],
+    this.uiSidenavService.open(MatButton, {
+      content: [[this.document.createTextNode(SharedLocalization.close)]],
       position: 'end',
       width: this.isSmallScreen() ? 'full' : 'sm',
     });
+    const closeAction = (): void => {
+      this.uiSidenavService.close();
+      this.uiSidenavService.sidenavCmpRef()?.location.nativeElement.removeEventListener('click', closeAction);
+    };
+    this.uiSidenavService.sidenavCmpRef()?.location.nativeElement.addEventListener('click', closeAction);
   }
 }

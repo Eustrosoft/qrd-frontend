@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, DOCUMENT, inject, signal } from '@angular/core';
-import { MatAnchor, MatIconButton } from '@angular/material/button';
+import { MatAnchor, MatButton, MatIconButton } from '@angular/material/button';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { SharedLocalization } from '@shared/shared.constants';
 import { PaletteAnimationDirective } from '@shared/directives/palette-animation.directive';
@@ -19,7 +19,6 @@ import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { MiniProfileInfoComponent } from '@modules/auth/components/mini-profile-info/mini-profile-info.component';
 import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overlay/create-menu-overlay.component';
 import { MatIcon } from '@angular/material/icon';
-import { CardFieldComponent } from '@shared/components/card-field/card-field.component';
 import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
 
 @Component({
@@ -125,11 +124,15 @@ export class QrdHeaderComponent {
   }
 
   protected openSidenavMenu(): void {
-    const el = this.document.createElement('h1');
-    el.textContent = SharedLocalization.dev;
-    this.uiSidenavService.open(CardFieldComponent, {
-      content: [[el]],
+    this.uiSidenavService.open(MatButton, {
+      content: [[this.document.createTextNode(SharedLocalization.close)]],
+      position: 'start',
       width: 'full',
     });
+    const closeAction = (): void => {
+      this.uiSidenavService.close();
+      this.uiSidenavService.sidenavCmpRef()?.location.nativeElement.removeEventListener('click', closeAction);
+    };
+    this.uiSidenavService.sidenavCmpRef()?.location.nativeElement.addEventListener('click', closeAction);
   }
 }

@@ -12,10 +12,11 @@ import { DataViewComponent } from '@shared/components/data-view/data-view.compon
 import { SelectionBarComponent } from '@shared/components/selection-bar/selection-bar.component';
 import { MatIcon } from '@angular/material/icon';
 import { FileListComponent } from '@app/pages/files/components/file-list/file-list.component';
-import { MatMiniFabButton } from '@angular/material/button';
+import { MatButton, MatMiniFabButton } from '@angular/material/button';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
+import { SharedLocalization } from '@shared/shared.constants';
 
 @Component({
   selector: 'files-layout',
@@ -51,8 +52,14 @@ export class FilesLayoutComponent {
   });
 
   protected openAdvancedSearch(): void {
-    this.uiSidenavService.open(MatIcon, {
-      content: [[this.document.createTextNode('database_search')]],
+    this.uiSidenavService.open(MatButton, {
+      content: [[this.document.createTextNode(SharedLocalization.close)]],
+      position: 'end',
     });
+    const closeAction = (): void => {
+      this.uiSidenavService.close();
+      this.uiSidenavService.sidenavCmpRef()?.location.nativeElement.removeEventListener('click', closeAction);
+    };
+    this.uiSidenavService.sidenavCmpRef()?.location.nativeElement.addEventListener('click', closeAction);
   }
 }
