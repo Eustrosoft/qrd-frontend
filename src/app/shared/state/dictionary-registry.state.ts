@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, createSelector, NgxsAfterBootstrap, State, StateContext, StateToken } from '@ngxs/store';
-import { Dictionaries, DictionaryState } from '@app/app.models';
+import { Dictionaries, DictionaryState, Locale } from '@app/app.models';
 import { DictionaryItem, Option } from '@shared/shared.models';
 import { ThemePickerOverlayLocalization } from '@shared/components/theme-picker-overlay/theme-picker-overlay.constants';
 import { patch } from '@ngxs/store/operators';
@@ -73,7 +73,7 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
             isLoading: false,
             isLoadError: false,
           }),
-          locales: patch<DictionaryState<Option<string>>>({
+          locales: patch<DictionaryState<Option<Locale>>>({
             list: [
               {
                 value: 'ru-RU',
@@ -82,6 +82,10 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
               {
                 value: 'en-US',
                 viewValue: LocalesLocalization.enUS,
+              },
+              {
+                value: 'bg-BG',
+                viewValue: LocalesLocalization.bgBg,
               },
             ],
             isLoading: false,

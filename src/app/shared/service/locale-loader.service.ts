@@ -14,7 +14,9 @@ export class LocaleLoaderService {
 
   public fetchLocale(locale: Locale): Observable<LocaleJson> {
     return this.http
-      .get<LocaleJson>(`${this.baseHref}locale/messages.${locale}.json`, { responseType: 'json' })
+      .get<LocaleJson>(`${this.baseHref}locale/messages.${locale}.json?t=${new Date().getTime()}`, {
+        responseType: 'json',
+      })
       .pipe(catchError(() => of<LocaleJson>({ locale: DEFAULT_LOCALE, translations: {} })));
   }
 }

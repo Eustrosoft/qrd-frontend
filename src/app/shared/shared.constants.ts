@@ -87,8 +87,9 @@ export const SizeUnitsLocalization = {
 };
 
 export const LocalesLocalization = {
-  ruRu: $localize`:@@locales.ruRu:Russian`,
+  ruRu: $localize`:@@locales.ruRu:Русский`,
   enUS: $localize`:@@locales.enUS:English (US)`,
+  bgBg: $localize`:@@locales.bgBg:Български`,
 } as const;
 
 export const RouteTitles = {
