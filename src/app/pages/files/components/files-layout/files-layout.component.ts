@@ -37,6 +37,7 @@ export class FilesLayoutComponent {
   protected readonly uiSidenavService = inject(UiSidenavService);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly document = inject(DOCUMENT);
+  protected readonly SharedLocalization = SharedLocalization;
 
   protected readonly selectors = createSelectMap({
     displayType: FilesState.getDisplayType$,

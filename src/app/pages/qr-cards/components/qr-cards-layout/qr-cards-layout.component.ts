@@ -49,6 +49,7 @@ export class QrCardsLayoutComponent {
   protected readonly document = inject(DOCUMENT);
   protected readonly destroyRef = inject(DestroyRef);
 
+  protected readonly SharedLocalization = SharedLocalization;
   protected readonly ALL_QR_TABLE_COLS = ALL_QR_TABLE_COLS;
 
   protected readonly selectors = createSelectMap({

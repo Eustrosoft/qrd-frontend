@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { SharedLocalization } from '@shared/shared.constants';
 
 @Component({
   selector: 'template-usages',
@@ -7,4 +8,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './template-usages.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TemplateUsagesComponent {}
+export class TemplateUsagesComponent {
+  protected readonly SharedLocalization = SharedLocalization;
+}
