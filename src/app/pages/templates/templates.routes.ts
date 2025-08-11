@@ -60,6 +60,7 @@ export const templatesRoutes: Routes = [
         resolve: { templateForm: templateFormResolver() },
         data: { mode: 'edit' },
         title: RouteTitles.template,
+        runGuardsAndResolvers: 'always',
       },
     ],
   },
