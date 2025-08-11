@@ -23,4 +23,14 @@ module.exports = [
       '^/qr': '/qr', // Optional, keeps the path as-is
     },
   },
+  {
+    context: ['^/printer(/|$)'], // ^ = start, (/|$) = / or end
+    target: 'https://qrdemo.dev40.qxyz.ru/',
+    changeOrigin: true,
+    secure: false,
+    logLevel: 'debug',
+    pathRewrite: {
+      '^/printer': '/printer', // Optional, keeps the path as-is
+    },
+  },
 ];

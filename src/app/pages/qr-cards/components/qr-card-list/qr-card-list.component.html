@@ -1,7 +1,8 @@
 @if (!selectors.isQrCardListLoading()) {
   @for (qrCard of selectors.qrCardList(); track qrCard.id) {
+    @let code = qrCard.code | toHex;
     <view-list-item
-      [title]="qrCard.code | toHex"
+      [title]="code"
       [navigateTo]="`./${qrCard.code}`"
       [isPreviewShown]="true"
       [isSelected]="selectionModel.isSelected(qrCard.id)"
@@ -10,7 +11,7 @@
       <ng-container preview>
         @if (selectors.qrTableColumnVisibility().code_picture) {
           <img
-            [src]="`https://qrgen.qxyz.ru/generate?q=${qrCard.code | toHex}&amp;color=%23000000&amp;background=%23ffffff&amp;x=128&amp;fileType=SVG&amp;correctionLevel=L`"
+            [src]="`https://qrgen.qxyz.ru/generate?q=${code}&amp;color=%23000000&amp;background=%23ffffff&amp;x=128&amp;fileType=SVG&amp;correctionLevel=L`"
             alt="qr code"
             imgLoadState
             #imgLoadState="imgLoadState"
@@ -42,7 +43,7 @@
           <mat-icon>open_in_new</mat-icon>
           {{ QrCardsLocalization.viewCard }}
         </button>
-        <button mat-menu-item>
+        <button (click)="openPrint(code)" mat-menu-item>
           <mat-icon>print</mat-icon>
           {{ SharedLocalization.print }}
         </button>

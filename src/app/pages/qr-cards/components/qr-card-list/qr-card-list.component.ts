@@ -36,6 +36,8 @@ import { AppState } from '@app/state/app.state';
 import { RangeSelectorService } from '@shared/service/range-selector.service';
 import { QRDto } from '@api/qr-cards/qrs-api.models';
 import { AppRoutes } from '@app/app.constants';
+import { WINDOW } from '@cdk/tokens/window.token';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'qr-card-list',
@@ -58,12 +60,15 @@ import { AppRoutes } from '@app/app.constants';
 export class QrCardListComponent implements OnInit {
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
+  protected readonly window = inject(WINDOW);
   protected readonly uiSidenavService = inject(UiSidenavService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly rangeSelectorService = inject(RangeSelectorService);
   protected readonly QrCardsLocalization = QrCardsLocalization;
   protected readonly SharedLocalization = SharedLocalization;
+  protected readonly AppRoutes = AppRoutes;
+
   protected readonly selectors = createSelectMap({
     displayType: QrCardsState.getDisplayType$,
     isQrCardListLoading: QrCardsState.isQrCardListLoading$,
@@ -71,7 +76,9 @@ export class QrCardListComponent implements OnInit {
     qrCardList: QrCardsState.getQrCardList$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
     qrTableColumnVisibility: AppState.qrTableColumnVisibility$,
+    settingsState: AppState.getSettingsState$,
   });
+
   protected readonly actions = createDispatchMap({
     setDisplayType: SetQrCardsDataViewDisplayType,
     fetchQrCards: FetchQrCardList,
@@ -112,9 +119,18 @@ export class QrCardListComponent implements OnInit {
     });
   }
 
+  protected openPrint(code: string): void {
+    const queryParams = new HttpParams({
+      fromObject: {
+        q: code,
+        text: this.selectors.settingsState().settings.defaultQrPrintText,
+        textDown: this.selectors.settingsState().settings.defaultQrPrintTextDown,
+      },
+    });
+    this.window.open(`/printer/?${queryParams.toString()}`, '_blank', 'noopener noreferrer');
+  }
+
   protected fetchMore(): void {
     throw new Error('Not implemented');
   }
-
-  protected readonly AppRoutes = AppRoutes;
 }
