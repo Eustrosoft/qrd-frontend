@@ -1,0 +1,11 @@
+<div #wrapper class="collapsible" [class.no-transition]="disableTransition()">
+  <div #inner>
+    <ng-content></ng-content>
+  </div>
+</div>
+
+@if (canToggle()) {
+  <button (click)="toggleCollapse()" mat-button>
+    {{ isCollapsed() ? showMoreText() : showLessText() }}
+  </button>
+}

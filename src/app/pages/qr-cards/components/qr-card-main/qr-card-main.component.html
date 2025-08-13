@@ -41,20 +41,23 @@
     <h1>{{ RouteTitles.files }}</h1>
   </ng-container>
   <ng-container content>
-    <ui-flex-block flexDirection="column">
-      @for (file of selectors.qrCard()?.files; track file.id) {
-        <file-list-item
-          [fileLink]="`/files/${file.id}`"
-          [fileStorageType]="file.fileStorageType"
-          [name]="file?.name ?? ''"
-          [fileSize]="file.fileSize | bytesToSize"
-          [isPublic]="file.isPublic"
-          [isActive]="file.isActive"
-          [updated]="(file.updated | date: 'short') ?? ''"
-        />
-      } @empty {
-        {{ SharedLocalization.noFiles }}
-      }
-    </ui-flex-block>
+    <collapsible-container>
+      <ui-grid-block collapsibleList gridTemplateRows="auto" gridTemplateColumns="stretch">
+        @for (file of selectors.qrCard()?.files; track file.id) {
+          <file-list-item
+            collapsibleListItem
+            [fileLink]="`/files/${file.id}`"
+            [fileStorageType]="file.fileStorageType"
+            [name]="file?.name ?? ''"
+            [fileSize]="file.fileSize | bytesToSize"
+            [isPublic]="file.isPublic"
+            [isActive]="file.isActive"
+            [updated]="(file.updated | date: 'short') ?? ''"
+          />
+        } @empty {
+          <p collapsibleListItem>{{ SharedLocalization.noFiles }}</p>
+        }
+      </ui-grid-block>
+    </collapsible-container>
   </ng-container>
 </card-container>

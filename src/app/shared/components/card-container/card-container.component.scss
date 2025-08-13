@@ -13,7 +13,7 @@
 
   @media #{map.get(bp.$breakpoints, xsmall)} {
     gap: mixins.rem(16);
-    padding: mixins.rem(8) mixins.rem(12);
+    padding: mixins.rem(12) mixins.rem(12);
   }
 
   @media #{map.get(bp.$breakpoints, small)} {

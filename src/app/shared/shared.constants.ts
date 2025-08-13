@@ -72,6 +72,8 @@ export const SharedLocalization = {
   pickAFile: $localize`:@@shared.pickAFile:Pick a file`,
   loading: $localize`:@@shared.loading:Loading...`,
   dev: $localize`:@@shared.dev:Under development`,
+  showMore: $localize`:@@shared.showMore:Show more`,
+  showLess: $localize`:@@shared.showLess:Show less`,
 } as const;
 
 export const SizeUnitsLocalization = {

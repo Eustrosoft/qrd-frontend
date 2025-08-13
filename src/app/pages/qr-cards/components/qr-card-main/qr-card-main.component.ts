@@ -10,7 +10,6 @@ import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
-import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { FileListItemComponent } from '@shared/components/file-list-item/file-list-item.component';
 import { DatePipe } from '@angular/common';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
@@ -19,6 +18,9 @@ import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { AppRoutes } from '@app/app.constants';
+import { CollapsibleContainerComponent } from '@shared/components/collapsible-container/collapsible-container.component';
+import { CollapsibleListItemDirective } from '@shared/directives/collapsible-list-item.directive';
+import { CollapsibleListDirective } from '@shared/directives/collapsible-list.directive';
 
 @Component({
   selector: 'qr-card-main',
@@ -30,12 +32,14 @@ import { AppRoutes } from '@app/app.constants';
     MatIcon,
     RouterLink,
     InteractionEffect,
-    UiFlexBlockComponent,
     FileListItemComponent,
     DatePipe,
     BytesToSizePipe,
     ToHexPipe,
     FallbackPipe,
+    CollapsibleContainerComponent,
+    CollapsibleListItemDirective,
+    CollapsibleListDirective,
   ],
   templateUrl: './qr-card-main.component.html',
   styleUrl: './qr-card-main.component.scss',

@@ -167,6 +167,8 @@
     "shared.pickAFile": "Pick a file",
     "shared.loading": "Loading...",
     "shared.dev": "Under development",
+    "shared.showMore": "Show more",
+    "shared.showLess": "Show less",
     "sizeUnits.bytes": "B",
     "sizeUnits.kb": "KB",
     "sizeUnits.mb": "MB",

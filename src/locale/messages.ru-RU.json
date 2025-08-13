@@ -167,6 +167,8 @@
     "shared.pickAFile": "Выберите файл",
     "shared.loading": "Загрузка...",
     "shared.dev": "Функционал в разработке",
+    "shared.showMore": "Показать ещё",
+    "shared.showLess": "Свернуть",
     "sizeUnits.bytes": "B",
     "sizeUnits.kb": "KB",
     "sizeUnits.mb": "MB",

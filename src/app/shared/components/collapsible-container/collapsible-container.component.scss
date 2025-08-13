@@ -1,0 +1,14 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  gap: mixins.rem(16);
+  display: grid;
+
+  .collapsible {
+    overflow: hidden;
+
+    &:not(.no-transition) {
+      transition: height 0.3s ease;
+    }
+  }
+}
