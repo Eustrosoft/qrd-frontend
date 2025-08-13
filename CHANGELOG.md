@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.6.0...v1.7.0) (2025-08-13)
+
+
+### Features
+
+* **bg-BG:** добавлена болгарская локализация ([15f1593](https://github.com/Eustrosoft/qrd-frontend/commit/15f15934c665dce6a970fef2926ab8035c3aad23))
+* **col-conf:** доработан компонент настройки столбцов ([27ea0f9](https://github.com/Eustrosoft/qrd-frontend/commit/27ea0f93667e83b3d79b4ed7939edeab91418928))
+* **collapsible:** добавлен компонент сворачиваемого списка ([ab7f32a](https://github.com/Eustrosoft/qrd-frontend/commit/ab7f32a547d26d3bfa0801d928531e7e754adb9a))
+* **cols:** фильтрация отображения полей QR карточек ([3775b90](https://github.com/Eustrosoft/qrd-frontend/commit/3775b901407f0b3182e32db29045eb076a5ebb1e))
+* **edit:** добавлен переход в редактирование карточки из списка ([8dd601f](https://github.com/Eustrosoft/qrd-frontend/commit/8dd601f9a0a50364cfbb5e5b7404c12c6714d17b))
+* **print:** добавлен переход в компонент печати ([58b8714](https://github.com/Eustrosoft/qrd-frontend/commit/58b8714bafa499ce4809153d839add8a33355f53))
+* **qr-cards:** добавлена возможность фильтрации списка через поиск ([fb449df](https://github.com/Eustrosoft/qrd-frontend/commit/fb449df23635e42e1a636419d1bb1d0b20b759ed))
+* **selection:** добавлена возможность выбора нескольких записей через Shift ([ca7ab2a](https://github.com/Eustrosoft/qrd-frontend/commit/ca7ab2ad7f8d2db667dd73aed238eefdb854b9e8))
+
+
+### Bug Fixes
+
+* **core:** исправлено некорректное отображение некоторых элементов приложения ([df075f3](https://github.com/Eustrosoft/qrd-frontend/commit/df075f32940fc66686e63e355a9a94a89ed4fd6e))
+* **profile:** flex -> grid ([48534df](https://github.com/Eustrosoft/qrd-frontend/commit/48534df8076828e1b284f5967ce1c35502071076))
+* **template:** исправлена ошибка при создании шаблона ([34f2081](https://github.com/Eustrosoft/qrd-frontend/commit/34f2081835abeb818bfca03aedf19b595736a95c))
+
 ## [1.6.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.5.0...v1.6.0) (2025-08-05)
 
 
