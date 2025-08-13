@@ -36,16 +36,7 @@
       }
     </ng-container>
   </toolbar>
-  <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="tab-nav-bar">
-    @for (link of tabLinks; track link.link) {
-      <a [routerLink]="link.link" [active]="rla.isActive" #rla="routerLinkActive" routerLinkActive mat-tab-link>
-        {{ link.title | uppercase }}
-      </a>
-    }
-  </nav>
-  <mat-tab-nav-panel #tabPanel>
-    <router-outlet />
-  </mat-tab-nav-panel>
+  <router-outlet style="display: contents" />
 } @else {
   <ui-skeleton height="44" />
   <ui-skeleton height="48" />

@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, inputBinding, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
+import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { AppRoutes } from '@app/app.constants';
 import { TabLink } from '@shared/shared.models';
-import { UpperCasePipe } from '@angular/common';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { MatButton } from '@angular/material/button';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
@@ -24,10 +22,6 @@ import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
   selector: 'qr-card-view',
   imports: [
     RouterOutlet,
-    MatTabNav,
-    MatTabLink,
-    MatTabNavPanel,
-    UpperCasePipe,
     MatButton,
     RouterLink,
     UiSkeletonComponent,
@@ -35,7 +29,6 @@ import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
     InteractionEffect,
     TruncateDirective,
     ToHexPipe,
-    RouterLinkActive,
     ToolbarComponent,
   ],
   templateUrl: './qr-card-view.component.html',

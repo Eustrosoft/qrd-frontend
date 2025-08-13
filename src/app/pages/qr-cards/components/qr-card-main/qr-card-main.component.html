@@ -38,6 +38,30 @@
 </card-container>
 <card-container>
   <ng-container heading>
+    <h1>{{ RouteTitles.attrs }}</h1>
+  </ng-container>
+  <ng-container content>
+    <collapsible-container>
+      <ui-grid-block collapsibleList gridTemplateRows="auto" gridTemplateColumns="stretch">
+        @for (field of selectors.qrCard()?.form?.fields; track field.id) {
+          <attr-list-item
+            collapsibleListItem
+            [caption]="field.caption"
+            [value]="selectors.qrCard()?.data?.[field.name] ?? SharedLocalization.empty"
+            [type]="field.fieldType"
+            [isPublic]="field.isPublic"
+            [isStatic]="field.isStatic"
+          />
+        } @empty {
+          {{ SharedLocalization.noAttrs }}
+        }
+      </ui-grid-block>
+    </collapsible-container>
+  </ng-container>
+</card-container>
+
+<card-container>
+  <ng-container heading>
     <h1>{{ RouteTitles.files }}</h1>
   </ng-container>
   <ng-container content>
