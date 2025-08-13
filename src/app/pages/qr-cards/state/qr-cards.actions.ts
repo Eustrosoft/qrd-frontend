@@ -7,6 +7,11 @@ export class FetchQrCardList {
   public static readonly type = '[Qr Cards] Fetch Qr Card List';
 }
 
+export class SetQrCardListSearchValue {
+  public static readonly type = '[Qr Cards] Set Qr Card List Search Value';
+  constructor(readonly searchValue: string) {}
+}
+
 export class FetchQrCard {
   public static readonly type = '[Qr Cards] Fetch Qr Card';
   constructor(

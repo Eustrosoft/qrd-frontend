@@ -3,7 +3,7 @@
     <mat-form-field class="form-field-md search-bar" subscriptSizing="dynamic">
       <input
         [value]="searchValue()"
-        (change)="searchValueChange.emit(searchInput.value)"
+        (input)="searchValueChange.emit(searchInput.value)"
         (keydown.enter)="searchClicked.emit()"
         [placeholder]="SharedLocalization.search"
         #searchInput="matInput"
@@ -11,7 +11,7 @@
       />
       @if (!isSmallScreen()) {
         <button
-          (click)="searchInput.value = ''"
+          (click)="searchInput.value = ''; searchValueChange.emit('')"
           [toggleVisibility]="!!searchInput.value"
           matSuffix
           class="icon-button-sm"

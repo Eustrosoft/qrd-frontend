@@ -2,6 +2,7 @@
   [displayType]="selectors.displayType()"
   (displayTypeChange)="actions.setDisplayType($event.value)"
   (advancedSearchClicked)="openAdvancedSearch()"
+  (searchValueChange)="actions.setQrCardListSearchValue($event)"
 >
   <ng-content view-settings>
     @if (!isSmallScreen()) {

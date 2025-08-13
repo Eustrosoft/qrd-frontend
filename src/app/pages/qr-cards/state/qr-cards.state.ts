@@ -12,6 +12,7 @@ import {
   ResetQrCardsState,
   SaveQrCard,
   SelectAllQrCards,
+  SetQrCardListSearchValue,
   SetQrCardsDataViewDisplayType,
   SetSelectedQrCards,
 } from './qr-cards.actions';
@@ -41,6 +42,7 @@ import { QRRangeDto } from '@api/ranges/ranges-api.models';
 
 export interface QrCardsStateModel {
   displayType: DataViewDisplayType;
+  searchValue: string;
   isQrCardListLoading: boolean;
   qrCardListSkeletonLoaders: number;
   qrCardList: QRDto[];
@@ -65,6 +67,7 @@ export interface QrCardsStateModel {
 
 const defaults: QrCardsStateModel = {
   displayType: 'list',
+  searchValue: '',
   isQrCardListLoading: false,
   qrCardListSkeletonLoaders: DEFAULT_ITEMS_PER_PAGE,
   qrCardList: [],
@@ -120,8 +123,13 @@ export class QrCardsState {
   }
 
   @Selector()
-  public static getQrCardList$({ qrCardList }: QrCardsStateModel): QRDto[] {
-    return qrCardList;
+  public static getQrCardList$({ qrCardList, searchValue }: QrCardsStateModel): QRDto[] {
+    return qrCardList.filter(
+      (qrCard) =>
+        qrCard.name.toLowerCase().includes(searchValue) ||
+        qrCard.description.toLowerCase().includes(searchValue) ||
+        qrCard.code.toString().includes(searchValue),
+    );
   }
 
   @Selector()
@@ -215,6 +223,14 @@ export class QrCardsState {
         return throwError(() => err);
       }),
     );
+  }
+
+  @Action(SetQrCardListSearchValue)
+  public searchQrCardList(
+    { setState }: StateContext<QrCardsStateModel>,
+    { searchValue }: SetQrCardListSearchValue,
+  ): void {
+    setState(patch({ searchValue: searchValue.trim().toLowerCase() }));
   }
 
   @Action(FetchQrCard)

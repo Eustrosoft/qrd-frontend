@@ -6,6 +6,7 @@ import {
   DeleteQrCards,
   FetchQrCardList,
   SelectAllQrCards,
+  SetQrCardListSearchValue,
   SetQrCardsDataViewDisplayType,
   SetSelectedQrCards,
 } from '@app/pages/qr-cards/state/qr-cards.actions';
@@ -61,6 +62,7 @@ export class QrCardsLayoutComponent {
   protected readonly actions = createDispatchMap({
     setDisplayType: SetQrCardsDataViewDisplayType,
     fetchQrCards: FetchQrCardList,
+    setQrCardListSearchValue: SetQrCardListSearchValue,
     setSelectedQrCards: SetSelectedQrCards,
     selectAllQrCards: SelectAllQrCards,
     deleteQrCards: DeleteQrCards,
