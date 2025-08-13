@@ -22,7 +22,6 @@ import { CollapsibleContainerComponent } from '@shared/components/collapsible-co
 import { CollapsibleListItemDirective } from '@shared/directives/collapsible-list-item.directive';
 import { CollapsibleListDirective } from '@shared/directives/collapsible-list.directive';
 import { AttrListItemComponent } from '@shared/components/attr-list-item/attr-list-item.component';
-import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 
 @Component({
   selector: 'qr-card-main',
@@ -43,7 +42,6 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
     CollapsibleListItemDirective,
     CollapsibleListDirective,
     AttrListItemComponent,
-    UiFlexBlockComponent,
   ],
   templateUrl: './qr-card-main.component.html',
   styleUrl: './qr-card-main.component.scss',
