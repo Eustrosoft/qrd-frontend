@@ -103,6 +103,11 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "optimization": true,
+              "outputHashing": "all",
+              "namedChunks": false,
+              "extractLicenses": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -115,7 +120,6 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
