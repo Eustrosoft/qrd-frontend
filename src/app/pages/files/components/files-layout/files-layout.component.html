@@ -1,7 +1,9 @@
 <data-view
   [displayType]="selectors.displayType()"
+  [searchValue]="selectors.searchValue()"
   (displayTypeChange)="actions.setDisplayType($event.value)"
   (advancedSearchClicked)="openAdvancedSearch()"
+  (searchValueChange)="actions.setFileListSearchValue($event)"
 >
   <selection-bar
     *animatedIf="!!selectors.selectedFileList().length"

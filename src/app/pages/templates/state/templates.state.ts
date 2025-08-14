@@ -20,6 +20,7 @@ import {
   SaveTemplate,
   SelectAllTemplates,
   SetSelectedTemplates,
+  SetTemplateListSearchValue,
   SetTemplatesDataViewDisplayType,
 } from '@app/pages/templates/state/templates.actions';
 import { TemplateDto } from '@api/templates/templates-api.models';
@@ -36,6 +37,7 @@ import { NotificationSnackbarLocalization } from '@modules/error/error.constants
 
 export interface TemplatesStateModel {
   displayType: DataViewDisplayType;
+  searchValue: string;
   isTemplateListLoading: boolean;
   templateListSkeletonLoaders: number;
   templateList: TemplateDto[];
@@ -53,6 +55,7 @@ export interface TemplatesStateModel {
 
 const defaults: TemplatesStateModel = {
   displayType: 'list',
+  searchValue: '',
   isTemplateListLoading: false,
   templateListSkeletonLoaders: DEFAULT_ITEMS_PER_PAGE,
   templateList: [],
@@ -89,6 +92,11 @@ export class TemplatesState {
   }
 
   @Selector()
+  public static getSearchValue$({ searchValue }: TemplatesStateModel): string {
+    return searchValue;
+  }
+
+  @Selector()
   public static isTemplateListLoading$({ isTemplateListLoading }: TemplatesStateModel): boolean {
     return isTemplateListLoading;
   }
@@ -99,8 +107,11 @@ export class TemplatesState {
   }
 
   @Selector()
-  public static getTemplateList$({ templateList }: TemplatesStateModel): TemplateDto[] {
-    return templateList;
+  public static getTemplateList$({ templateList, searchValue }: TemplatesStateModel): TemplateDto[] {
+    return templateList.filter(
+      (template) =>
+        template.name.toLowerCase().includes(searchValue) || template.description.toLowerCase().includes(searchValue),
+    );
   }
 
   @Selector()
@@ -168,6 +179,14 @@ export class TemplatesState {
         return throwError(() => err);
       }),
     );
+  }
+
+  @Action(SetTemplateListSearchValue)
+  public setTemplateListSearchValue(
+    { setState }: StateContext<TemplatesStateModel>,
+    { searchValue }: SetTemplateListSearchValue,
+  ): void {
+    setState(patch({ searchValue: searchValue.trim().toLowerCase(), selectedTemplateList: [] }));
   }
 
   @Action(FetchTemplate)

@@ -7,6 +7,11 @@ export class FetchTemplateList {
   public static readonly type = '[Templates] Fetch Template List';
 }
 
+export class SetTemplateListSearchValue {
+  public static readonly type = '[Templates] Set Template List Search Value';
+  constructor(readonly searchValue: string) {}
+}
+
 export class FetchTemplate {
   public static readonly type = '[Templates] Fetch Template';
   constructor(

@@ -12,6 +12,7 @@ import {
   FetchFile,
   FetchFileList,
   SelectAllFiles,
+  SetFileListSearchValue,
   SetFilesDataViewDisplayType,
   SetSelectedFiles,
 } from '@app/pages/files/state/files.actions';
@@ -29,6 +30,7 @@ import { ErrorsLocalization, NotificationSnackbarLocalization } from '@modules/e
 
 export interface FilesStateModel {
   displayType: DataViewDisplayType;
+  searchValue: string;
   isFileListLoading: boolean;
   fileListSkeletonLoaders: number;
   fileList: FileDto[];
@@ -41,6 +43,7 @@ export interface FilesStateModel {
 
 const defaults: FilesStateModel = {
   displayType: 'list',
+  searchValue: '',
   isFileListLoading: false,
   fileListSkeletonLoaders: DEFAULT_ITEMS_PER_PAGE,
   fileList: [],
@@ -72,6 +75,11 @@ export class FilesState {
   }
 
   @Selector()
+  public static getSearchValue$({ searchValue }: FilesStateModel): string {
+    return searchValue;
+  }
+
+  @Selector()
   public static isFileListLoading$({ isFileListLoading }: FilesStateModel): boolean {
     return isFileListLoading;
   }
@@ -82,8 +90,10 @@ export class FilesState {
   }
 
   @Selector()
-  public static getFileList$({ fileList }: FilesStateModel): FileDto[] {
-    return fileList;
+  public static getFileList$({ fileList, searchValue }: FilesStateModel): FileDto[] {
+    return fileList.filter(
+      (file) => file.name.toLowerCase().includes(searchValue) || file.description.toLowerCase().includes(searchValue),
+    );
   }
 
   @Selector()
@@ -127,6 +137,14 @@ export class FilesState {
         return throwError(() => err);
       }),
     );
+  }
+
+  @Action(SetFileListSearchValue)
+  public setFileListSearchValue(
+    { setState }: StateContext<FilesStateModel>,
+    { searchValue }: SetFileListSearchValue,
+  ): void {
+    setState(patch({ searchValue: searchValue.trim().toLowerCase(), selectedFileList: [] }));
   }
 
   @Action(FetchFile)

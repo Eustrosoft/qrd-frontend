@@ -113,6 +113,11 @@ export class QrCardsState {
   }
 
   @Selector()
+  public static getSearchValue$({ searchValue }: QrCardsStateModel): string {
+    return searchValue;
+  }
+
+  @Selector()
   public static isQrCardListLoading$({ isQrCardListLoading }: QrCardsStateModel): boolean {
     return isQrCardListLoading;
   }
@@ -230,7 +235,7 @@ export class QrCardsState {
     { setState }: StateContext<QrCardsStateModel>,
     { searchValue }: SetQrCardListSearchValue,
   ): void {
-    setState(patch({ searchValue: searchValue.trim().toLowerCase() }));
+    setState(patch({ searchValue: searchValue.trim().toLowerCase(), selectedQrCardList: [] }));
   }
 
   @Action(FetchQrCard)

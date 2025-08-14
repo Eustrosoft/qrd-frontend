@@ -5,6 +5,11 @@ export class FetchFileList {
   public static readonly type = '[Files] Fetch File List';
 }
 
+export class SetFileListSearchValue {
+  public static readonly type = '[Files] Set File List Search Value';
+  constructor(readonly searchValue: string) {}
+}
+
 export class FetchFile {
   public static readonly type = '[Files] Fetch File';
   constructor(

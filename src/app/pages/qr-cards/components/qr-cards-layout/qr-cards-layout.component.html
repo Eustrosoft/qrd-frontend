@@ -1,5 +1,6 @@
 <data-view
   [displayType]="selectors.displayType()"
+  [searchValue]="selectors.searchValue()"
   (displayTypeChange)="actions.setDisplayType($event.value)"
   (advancedSearchClicked)="openAdvancedSearch()"
   (searchValueChange)="actions.setQrCardListSearchValue($event)"

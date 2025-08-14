@@ -41,6 +41,8 @@
         </button>
       </ng-container>
     </view-list-item>
+  } @empty {
+    <p>{{ SharedLocalization.emptyList }}</p>
   }
 } @else {
   @for (sk of selectors.fileListSkeletonLoaders(); track sk) {

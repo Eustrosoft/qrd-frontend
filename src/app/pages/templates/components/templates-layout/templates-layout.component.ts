@@ -12,6 +12,7 @@ import {
   FetchTemplateList,
   SelectAllTemplates,
   SetSelectedTemplates,
+  SetTemplateListSearchValue,
   SetTemplatesDataViewDisplayType,
 } from '@app/pages/templates/state/templates.actions';
 import { TemplateListComponent } from '@app/pages/templates/components/template-list/template-list.component';
@@ -41,12 +42,14 @@ export class TemplatesLayoutComponent {
 
   protected readonly selectors = createSelectMap({
     displayType: TemplatesState.getDisplayType$,
+    searchValue: TemplatesState.getSearchValue$,
     selectedTemplateList: TemplatesState.getSelectedTemplateList$,
     isDeleteInProgress: TemplatesState.isDeleteInProgress$,
   });
   protected readonly actions = createDispatchMap({
     setDisplayType: SetTemplatesDataViewDisplayType,
     fetchTemplateList: FetchTemplateList,
+    setTemplateListSearchValue: SetTemplateListSearchValue,
     setSelectedTemplates: SetSelectedTemplates,
     selectAllTemplates: SelectAllTemplates,
     deleteTemplates: DeleteTemplates,

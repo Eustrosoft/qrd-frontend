@@ -5,6 +5,7 @@ import {
   DeleteFiles,
   FetchFileList,
   SelectAllFiles,
+  SetFileListSearchValue,
   SetFilesDataViewDisplayType,
   SetSelectedFiles,
 } from '@app/pages/files/state/files.actions';
@@ -41,12 +42,14 @@ export class FilesLayoutComponent {
 
   protected readonly selectors = createSelectMap({
     displayType: FilesState.getDisplayType$,
+    searchValue: FilesState.getSearchValue$,
     selectedFileList: FilesState.getSelectedFileList$,
     isDeleteInProgress: FilesState.isDeleteInProgress$,
   });
   protected readonly actions = createDispatchMap({
     setDisplayType: SetFilesDataViewDisplayType,
     fetchFileList: FetchFileList,
+    setFileListSearchValue: SetFileListSearchValue,
     setSelectedFiles: SetSelectedFiles,
     selectAllFiles: SelectAllFiles,
     deleteFiles: DeleteFiles,

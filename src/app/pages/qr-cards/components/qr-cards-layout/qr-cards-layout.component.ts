@@ -55,6 +55,7 @@ export class QrCardsLayoutComponent {
 
   protected readonly selectors = createSelectMap({
     displayType: QrCardsState.getDisplayType$,
+    searchValue: QrCardsState.getSearchValue$,
     settingsState: AppState.getSettingsState$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
     isDeleteInProgress: QrCardsState.isDeleteInProgress$,
