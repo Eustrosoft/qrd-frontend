@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.7.0...v1.8.0) (2025-08-15)
+
+
+### Features
+
+* **temp,files:** добавлена возможность фильтрации списка через поиск ([1ec0c15](https://github.com/Eustrosoft/qrd-frontend/commit/1ec0c152db7b726d37f143d4930095b94247204b))
+
 ## [1.7.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.6.0...v1.7.0) (2025-08-13)
 
 
