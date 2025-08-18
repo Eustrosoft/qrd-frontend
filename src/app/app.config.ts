@@ -25,6 +25,7 @@ import { httpErrorInterceptor } from '@modules/error/http-error.interceptor';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
 import { APP_BASE_HREF, LocationStrategy } from '@angular/common';
 import { CustomLocationStrategy } from '@cdk/classes/custom-location-strategy.class';
+import { Iso8601DateFormatPipe } from '@shared/pipe/iso8601-date-format.pipe';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -58,7 +59,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: DateAdapter,
       useFactory: localizedDateAdapterFactory,
-      deps: [LOCALE_ID, RuDateAdapterParsePipe],
+      deps: [LOCALE_ID, RuDateAdapterParsePipe, Iso8601DateFormatPipe],
     },
     { provide: TitleStrategy, useClass: TemplatePageTitleStrategy },
     { provide: APP_BASE_HREF, useValue: environment.baseHref },

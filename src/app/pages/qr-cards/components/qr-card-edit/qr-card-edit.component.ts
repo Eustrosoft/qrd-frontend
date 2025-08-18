@@ -69,6 +69,7 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { uniq } from '@shared/utils/functions/uniq.function';
+import { Iso8601DateFormatDirective } from '@shared/directives/iso8601-date-format.directive';
 
 @Component({
   selector: 'qr-card-edit',
@@ -105,6 +106,7 @@ import { uniq } from '@shared/utils/functions/uniq.function';
     MatSuffix,
     IndicatorComponent,
     RouterLink,
+    Iso8601DateFormatDirective,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './qr-card-edit.component.html',

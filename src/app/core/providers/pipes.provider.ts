@@ -7,6 +7,7 @@ import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { ContentDispositionHeaderParsePipe } from '@shared/pipe/content-disposition-header-parse.pipe';
 import { RuDateAdapterParsePipe } from '@shared/pipe/ru-adapter-parse.pipe';
 import { QrRangePipe } from '@shared/pipe/qr-range.pipe';
+import { Iso8601DateFormatPipe } from '@shared/pipe/iso8601-date-format.pipe';
 
 export function providePipes(): Provider[] {
   return [
@@ -18,5 +19,6 @@ export function providePipes(): Provider[] {
     FallbackPipe,
     ContentDispositionHeaderParsePipe,
     RuDateAdapterParsePipe,
+    Iso8601DateFormatPipe,
   ];
 }
