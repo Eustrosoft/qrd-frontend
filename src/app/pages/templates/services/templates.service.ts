@@ -21,6 +21,10 @@ export class TemplatesService {
     return this.http.post<TemplateDto>('/qrCodeDemo/v1/api/secured/forms', payload);
   }
 
+  public createDefaultTemplate(): Observable<TemplateDto> {
+    return this.http.post<TemplateDto>('/qrCodeDemo/v1/api/secured/forms/default', undefined);
+  }
+
   public saveTemplate(id: number, payload: Partial<TemplateDto>): Observable<TemplateDto> {
     return this.http.put<TemplateDto>(`/qrCodeDemo/v1/api/secured/forms/${id}`, payload);
   }

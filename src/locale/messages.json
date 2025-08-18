@@ -78,6 +78,7 @@
     "confirmDialog.saveBeforeExit": "Looks like form contains unsaved changes. Save data before exit?",
     "createMenuOverlay.createCard": "Create card",
     "createMenuOverlay.createTemplate": "Create template",
+    "createMenuOverlay.createDefaultTemplate": "Create default template",
     "createMenuOverlay.uploadFile": "Upload file",
     "createMenuOverlay.createDoc": "Create doc",
     "footer.qrForAll": "QR for all",

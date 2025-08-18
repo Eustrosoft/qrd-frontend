@@ -7,6 +7,10 @@
     <mat-icon matListItemIcon>difference</mat-icon>
     {{ CreateMenuOverlayLocalization.createTemplate }}
   </a>
+  <button (click)="createDefaultTemplate(); closeOverlay.emit()" style="white-space: pre-line" mat-list-item>
+    <mat-icon matListItemIcon>difference</mat-icon>
+    <p class="pre-line">{{ CreateMenuOverlayLocalization.createDefaultTemplate }}</p>
+  </button>
   <a routerLink="/files/new" (click)="closeOverlay.emit()" mat-list-item>
     <mat-icon matListItemIcon>upload_file</mat-icon>
     {{ CreateMenuOverlayLocalization.uploadFile }}

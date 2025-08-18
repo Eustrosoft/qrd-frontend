@@ -48,6 +48,10 @@ export class CreateTemplate {
   ) {}
 }
 
+export class CreateDefaultTemplate {
+  public static readonly type = '[Templates] Create Default Template';
+}
+
 export class SaveTemplate {
   public static readonly type = '[Templates] Save Template';
   constructor(

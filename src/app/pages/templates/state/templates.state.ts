@@ -11,6 +11,7 @@ import { TemplatesService } from '@app/pages/templates/services/templates.servic
 import {
   AddFileToTemplate,
   ClearTemplate,
+  CreateDefaultTemplate,
   CreateTemplate,
   DeleteTemplates,
   FetchFileList,
@@ -262,6 +263,27 @@ export class TemplatesState {
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),
+    );
+  }
+
+  @Action(CreateDefaultTemplate)
+  public createDefaultTemplate({ setState, dispatch }: StateContext<TemplatesStateModel>): Observable<unknown> {
+    setState(patch({ isTemplateListLoading: true }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.templatesService.createDefaultTemplate()),
+      tap({
+        next: ({ id }) => {
+          this.snackbarService.success(NotificationSnackbarLocalization.created);
+          dispatch(new FetchTemplateList());
+          dispatch(new FetchTemplate(id));
+          this.router.navigate([AppRoutes.templates, id, AppRoutes.template]);
+        },
+      }),
+      catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnCreate);
+        setState(patch({ isTemplateListLoading: false }));
+        return throwError(() => err);
+      }),
     );
   }
 

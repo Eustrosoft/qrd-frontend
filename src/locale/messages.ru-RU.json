@@ -78,6 +78,7 @@
     "confirmDialog.saveBeforeExit": "Похоже, форма содержит несохраненные изменения. Сохранить данные?",
     "createMenuOverlay.createCard": "Создать карточку",
     "createMenuOverlay.createTemplate": "Создать шаблон",
+    "createMenuOverlay.createDefaultTemplate": "Создать шаблон по-умолчанию",
     "createMenuOverlay.uploadFile": "Загрузить файл",
     "createMenuOverlay.createDoc": "Создать документ",
     "footer.qrForAll": "QR-коды для всех",

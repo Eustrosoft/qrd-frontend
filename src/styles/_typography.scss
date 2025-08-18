@@ -28,6 +28,10 @@ p {
   &.error-color {
     color: var(--mat-sys-error);
   }
+
+  &.pre-line {
+    white-space: pre-line;
+  }
 }
 
 small {
