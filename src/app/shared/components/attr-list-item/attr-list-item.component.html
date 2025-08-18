@@ -1,5 +1,5 @@
 <p [title]="caption()" ellipsis>{{ caption() }}</p>
-@if (value() !== null) {
+@if (value() !== null && value() !== undefined) {
   @if (isTextLike()) {
     <p [title]="value()" ellipsis>{{ value() }}</p>
   }
@@ -7,7 +7,7 @@
     <p style="white-space: pre-line; word-wrap: break-word; hyphens: auto">{{ value() }}</p>
   }
   @if (type() === 'DATE') {
-    <p ellipsis>{{ (value() | date: 'shortDate') ?? value() }}</p>
+    <p ellipsis>{{ (value() ?? '' | date: 'shortDate') ?? value() }}</p>
   }
   @if (type() === 'EMAIL') {
     <a

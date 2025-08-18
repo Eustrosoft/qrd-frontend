@@ -27,7 +27,7 @@ import { InteractionEffect } from '@shared/directives/text-interaction-effect.di
 })
 export class AttrListItemComponent {
   public readonly caption = input<string>('');
-  public readonly value = input<string | null>(null);
+  public readonly value = input<string | null | undefined>(null);
   public readonly placeholder = input<string>('');
   public readonly type = input<FieldType>('TEXT');
   public readonly isPublic = input<boolean>(false);

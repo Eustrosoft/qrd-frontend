@@ -24,6 +24,7 @@
 
     border: 1px solid var(--mat-sys-outline);
     padding: 0;
+    overflow: auto;
     border-radius: mixins.rem(8);
   }
 
