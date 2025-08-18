@@ -56,6 +56,16 @@
             }
           </mat-label>
         }
+        @if (form.controls.formId.value) {
+          <button
+            (click)="$event.stopPropagation(); form.controls.formId.reset()"
+            class="icon-button-sm"
+            mat-icon-button
+            matSuffix
+          >
+            <mat-icon class="icon-primary">close</mat-icon>
+          </button>
+        }
         <mat-select [formControl]="form.controls.formId">
           @for (template of selectors.templatesState().templateList; track template.id) {
             <mat-option class="option-lg" [value]="template.id">{{ template.name }}</mat-option>

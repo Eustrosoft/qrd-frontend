@@ -53,8 +53,8 @@ export class FileUploadFormFactoryService {
     return this.fb.group<FileUploadForm>({
       name: this.fb.nonNullable.control<string>('', [Validators.required, Validators.maxLength(MAX_NAME_LENGTH)]),
       description: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_DESCRIPTION_LENGTH)]),
-      isActive: this.fb.nonNullable.control<boolean>(false),
-      isPublic: this.fb.nonNullable.control<boolean>(false),
+      isActive: this.fb.nonNullable.control<boolean>(true),
+      isPublic: this.fb.nonNullable.control<boolean>(true),
       file: this.fb.control<File | null>(null, [Validators.required]),
     });
   }
@@ -63,8 +63,8 @@ export class FileUploadFormFactoryService {
     return this.fb.group<FileAsUrlForm>({
       name: this.fb.nonNullable.control<string>('', [Validators.required, Validators.maxLength(MAX_NAME_LENGTH)]),
       description: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_DESCRIPTION_LENGTH)]),
-      isActive: this.fb.nonNullable.control<boolean>(false),
-      isPublic: this.fb.nonNullable.control<boolean>(false),
+      isActive: this.fb.nonNullable.control<boolean>(true),
+      isPublic: this.fb.nonNullable.control<boolean>(true),
       storagePath: this.fb.nonNullable.control<string>('', [
         Validators.required,
         Validators.maxLength(MAX_URL_LENGTH),

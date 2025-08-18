@@ -16,7 +16,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { QrCardCreationForm } from '@app/pages/qr-cards/qr-cards.models';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { MatError } from '@angular/material/form-field';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
@@ -47,6 +47,7 @@ import { QrRangePipe } from '@shared/pipe/qr-range.pipe';
     MatIconButton,
     FallbackPipe,
     QrRangePipe,
+    MatSuffix,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './qr-card-create.component.html',
@@ -79,9 +80,9 @@ export class QrCardCreateComponent implements OnInit {
   });
 
   protected readonly form = this.fb.group<QrCardCreationForm>({
-    name: this.fb.nonNullable.control<string>('', [Validators.required, Validators.maxLength(MAX_NAME_LENGTH)]),
+    name: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_NAME_LENGTH)]),
     description: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_DESCRIPTION_LENGTH)]),
-    formId: this.fb.nonNullable.control<number | null>(null, [Validators.required]),
+    formId: this.fb.nonNullable.control<number | null>(null),
     rangeId: this.fb.nonNullable.control<number | null>(null, [Validators.required]),
   });
 

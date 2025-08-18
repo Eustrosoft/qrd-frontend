@@ -70,10 +70,7 @@ export class QrCardFormFactoryService {
       id: this.fb.nonNullable.control<number>(initialData?.id ?? -1),
       code: this.fb.nonNullable.control<number>(initialData?.code ?? -1),
       formId: this.fb.nonNullable.control<number>(initialData?.formId ?? -1),
-      name: this.fb.nonNullable.control<string>(initialData?.name ?? '', [
-        Validators.required,
-        Validators.maxLength(MAX_NAME_LENGTH),
-      ]),
+      name: this.fb.nonNullable.control<string>(initialData?.name ?? '', [Validators.maxLength(MAX_NAME_LENGTH)]),
       description: this.fb.nonNullable.control<string>(initialData?.description ?? '', [
         Validators.maxLength(MAX_DESCRIPTION_LENGTH),
       ]),

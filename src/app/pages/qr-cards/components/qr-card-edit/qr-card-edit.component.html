@@ -56,16 +56,28 @@
                 }
               </mat-label>
             }
-            <mat-hint>
-              <a
-                [routerLink]="`/templates/${form().controls.formId.value}`"
-                class="button-anchor-sm"
-                mat-button
-                interactionEffect
+            @if (form().controls.formId.value !== -1) {
+              <mat-hint>
+                <a
+                  [routerLink]="`/templates/${form().controls.formId.value}`"
+                  class="button-anchor-sm"
+                  mat-button
+                  interactionEffect
+                >
+                  <small class="bold">{{ SharedLocalization.openTemplate }}</small>
+                </a>
+              </mat-hint>
+            }
+            @if (form().controls.formId.value !== -1) {
+              <button
+                (click)="$event.stopPropagation(); form().controls.formId.reset(-1)"
+                class="icon-button-sm"
+                mat-icon-button
+                matSuffix
               >
-                <small class="bold">{{ SharedLocalization.openTemplate }}</small>
-              </a>
-            </mat-hint>
+                <mat-icon class="icon-primary">close</mat-icon>
+              </button>
+            }
             <mat-select [formControl]="form().controls.formId">
               @for (template of selectors.templatesState().templateList; track template.id) {
                 <mat-option class="option-lg" [value]="template.id">{{ template.name }}</mat-option>
