@@ -40,9 +40,13 @@
           {{ SharedLocalization.open }}
         </a>
         <button (click)="openCardPreview(qrCard.qrCardPreviewUrl)" mat-menu-item>
+          <mat-icon>eye_tracking</mat-icon>
+          {{ QrCardsLocalization.previewCard }}
+        </button>
+        <a [href]="`https://qr.qxyz.ru/?q=${code}`" target="_blank" rel="noopener noreferrer" mat-menu-item>
           <mat-icon>open_in_new</mat-icon>
           {{ QrCardsLocalization.viewCard }}
-        </button>
+        </a>
         <button (click)="openPrint(code)" mat-menu-item>
           <mat-icon>print</mat-icon>
           {{ SharedLocalization.print }}

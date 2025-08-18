@@ -55,6 +55,7 @@
     "signUp.loginRequiredErr": "Login required",
     "signUp.pwdRequiredErr": "Password required",
     "qrCards.viewCard": "View card",
+    "qrCards.previewCard": "Preview card",
     "qrCards.creation": "Create new QR card",
     "qrCards.editing": "Edit QR card",
     "qrCardActions.std": "Standard",

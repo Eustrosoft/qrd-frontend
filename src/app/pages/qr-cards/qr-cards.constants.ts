@@ -1,5 +1,6 @@
 export const QrCardsLocalization = {
   viewCard: $localize`:@@qrCards.viewCard:View card`,
+  previewCard: $localize`:@@qrCards.previewCard:Preview card`,
   creation: $localize`:@@qrCards.creation:Create new QR card`,
   editing: $localize`:@@qrCards.editing:Edit QR card`,
 } as const;
