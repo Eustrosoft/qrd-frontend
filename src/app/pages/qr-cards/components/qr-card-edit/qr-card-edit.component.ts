@@ -213,6 +213,7 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
 
   public ngOnInit(): void {
     this.actions.fetchTemplateList(this.destroyRef);
+    this.actions.fetchQrCard(this.qrCardCode!, this.destroyRef);
   }
 
   public ngOnDestroy(): void {

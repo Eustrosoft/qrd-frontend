@@ -20,7 +20,7 @@
       }
     </ng-container>
     <ng-container action-buttons>
-      <a [routerLink]="`../${selectors.qrCard()?.code}/${AppRoutes.edit}`" class="button-md" mat-flat-button>
+      <a [routerLink]="`../${routeParams()['code']}/${AppRoutes.edit}`" class="button-md" mat-flat-button>
         {{ SharedLocalization.edit }}
       </a>
       @if (!selectors.isDeleteInProgress()) {
