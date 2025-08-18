@@ -6,7 +6,6 @@ import { QrCardFormFactoryService } from '@app/pages/qr-cards/services/qr-card-f
 import { QrCardFormGroup } from '@app/pages/qr-cards/qr-cards.models';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
-import { uniq } from '@shared/utils/functions/uniq.function';
 
 export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup>> => {
   return (route) => {
@@ -29,8 +28,7 @@ export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup>> => 
           action: qrCard()?.action ?? 'STD',
           redirect: qrCard()?.redirect ?? '',
           data: qrCard()?.data ?? {},
-          // eslint-disable-next-line no-extra-parens
-          files: uniq([...(qrCard()?.files ?? []), ...(qrCard()?.form?.files ?? [])], 'id'),
+          files: qrCard()?.files ?? [],
         },
         qrCard()?.form?.fields,
       );

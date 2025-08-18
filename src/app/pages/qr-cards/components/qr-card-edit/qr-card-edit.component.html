@@ -186,7 +186,7 @@
         <h1>{{ RouteTitles.files }}</h1>
       </ng-container>
       <ng-container content>
-        @if (!selectors.isTemplateFilesLoading()) {
+        @if (!selectors.isQrCardFilesLoading()) {
           <ui-grid-block gridTemplateColumns="repeat(1, 1fr)">
             @for (file of form().controls.files.controls; track file) {
               <ui-flex-block flexAlignItems="center">
@@ -229,7 +229,19 @@
                   </file-upload-blob>
                 }
               }
-            } @empty {
+            }
+            @for (file of selectors.qrCard()?.form?.files ?? []; track file) {
+              <file-list-item
+                [fileLink]="`/files/${file.id}`"
+                [fileStorageType]="file.fileStorageType"
+                [name]="file.name"
+                [fileSize]="file.fileSize | bytesToSize"
+                [isPublic]="file.isPublic"
+                [isActive]="file.isActive"
+                [updated]="(file.updated | date: 'short') ?? ''"
+              />
+            }
+            @if (!form().controls.files.controls.length && !(selectors.qrCard()?.form?.files ?? []).length) {
               {{ SharedLocalization.emptyList }}
             }
           </ui-grid-block>

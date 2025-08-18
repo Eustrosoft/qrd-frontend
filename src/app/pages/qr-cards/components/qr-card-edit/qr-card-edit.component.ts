@@ -68,7 +68,6 @@ import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
-import { uniq } from '@shared/utils/functions/uniq.function';
 import { Iso8601DateFormatDirective } from '@shared/directives/iso8601-date-format.directive';
 
 @Component({
@@ -148,7 +147,7 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
     isQrCardLoading: QrCardsState.isQrCardLoading$,
     qrCardLoadErr: QrCardsState.qrCardLoadErr$,
     isSaveInProgress: QrCardsState.isSaveInProgress$,
-    isTemplateFilesLoading: QrCardsState.isQrCardFilesLoading$,
+    isQrCardFilesLoading: QrCardsState.isQrCardFilesLoading$,
     qrCard: QrCardsState.getQrCard$,
     qrCardPreviewUrl: QrCardsState.getQrCardPreviewUrl$,
     templatesState: QrCardsState.getTemplatesState$,
@@ -181,8 +180,6 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
 
   protected readonly qrCardEff = effect(() => {
     const qrCard = this.selectors.qrCard();
-    const files = qrCard?.files ?? [];
-    const templateFiles = qrCard?.form?.files ?? [];
     this.qrCardFormFactoryService.patchQrCardForm(
       {
         id: qrCard?.id ?? -1,
@@ -196,7 +193,7 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
       },
       false,
     );
-    this.qrCardFormFactoryService.patchFiles(uniq([...files, ...templateFiles], 'id'), false);
+    this.qrCardFormFactoryService.patchFiles(qrCard?.files ?? [], false);
   });
 
   protected readonly isUploadVisible = signal<boolean>(false);
