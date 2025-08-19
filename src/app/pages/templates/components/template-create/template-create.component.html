@@ -1,0 +1,48 @@
+<card-container [hideHeading]="true">
+  <ng-container content>
+    <toolbar>
+      @if (!isSmallScreen()) {
+        <ng-container heading>
+          <h1>{{ TemplatesLocalization.creation }}</h1>
+        </ng-container>
+      }
+      <ng-container action-buttons>
+        @if (!selectors.isSaveInProgress()) {
+          <button (click)="createQrCard()" class="button-md" mat-flat-button>
+            {{ SharedLocalization.create }}
+          </button>
+        } @else {
+          <ui-skeleton height="40" width="112" />
+        }
+      </ng-container>
+    </toolbar>
+  </ng-container>
+</card-container>
+<card-container>
+  <ng-container heading>
+    <h1>{{ RouteTitles.template }}</h1>
+  </ng-container>
+  <ng-container content>
+    <ui-grid-block gridAlignItems="start" gridTemplateColumns="1fr">
+      <mat-form-field class="form-field-lg">
+        <mat-label> {{ SharedLocalization.name }} </mat-label>
+        <input [formControl]="form.controls.name" matInput />
+        @if (form.controls.name.touched && form.controls.name.hasError('required')) {
+          <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
+        }
+        @if (form.controls.name.touched && form.controls.name.hasError('maxlength')) {
+          <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_NAME_LENGTH }}</mat-error>
+        }
+      </mat-form-field>
+    </ui-grid-block>
+    <ui-grid-block gridTemplateColumns="1fr">
+      <mat-form-field class="form-field-lg">
+        <mat-label> {{ SharedLocalization.description }} </mat-label>
+        <textarea [formControl]="form.controls.description" rows="3" matInput></textarea>
+        @if (form.controls.description.touched && form.controls.description.hasError('maxlength')) {
+          <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_DESCRIPTION_LENGTH }}</mat-error>
+        }
+      </mat-form-field>
+    </ui-grid-block>
+  </ng-container>
+</card-container>

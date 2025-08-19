@@ -5,7 +5,7 @@
         <toolbar>
           @if (!isSmallScreen()) {
             <ng-container heading>
-              <h1>{{ templateId ? TemplatesLocalization.editing : TemplatesLocalization.creation }}</h1>
+              <h1>{{ TemplatesLocalization.editing }}</h1>
             </ng-container>
           }
           <ng-container action-buttons>
@@ -264,7 +264,7 @@
             </ui-grid-block>
           }
         } @else {
-          <ui-skeleton height="512" />
+          <ui-skeleton height="312" />
         }
         @if (isSmallScreen()) {
           @if (!selectors.isSaveInProgress()) {

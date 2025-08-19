@@ -193,21 +193,21 @@ export class TemplatesState {
   @Action(FetchTemplate)
   public fetchTemplate(
     { setState }: StateContext<TemplatesStateModel>,
-    { id, destroyRef, showLoading, storeProp }: FetchTemplate,
+    { id, destroyRef, showLoading, loadingStoreProp }: FetchTemplate,
   ): Observable<TemplateDto> {
     if (showLoading) {
-      setState(patch({ [storeProp]: true, templateLoadErr: false }));
+      setState(patch({ [loadingStoreProp]: true, templateLoadErr: false }));
     }
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.templatesService.getTemplate(id)),
       tap({
         next: (template) => {
-          setState(patch({ template, [storeProp]: false }));
+          setState(patch({ template, [loadingStoreProp]: false }));
         },
       }),
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
-        setState(patch({ [storeProp]: false, templateLoadErr: true }));
+        setState(patch({ [loadingStoreProp]: false, templateLoadErr: true }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),

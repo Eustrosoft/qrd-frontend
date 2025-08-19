@@ -79,7 +79,6 @@ export type DictionaryItem = {
   value: string;
   description: string;
 };
-export type FormMode = 'new' | 'edit';
 export type FileFormGroupArray = FormArray<FileFormGroup>;
 export type FileFormGroup = FormGroup<FileForm>;
 export type FileForm = {

@@ -38,7 +38,7 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 import { MatIcon } from '@angular/material/icon';
 import { FetchDictionaryByName } from '@shared/state/dictionary-registry.actions';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
-import { DictionaryItem, FormMode } from '@shared/shared.models';
+import { DictionaryItem } from '@shared/shared.models';
 import { MatSelect } from '@angular/material/select';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
@@ -108,12 +108,11 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
-  protected readonly templateId = this.activatedRoute.snapshot.paramMap.get('id');
+  protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
   protected readonly form = toSignal<TemplateFormGroup>(
     this.activatedRoute.data.pipe(map((data) => data['templateForm'])),
     { requireSync: true },
   );
-  protected readonly formMode: FormMode = this.activatedRoute.snapshot.data['mode'];
 
   public formHasUnsavedChanges = toSignal<boolean, boolean>(
     merge(
@@ -173,9 +172,6 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
   });
 
   protected readonly templateEff = effect(() => {
-    if (this.formMode === 'new') {
-      return;
-    }
     const template = this.selectors.template();
     this.templateFormFactoryService.patchTemplateForm(
       {
@@ -208,9 +204,7 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
   }
 
   public ngOnDestroy(): void {
-    if (this.formMode === 'edit') {
-      this.actions.clearTemplate();
-    }
+    this.actions.clearTemplate();
   }
 
   protected addField(): void {
@@ -238,7 +232,7 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     }
 
     if (isConfirmed) {
-      this.actions.saveTemplate(+this.templateId!, this.form().getRawValue(), this.destroyRef);
+      this.actions.saveTemplate(this.routeParams()['id'], this.form().getRawValue(), this.destroyRef);
       return merge(
         this.actions$.pipe(
           ofActionSuccessful(SaveTemplate),
@@ -259,11 +253,7 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     if (this.form().invalid) {
       return;
     }
-    if (this.templateId) {
-      this.actions.saveTemplate(+this.templateId, this.form().getRawValue(), this.destroyRef);
-      return;
-    }
-    this.actions.createTemplate(this.form().getRawValue(), this.destroyRef);
+    this.actions.saveTemplate(this.routeParams()['id'], this.form().getRawValue(), this.destroyRef);
   }
 
   protected toggleAdditionalFields(index: number): void {
@@ -291,7 +281,7 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
   protected fileMetadataUpdated(): void {
     this.fileInEditIndex.set(null);
     this.fileInEditMetadata.set(null);
-    this.actions.fetchTemplate(+this.templateId!, this.destroyRef, true, 'isTemplateFilesLoading');
+    this.actions.fetchTemplate(this.routeParams()['id'], this.destroyRef, true, 'isTemplateFilesLoading');
   }
 
   protected showFileSelection(): void {
@@ -302,15 +292,15 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
 
   protected addFileToTemplate(state: UploadState | null): void {
     this.isUploadVisible.set(false);
-    if (state?.fileId && this.templateId) {
-      this.actions.addFileToTemplate(+this.templateId, state.fileId, this.destroyRef);
+    if (state?.fileId) {
+      this.actions.addFileToTemplate(this.routeParams()['id'], state.fileId, this.destroyRef);
     }
   }
 
   protected addExistingFilesToTemplate(fileIdList: number[]): void {
     this.isFileSelectorVisible.set(false);
     for (const fileId of fileIdList) {
-      this.actions.addFileToTemplate(+this.templateId!, fileId, this.destroyRef);
+      this.actions.addFileToTemplate(this.routeParams()['id'], fileId, this.destroyRef);
     }
   }
 }

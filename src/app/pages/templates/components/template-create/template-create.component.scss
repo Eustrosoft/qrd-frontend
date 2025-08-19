@@ -1,0 +1,6 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  gap: mixins.rem(16);
+  display: grid;
+}

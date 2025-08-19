@@ -21,3 +21,9 @@ export type TemplateFieldForm = {
   name: FormControl<string>;
   placeholder: FormControl<string>;
 };
+
+export type TemplateCreationFormGroup = FormGroup<TemplateCreationForm>;
+export type TemplateCreationForm = {
+  name: FormControl<string>;
+  description: FormControl<string>;
+};
