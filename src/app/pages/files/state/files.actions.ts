@@ -1,5 +1,6 @@
 import { DestroyRef } from '@angular/core';
 import { DataViewDisplayType } from '@shared/shared.models';
+import { FileStorageType } from '@api/files/files-api.models';
 
 export class FetchFileList {
   public static readonly type = '[Files] Fetch File List';
@@ -37,6 +38,8 @@ export class DownloadFile {
   constructor(
     readonly id: number,
     readonly fileName: string,
+    readonly fileStorageType: FileStorageType,
+    readonly storagePath: string,
   ) {}
 }
 

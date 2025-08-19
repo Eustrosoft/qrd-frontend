@@ -48,6 +48,7 @@
             collapsibleListItem
             [caption]="field.caption"
             [value]="selectors.qrCard()?.data?.[field.name]"
+            [placeholder]="field.placeholder"
             [type]="field.fieldType"
             [isPublic]="field.isPublic"
             [isStatic]="field.isStatic"

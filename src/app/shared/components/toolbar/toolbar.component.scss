@@ -7,6 +7,10 @@
   display: flex;
   justify-content: space-between;
 
+  &:not(.with-action-buttons) {
+    grid-template-columns: 1fr;
+  }
+
   @media #{map.get(bp.$breakpoints, xsmall)} {
     display: grid;
     grid-template-rows: auto;

@@ -11,6 +11,9 @@ import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.with-action-buttons]': 'isActionButtonsShown()',
+  },
 })
 export class ToolbarComponent {
   protected readonly activatedRoute = inject(ActivatedRoute);

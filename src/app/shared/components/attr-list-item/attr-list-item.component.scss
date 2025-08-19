@@ -8,6 +8,15 @@
   align-items: center;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 
+  .placeholder-value {
+    color: color-mix(in srgb, var(--mat-sys-on-primary-container) 50%, transparent);
+    padding: mixins.rem(4);
+    max-width: 100%;
+    background: var(--mat-sys-primary-container);
+    justify-self: self-start;
+    border-radius: mixins.rem(6);
+  }
+
   &:nth-child(odd) {
     background: var(--mat-sys-surface-container-lowest);
   }

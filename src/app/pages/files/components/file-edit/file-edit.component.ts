@@ -18,6 +18,9 @@ import { FileUploadState } from '@app/pages/files/components/file-upload/state/f
 import { FileAsUrlComponent } from '@app/pages/files/components/file-upload/file-as-url/file-as-url.component';
 import { FileUploadBlobComponent } from '@app/pages/files/components/file-upload/file-upload-blob/file-upload-blob.component';
 import { FileAttachmentModeComponent } from '@app/pages/files/components/file-upload/file-attachment-mode/file-attachment-mode.component';
+import { TemplatesLocalization } from '@app/pages/templates/templates.constants';
+import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 
 @Component({
   selector: 'file-edit',
@@ -28,6 +31,7 @@ import { FileAttachmentModeComponent } from '@app/pages/files/components/file-up
     FileAsUrlComponent,
     FileUploadBlobComponent,
     FileAttachmentModeComponent,
+    EllipsisDirective,
   ],
   templateUrl: './file-edit.component.html',
   styleUrl: './file-edit.component.scss',
@@ -38,6 +42,7 @@ export class FileEditComponent implements OnInit, CanComponentDeactivate {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly actions$ = inject(Actions);
+  protected readonly isXSmall = inject(IS_XSMALL);
 
   protected readonly fileId = this.activatedRoute.snapshot.paramMap.get('id');
   protected readonly fileUploadBlobCmp = viewChild(FileUploadBlobComponent);
@@ -115,4 +120,6 @@ export class FileEditComponent implements OnInit, CanComponentDeactivate {
     }
     this.router.navigate(['../', uploadState.fileId], { relativeTo: this.activatedRoute });
   }
+
+  protected readonly TemplatesLocalization = TemplatesLocalization;
 }

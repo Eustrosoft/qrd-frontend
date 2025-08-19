@@ -5,7 +5,18 @@
     </ng-container>
     <ng-container action-buttons>
       @if (!selectors.isFileDownloading()) {
-        <button (click)="downloadFile()" class="button-md" mat-flat-button>
+        <button
+          (click)="
+            actions.downloadFile(
+              selectors.file()!.id,
+              selectors.file()!.fileName,
+              selectors.file()!.fileStorageType,
+              selectors.file()!.storagePath
+            )
+          "
+          class="button-md"
+          mat-flat-button
+        >
           {{ SharedLocalization.download }}
         </button>
       } @else {

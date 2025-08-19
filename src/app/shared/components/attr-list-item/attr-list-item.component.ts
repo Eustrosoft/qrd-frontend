@@ -38,4 +38,7 @@ export class AttrListItemComponent {
   protected readonly isTextLike = computed<boolean>(() =>
     Array.from<FieldType>(['TEXT', 'NUMBER', 'URL', 'PHONE', 'EDIT']).includes(this.type()),
   );
+  protected readonly isValueEmpty = computed<boolean>(
+    () => this.value() === null || this.value() === undefined || this.value() === '',
+  );
 }

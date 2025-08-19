@@ -1,5 +1,5 @@
 <p [title]="caption()" ellipsis>{{ caption() }}</p>
-@if (value() !== null && value() !== undefined) {
+@if (!isValueEmpty()) {
   @if (isTextLike()) {
     <p [title]="value()" ellipsis>{{ value() }}</p>
   }
@@ -22,9 +22,18 @@
       {{ value() }}
     </a>
   }
-}
-@if (placeholder()) {
-  <p [title]="placeholder()" ellipsis>{{ placeholder() }}</p>
+} @else if (isValueEmpty() && placeholder() && isStatic()) {
+  <p
+    [title]="placeholder()"
+    [matTooltip]="SharedLocalization.placeholder"
+    matTooltipPosition="above"
+    class="placeholder-value"
+    ellipsis
+  >
+    {{ placeholder() }}
+  </p>
+} @else {
+  <p></p>
 }
 @if (!hideIconAttrs()) {
   <ui-flex-block flexWrap="wrap">

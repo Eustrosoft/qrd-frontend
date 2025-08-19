@@ -5,7 +5,18 @@
         {{ selectors.file()?.name | fallback: SharedLocalization.noName }}
       </card-field>
       <card-field [caption]="`${SharedLocalization.originalName}:`">
-        {{ selectors.file()?.fileName | fallback: SharedLocalization.noOriginalName }}
+        <a
+          [href]="fileHref()"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="button-anchor-md-with-icon"
+          interactionEffect
+          [targetSelectors]="['p', 'mat-icon']"
+          mat-button
+        >
+          <p>{{ selectors.file()?.fileName | fallback: SharedLocalization.noOriginalName }}</p>
+          <mat-icon class="icon-primary">open_in_new</mat-icon>
+        </a>
       </card-field>
       <card-field [caption]="`${SharedLocalization.description}:`">
         {{ selectors.file()?.description | fallback: SharedLocalization.noDescription }}

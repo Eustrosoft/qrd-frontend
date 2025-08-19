@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { DataViewDisplayType } from '@shared/shared.models';
 import { FileDto } from '@api/files/files-api.models';
-import { catchError, concatMap, EMPTY, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
+import { catchError, concatMap, EMPTY, from, Observable, of, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { patch } from '@ngxs/store/operators';
 import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -27,6 +27,7 @@ import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '@shared/service/snackbar.service';
 import { ErrorsLocalization, NotificationSnackbarLocalization } from '@modules/error/error.constants';
+import { WINDOW } from '@cdk/tokens/window.token';
 
 export interface FilesStateModel {
   displayType: DataViewDisplayType;
@@ -68,6 +69,7 @@ export class FilesState {
   private readonly pxToRemPipe = inject(PxToRemPipe);
   private readonly matDialog = inject(MatDialog);
   private readonly snackbarService = inject(SnackbarService);
+  private readonly window = inject(WINDOW);
 
   @Selector()
   public static getDisplayType$({ displayType }: FilesStateModel): DataViewDisplayType {
@@ -188,11 +190,16 @@ export class FilesState {
   @Action(DownloadFile)
   public downloadFile(
     { setState }: StateContext<FilesStateModel>,
-    { id, fileName }: DownloadFile,
+    { id, fileName, fileStorageType, storagePath }: DownloadFile,
   ): Observable<HttpResponse<Blob>> {
+    if (fileStorageType === 'URL' || fileStorageType === 'S3') {
+      this.window.open(storagePath, '_blank', 'noreferrer');
+      return of();
+    }
+
     setState(patch({ isFileDownloading: true }));
     return timer(SKELETON_TIMER).pipe(
-      switchMap(() => this.filesService.downloadFile(id, fileName)),
+      switchMap(() => this.filesService.downloadFile(id, encodeURIComponent(fileName))),
       tap({
         next: (response: HttpResponse<Blob>) => {
           setState(patch({ isFileDownloading: false }));

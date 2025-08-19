@@ -11,7 +11,7 @@ import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
 import { FileListItemComponent } from '@shared/components/file-list-item/file-list-item.component';
-import { DatePipe } from '@angular/common';
+import { DatePipe, JsonPipe } from '@angular/common';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
@@ -42,6 +42,7 @@ import { AttrListItemComponent } from '@shared/components/attr-list-item/attr-li
     CollapsibleListItemDirective,
     CollapsibleListDirective,
     AttrListItemComponent,
+    JsonPipe,
   ],
   templateUrl: './qr-card-main.component.html',
   styleUrl: './qr-card-main.component.scss',

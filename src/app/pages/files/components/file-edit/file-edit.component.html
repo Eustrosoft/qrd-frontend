@@ -1,7 +1,15 @@
 @if (!selectors.isFileLoading()) {
   <card-container [hideHeading]="true">
     <ng-container content>
-      <toolbar [isActionButtonsShown]="false" />
+      <toolbar [isActionButtonsShown]="false" ellipsis>
+        <ng-container heading>
+          @if (fileId) {
+            <h1 ellipsis>
+              {{ selectors.file()?.name }}
+            </h1>
+          }
+        </ng-container>
+      </toolbar>
     </ng-container>
   </card-container>
   <card-container [hideHeading]="true">

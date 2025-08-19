@@ -9,10 +9,23 @@ import { FilesState } from '@app/pages/files/state/files.state';
 import { BoolToTextPipe } from '@shared/pipe/bool-to-text.pipe';
 import { DatePipe } from '@angular/common';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
+import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'file-main',
-  imports: [CardContainerComponent, CardFieldComponent, UiGridBlockComponent, BoolToTextPipe, DatePipe, FallbackPipe],
+  imports: [
+    CardContainerComponent,
+    CardFieldComponent,
+    UiGridBlockComponent,
+    BoolToTextPipe,
+    DatePipe,
+    FallbackPipe,
+    InteractionEffect,
+    MatButton,
+    MatIcon,
+  ],
   templateUrl: './file-main.component.html',
   styleUrl: './file-main.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,6 +38,7 @@ export class FileMainComponent {
 
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly RouteTitles = RouteTitles;
+  protected readonly FileStorageTypeMap = FileStorageTypeMap;
 
   protected readonly infoGridTemplateColumns = computed<string>(() => {
     if (this.isSmallScreen()) {
@@ -32,5 +46,12 @@ export class FileMainComponent {
     }
     return 'repeat(3, 1fr)';
   });
-  protected readonly FileStorageTypeMap = FileStorageTypeMap;
+
+  protected readonly fileHref = computed<string>(() => {
+    const file = this.selectors.file();
+    if (!file?.id) {
+      return '';
+    }
+    return `/qrCodeDemo/v1/api/secured/files/${file.id}/download/${encodeURIComponent(file.fileName)}`;
+  });
 }
