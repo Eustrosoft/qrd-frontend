@@ -26,7 +26,6 @@ export const templatesRoutes: Routes = [
       {
         path: AppRoutes.new,
         component: TemplateCreateComponent,
-        resolve: { templateForm: templateFormResolver(true) },
         title: RouteTitles.template,
       },
       {

@@ -66,6 +66,14 @@ export class AddFileToQrCard {
   ) {}
 }
 
+export class ReplaceQrCardFields {
+  public static readonly type = '[Qr Cards] Replace Qr Card Fields';
+  constructor(
+    readonly formValue: Partial<ReturnType<QrCardFormGroup['getRawValue']>>,
+    readonly destroyRef: DestroyRef,
+  ) {}
+}
+
 export class FetchTemplateList {
   public static readonly type = '[Qr Cards] Fetch Template List';
   constructor(readonly destroyRef: DestroyRef) {}

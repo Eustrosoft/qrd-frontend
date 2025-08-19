@@ -56,7 +56,7 @@
                 }
               </mat-label>
             }
-            @if (form().controls.formId.value !== -1) {
+            @if (form().controls.formId.value !== DEFAULT_EMPTY_ID) {
               <mat-hint>
                 <a
                   [routerLink]="`/templates/${form().controls.formId.value}`"
@@ -68,7 +68,7 @@
                 </a>
               </mat-hint>
             }
-            @if (form().controls.formId.value !== -1) {
+            @if (form().controls.formId.value !== DEFAULT_EMPTY_ID) {
               <button
                 (click)="$event.stopPropagation(); form().controls.formId.reset(-1)"
                 class="icon-button-sm"

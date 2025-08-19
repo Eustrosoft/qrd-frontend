@@ -14,7 +14,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { distinctUntilChanged, map, merge, Observable, of, pairwise, startWith } from 'rxjs';
+import { distinctUntilChanged, filter, map, merge, Observable, of, pairwise, startWith, switchMap } from 'rxjs';
 import { DictionaryItem } from '@shared/shared.models';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
@@ -37,6 +37,7 @@ import {
   FetchFileList,
   FetchQrCard,
   FetchTemplateList,
+  ReplaceQrCardFields,
   SaveQrCard,
 } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { QrCardFormFactoryService } from '@app/pages/qr-cards/services/qr-card-form-factory.service';
@@ -69,6 +70,8 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { Iso8601DateFormatDirective } from '@shared/directives/iso8601-date-format.directive';
+import { FetchTemplate } from '@app/pages/templates/state/templates.actions';
+import { DEFAULT_EMPTY_ID } from '@app/app.constants';
 
 @Component({
   selector: 'qr-card-edit',
@@ -120,7 +123,7 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
-  protected readonly qrCardCode = this.activatedRoute.snapshot.paramMap.get('code');
+  protected readonly qrCardCode = this.activatedRoute.snapshot.paramMap.get('code')!;
   protected readonly form = toSignal<QrCardFormGroup>(
     this.activatedRoute.data.pipe(map((data) => data['qrCardForm'])),
     { requireSync: true },
@@ -159,7 +162,9 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
     fetchQrCard: FetchQrCard,
     saveQrCard: SaveQrCard,
     addFileToQrCard: AddFileToQrCard,
+    replaceQrCardFields: ReplaceQrCardFields,
     fetchTemplateList: FetchTemplateList,
+    fetchTemplate: FetchTemplate,
     fetchFileList: FetchFileList,
     clearQrCard: ClearQrCard,
   });
@@ -194,6 +199,7 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
       false,
     );
     this.qrCardFormFactoryService.patchFiles(qrCard?.files ?? [], false);
+    this.qrCardFormFactoryService.patchDataFormRecord(qrCard?.form?.fields ?? [], qrCard?.data ?? {});
   });
 
   protected readonly isUploadVisible = signal<boolean>(false);
@@ -210,14 +216,25 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
   protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
   protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
   protected readonly MAX_URL_LENGTH = MAX_URL_LENGTH;
+  protected readonly DEFAULT_EMPTY_ID = DEFAULT_EMPTY_ID;
 
   public ngOnInit(): void {
     this.actions.fetchTemplateList(this.destroyRef);
-    this.actions.fetchQrCard(this.qrCardCode!, this.destroyRef);
+    this.initFormSubs();
   }
 
   public ngOnDestroy(): void {
     this.actions.clearQrCard();
+  }
+
+  protected initFormSubs(): void {
+    this.form()
+      .controls.formId.valueChanges.pipe(
+        filter((formId) => !!formId && formId !== DEFAULT_EMPTY_ID),
+        switchMap(() => this.actions.replaceQrCardFields(this.form().getRawValue(), this.destroyRef)),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe();
   }
 
   protected unlinkFile(index: number): void {

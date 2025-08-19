@@ -160,7 +160,7 @@
       <ng-container content>
         @if (!selectors.isTemplateFilesLoading()) {
           <ui-grid-block gridTemplateColumns="repeat(1, 1fr)">
-            @for (file of form().controls.files.controls; track file) {
+            @for (file of form().controls.files.controls; track file.controls.id.value) {
               <ui-flex-block flexAlignItems="center">
                 <file-list-item
                   [fileLink]="`/files/${file.controls.id.value}`"

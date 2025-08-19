@@ -9,6 +9,7 @@ import {
   FetchQrCardList,
   FetchQrRangeList,
   FetchTemplateList,
+  ReplaceQrCardFields,
   ResetQrCardsState,
   SaveQrCard,
   SelectAllQrCards,
@@ -373,6 +374,28 @@ export class QrCardsState {
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnAddFile);
         setState(patch({ isQrCardFilesLoading: false }));
+        return throwError(() => err);
+      }),
+      takeUntilDestroyed(destroyRef),
+    );
+  }
+
+  @Action(ReplaceQrCardFields)
+  public replaceQrCardFields(
+    { setState, dispatch }: StateContext<QrCardsStateModel>,
+    { formValue, destroyRef }: ReplaceQrCardFields,
+  ): Observable<void> {
+    setState(patch({ isQrCardLoading: true }));
+    return timer(SKELETON_TIMER).pipe(
+      concatMap(() => dispatch(new SaveQrCard(formValue, destroyRef))),
+      concatMap(() => dispatch(new FetchQrCard(formValue.code?.toString()!, destroyRef))),
+      tap({
+        next: () => {
+          setState(patch({ isQrCardLoading: false }));
+        },
+      }),
+      catchError((err) => {
+        setState(patch({ isQrCardLoading: false }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),

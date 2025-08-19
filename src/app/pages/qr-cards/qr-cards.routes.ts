@@ -6,7 +6,6 @@ import { AppRoutes } from '@app/app.constants';
 import { QrCardMainComponent } from '@app/pages/qr-cards/components/qr-card-main/qr-card-main.component';
 import { RouteTitles } from '@shared/shared.constants';
 import { QrCardEditComponent } from '@app/pages/qr-cards/components/qr-card-edit/qr-card-edit.component';
-import { QrCardFormFactoryService } from '@app/pages/qr-cards/services/qr-card-form-factory.service';
 import { qrCardFormResolver } from '@app/pages/qr-cards/resolvers/qr-card-form.resolver';
 import { unsavedDataGuard } from '@shared/guards/unsaved-data.guard';
 import { QrCardCreateComponent } from '@app/pages/qr-cards/components/qr-card-create/qr-card-create.component';
@@ -15,7 +14,6 @@ export const qrCardsRoutes: Routes = [
   {
     path: '',
     component: QrCardsComponent,
-    providers: [QrCardFormFactoryService],
     children: [
       {
         path: '',

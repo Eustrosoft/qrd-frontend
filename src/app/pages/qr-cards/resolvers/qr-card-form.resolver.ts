@@ -1,15 +1,17 @@
-import { ResolveFn } from '@angular/router';
-import { Actions, dispatch, ofActionCompleted, select } from '@ngxs/store';
+import { RedirectCommand, ResolveFn, Router } from '@angular/router';
+import { Actions, dispatch, ofActionErrored, ofActionSuccessful, select } from '@ngxs/store';
 import { inject } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { map, merge, Observable } from 'rxjs';
 import { QrCardFormFactoryService } from '@app/pages/qr-cards/services/qr-card-form-factory.service';
 import { QrCardFormGroup } from '@app/pages/qr-cards/qr-cards.models';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
+import { AppRoutes, DEFAULT_EMPTY_ID } from '@app/app.constants';
 
-export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup>> => {
+export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup | RedirectCommand>> => {
   return (route) => {
     const actions$ = inject(Actions);
+    const router = inject(Router);
     const qrCardFormFactoryService = inject(QrCardFormFactoryService);
 
     const code = route.paramMap.get('code')!;
@@ -20,9 +22,9 @@ export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup>> => 
     const initializeForm = (): QrCardFormGroup => {
       qrCardFormFactoryService.initialize(
         {
-          id: qrCard()?.id ?? -1,
-          code: qrCard()?.code ?? -1,
-          formId: qrCard()?.form?.id ?? -1,
+          id: qrCard()?.id ?? DEFAULT_EMPTY_ID,
+          code: qrCard()?.code ?? DEFAULT_EMPTY_ID,
+          formId: qrCard()?.form?.id ?? DEFAULT_EMPTY_ID,
           name: qrCard()?.name ?? '',
           description: qrCard()?.description ?? '',
           action: qrCard()?.action ?? 'STD',
@@ -35,14 +37,22 @@ export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup>> => 
       return qrCardFormFactoryService.form;
     };
 
-    if (qrCard()) {
-      return of(initializeForm());
-    }
-
     dispatch(FetchQrCard)(code);
-    return actions$.pipe(
-      ofActionCompleted(FetchQrCard),
-      map(() => initializeForm()),
+    return merge(
+      actions$.pipe(
+        ofActionSuccessful(FetchQrCard),
+        map(() => initializeForm()),
+      ),
+      actions$.pipe(
+        ofActionErrored(FetchQrCard),
+        map(
+          () =>
+            new RedirectCommand(
+              router.getCurrentNavigation()?.previousNavigation?.extractedUrl ??
+                router.createUrlTree([AppRoutes.qrCards]),
+            ),
+        ),
+      ),
     );
   };
 };

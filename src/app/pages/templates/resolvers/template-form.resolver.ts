@@ -2,24 +2,19 @@ import { RedirectCommand, ResolveFn, Router } from '@angular/router';
 import { Actions, dispatch, ofActionErrored, ofActionSuccessful, select } from '@ngxs/store';
 import { FetchTemplate } from '@app/pages/templates/state/templates.actions';
 import { inject } from '@angular/core';
-import { map, merge, Observable, of } from 'rxjs';
+import { map, merge, Observable } from 'rxjs';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { TemplateFormFactoryService } from '@app/pages/templates/services/template-form-factory.service';
 import { TemplateFormGroup } from '@app/pages/templates/templates.models';
 import { AppRoutes } from '@app/app.constants';
 
-export const templateFormResolver = (isNew = false): ResolveFn<Observable<TemplateFormGroup | RedirectCommand>> => {
+export const templateFormResolver = (): ResolveFn<Observable<TemplateFormGroup | RedirectCommand>> => {
   return (route) => {
     const actions$ = inject(Actions);
     const router = inject(Router);
     const templateFormFactoryService = inject(TemplateFormFactoryService);
 
     templateFormFactoryService.reset();
-
-    if (isNew) {
-      templateFormFactoryService.initialize();
-      return of(templateFormFactoryService.form);
-    }
 
     const templateId = route.paramMap.get('id')!;
     const template = select(TemplatesState.getTemplate$);
@@ -40,12 +35,13 @@ export const templateFormResolver = (isNew = false): ResolveFn<Observable<Templa
       ),
       actions$.pipe(
         ofActionErrored(FetchTemplate),
-        map(() => {
-          return new RedirectCommand(
-            router.getCurrentNavigation()?.previousNavigation?.extractedUrl ??
-              router.createUrlTree([AppRoutes.templates]),
-          );
-        }),
+        map(
+          () =>
+            new RedirectCommand(
+              router.getCurrentNavigation()?.previousNavigation?.extractedUrl ??
+                router.createUrlTree([AppRoutes.templates]),
+            ),
+        ),
       ),
     );
   };

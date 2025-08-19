@@ -38,6 +38,7 @@ export const CUSTOM_ICON_MAP = new Map<Icon, string>([
   ['unknown-err', 'public/icons/unknown-err.svg'],
 ]);
 
+export const DEFAULT_EMPTY_ID = -1;
 export const SKELETON_TIMER = 300;
 export const DEFAULT_ITEMS_PER_PAGE = 20;
 export const QR_API_URL = '/qr/?q=';

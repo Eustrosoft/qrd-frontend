@@ -7,7 +7,9 @@ import { FileFormGroup } from '@shared/shared.models';
 import { TemplateField } from '@api/templates/templates-api.models';
 import { WEB_REGEXP } from '@shared/shared.constants';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class QrCardFormFactoryService {
   private readonly fb = inject(FormBuilder);
   private readonly sharedFormFactoryService = inject(SharedFormFactoryService);
@@ -48,11 +50,13 @@ export class QrCardFormFactoryService {
     this.form.patchValue(value, { emitEvent });
   }
 
-  public patchDataFormRecord(fieldList: TemplateField[], emitEvent = true): void {
+  public patchDataFormRecord(fieldList: TemplateField[], data: Record<string, never>, emitEvent = true): void {
     Object.keys(this.form.controls.data.controls).forEach((controlName) => {
       this.form.controls.data.removeControl(controlName, { emitEvent });
     });
-    this.form.controls.data.setParent(this.makeDataFormRecord(fieldList, emitEvent));
+    fieldList.forEach((field) => {
+      this.form.controls.data.addControl(field.name, this.fb.control(data[field.name] ?? ''), { emitEvent });
+    });
   }
 
   public reset(): void {
