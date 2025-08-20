@@ -9,7 +9,16 @@
 }
 <hr />
 <ui-grid-block gridTemplateColumns="1fr" rowGapSize="8" gridJustifyItems="start">
-  <a class="button-anchor-md" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.aboutService }}</a>
+  <a
+    href="https://qrdemo.qxyz.ru/"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="button-anchor-md"
+    mat-button
+    textInteractionEffect
+  >
+    {{ ProfileInfoOverlayLocalization.aboutService }}
+  </a>
   <a
     href="https://github.com/Eustrosoft/qrd-frontend/blob/master/CHANGELOG.md"
     target="_blank"
@@ -20,8 +29,16 @@
   >
     {{ ProfileInfoOverlayLocalization.versionHistory }}
   </a>
-  <a class="button-anchor-md" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.feedback }}</a>
-  <a class="button-anchor-md" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.help }}</a>
+  <a
+    href="https://qrdemo.dev40.qxyz.ru/help/"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="button-anchor-md"
+    mat-button
+    textInteractionEffect
+  >
+    {{ ProfileInfoOverlayLocalization.help }}
+  </a>
   <hr />
   <a
     [routerLink]="AppRoutes.settings"

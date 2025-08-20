@@ -3,7 +3,6 @@
   "translations": {
     "profileInfoOverlay.aboutService": "About service",
     "profileInfoOverlay.versionHistory": "Version history",
-    "profileInfoOverlay.feedback": "Feedback",
     "profileInfoOverlay.help": "Help",
     "profileInfoOverlay.oldApp": "Old app",
     "errors.errOccurred": "Error occurred",

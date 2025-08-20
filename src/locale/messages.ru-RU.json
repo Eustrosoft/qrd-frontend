@@ -3,7 +3,6 @@
   "translations": {
     "profileInfoOverlay.aboutService": "О сервисе",
     "profileInfoOverlay.versionHistory": "История версий",
-    "profileInfoOverlay.feedback": "Связаться с нами",
     "profileInfoOverlay.help": "Помощь",
     "profileInfoOverlay.oldApp": "Старое приложение",
     "errors.errOccurred": "Произошла ошибка",
