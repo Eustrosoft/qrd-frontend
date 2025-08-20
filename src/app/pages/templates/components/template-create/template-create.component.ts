@@ -15,6 +15,8 @@ import { CreateTemplate } from '@app/pages/templates/state/templates.actions';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 
 @Component({
   selector: 'template-create',
@@ -33,6 +35,7 @@ import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component'
   templateUrl: './template-create.component.html',
   styleUrl: './template-create.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
 })
 export class TemplateCreateComponent {
   private readonly fb = inject(FormBuilder);

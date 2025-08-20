@@ -7,10 +7,12 @@ import { dispatch } from '@ngxs/store';
 import { Logout } from '@modules/auth/state/auth.actions';
 import { MatIcon } from '@angular/material/icon';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
+import { RouterLink } from '@angular/router';
+import { AppRoutes } from '@app/app.constants';
 
 @Component({
   selector: 'profile-info-overlay',
-  imports: [MatIconButton, UiFlexBlockComponent, MatAnchor, MatButton, MatIcon, UiGridBlockComponent],
+  imports: [MatIconButton, UiFlexBlockComponent, MatAnchor, MatButton, MatIcon, UiGridBlockComponent, RouterLink],
   templateUrl: './profile-info-overlay.component.html',
   styleUrl: './profile-info-overlay.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,10 +20,12 @@ import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component'
 export class ProfileInfoOverlayComponent {
   protected readonly ProfileInfoOverlayLocalization = ProfileInfoOverlayLocalization;
   protected readonly SharedLocalization = SharedLocalization;
+  protected readonly AppRoutes = AppRoutes;
 
   protected readonly logout = dispatch(Logout);
 
   public readonly username = input<string>('');
   public readonly email = input<string>('');
   public readonly closeClick = output<void>();
+  public readonly closeOverlay = output<void>();
 }

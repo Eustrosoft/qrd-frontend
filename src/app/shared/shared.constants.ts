@@ -21,6 +21,7 @@ export const SharedLocalization = {
   description: $localize`:@@shared.description:Description`,
   noDescription: $localize`:@@shared.noDescription:No description`,
   action: $localize`:@@shared.action:Action`,
+  ranges: $localize`:@@shared.ranges:Ranges`,
   range: $localize`:@@shared.range:Range`,
   template: $localize`:@@shared.template:Template`,
   noTemplate: $localize`:@@shared.noTemplate:No template`,
@@ -105,6 +106,8 @@ export const RouteTitles = {
   files: $localize`:@@routes.files:Files`,
   file: $localize`:@@routes.file:File`,
   docs: $localize`:@@routes.docs:Docs`,
+  settings: $localize`:@@routes.settings:Settings`,
+  passwordChange: $localize`:@@routes.passwordChange:Password change`,
   devSandbox: $localize`:@@routes.devSandbox:Dev Sandbox`,
 } as const;
 

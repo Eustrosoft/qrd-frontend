@@ -1,4 +1,5 @@
 import { UserLoginDto } from '@api/api.models';
+import { PasswordChangeFormGroup } from '@app/pages/settings/settings.models';
 
 export class Login {
   public static readonly type = '[Auth] Login';
@@ -11,6 +12,11 @@ export class Logout {
 
 export class FetchAuthInfo {
   public static readonly type = '[Auth] Fetch Auth Info';
+}
+
+export class ChangePassword {
+  public static readonly type = '[Auth] Change Password';
+  constructor(readonly formValue: ReturnType<PasswordChangeFormGroup['getRawValue']>) {}
 }
 
 export class RestoreAuth {

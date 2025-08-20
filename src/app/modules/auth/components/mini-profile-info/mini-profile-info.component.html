@@ -33,5 +33,6 @@
     [username]="selectors.authInfo()?.username ?? ''"
     [email]="selectors.authInfo()?.email ?? ''"
     (closeClick)="closeOverlay()"
+    (closeOverlay)="closeOverlay()"
   />
 </ng-template>

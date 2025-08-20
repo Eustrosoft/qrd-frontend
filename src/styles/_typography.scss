@@ -32,6 +32,10 @@ p {
   &.pre-line {
     white-space: pre-line;
   }
+
+  &.center {
+    text-align: center;
+  }
 }
 
 small {

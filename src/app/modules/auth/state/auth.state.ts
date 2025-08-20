@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
-import { FetchAuthInfo, Login, Logout, ResetAuthState, RestoreAuth } from './auth.actions';
+import { ChangePassword, FetchAuthInfo, Login, Logout, ResetAuthState, RestoreAuth } from './auth.actions';
 import { AuthService } from '@modules/auth/auth.service';
 import { catchError, Observable, switchMap, tap, throwError } from 'rxjs';
 import { AppRoutes, IS_AUTHENTICATED_KEY } from '@app/app.constants';
@@ -9,17 +9,21 @@ import { patch } from '@ngxs/store/operators';
 import { LocalStorageService } from '@shared/service/local-storage.service';
 import { ParticipantDto } from '@api/api.models';
 import { FetchSettings } from '@app/state/app.actions';
+import { SnackbarService } from '@shared/service/snackbar.service';
+import { SettingsLocalization } from '@app/pages/settings/settings.constants';
 
 export interface AuthStateModel {
   isAuthenticated: boolean;
   isAuthInfoLoading: boolean;
   authInfo: ParticipantDto | null;
+  isSavingPassword: boolean;
 }
 
 const defaults: AuthStateModel = {
   isAuthenticated: false,
   isAuthInfoLoading: false,
   authInfo: null,
+  isSavingPassword: false,
 } as const;
 
 const AUTH_STATE_TOKEN: StateToken<AuthStateModel> = new StateToken<AuthStateModel>('auth');
@@ -33,6 +37,7 @@ export class AuthState {
   private readonly authService = inject(AuthService);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly router = inject(Router);
+  private readonly snackbarService = inject(SnackbarService);
 
   @Selector()
   public static isAuthenticated$({ isAuthenticated }: AuthStateModel): boolean {
@@ -47,6 +52,11 @@ export class AuthState {
   @Selector()
   public static getAuthInfo$({ authInfo }: AuthStateModel): ParticipantDto | null {
     return authInfo;
+  }
+
+  @Selector()
+  public static isSavingPassword$({ isSavingPassword }: AuthStateModel): boolean {
+    return isSavingPassword;
   }
 
   @Action(Login)
@@ -87,6 +97,28 @@ export class AuthState {
       }),
       catchError((err) => {
         setState(patch({ isAuthInfoLoading: false }));
+        return throwError(() => err);
+      }),
+    );
+  }
+
+  @Action(ChangePassword)
+  public changePassword(
+    { setState }: StateContext<AuthStateModel>,
+    { formValue }: ChangePassword,
+  ): Observable<unknown> {
+    setState(patch({ isSavingPassword: true }));
+    return this.authService.changePassword(formValue).pipe(
+      tap({
+        next: () => {
+          this.snackbarService.success(SettingsLocalization.passwordUpdated);
+          this.router.navigate([AppRoutes.settings]);
+          setState(patch({ isSavingPassword: false }));
+        },
+      }),
+      catchError((err) => {
+        this.snackbarService.success(SettingsLocalization.passwordUpdateErr);
+        setState(patch({ isSavingPassword: false }));
         return throwError(() => err);
       }),
     );

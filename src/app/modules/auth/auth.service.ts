@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SUPPRESS_HTTP_ERROR_INTERCEPTOR } from '@modules/error/error.constants';
-import { ParticipantDto, UserLoginDto } from '@api/api.models';
+import { ParticipantDto, PasswordChangeDto, UserLoginDto } from '@api/api.models';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +24,9 @@ export class AuthService {
 
   public getAuthInfo(): Observable<ParticipantDto> {
     return this.http.get<ParticipantDto>('/qrCodeDemo/v1/api/secured/participants/me');
+  }
+
+  public changePassword(payload: PasswordChangeDto): Observable<void> {
+    return this.http.post<void>('/qrCodeDemo/v1/api/secured/participants/settings/change-password', payload);
   }
 }

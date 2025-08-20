@@ -1,0 +1,80 @@
+@if (!selectors.settingsState().isLoadingSettings) {
+  <card-container [hideHeading]="true">
+    <ng-container content>
+      <toolbar>
+        @if (!isSmallScreen()) {
+          <ng-container heading>
+            <h1>{{ RouteTitles.settings }}</h1>
+          </ng-container>
+        }
+        <ng-container action-buttons>
+          @if (!selectors.settingsState().isSavingSettings) {
+            <button (click)="saveData()" class="button-md" mat-flat-button>
+              <ui-flex-block gapSize="4">
+                {{ SharedLocalization.save }}
+                @if (formHasUnsavedChanges()) {
+                  <indicator />
+                }
+              </ui-flex-block>
+            </button>
+          } @else {
+            <ui-skeleton height="40" width="128" />
+          }
+        </ng-container>
+      </toolbar>
+    </ng-container>
+  </card-container>
+  <card-container>
+    <ng-container heading>
+      <h1>{{ SettingsLocalization.main }}</h1>
+    </ng-container>
+    <ng-container content>
+      <ui-grid-block gridAlignItems="center" [gridTemplateColumns]="gridTemplateColumns()">
+        <mat-form-field class="form-field-lg">
+          <mat-label> {{ SettingsLocalization.defaultQrPrintText }} </mat-label>
+          <input [formControl]="form.controls.defaultQrPrintText" matInput />
+          @if (form.controls.defaultQrPrintText.touched && form.controls.defaultQrPrintText.hasError('maxlength')) {
+            <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_NAME_LENGTH }}</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field class="form-field-lg">
+          <mat-label> {{ SettingsLocalization.defaultQrPrintTextDown }} </mat-label>
+          <input [formControl]="form.controls.defaultQrPrintTextDown" matInput />
+          @if (
+            form.controls.defaultQrPrintTextDown.touched && form.controls.defaultQrPrintTextDown.hasError('maxlength')
+          ) {
+            <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_NAME_LENGTH }}</mat-error>
+          }
+        </mat-form-field>
+        <mat-slide-toggle [formControl]="form.controls.checkUploadSize" class="slide-toggle">
+          {{ SettingsLocalization.checkUploadSize }}
+        </mat-slide-toggle>
+        <a [routerLink]="AppRoutes.password" class="button-lg" mat-flat-button>
+          <p class="center">{{ SettingsLocalization.changePassword }}</p>
+        </a>
+      </ui-grid-block>
+    </ng-container>
+  </card-container>
+  <card-container>
+    <ng-container heading>
+      <h1>{{ SharedLocalization.ranges }}</h1>
+    </ng-container>
+    <ng-container content>
+      <ui-grid-block [gridTemplateColumns]="gridTemplateColumns()">
+        @for (range of selectors.authInfo()?.ranges ?? []; track range.id) {
+          <ui-badge
+            padding="8px 16px"
+            color="var(--mat-sys-on-tertiary-container)"
+            background="var(--mat-sys-tertiary-container)"
+          >
+            {{ range.name | fallback: SharedLocalization.emptyName }} {{ range.from | qrRange: range.to }}
+          </ui-badge>
+        }
+      </ui-grid-block>
+    </ng-container>
+  </card-container>
+} @else {
+  <ui-skeleton height="92" />
+  <ui-skeleton height="262" />
+  <ui-skeleton height="200" />
+}

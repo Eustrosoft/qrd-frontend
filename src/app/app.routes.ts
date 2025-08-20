@@ -53,6 +53,12 @@ export const routes: Routes = [
     providers: [provideStates([FilesState])],
   },
   {
+    path: AppRoutes.settings,
+    title: RouteTitles.settings,
+    canActivate: [authGuard],
+    loadChildren: () => import('@app/pages/settings/settings.routes').then((m) => m.settingsRoutes),
+  },
+  {
     path: AppRoutes.devSandbox,
     title: RouteTitles.devSandbox,
     canActivate: [(): boolean => !environment.production],

@@ -23,7 +23,15 @@
   <a class="button-anchor-md" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.feedback }}</a>
   <a class="button-anchor-md" mat-button textInteractionEffect>{{ ProfileInfoOverlayLocalization.help }}</a>
   <hr />
-  <a class="button-anchor-md" mat-button textInteractionEffect>{{ SharedLocalization.settings }}</a>
+  <a
+    [routerLink]="AppRoutes.settings"
+    (click)="closeOverlay.emit()"
+    class="button-anchor-md"
+    mat-button
+    textInteractionEffect
+  >
+    {{ SharedLocalization.settings }}
+  </a>
   <hr />
   <a
     href="https://qrdemo.qxyz.ru/"

@@ -13,6 +13,8 @@ export const AppRoutes = {
   usages: 'usages',
   new: 'new',
   edit: 'edit',
+  settings: 'settings',
+  password: 'password',
   notFound: 'not-found',
   unauthenticated: 'unauthenticated',
   devSandbox: 'dev-sandbox',

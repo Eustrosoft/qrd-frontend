@@ -222,10 +222,6 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     this.templateFormFactoryService.removeFile(index);
   }
 
-  public isDataSaved(): boolean {
-    return !this.formHasUnsavedChanges();
-  }
-
   public canDeactivate(isConfirmed?: boolean): Observable<boolean> {
     if (isConfirmed === undefined) {
       return of(false);
@@ -246,6 +242,10 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     }
 
     return of(true);
+  }
+
+  public isDataSaved(): boolean {
+    return !this.formHasUnsavedChanges();
   }
 
   protected saveData(): void {
