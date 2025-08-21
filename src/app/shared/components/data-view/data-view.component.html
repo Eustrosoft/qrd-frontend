@@ -1,6 +1,6 @@
 <ui-grid-block [gridTemplateColumns]="isSmallScreen() ? '1fr' : '1fr auto'">
   <ui-flex-block gapSize="8">
-    <mat-form-field class="form-field-md search-bar" subscriptSizing="dynamic">
+    <mat-form-field class="form-field-md search-bar">
       <input
         [value]="searchValue()"
         (input)="searchValueChange.emit(searchInput.value)"
@@ -37,24 +37,36 @@
         <mat-icon class="icon-on-secondary">manage_search</mat-icon>
       </button>
     }
-    <mat-button-toggle-group
-      [value]="displayType()"
-      (change)="displayTypeChange.emit($event)"
-      [hideSingleSelectionIndicator]="true"
-    >
-      <mat-button-toggle class="button-toggle-md" value="list">
+    <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="tab-nav-bar">
+      <a
+        routerLink="list"
+        [relativeTo]="activatedRoute"
+        [active]="list.isActive"
+        #list="routerLinkActive"
+        routerLinkActive
+        mat-tab-link
+      >
         <ui-flex-block gapSize="4" flexAlignItems="center" flexDisplay="inline-flex">
           <mat-icon class="icon-primary">menu</mat-icon>
           <p>{{ SharedLocalization.list }}</p>
         </ui-flex-block>
-      </mat-button-toggle>
-      <mat-button-toggle class="button-toggle-md" value="table">
+      </a>
+      <a
+        routerLink="table"
+        [relativeTo]="activatedRoute"
+        [active]="table.isActive"
+        #table="routerLinkActive"
+        routerLinkActive
+        mat-tab-link
+      >
         <ui-flex-block gapSize="4" flexAlignItems="center" flexDisplay="inline-flex">
           <p>{{ SharedLocalization.table }}</p>
           <mat-icon class="icon-primary">table</mat-icon>
         </ui-flex-block>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
+      </a>
+    </nav>
   </ui-flex-block>
 </ui-grid-block>
-<ng-content />
+<mat-tab-nav-panel #tabPanel>
+  <ng-content />
+</mat-tab-nav-panel>

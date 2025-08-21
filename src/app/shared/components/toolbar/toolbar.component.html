@@ -1,7 +1,7 @@
 <ui-flex-block flexAlignItems="center" overflow="hidden" flexJustifyContent="flex-start" flex="auto">
-  <a [routerLink]="navigateTo()" [relativeTo]="activatedRoute" class="mini-fab-md mini-fab-primary" mat-mini-fab>
+  <button (click)="goBack()" class="mini-fab-md mini-fab-primary" mat-mini-fab>
     <mat-icon class="icon-md icon-on-secondary">chevron_left</mat-icon>
-  </a>
+  </button>
   <ng-content select="[heading]" />
 </ui-flex-block>
 @if (isActionButtonsShown()) {

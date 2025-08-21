@@ -24,11 +24,11 @@
     <th mat-header-cell *matHeaderCellDef>{{ SharedLocalization.actions }}</th>
     <td mat-cell *matCellDef="let element">
       <more-menu>
-        <a [routerLink]="`./${element.id}`" [relativeTo]="activatedRoute" mat-menu-item>
+        <a [routerLink]="`../${element.id}`" [relativeTo]="activatedRoute" mat-menu-item>
           <mat-icon>outbound</mat-icon>
           {{ SharedLocalization.open }}
         </a>
-        <a [routerLink]="`./${element.id}/${AppRoutes.edit}`" mat-menu-item>
+        <a [routerLink]="`../${element.id}/${AppRoutes.edit}`" mat-menu-item>
           <mat-icon>edit</mat-icon>
           {{ SharedLocalization.edit }}
         </a>

@@ -1,5 +1,4 @@
 <data-view
-  [displayType]="selectors.displayType()"
   [searchValue]="selectors.searchValue()"
   (displayTypeChange)="actions.setDisplayType($event.value)"
   (advancedSearchClicked)="openAdvancedSearch()"
@@ -23,10 +22,5 @@
       <ui-skeleton width="40" height="40" borderRadius="50%" />
     }
   </selection-bar>
-  @if (selectors.displayType() === 'list') {
-    <template-list (selectionChanged)="actions.setSelectedTemplates($event)" />
-  }
-  @if (selectors.displayType() === 'table') {
-    <template-table />
-  }
+  <router-outlet style="display: contents" />
 </data-view>

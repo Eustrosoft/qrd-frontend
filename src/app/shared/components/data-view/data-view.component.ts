@@ -5,11 +5,13 @@ import { SharedLocalization } from '@shared/shared.constants';
 import { MatIcon } from '@angular/material/icon';
 import { MatFabButton, MatIconButton } from '@angular/material/button';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
-import { MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { DataViewDisplayType } from '@shared/shared.models';
 import { ToggleVisibilityDirective } from '@shared/directives/toggle-visibility.directive';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
+import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
+import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
 
 @Component({
   selector: 'data-view',
@@ -22,16 +24,20 @@ import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component'
     MatIconButton,
     UiFlexBlockComponent,
     MatFabButton,
-    MatButtonToggle,
-    MatButtonToggleGroup,
     ToggleVisibilityDirective,
     UiGridBlockComponent,
+    RouterLinkActive,
+    RouterLink,
+    MatTabLink,
+    MatTabNav,
+    MatTabNavPanel,
   ],
   templateUrl: './data-view.component.html',
   styleUrl: './data-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataViewComponent {
+  protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly SharedLocalization = SharedLocalization;
 

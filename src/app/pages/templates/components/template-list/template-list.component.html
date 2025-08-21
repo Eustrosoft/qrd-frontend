@@ -2,7 +2,7 @@
   @for (template of selectors.templateList(); track template.id) {
     <view-list-item
       [title]="template.name"
-      [navigateTo]="`./${template.id}`"
+      [navigateTo]="`../${template.id}`"
       [isPreviewShown]="true"
       [isSelected]="selectionModel.isSelected(template.id)"
       (checkboxChanged)="makeSelect(template)"
@@ -13,11 +13,11 @@
         </p>
       </ng-container>
       <ng-container menu-items>
-        <a [routerLink]="`./${template.id}`" [relativeTo]="activatedRoute" mat-menu-item>
+        <a [routerLink]="`../${template.id}`" [relativeTo]="activatedRoute" mat-menu-item>
           <mat-icon>outbound</mat-icon>
           {{ SharedLocalization.open }}
         </a>
-        <a [routerLink]="`./${template.id}/${AppRoutes.edit}`" mat-menu-item>
+        <a [routerLink]="`../${template.id}/${AppRoutes.edit}`" mat-menu-item>
           <mat-icon>edit</mat-icon>
           {{ SharedLocalization.edit }}
         </a>

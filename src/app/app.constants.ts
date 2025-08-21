@@ -11,6 +11,8 @@ export const AppRoutes = {
   files: 'files',
   file: 'file',
   usages: 'usages',
+  list: 'list',
+  table: 'table',
   new: 'new',
   edit: 'edit',
   settings: 'settings',

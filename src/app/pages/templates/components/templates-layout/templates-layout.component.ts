@@ -15,10 +15,9 @@ import {
   SetTemplateListSearchValue,
   SetTemplatesDataViewDisplayType,
 } from '@app/pages/templates/state/templates.actions';
-import { TemplateListComponent } from '@app/pages/templates/components/template-list/template-list.component';
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
 import { SharedLocalization } from '@shared/shared.constants';
-import { TemplateTableComponent } from '@app/pages/templates/components/template-table/template-table.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'templates-layout',
@@ -28,9 +27,8 @@ import { TemplateTableComponent } from '@app/pages/templates/components/template
     MatMiniFabButton,
     SelectionBarComponent,
     UiSkeletonComponent,
-    TemplateListComponent,
     AnimatedIfDirective,
-    TemplateTableComponent,
+    RouterOutlet,
   ],
   templateUrl: './templates-layout.component.html',
   styleUrl: './templates-layout.component.scss',

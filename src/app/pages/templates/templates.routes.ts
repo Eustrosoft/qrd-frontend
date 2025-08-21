@@ -12,6 +12,8 @@ import { unsavedDataGuard } from '@shared/guards/unsaved-data.guard';
 import { templateFormResolver } from '@app/pages/templates/resolvers/template-form.resolver';
 import { TemplateFormFactoryService } from '@app/pages/templates/services/template-form-factory.service';
 import { TemplateCreateComponent } from '@app/pages/templates/components/template-create/template-create.component';
+import { TemplateListComponent } from '@app/pages/templates/components/template-list/template-list.component';
+import { TemplateTableComponent } from '@app/pages/templates/components/template-table/template-table.component';
 
 export const templatesRoutes: Routes = [
   {
@@ -22,6 +24,21 @@ export const templatesRoutes: Routes = [
       {
         path: '',
         component: TemplatesLayoutComponent,
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: AppRoutes.list,
+          },
+          {
+            path: AppRoutes.list,
+            component: TemplateListComponent,
+          },
+          {
+            path: AppRoutes.table,
+            component: TemplateTableComponent,
+          },
+        ],
       },
       {
         path: AppRoutes.new,
