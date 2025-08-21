@@ -1,0 +1,51 @@
+@if (selectors.isTemplateListLoading()) {
+  <mat-progress-bar mode="indeterminate" />
+} @else {
+  <div style="height: 4px"></div>
+}
+<table-container matSort #sort="matSort" (selectionChanged)="actions.setSelectedTemplates($event)">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.name }}</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.description }}</th>
+    <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+  </ng-container>
+  <ng-container matColumnDef="created">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.createDate }}</th>
+    <td mat-cell *matCellDef="let element">{{ element.created | date: 'short' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="updated">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.updateDate }}</th>
+    <td mat-cell *matCellDef="let element">{{ element.updated | date: 'short' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>{{ SharedLocalization.actions }}</th>
+    <td mat-cell *matCellDef="let element">
+      <more-menu>
+        <a [routerLink]="`./${element.id}`" [relativeTo]="activatedRoute" mat-menu-item>
+          <mat-icon>outbound</mat-icon>
+          {{ SharedLocalization.open }}
+        </a>
+        <a [routerLink]="`./${element.id}/${AppRoutes.edit}`" mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          {{ SharedLocalization.edit }}
+        </a>
+        <button (click)="actions.deleteTemplates([element.id], destroyRef)" mat-menu-item>
+          <mat-icon>delete</mat-icon>
+          {{ SharedLocalization.delete }}
+        </button>
+      </more-menu>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <tr *matNoDataRow>
+    @if (!selectors.isTemplateListLoading()) {
+      <td style="padding: 0 16px" colspan="2">
+        <h3>{{ SharedLocalization.emptyList }}</h3>
+      </td>
+    }
+  </tr>
+</table-container>

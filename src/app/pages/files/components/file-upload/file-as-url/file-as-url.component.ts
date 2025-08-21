@@ -53,10 +53,10 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
     IndicatorComponent,
     UiFlexBlockComponent,
   ],
+  providers: [FileUploadFormFactoryService, { provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './file-as-url.component.html',
   styleUrl: './file-as-url.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [FileUploadFormFactoryService, { provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
 })
 export class FileAsUrlComponent implements OnDestroy {
   private readonly destroyRef = inject(DestroyRef);

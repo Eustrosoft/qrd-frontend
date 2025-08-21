@@ -13,9 +13,6 @@
     <ng-content select="[content]" />
   </ui-flex-block>
 </a>
-<button class="icon-button-md" mat-icon-button [matMenuTriggerFor]="menu">
-  <mat-icon class="icon-primary icon-md">more_vert</mat-icon>
-</button>
-<mat-menu #menu="matMenu">
+<more-menu>
   <ng-content select="[menu-items]" />
-</mat-menu>
+</more-menu>

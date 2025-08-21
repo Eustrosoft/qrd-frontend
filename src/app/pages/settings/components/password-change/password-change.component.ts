@@ -74,7 +74,7 @@ export class PasswordChangeComponent implements CanComponentDeactivate {
   protected readonly isNewPwdVisible = signal<boolean>(false);
   protected readonly isRepeatPwdVisible = signal<boolean>(false);
 
-  public formHasUnsavedChanges = toSignal<boolean, boolean>(
+  public formHasUnsavedChanges = toSignal(
     merge(
       this.form.valueChanges.pipe(
         startWith(this.form.getRawValue()),

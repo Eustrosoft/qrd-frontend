@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { DataViewDisplayType } from '@shared/shared.models';
 import { catchError, concatMap, EMPTY, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
@@ -55,7 +55,7 @@ export interface TemplatesStateModel {
 }
 
 const defaults: TemplatesStateModel = {
-  displayType: 'list',
+  displayType: 'table',
   searchValue: '',
   isTemplateListLoading: false,
   templateListSkeletonLoaders: DEFAULT_ITEMS_PER_PAGE,
@@ -86,6 +86,7 @@ export class TemplatesState {
   private readonly pxToRemPipe = inject(PxToRemPipe);
   private readonly matDialog = inject(MatDialog);
   private readonly snackbarService = inject(SnackbarService);
+  private readonly destroyRef = inject(DestroyRef);
 
   @Selector()
   public static getDisplayType$({ displayType }: TemplatesStateModel): DataViewDisplayType {
@@ -165,7 +166,10 @@ export class TemplatesState {
   }
 
   @Action(FetchTemplateList)
-  public fetchTemplateList({ setState }: StateContext<TemplatesStateModel>): Observable<TemplateDto[]> {
+  public fetchTemplateList(
+    { setState }: StateContext<TemplatesStateModel>,
+    { destroyRef }: FetchTemplateList,
+  ): Observable<TemplateDto[]> {
     setState(patch({ isTemplateListLoading: true }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.templatesService.getTemplateList()),
@@ -174,6 +178,7 @@ export class TemplatesState {
           setState(patch({ templateList: fileList, isTemplateListLoading: false }));
         },
       }),
+      takeUntilDestroyed(destroyRef),
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetchList);
         setState(patch({ isTemplateListLoading: false }));
@@ -274,7 +279,7 @@ export class TemplatesState {
       tap({
         next: ({ id }) => {
           this.snackbarService.success(NotificationSnackbarLocalization.created);
-          dispatch(new FetchTemplateList());
+          dispatch(new FetchTemplateList(this.destroyRef));
           dispatch(new FetchTemplate(id));
           this.router.navigate([AppRoutes.templates, id, AppRoutes.template]);
         },

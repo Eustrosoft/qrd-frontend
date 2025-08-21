@@ -129,7 +129,7 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
     { requireSync: true },
   );
 
-  public formHasUnsavedChanges = toSignal<boolean, boolean>(
+  public formHasUnsavedChanges = toSignal(
     merge(
       this.form().valueChanges.pipe(
         startWith(this.form().getRawValue()),

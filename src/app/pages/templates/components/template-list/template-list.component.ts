@@ -13,11 +13,7 @@ import { map } from 'rxjs';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { AppRoutes } from '@app/app.constants';
 import { SharedLocalization } from '@shared/shared.constants';
-import {
-  DeleteTemplates,
-  FetchTemplateList,
-  SetTemplatesDataViewDisplayType,
-} from '@app/pages/templates/state/templates.actions';
+import { DeleteTemplates, FetchTemplateList } from '@app/pages/templates/state/templates.actions';
 import { RangeSelectorService } from '@shared/service/range-selector.service';
 import { TemplateDto } from '@api/templates/templates-api.models';
 
@@ -32,24 +28,22 @@ import { TemplateDto } from '@api/templates/templates-api.models';
     ViewListItemComponent,
     RouterLink,
   ],
+  providers: [RangeSelectorService],
   templateUrl: './template-list.component.html',
   styleUrl: './template-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [RangeSelectorService],
 })
 export class TemplateListComponent implements OnInit {
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly rangeSelectorService = inject(RangeSelectorService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly selectors = createSelectMap({
-    displayType: TemplatesState.getDisplayType$,
     isTemplateListLoading: TemplatesState.isTemplateListLoading$,
     templateListSkeletonLoaders: TemplatesState.getTemplateListSkeletonLoaders$,
     templateList: TemplatesState.getTemplateList$,
     selectedTemplateList: TemplatesState.getSelectedTemplateList$,
   });
   protected readonly actions = createDispatchMap({
-    setDisplayType: SetTemplatesDataViewDisplayType,
     fetchTemplateList: FetchTemplateList,
     deleteTemplates: DeleteTemplates,
   });
@@ -71,7 +65,7 @@ export class TemplateListComponent implements OnInit {
   protected readonly SharedLocalization = SharedLocalization;
 
   public ngOnInit(): void {
-    this.actions.fetchTemplateList();
+    this.actions.fetchTemplateList(this.destroyRef);
   }
 
   protected makeSelect(item: TemplateDto): void {

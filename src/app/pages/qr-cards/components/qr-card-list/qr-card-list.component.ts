@@ -52,10 +52,10 @@ import { HttpParams } from '@angular/common/http';
     RouterLink,
     FallbackPipe,
   ],
+  providers: [RangeSelectorService],
   templateUrl: './qr-card-list.component.html',
   styleUrl: './qr-card-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [RangeSelectorService],
 })
 export class QrCardListComponent implements OnInit {
   protected readonly isXSmall = inject(IS_XSMALL);

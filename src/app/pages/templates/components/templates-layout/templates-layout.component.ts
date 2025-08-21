@@ -18,6 +18,7 @@ import {
 import { TemplateListComponent } from '@app/pages/templates/components/template-list/template-list.component';
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
 import { SharedLocalization } from '@shared/shared.constants';
+import { TemplateTableComponent } from '@app/pages/templates/components/template-table/template-table.component';
 
 @Component({
   selector: 'templates-layout',
@@ -29,6 +30,7 @@ import { SharedLocalization } from '@shared/shared.constants';
     UiSkeletonComponent,
     TemplateListComponent,
     AnimatedIfDirective,
+    TemplateTableComponent,
   ],
   templateUrl: './templates-layout.component.html',
   styleUrl: './templates-layout.component.scss',

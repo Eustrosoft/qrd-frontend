@@ -27,6 +27,6 @@
     <template-list (selectionChanged)="actions.setSelectedTemplates($event)" />
   }
   @if (selectors.displayType() === 'table') {
-    <h1>{{ SharedLocalization.dev }}</h1>
+    <template-table />
   }
 </data-view>

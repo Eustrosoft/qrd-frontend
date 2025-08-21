@@ -1,0 +1,20 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  display: grid;
+  overflow: auto;
+  box-shadow: var(--mat-sys-level2);
+  border-radius: mixins.rem(12);
+
+  table {
+    ::ng-deep {
+      tbody {
+        tr {
+          @include mixins.hover {
+            background: var(--mat-sys-surface-container);
+          }
+        }
+      }
+    }
+  }
+}

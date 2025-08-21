@@ -1,0 +1,6 @@
+<button (click)="$event.stopPropagation()" class="icon-button-md" mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon class="icon-primary icon-md">more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <ng-content />
+</mat-menu>

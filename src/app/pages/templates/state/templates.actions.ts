@@ -5,6 +5,7 @@ import { TemplatesStateModel } from '@app/pages/templates/state/templates.state'
 
 export class FetchTemplateList {
   public static readonly type = '[Templates] Fetch Template List';
+  constructor(readonly destroyRef: DestroyRef) {}
 }
 
 export class SetTemplateListSearchValue {

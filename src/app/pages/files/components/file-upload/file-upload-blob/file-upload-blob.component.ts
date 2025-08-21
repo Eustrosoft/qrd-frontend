@@ -65,10 +65,10 @@ import { IndicatorComponent } from '@shared/components/indicator/indicator.compo
     UiGridBlockComponent,
     IndicatorComponent,
   ],
+  providers: [FileUploadFormFactoryService, { provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './file-upload-blob.component.html',
   styleUrl: './file-upload-blob.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [FileUploadFormFactoryService, { provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
 })
 export class FileUploadBlobComponent implements OnDestroy {
   private readonly destroyRef = inject(DestroyRef);

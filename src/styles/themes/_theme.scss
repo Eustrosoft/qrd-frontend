@@ -83,4 +83,11 @@
       supporting-text-color: var(--mat-sys-on-secondary-container),
     )
   );
+  @include mat.table-overrides(
+    (
+      header-headline-size: 16px,
+      header-headline-weight: bold,
+      background-color: var(--mat-sys-surface-container-low),
+    )
+  );
 }

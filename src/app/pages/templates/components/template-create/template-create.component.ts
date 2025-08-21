@@ -32,10 +32,10 @@ import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-match
     UiGridBlockComponent,
     ReactiveFormsModule,
   ],
+  providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './template-create.component.html',
   styleUrl: './template-create.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
 })
 export class TemplateCreateComponent {
   private readonly fb = inject(FormBuilder);

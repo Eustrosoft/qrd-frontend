@@ -1,5 +1,8 @@
+@use 'styles/mixins' as mixins;
+
 :host {
   display: flex;
+  padding: mixins.rem(8);
   min-height: inherit;
   align-items: center;
   flex-direction: column;

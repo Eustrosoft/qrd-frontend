@@ -1,25 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
-import { MatIconButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
-import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { ActivatedRoute, RouterLink, UrlTree } from '@angular/router';
+import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.component';
 
 @Component({
   selector: 'view-list-item',
-  imports: [
-    MatCheckbox,
-    UiFlexBlockComponent,
-    MatIcon,
-    MatIconButton,
-    MatMenuTrigger,
-    MatMenu,
-    RouterLink,
-    EllipsisDirective,
-  ],
+  imports: [MatCheckbox, UiFlexBlockComponent, RouterLink, EllipsisDirective, MoreMenuComponent],
   templateUrl: './view-list-item.component.html',
   styleUrl: './view-list-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
