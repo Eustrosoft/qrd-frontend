@@ -33,7 +33,7 @@
       {{ dialogData.cancelButtonText }}
     </a>
   </ui-grid-block>
-  <ui-grid-block gridTemplateColumns="repeat(1, 1fr)" gridJustifyItems="center">
+  <ui-grid-block gridTemplateColumns="repeat(1, 1fr)" gridJustifyItems="center" [style]="isXSmall() ? 'order: -1' : ''">
     <button (click)="confirm()" class="fab-icon-primary-button-xxxl" mat-fab>
       <mat-icon class="icon-on-primary icon-xxxl">done_all</mat-icon>
     </button>
