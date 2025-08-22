@@ -14,7 +14,7 @@
           #anchor
           (click)="openCardPreview()"
         >
-          <h1 [truncate]="anchor._elementRef.nativeElement">QR №{{ selectors.qrCard()?.code | toHex }}</h1>
+          <h1 truncate [host]="anchor._elementRef.nativeElement">QR №{{ selectors.qrCard()?.code | toHex }}</h1>
           <mat-icon class="icon-primary">open_in_new</mat-icon>
         </button>
       }

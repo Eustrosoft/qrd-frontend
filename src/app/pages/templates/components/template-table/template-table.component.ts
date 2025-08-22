@@ -17,7 +17,6 @@ import {
   MatHeaderCellDef,
   MatHeaderRow,
   MatHeaderRowDef,
-  MatNoDataRow,
   MatRow,
   MatRowDef,
   MatTableDataSource,
@@ -37,7 +36,7 @@ import { TableContainerComponent } from '@shared/components/table-container/tabl
 import { TABLE_CONTEXT, TableContext } from '@cdk/tokens/table.tokens';
 import { DatePipe } from '@angular/common';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
-import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'template-table',
@@ -56,11 +55,10 @@ import { MatProgressBar } from '@angular/material/progress-bar';
     MatIcon,
     MatMenuItem,
     TableContainerComponent,
-    MatNoDataRow,
     DatePipe,
     MatSort,
     MatSortHeader,
-    MatProgressBar,
+    MatButton,
   ],
   providers: [
     {

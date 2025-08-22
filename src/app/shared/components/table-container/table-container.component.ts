@@ -6,6 +6,7 @@ import {
   contentChild,
   contentChildren,
   inject,
+  input,
   viewChild,
 } from '@angular/core';
 import {
@@ -24,10 +25,22 @@ import { RangeSelectorService } from '@shared/service/range-selector.service';
 import { map } from 'rxjs';
 import { outputFromObservable, toSignal } from '@angular/core/rxjs-interop';
 import { TABLE_CONTEXT, TableContext } from '@cdk/tokens/table.tokens';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { SharedLocalization } from '@shared/shared.constants';
 
 @Component({
   selector: 'table-container',
-  imports: [MatHeaderCell, MatTable, MatColumnDef, MatHeaderCellDef, MatCheckbox, MatCellDef, MatCell],
+  imports: [
+    MatHeaderCell,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatCheckbox,
+    MatCellDef,
+    MatCell,
+    MatProgressBar,
+    MatNoDataRow,
+  ],
   providers: [RangeSelectorService],
   templateUrl: './table-container.component.html',
   styleUrl: './table-container.component.scss',
@@ -35,14 +48,12 @@ import { TABLE_CONTEXT, TableContext } from '@cdk/tokens/table.tokens';
 })
 export class TableContainerComponent<T> implements AfterContentInit {
   private readonly rangeSelectorService = inject(RangeSelectorService);
-
   protected readonly ctx = inject<TableContext<T>>(TABLE_CONTEXT);
 
   private readonly headerRowDefs = contentChildren(MatHeaderRowDef);
   private readonly rowDefs = contentChildren(MatRowDef);
   private readonly columnDefs = contentChildren(MatColumnDef);
-  private readonly noDataRow = contentChild.required(MatNoDataRow);
-
+  private readonly noDataRow = contentChild(MatNoDataRow);
   private readonly table = viewChild.required(MatTable<T>);
 
   protected readonly selectionModelChanges$ = this.ctx.selectionModel.changed
@@ -59,13 +70,16 @@ export class TableContainerComponent<T> implements AfterContentInit {
     return numSelected === numRows;
   });
 
+  protected readonly SharedLocalization = SharedLocalization;
+
+  public readonly isLoading = input<boolean>(false);
   public readonly selectionChanged = outputFromObservable(this.selectionModelChanges$);
 
   public ngAfterContentInit(): void {
     this.columnDefs().forEach((columnDef) => this.table().addColumnDef(columnDef));
     this.rowDefs().forEach((rowDef) => this.table().addRowDef(rowDef));
     this.headerRowDefs().forEach((headerRowDef) => this.table().addHeaderRowDef(headerRowDef));
-    this.table().setNoDataRow(this.noDataRow());
+    this.table().setNoDataRow(this.noDataRow() ?? null);
   }
 
   protected toggleAllRows(): void {
@@ -74,6 +88,7 @@ export class TableContainerComponent<T> implements AfterContentInit {
       return;
     }
 
+    // TODO разобраться с типами
     // eslint-disable-next-line
     this.ctx.selectionModel.select(...this.ctx.dataSource.data.map((item) => <any>item[this.ctx.selectionKey]));
   }

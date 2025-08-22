@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, HostListener, inject, input, model } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostListener, inject, input, model, signal } from '@angular/core';
 
 @Directive({
   selector: '[truncate]',
@@ -11,9 +11,11 @@ import { AfterViewInit, Directive, ElementRef, HostListener, inject, input, mode
 })
 export class TruncateDirective implements AfterViewInit {
   private readonly elRef = inject(ElementRef);
-  public readonly truncate = input<HTMLElement>(this.elRef.nativeElement);
-  protected readonly maxWidth = model<string>('320px');
-  protected readonly widthToExtract = input<number>(22);
+
+  protected readonly maxWidth = signal<string>('320px');
+
+  public readonly host = model<HTMLElement>(this.elRef.nativeElement);
+  public readonly widthToExtract = input<number>(22);
 
   public ngAfterViewInit(): void {
     this.doTruncate();
@@ -25,6 +27,6 @@ export class TruncateDirective implements AfterViewInit {
   }
 
   private doTruncate(): void {
-    this.maxWidth.set(`${this.truncate().clientWidth - this.widthToExtract()}px`);
+    this.maxWidth.set(`${this.host().clientWidth - this.widthToExtract()}px`);
   }
 }

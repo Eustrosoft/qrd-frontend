@@ -6,6 +6,11 @@
   box-shadow: var(--mat-sys-level2);
   border-radius: mixins.rem(12);
 
+  .progress-bar-placeholder {
+    height: mixins.rem(4);
+    background: var(--mat-sys-surface-container-low);
+  }
+
   table {
     ::ng-deep {
       tbody {

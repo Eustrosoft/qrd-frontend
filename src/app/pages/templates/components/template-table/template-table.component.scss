@@ -1,0 +1,37 @@
+@use 'styles/mixins' as mixins;
+@use 'styles/breakpoints' as bp;
+@use 'sass:map';
+
+:host {
+  .mat-column-name {
+    @include mixins.ellipsis;
+
+    max-width: mixins.rem(220);
+
+    a {
+      @include mixins.ellipsis;
+
+      display: block;
+    }
+  }
+
+  .mat-column-description {
+    @include mixins.ellipsis;
+
+    max-width: mixins.rem(320);
+  }
+
+  @media #{map.get(bp.$breakpoints, xsmall)} {
+    .mat-column-name,
+    .mat-column-description {
+      max-width: mixins.rem(136);
+    }
+  }
+
+  @media #{map.get(bp.$breakpoints, small)} {
+    .mat-column-name,
+    .mat-column-description {
+      max-width: mixins.rem(220);
+    }
+  }
+}

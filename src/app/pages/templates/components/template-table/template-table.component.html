@@ -1,12 +1,22 @@
-@if (selectors.isTemplateListLoading()) {
-  <mat-progress-bar mode="indeterminate" />
-} @else {
-  <div style="height: 4px"></div>
-}
-<table-container matSort #sort="matSort" (selectionChanged)="actions.setSelectedTemplates($event)">
+<table-container
+  matSort
+  #sort="matSort"
+  [isLoading]="selectors.isTemplateListLoading()"
+  (selectionChanged)="actions.setSelectedTemplates($event)"
+>
   <ng-container matColumnDef="name">
     <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.name }}</th>
-    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    <td mat-cell *matCellDef="let element">
+      <a
+        [routerLink]="`../${element.id}`"
+        [relativeTo]="activatedRoute"
+        textInteractionEffect
+        class="button-anchor-md"
+        mat-button
+      >
+        {{ element.name }}
+      </a>
+    </td>
   </ng-container>
   <ng-container matColumnDef="description">
     <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.description }}</th>
@@ -41,11 +51,4 @@
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  <tr *matNoDataRow>
-    @if (!selectors.isTemplateListLoading()) {
-      <td style="padding: 0 16px" colspan="2">
-        <h3>{{ SharedLocalization.emptyList }}</h3>
-      </td>
-    }
-  </tr>
 </table-container>

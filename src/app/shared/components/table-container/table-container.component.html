@@ -1,3 +1,8 @@
+@if (isLoading()) {
+  <mat-progress-bar mode="indeterminate" />
+} @else {
+  <div class="progress-bar-placeholder"></div>
+}
 <table mat-table [dataSource]="ctx.dataSource">
   <ng-container matColumnDef="select">
     <th mat-header-cell *matHeaderCellDef>
@@ -16,4 +21,11 @@
     </td>
   </ng-container>
   <ng-content />
+  <tr *matNoDataRow>
+    @if (!isLoading()) {
+      <td style="padding: 0 16px" colspan="2">
+        <h3>{{ SharedLocalization.emptyList }}</h3>
+      </td>
+    }
+  </tr>
 </table>
