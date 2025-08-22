@@ -7,11 +7,9 @@ import {
   FetchQrCardList,
   SelectAllQrCards,
   SetQrCardListSearchValue,
-  SetQrCardsDataViewDisplayType,
   SetSelectedQrCards,
 } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { SelectionBarComponent } from '@shared/components/selection-bar/selection-bar.component';
-import { QrCardListComponent } from '@app/pages/qr-cards/components/qr-card-list/qr-card-list.component';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatMiniFabButton } from '@angular/material/button';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
@@ -25,13 +23,13 @@ import { AppState } from '@app/state/app.state';
 import { PatchSettings } from '@app/state/app.actions';
 import { ColumnConfigOverlayComponent } from '@shared/components/column-config-overlay/column-config-overlay.component';
 import { SharedLocalization } from '@shared/shared.constants';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'qr-cards-layout',
   imports: [
     DataViewComponent,
     SelectionBarComponent,
-    QrCardListComponent,
     MatIcon,
     MatMiniFabButton,
     UiSkeletonComponent,
@@ -39,6 +37,7 @@ import { SharedLocalization } from '@shared/shared.constants';
     ViewModeSettingsComponent,
     OverlayAnimationDirective,
     ColumnConfigOverlayComponent,
+    RouterOutlet,
   ],
   templateUrl: './qr-cards-layout.component.html',
   styleUrl: './qr-cards-layout.component.scss',
@@ -54,14 +53,12 @@ export class QrCardsLayoutComponent {
   protected readonly ALL_QR_TABLE_COLS = ALL_QR_TABLE_COLS;
 
   protected readonly selectors = createSelectMap({
-    displayType: QrCardsState.getDisplayType$,
     searchValue: QrCardsState.getSearchValue$,
     settingsState: AppState.getSettingsState$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
     isDeleteInProgress: QrCardsState.isDeleteInProgress$,
   });
   protected readonly actions = createDispatchMap({
-    setDisplayType: SetQrCardsDataViewDisplayType,
     fetchQrCards: FetchQrCardList,
     setQrCardListSearchValue: SetQrCardListSearchValue,
     setSelectedQrCards: SetSelectedQrCards,

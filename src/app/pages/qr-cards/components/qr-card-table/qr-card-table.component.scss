@@ -1,0 +1,17 @@
+@use 'styles/mixins' as mixins;
+@use 'styles/breakpoints' as bp;
+@use 'sass:map';
+
+:host {
+  .mat-column-qr-picture {
+    min-width: mixins.rem(128);
+  }
+
+  .mat-column-name {
+    max-width: mixins.rem(136);
+  }
+
+  .mat-column-description {
+    max-width: mixins.rem(220);
+  }
+}

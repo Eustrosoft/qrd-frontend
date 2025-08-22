@@ -1,10 +1,10 @@
-import { DataViewDisplayType } from '@shared/shared.models';
 import { DestroyRef } from '@angular/core';
 import { QrCardCreationFormGroup, QrCardFormGroup } from '@app/pages/qr-cards/qr-cards.models';
 import { QrCardsStateModel } from '@app/pages/qr-cards/state/qr-cards.state';
 
 export class FetchQrCardList {
   public static readonly type = '[Qr Cards] Fetch Qr Card List';
+  constructor(readonly destroyRef: DestroyRef) {}
 }
 
 export class SetQrCardListSearchValue {
@@ -33,11 +33,6 @@ export class SetSelectedQrCards {
 
 export class SelectAllQrCards {
   public static readonly type = '[Qr Cards] Select All Qr Cards';
-}
-
-export class SetQrCardsDataViewDisplayType {
-  public static readonly type = '[Qr Cards] Set Cards Display Type';
-  constructor(readonly displayType: DataViewDisplayType) {}
 }
 
 export class CreateQrCard {

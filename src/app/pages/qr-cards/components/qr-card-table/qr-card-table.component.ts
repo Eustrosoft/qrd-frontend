@@ -10,7 +10,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { TABLE_CONTEXT, TableContext } from '@cdk/tokens/table.tokens';
-import { FileDto } from '@api/files/files-api.models';
+import { QRDto } from '@api/qr-cards/qrs-api.models';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -29,20 +29,22 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 import { SharedLocalization } from '@shared/shared.constants';
 import { AppRoutes } from '@app/app.constants';
-import { FilesState } from '@app/pages/files/state/files.state';
-import { DeleteFiles, FetchFileList, SetSelectedFiles } from '@app/pages/files/state/files.actions';
+import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
+import { DeleteQrCards, FetchQrCardList, SetSelectedQrCards } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { DatePipe } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { MatMenuItem } from '@angular/material/menu';
 import { TableContainerComponent } from '@shared/components/table-container/table-container.component';
 import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.component';
 import { MatIcon } from '@angular/material/icon';
-import { FilesLocalization } from '@app/pages/files/files.constants';
-import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
-import { BoolToTextPipe } from '@shared/pipe/bool-to-text.pipe';
+import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
+import { ImgLoadStateDirective } from '@shared/directives/img-load-state.directive';
+import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
+import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
+import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
 
 @Component({
-  selector: 'file-table',
+  selector: 'qr-card-table',
   imports: [
     DatePipe,
     MatButton,
@@ -57,71 +59,63 @@ import { BoolToTextPipe } from '@shared/pipe/bool-to-text.pipe';
     TableContainerComponent,
     MatSort,
     MatHeaderCellDef,
-    RouterLink,
     MatSortHeader,
+    RouterLink,
+    MatRowDef,
     MoreMenuComponent,
     MatRow,
-    MatRowDef,
-    BytesToSizePipe,
-    BoolToTextPipe,
+    ToHexPipe,
+    ImgLoadStateDirective,
+    UiSkeletonComponent,
   ],
   providers: [
     {
       provide: TABLE_CONTEXT,
-      useFactory: (cmp: FileTableComponent): TableContext<FileDto> => ({
+      useFactory: (cmp: QrCardTableComponent): TableContext<QRDto> => ({
         dataSource: cmp.dataSource,
         selectionModel: cmp.selectionModel,
         selectionKey: 'id',
         columns: cmp.displayedColumns,
       }),
-      deps: [FileTableComponent],
+      deps: [QrCardTableComponent],
     },
   ],
-  templateUrl: './file-table.component.html',
-  styleUrl: './file-table.component.scss',
+  templateUrl: './qr-card-table.component.html',
+  styleUrl: './qr-card-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FileTableComponent implements OnInit, AfterViewInit {
+export class QrCardTableComponent implements OnInit, AfterViewInit {
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly activatedRoute = inject(ActivatedRoute);
+  protected readonly qrCardsService = inject(QrCardsService);
 
-  protected readonly FilesLocalization = FilesLocalization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly AppRoutes = AppRoutes;
 
   protected readonly selectors = createSelectMap({
-    isFileListLoading$: FilesState.isFileListLoading$,
-    fileList: FilesState.getFileList$,
-    selectedFileList: FilesState.getSelectedFileList$,
+    isQrCardListLoading: QrCardsState.isQrCardListLoading$,
+    qrCardList: QrCardsState.getQrCardList$,
+    selectedQrCardList: QrCardsState.getSelectedQrCardList$,
   });
   protected readonly actions = createDispatchMap({
-    fetchFileList: FetchFileList,
-    setSelectedFiles: SetSelectedFiles,
-    deleteFiles: DeleteFiles,
+    fetchQrCardList: FetchQrCardList,
+    setSelectedQrCards: SetSelectedQrCards,
+    deleteQrCards: DeleteQrCards,
   });
 
   protected readonly sort = viewChild.required('sort', { read: MatSort });
 
-  public readonly displayedColumns = [
-    'select',
-    'name',
-    'fileName',
-    'description',
-    'fileSize',
-    'isPublic',
-    'created',
-    'actions',
-  ];
-  protected readonly dataSource = new MatTableDataSource<FileDto>(this.selectors.fileList());
+  public readonly displayedColumns = ['select', 'code', 'qr-picture', 'name', 'description', 'actions'];
+  protected readonly dataSource = new MatTableDataSource<QRDto>(this.selectors.qrCardList());
   protected readonly dataSourceEff = effect(() => {
-    this.dataSource.data = this.selectors.fileList();
+    this.dataSource.data = this.selectors.qrCardList();
     this.dataSource.sort = this.sort();
   });
 
-  protected readonly selectionModel = new SelectionModel<number>(true, this.selectors.selectedFileList());
+  protected readonly selectionModel = new SelectionModel<number>(true, this.selectors.selectedQrCardList());
   public readonly selectionChanged = output<number[]>();
   private readonly selEff = effect(() => {
-    const selectedValues = this.selectors.selectedFileList();
+    const selectedValues = this.selectors.selectedQrCardList();
     this.selectionModel.select(...selectedValues);
     if (!selectedValues.length) {
       this.selectionModel.clear();
@@ -129,10 +123,12 @@ export class FileTableComponent implements OnInit, AfterViewInit {
   });
 
   public ngOnInit(): void {
-    this.actions.fetchFileList(this.destroyRef);
+    this.actions.fetchQrCardList(this.destroyRef);
   }
 
   public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort();
   }
+
+  protected readonly QrCardsLocalization = QrCardsLocalization;
 }

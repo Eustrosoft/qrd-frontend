@@ -1,7 +1,5 @@
 <data-view
-  [displayType]="selectors.displayType()"
   [searchValue]="selectors.searchValue()"
-  (displayTypeChange)="actions.setDisplayType($event.value)"
   (advancedSearchClicked)="openAdvancedSearch()"
   (searchValueChange)="actions.setQrCardListSearchValue($event)"
 >
@@ -39,10 +37,5 @@
       <ui-skeleton width="40" height="40" borderRadius="50%" />
     }
   </selection-bar>
-  @if (selectors.displayType() === 'list') {
-    <qr-card-list (selectionChanged)="actions.setSelectedQrCards($event)" />
-  }
-  @if (selectors.displayType() === 'table') {
-    <h1>{{ SharedLocalization.dev }}</h1>
-  }
+  <router-outlet style="display: contents" />
 </data-view>

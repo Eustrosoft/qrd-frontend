@@ -8,11 +8,11 @@ import { MatMenuItem } from '@angular/material/menu';
 import { SharedLocalization } from '@shared/shared.constants';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { MatIcon } from '@angular/material/icon';
-import { outputFromObservable } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map, startWith } from 'rxjs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FilesState } from '@app/pages/files/state/files.state';
-import { DeleteFiles, FetchFileList } from '@app/pages/files/state/files.actions';
+import { DeleteFiles, FetchFileList, SetSelectedFiles } from '@app/pages/files/state/files.actions';
 import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 import { DatePipe } from '@angular/common';
@@ -53,13 +53,25 @@ export class FileListComponent implements OnInit {
   });
   protected readonly actions = createDispatchMap({
     fetchFileList: FetchFileList,
+    setSelectedFiles: SetSelectedFiles,
     deleteFiles: DeleteFiles,
   });
 
   protected readonly selectionModel = new SelectionModel(true, this.selectors.selectedFileList());
-  public readonly selectionChanged = outputFromObservable(
-    this.selectionModel.changed.asObservable().pipe(map(() => this.selectionModel.selected)),
+
+  public readonly selectionChanged = toSignal(
+    this.selectionModel.changed.asObservable().pipe(
+      map(() => this.selectionModel.selected),
+      startWith<number[]>([]),
+    ),
+    { requireSync: true },
   );
+
+  private readonly selChangeEff = effect(() => {
+    const selection = this.selectionChanged();
+    this.actions.setSelectedFiles(selection);
+  });
+
   private readonly selEff = effect(() => {
     const selectedValues = this.selectors.selectedFileList();
     this.selectionModel.select(...selectedValues);

@@ -8,12 +8,12 @@ import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { SelectionModel } from '@angular/cdk/collections';
-import { outputFromObservable } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map, startWith } from 'rxjs';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { AppRoutes } from '@app/app.constants';
 import { SharedLocalization } from '@shared/shared.constants';
-import { DeleteTemplates, FetchTemplateList } from '@app/pages/templates/state/templates.actions';
+import { DeleteTemplates, FetchTemplateList, SetSelectedTemplates } from '@app/pages/templates/state/templates.actions';
 import { RangeSelectorService } from '@shared/service/range-selector.service';
 import { TemplateDto } from '@api/templates/templates-api.models';
 
@@ -45,13 +45,24 @@ export class TemplateListComponent implements OnInit {
   });
   protected readonly actions = createDispatchMap({
     fetchTemplateList: FetchTemplateList,
+    setSelectedTemplates: SetSelectedTemplates,
     deleteTemplates: DeleteTemplates,
   });
 
   protected readonly selectionModel = new SelectionModel(true, this.selectors.selectedTemplateList());
-  public readonly selectionChanged = outputFromObservable(
-    this.selectionModel.changed.asObservable().pipe(map(() => this.selectionModel.selected)),
+  public readonly selectionChanged = toSignal(
+    this.selectionModel.changed.asObservable().pipe(
+      map(() => this.selectionModel.selected),
+      startWith<number[]>([]),
+    ),
+    { requireSync: true },
   );
+
+  private readonly selChangeEff = effect(() => {
+    const selection = this.selectionChanged();
+    this.actions.setSelectedTemplates(selection);
+  });
+
   private readonly selEff = effect(() => {
     const selectedValues = this.selectors.selectedTemplateList();
     this.selectionModel.select(...selectedValues);

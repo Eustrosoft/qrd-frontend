@@ -14,10 +14,8 @@ import {
   SaveQrCard,
   SelectAllQrCards,
   SetQrCardListSearchValue,
-  SetQrCardsDataViewDisplayType,
   SetSelectedQrCards,
 } from './qr-cards.actions';
-import { DataViewDisplayType } from '@shared/shared.models';
 import { patch } from '@ngxs/store/operators';
 import { QRChangeDto, QRDto } from '@api/qr-cards/qrs-api.models';
 import { catchError, concatMap, EMPTY, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
@@ -42,10 +40,6 @@ import { TemplatesService } from '@app/pages/templates/services/templates.servic
 import { QRRangeDto } from '@api/ranges/ranges-api.models';
 
 export interface QrCardsStateModel {
-  /**
-   * @deprecated
-   */
-  displayType: DataViewDisplayType;
   searchValue: string;
   isQrCardListLoading: boolean;
   qrCardListSkeletonLoaders: number;
@@ -70,7 +64,6 @@ export interface QrCardsStateModel {
 }
 
 const defaults: QrCardsStateModel = {
-  displayType: 'list',
   searchValue: '',
   isQrCardListLoading: false,
   qrCardListSkeletonLoaders: DEFAULT_ITEMS_PER_PAGE,
@@ -110,11 +103,6 @@ export class QrCardsState {
   private readonly pxToRemPipe = inject(PxToRemPipe);
   private readonly matDialog = inject(MatDialog);
   private readonly snackbarService = inject(SnackbarService);
-
-  @Selector()
-  public static getDisplayType$({ displayType }: QrCardsStateModel): DataViewDisplayType {
-    return displayType;
-  }
 
   @Selector()
   public static getSearchValue$({ searchValue }: QrCardsStateModel): string {
@@ -290,14 +278,6 @@ export class QrCardsState {
   public selectedAllQrCards({ setState, getState }: StateContext<QrCardsStateModel>): void {
     const { qrCardList } = getState();
     setState(patch({ selectedQrCardList: qrCardList.map((card) => card.id) }));
-  }
-
-  @Action(SetQrCardsDataViewDisplayType)
-  public setDisplayType(
-    { setState }: StateContext<QrCardsStateModel>,
-    { displayType }: SetQrCardsDataViewDisplayType,
-  ): void {
-    setState(patch({ displayType }));
   }
 
   @Action(CreateQrCard)

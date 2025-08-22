@@ -1,0 +1,88 @@
+<table-container
+  matSort
+  #sort="matSort"
+  [isLoading]="selectors.isQrCardListLoading()"
+  (selectionChanged)="actions.setSelectedQrCards($event)"
+>
+  <ng-container matColumnDef="code">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.code }}</th>
+    <td mat-cell *matCellDef="let element">
+      <a
+        [routerLink]="`../${element.code}`"
+        [relativeTo]="activatedRoute"
+        [title]="element.code"
+        textInteractionEffect
+        class="button-anchor-md"
+        mat-button
+      >
+        {{ element.code | toHex }}
+      </a>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="qr-picture">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>QR</th>
+    <td mat-cell *matCellDef="let element" [title]="element.name">
+      <img
+        [src]="`https://qrgen.qxyz.ru/generate?q=${element.code}&amp;color=%23000000&amp;background=%23ffffff&amp;x=128&amp;fileType=SVG&amp;correctionLevel=L`"
+        alt="qr code"
+        imgLoadState
+        #imgLoadState="imgLoadState"
+        [hidden]="!imgLoadState.isLoaded"
+      />
+      @if (!imgLoadState.isLoaded) {
+        <ui-skeleton width="128" height="128" borderRadius="0" />
+      }
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.name }}</th>
+    <td mat-cell *matCellDef="let element" [title]="element.name">
+      {{ element.name }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.description }}</th>
+    <td mat-cell *matCellDef="let element" [title]="element.description">{{ element.description }}</td>
+  </ng-container>
+  <ng-container matColumnDef="created">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.createDate }}</th>
+    <td mat-cell *matCellDef="let element">{{ element.created | date: 'short' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="updated">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.updateDate }}</th>
+    <td mat-cell *matCellDef="let element">{{ element.updated | date: 'short' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>{{ SharedLocalization.actions }}</th>
+    <td mat-cell *matCellDef="let element">
+      <more-menu>
+        <a [routerLink]="`../${element.code}`" [relativeTo]="activatedRoute" mat-menu-item>
+          <mat-icon>outbound</mat-icon>
+          {{ SharedLocalization.open }}
+        </a>
+        <button (click)="qrCardsService.openCardPreview(element.qrCardPreviewUrl)" mat-menu-item>
+          <mat-icon>eye_tracking</mat-icon>
+          {{ QrCardsLocalization.previewCard }}
+        </button>
+        <a [href]="`https://qr.qxyz.ru/?q=${element.code}`" target="_blank" rel="noopener noreferrer" mat-menu-item>
+          <mat-icon>open_in_new</mat-icon>
+          {{ QrCardsLocalization.viewCard }}
+        </a>
+        <button (click)="qrCardsService.openPrint(element.code)" mat-menu-item>
+          <mat-icon>print</mat-icon>
+          {{ SharedLocalization.print }}
+        </button>
+        <a [routerLink]="`../${element.code}/${AppRoutes.edit}`" [relativeTo]="activatedRoute" mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          {{ SharedLocalization.edit }}
+        </a>
+        <button (click)="actions.deleteQrCards([element.id], destroyRef)" mat-menu-item>
+          <mat-icon>delete</mat-icon>
+          {{ SharedLocalization.delete }}
+        </button>
+      </more-menu>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table-container>

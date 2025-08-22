@@ -3,7 +3,7 @@
     @let code = qrCard.code | toHex;
     <view-list-item
       [title]="code"
-      [navigateTo]="`./${qrCard.code}`"
+      [navigateTo]="`../${qrCard.code}`"
       [isPreviewShown]="true"
       [isSelected]="selectionModel.isSelected(qrCard.id)"
       (checkboxChanged)="makeSelect(qrCard)"
@@ -35,11 +35,11 @@
         }
       </ng-container>
       <ng-container menu-items>
-        <a [routerLink]="`./${qrCard.code}`" [relativeTo]="activatedRoute" mat-menu-item>
+        <a [routerLink]="`../${qrCard.code}`" [relativeTo]="activatedRoute" mat-menu-item>
           <mat-icon>outbound</mat-icon>
           {{ SharedLocalization.open }}
         </a>
-        <button (click)="openCardPreview(qrCard.qrCardPreviewUrl)" mat-menu-item>
+        <button (click)="qrCardsService.openCardPreview(qrCard.qrCardPreviewUrl)" mat-menu-item>
           <mat-icon>eye_tracking</mat-icon>
           {{ QrCardsLocalization.previewCard }}
         </button>
@@ -47,11 +47,11 @@
           <mat-icon>open_in_new</mat-icon>
           {{ QrCardsLocalization.viewCard }}
         </a>
-        <button (click)="openPrint(code)" mat-menu-item>
+        <button (click)="qrCardsService.openPrint(code)" mat-menu-item>
           <mat-icon>print</mat-icon>
           {{ SharedLocalization.print }}
         </button>
-        <a [routerLink]="`./${qrCard.code}/${AppRoutes.edit}`" [relativeTo]="activatedRoute" mat-menu-item>
+        <a [routerLink]="`../${qrCard.code}/${AppRoutes.edit}`" [relativeTo]="activatedRoute" mat-menu-item>
           <mat-icon>edit</mat-icon>
           {{ SharedLocalization.edit }}
         </a>

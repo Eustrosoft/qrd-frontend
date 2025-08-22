@@ -8,6 +8,7 @@ export const SharedLocalization = {
   language: $localize`:@@shared.language:Language`,
   mainPage: $localize`:@@shared.mainPage:Main`,
   defaultTitle: $localize`:@@shared.defaultTitle:QRD`,
+  code: $localize`:@@shared.code:Code`,
   fieldRequired: $localize`:@@shared.fieldRequired:Field required`,
   maxLength: $localize`:@@shared.maxLength:Max length is`,
   mustBeUrl: $localize`:@@shared.mustBeUrl:Must be a valid URL`,
