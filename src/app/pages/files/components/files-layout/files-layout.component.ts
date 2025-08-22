@@ -6,18 +6,17 @@ import {
   FetchFileList,
   SelectAllFiles,
   SetFileListSearchValue,
-  SetFilesDataViewDisplayType,
   SetSelectedFiles,
 } from '@app/pages/files/state/files.actions';
 import { DataViewComponent } from '@shared/components/data-view/data-view.component';
 import { SelectionBarComponent } from '@shared/components/selection-bar/selection-bar.component';
 import { MatIcon } from '@angular/material/icon';
-import { FileListComponent } from '@app/pages/files/components/file-list/file-list.component';
 import { MatButton, MatMiniFabButton } from '@angular/material/button';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
 import { SharedLocalization } from '@shared/shared.constants';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'files-layout',
@@ -25,10 +24,10 @@ import { SharedLocalization } from '@shared/shared.constants';
     DataViewComponent,
     SelectionBarComponent,
     MatIcon,
-    FileListComponent,
     MatMiniFabButton,
     UiSkeletonComponent,
     AnimatedIfDirective,
+    RouterOutlet,
   ],
   templateUrl: './files-layout.component.html',
   styleUrl: './files-layout.component.scss',
@@ -41,13 +40,11 @@ export class FilesLayoutComponent {
   protected readonly SharedLocalization = SharedLocalization;
 
   protected readonly selectors = createSelectMap({
-    displayType: FilesState.getDisplayType$,
     searchValue: FilesState.getSearchValue$,
     selectedFileList: FilesState.getSelectedFileList$,
     isDeleteInProgress: FilesState.isDeleteInProgress$,
   });
   protected readonly actions = createDispatchMap({
-    setDisplayType: SetFilesDataViewDisplayType,
     fetchFileList: FetchFileList,
     setFileListSearchValue: SetFileListSearchValue,
     setSelectedFiles: SetSelectedFiles,

@@ -12,7 +12,7 @@ import { outputFromObservable } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FilesState } from '@app/pages/files/state/files.state';
-import { DeleteFiles, FetchFileList, SetFilesDataViewDisplayType } from '@app/pages/files/state/files.actions';
+import { DeleteFiles, FetchFileList } from '@app/pages/files/state/files.actions';
 import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 import { DatePipe } from '@angular/common';
@@ -46,14 +46,12 @@ export class FileListComponent implements OnInit {
   protected readonly rangeSelectorService = inject(RangeSelectorService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly selectors = createSelectMap({
-    displayType: FilesState.getDisplayType$,
     isFileListLoading: FilesState.isFileListLoading$,
     fileListSkeletonLoaders: FilesState.getFileListSkeletonLoaders$,
     fileList: FilesState.getFileList$,
     selectedFileList: FilesState.getSelectedFileList$,
   });
   protected readonly actions = createDispatchMap({
-    setDisplayType: SetFilesDataViewDisplayType,
     fetchFileList: FetchFileList,
     deleteFiles: DeleteFiles,
   });
@@ -75,7 +73,7 @@ export class FileListComponent implements OnInit {
   protected readonly SharedLocalization = SharedLocalization;
 
   public ngOnInit(): void {
-    this.actions.fetchFileList();
+    this.actions.fetchFileList(this.destroyRef);
   }
 
   protected makeSelect(item: FileDto): void {

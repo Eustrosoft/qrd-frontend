@@ -1,5 +1,4 @@
 import { DestroyRef } from '@angular/core';
-import { DataViewDisplayType } from '@shared/shared.models';
 import { TemplateCreationFormGroup, TemplateFieldFormGroup } from '@app/pages/templates/templates.models';
 import { TemplatesStateModel } from '@app/pages/templates/state/templates.state';
 
@@ -34,11 +33,6 @@ export class SetSelectedTemplates {
 
 export class SelectAllTemplates {
   public static readonly type = '[Templates] Select All Templates';
-}
-
-export class SetTemplatesDataViewDisplayType {
-  public static readonly type = '[Templates] Set Templates Display Type';
-  constructor(readonly displayType: DataViewDisplayType) {}
 }
 
 export class CreateTemplate {

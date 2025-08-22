@@ -1,9 +1,9 @@
 import { DestroyRef } from '@angular/core';
-import { DataViewDisplayType } from '@shared/shared.models';
 import { FileStorageType } from '@api/files/files-api.models';
 
 export class FetchFileList {
   public static readonly type = '[Files] Fetch File List';
+  constructor(readonly destroyRef: DestroyRef) {}
 }
 
 export class SetFileListSearchValue {
@@ -26,11 +26,6 @@ export class SetSelectedFiles {
 
 export class SelectAllFiles {
   public static readonly type = '[Files] Select All Files';
-}
-
-export class SetFilesDataViewDisplayType {
-  public static readonly type = '[Files] Set Files Display Type';
-  constructor(readonly displayType: DataViewDisplayType) {}
 }
 
 export class DownloadFile {

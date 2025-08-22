@@ -1,11 +1,10 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
-import { DataViewDisplayType } from '@shared/shared.models';
 import { catchError, concatMap, EMPTY, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { patch } from '@ngxs/store/operators';
 import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { SetFilesDataViewDisplayType, SetSelectedFiles } from '@app/pages/files/state/files.actions';
+import { SetSelectedFiles } from '@app/pages/files/state/files.actions';
 import { Router } from '@angular/router';
 import { TemplatesService } from '@app/pages/templates/services/templates.service';
 import {
@@ -22,7 +21,6 @@ import {
   SelectAllTemplates,
   SetSelectedTemplates,
   SetTemplateListSearchValue,
-  SetTemplatesDataViewDisplayType,
 } from '@app/pages/templates/state/templates.actions';
 import { TemplateDto } from '@api/templates/templates-api.models';
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
@@ -37,7 +35,6 @@ import { SnackbarService } from '@shared/service/snackbar.service';
 import { NotificationSnackbarLocalization } from '@modules/error/error.constants';
 
 export interface TemplatesStateModel {
-  displayType: DataViewDisplayType;
   searchValue: string;
   isTemplateListLoading: boolean;
   templateListSkeletonLoaders: number;
@@ -55,7 +52,6 @@ export interface TemplatesStateModel {
 }
 
 const defaults: TemplatesStateModel = {
-  displayType: 'table',
   searchValue: '',
   isTemplateListLoading: false,
   templateListSkeletonLoaders: DEFAULT_ITEMS_PER_PAGE,
@@ -87,11 +83,6 @@ export class TemplatesState {
   private readonly matDialog = inject(MatDialog);
   private readonly snackbarService = inject(SnackbarService);
   private readonly destroyRef = inject(DestroyRef);
-
-  @Selector()
-  public static getDisplayType$({ displayType }: TemplatesStateModel): DataViewDisplayType {
-    return displayType;
-  }
 
   @Selector()
   public static getSearchValue$({ searchValue }: TemplatesStateModel): string {
@@ -236,14 +227,6 @@ export class TemplatesState {
   public selectedAllTemplates({ setState, getState }: StateContext<TemplatesStateModel>): void {
     const { templateList } = getState();
     setState(patch({ selectedTemplateList: templateList.map((file) => file.id) }));
-  }
-
-  @Action(SetTemplatesDataViewDisplayType)
-  public setDisplayType(
-    { setState }: StateContext<TemplatesStateModel>,
-    { displayType }: SetFilesDataViewDisplayType,
-  ): void {
-    setState(patch({ displayType }));
   }
 
   @Action(CreateTemplate)

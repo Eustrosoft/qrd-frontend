@@ -1,6 +1,5 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
-import { DataViewDisplayType } from '@shared/shared.models';
 import { FileDto } from '@api/files/files-api.models';
 import { catchError, concatMap, EMPTY, from, Observable, of, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { patch } from '@ngxs/store/operators';
@@ -13,7 +12,6 @@ import {
   FetchFileList,
   SelectAllFiles,
   SetFileListSearchValue,
-  SetFilesDataViewDisplayType,
   SetSelectedFiles,
 } from '@app/pages/files/state/files.actions';
 import { FilesService } from '@app/pages/files/services/files.service';
@@ -30,7 +28,6 @@ import { ErrorsLocalization, NotificationSnackbarLocalization } from '@modules/e
 import { WINDOW } from '@cdk/tokens/window.token';
 
 export interface FilesStateModel {
-  displayType: DataViewDisplayType;
   searchValue: string;
   isFileListLoading: boolean;
   fileListSkeletonLoaders: number;
@@ -43,7 +40,6 @@ export interface FilesStateModel {
 }
 
 const defaults: FilesStateModel = {
-  displayType: 'list',
   searchValue: '',
   isFileListLoading: false,
   fileListSkeletonLoaders: DEFAULT_ITEMS_PER_PAGE,
@@ -70,11 +66,6 @@ export class FilesState {
   private readonly matDialog = inject(MatDialog);
   private readonly snackbarService = inject(SnackbarService);
   private readonly window = inject(WINDOW);
-
-  @Selector()
-  public static getDisplayType$({ displayType }: FilesStateModel): DataViewDisplayType {
-    return displayType;
-  }
 
   @Selector()
   public static getSearchValue$({ searchValue }: FilesStateModel): string {
@@ -124,7 +115,10 @@ export class FilesState {
   }
 
   @Action(FetchFileList)
-  public fetchFileList({ setState }: StateContext<FilesStateModel>): Observable<FileDto[]> {
+  public fetchFileList(
+    { setState }: StateContext<FilesStateModel>,
+    { destroyRef }: FetchFileList,
+  ): Observable<FileDto[]> {
     setState(patch({ isFileListLoading: true }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.filesService.getFileList()),
@@ -133,6 +127,7 @@ export class FilesState {
           setState(patch({ fileList, isFileListLoading: false }));
         },
       }),
+      takeUntilDestroyed(destroyRef),
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetchList);
         setState(patch({ isFileListLoading: false }));
@@ -177,14 +172,6 @@ export class FilesState {
   public selectedAllFiles({ setState, getState }: StateContext<FilesStateModel>): void {
     const { fileList } = getState();
     setState(patch({ selectedFileList: fileList.map((file) => file.id) }));
-  }
-
-  @Action(SetFilesDataViewDisplayType)
-  public setDisplayType(
-    { setState }: StateContext<FilesStateModel>,
-    { displayType }: SetFilesDataViewDisplayType,
-  ): void {
-    setState(patch({ displayType }));
   }
 
   @Action(DownloadFile)

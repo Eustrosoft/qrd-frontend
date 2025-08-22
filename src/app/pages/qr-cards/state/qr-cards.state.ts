@@ -42,6 +42,9 @@ import { TemplatesService } from '@app/pages/templates/services/templates.servic
 import { QRRangeDto } from '@api/ranges/ranges-api.models';
 
 export interface QrCardsStateModel {
+  /**
+   * @deprecated
+   */
   displayType: DataViewDisplayType;
   searchValue: string;
   isQrCardListLoading: boolean;

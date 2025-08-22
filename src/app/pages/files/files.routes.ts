@@ -8,6 +8,8 @@ import { FileMainComponent } from '@app/pages/files/components/file-main/file-ma
 import { FileUsagesComponent } from '@app/pages/files/components/file-usages/file-usages.component';
 import { FileEditComponent } from '@app/pages/files/components/file-edit/file-edit.component';
 import { unsavedDataGuard } from '@shared/guards/unsaved-data.guard';
+import { FileListComponent } from '@app/pages/files/components/file-list/file-list.component';
+import { FileTableComponent } from '@app/pages/files/components/file-table/file-table.component';
 
 export const filesRoutes: Routes = [
   {
@@ -17,6 +19,21 @@ export const filesRoutes: Routes = [
       {
         path: '',
         component: FilesLayoutComponent,
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: AppRoutes.list,
+          },
+          {
+            path: AppRoutes.list,
+            component: FileListComponent,
+          },
+          {
+            path: AppRoutes.table,
+            component: FileTableComponent,
+          },
+        ],
       },
       {
         path: AppRoutes.new,

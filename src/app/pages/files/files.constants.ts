@@ -20,4 +20,5 @@ export const FilesLocalization = {
   upload: $localize`:@@files.upload:Upload`,
   uploaded: $localize`:@@files.uploaded:Uploaded`,
   fileRequired: $localize`:@@files.fileRequired:File is required`,
+  fileSize: $localize`:@@files.fileSize:File size`,
 };

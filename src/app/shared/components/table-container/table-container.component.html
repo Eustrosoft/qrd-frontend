@@ -1,8 +1,4 @@
-@if (isLoading()) {
-  <mat-progress-bar mode="indeterminate" />
-} @else {
-  <div class="progress-bar-placeholder"></div>
-}
+<mat-progress-bar [mode]="isLoading() ? 'indeterminate' : 'determinate'" />
 <table mat-table [dataSource]="ctx.dataSource">
   <ng-container matColumnDef="select">
     <th mat-header-cell *matHeaderCellDef>

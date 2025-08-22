@@ -4,8 +4,6 @@
 
 :host {
   .mat-column-name {
-    @include mixins.ellipsis;
-
     max-width: mixins.rem(220);
 
     a {
@@ -16,8 +14,6 @@
   }
 
   .mat-column-description {
-    @include mixins.ellipsis;
-
     max-width: mixins.rem(320);
   }
 

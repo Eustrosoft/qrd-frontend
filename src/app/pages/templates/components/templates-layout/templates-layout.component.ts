@@ -13,7 +13,6 @@ import {
   SelectAllTemplates,
   SetSelectedTemplates,
   SetTemplateListSearchValue,
-  SetTemplatesDataViewDisplayType,
 } from '@app/pages/templates/state/templates.actions';
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
 import { SharedLocalization } from '@shared/shared.constants';
@@ -41,13 +40,11 @@ export class TemplatesLayoutComponent {
   protected readonly SharedLocalization = SharedLocalization;
 
   protected readonly selectors = createSelectMap({
-    displayType: TemplatesState.getDisplayType$,
     searchValue: TemplatesState.getSearchValue$,
     selectedTemplateList: TemplatesState.getSelectedTemplateList$,
     isDeleteInProgress: TemplatesState.isDeleteInProgress$,
   });
   protected readonly actions = createDispatchMap({
-    setDisplayType: SetTemplatesDataViewDisplayType,
     fetchTemplateList: FetchTemplateList,
     setTemplateListSearchValue: SetTemplateListSearchValue,
     setSelectedTemplates: SetSelectedTemplates,

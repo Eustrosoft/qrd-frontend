@@ -2,7 +2,7 @@
   @for (file of selectors.fileList(); track file.id) {
     <view-list-item
       [title]="file.name"
-      [navigateTo]="`./${file.id}`"
+      [navigateTo]="`../${file.id}`"
       [isPreviewShown]="true"
       [isSelected]="selectionModel.isSelected(file.id)"
       (checkboxChanged)="makeSelect(file)"
@@ -23,15 +23,11 @@
         </ui-flex-block>
       </ng-container>
       <ng-container menu-items>
-        <a [routerLink]="`./${file.id}`" [relativeTo]="activatedRoute" mat-menu-item>
+        <a [routerLink]="`../${file.id}`" [relativeTo]="activatedRoute" mat-menu-item>
           <mat-icon>outbound</mat-icon>
           {{ SharedLocalization.open }}
         </a>
-        <button mat-menu-item>
-          <mat-icon>print</mat-icon>
-          {{ SharedLocalization.print }}
-        </button>
-        <a [routerLink]="`./${file.id}/${AppRoutes.edit}`" mat-menu-item>
+        <a [routerLink]="`../${file.id}/${AppRoutes.edit}`" mat-menu-item>
           <mat-icon>edit</mat-icon>
           {{ SharedLocalization.edit }}
         </a>

@@ -42,6 +42,9 @@ export class DataViewComponent {
   protected readonly SharedLocalization = SharedLocalization;
 
   public readonly searchValue = input<string>('');
+  /**
+   * @deprecated
+   */
   public readonly displayType = input<DataViewDisplayType>('list');
 
   public readonly searchValueChange = output<string>();

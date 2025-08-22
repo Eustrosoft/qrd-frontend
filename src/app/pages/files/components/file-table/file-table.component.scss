@@ -1,0 +1,22 @@
+@use 'styles/mixins' as mixins;
+@use 'styles/breakpoints' as bp;
+@use 'sass:map';
+
+:host {
+  .mat-column-name {
+    @include mixins.ellipsis;
+
+    max-width: mixins.rem(144);
+
+    a {
+      @include mixins.ellipsis;
+
+      display: block;
+    }
+  }
+
+  .mat-column-description,
+  .mat-column-fileName /* stylelint-disable-line */ {
+    max-width: mixins.rem(144);
+  }
+}
