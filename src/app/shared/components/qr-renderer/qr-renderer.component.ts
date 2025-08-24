@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { ImgLoadStateDirective } from '@shared/directives/img-load-state.directive';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
+import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'qr-renderer',
@@ -9,15 +11,28 @@ import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
   styleUrl: './qr-renderer.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[style.--img-width]': 'width()',
+    '[style.--img-width]': 'remWidth()',
   },
 })
 export class QrRendererComponent {
-  public readonly code = input.required<string>();
-  public readonly width = input('128px');
+  private readonly pxToRemPipe = inject(PxToRemPipe);
 
-  protected readonly srcUrl = computed(
-    () =>
-      `https://qrgen.qxyz.ru/generate?q=${this.code()}&amp;color=%23000000&amp;background=%23ffffff&amp;x=${this.width()}&amp;fileType=SVG&amp;correctionLevel=L`,
-  );
+  public readonly code = input.required<string>();
+  public readonly width = input<number>(128);
+
+  protected readonly remWidth = computed(() => this.pxToRemPipe.transform(this.width().toString()));
+
+  protected readonly srcUrl = computed(() => {
+    const params = new HttpParams({
+      fromObject: {
+        q: this.code(),
+        color: '#000000',
+        background: '#ffffff',
+        x: this.width(),
+        fileType: 'SVG',
+        correctionLevel: 'L',
+      },
+    });
+    return `https://qrgen.qxyz.ru/generate?${params.toString()}`;
+  });
 }

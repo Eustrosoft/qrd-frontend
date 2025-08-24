@@ -22,6 +22,7 @@ import { CollapsibleContainerComponent } from '@shared/components/collapsible-co
 import { CollapsibleListItemDirective } from '@shared/directives/collapsible-list-item.directive';
 import { CollapsibleListDirective } from '@shared/directives/collapsible-list.directive';
 import { AttrListItemComponent } from '@shared/components/attr-list-item/attr-list-item.component';
+import { FileDto } from '@api/files/files-api.models';
 
 @Component({
   selector: 'qr-card-main',
@@ -51,14 +52,21 @@ export class QrCardMainComponent {
   private readonly uiSidenavService = inject(UiSidenavService);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
+
+  protected readonly SharedLocalization = SharedLocalization;
+  protected readonly RouteTitles = RouteTitles;
+  protected readonly AppRoutes = AppRoutes;
+
   protected readonly selectors = createSelectMap({
     qrCard: QrCardsState.getQrCard$,
     qrCardPreviewUrl: QrCardsState.getQrCardPreviewUrl$,
   });
 
-  protected readonly SharedLocalization = SharedLocalization;
-  protected readonly RouteTitles = RouteTitles;
-  protected readonly AppRoutes = AppRoutes;
+  protected readonly fileList = computed<FileDto[]>(() => {
+    const qrCard = this.selectors.qrCard();
+    // eslint-disable-next-line
+    return [...(qrCard?.files ?? []), ...(qrCard?.form?.files ?? [])];
+  });
 
   protected readonly infoGridTemplateColumns = computed<string>(() => {
     if (this.isSmallScreen()) {

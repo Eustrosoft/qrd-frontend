@@ -2,7 +2,7 @@
   @if (!selectors.isQrCardLoading()) {
     <card-container [hideHeading]="true">
       <ng-container content>
-        <toolbar>
+        <toolbar [navigateTo]="['../']">
           @if (!isSmallScreen()) {
             <ng-container heading>
               <h1>{{ QrCardsLocalization.editing }}</h1>

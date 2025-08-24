@@ -199,7 +199,7 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
       false,
     );
     this.qrCardFormFactoryService.patchFiles(qrCard?.files ?? [], false);
-    this.qrCardFormFactoryService.patchDataFormRecord(qrCard?.form?.fields ?? [], qrCard?.data ?? {});
+    this.qrCardFormFactoryService.patchDataFormRecord(qrCard?.form?.fields ?? [], qrCard?.data ?? {}, false);
   });
 
   protected readonly isUploadVisible = signal<boolean>(false);

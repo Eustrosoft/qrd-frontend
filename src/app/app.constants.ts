@@ -1,5 +1,5 @@
 import { Icon, Locale, Theme, ThemeContrast } from '@app/app.models';
-import { Column, SettingsDto } from '@api/settings/settings-api.models';
+import { SettingsDto } from '@api/settings/settings-api.models';
 
 export const AppRoutes = {
   login: 'login',
@@ -47,47 +47,9 @@ export const SKELETON_TIMER = 300;
 export const DEFAULT_ITEMS_PER_PAGE = 20;
 export const QR_API_URL = '/qr/?q=';
 
-export const ALL_QR_TABLE_COLS: Column[] = [
-  {
-    type: 'qr_image',
-    fieldName: 'code_picture',
-    name: 'QR Picture',
-    enable: true,
-  },
-  {
-    type: 'qr_code',
-    fieldName: 'code',
-    name: 'QR Code',
-    enable: true,
-  },
-  {
-    type: 'text',
-    fieldName: 'name',
-    name: 'Name',
-    enable: true,
-  },
-  {
-    type: 'text',
-    fieldName: 'description',
-    name: 'Description',
-    enable: true,
-  },
-  {
-    type: 'date',
-    fieldName: 'created',
-    name: 'Создана',
-    enable: true,
-  },
-  {
-    type: 'date',
-    fieldName: 'updated',
-    name: 'Отредактирована',
-    enable: true,
-  },
-];
 export const DEFAULT_SETTINGS: SettingsDto['settings'] = {
   language: 'en-US',
-  qrTableColumns: [ALL_QR_TABLE_COLS[0], ALL_QR_TABLE_COLS[1], ALL_QR_TABLE_COLS[2], ALL_QR_TABLE_COLS[3]],
+  qrTableColumns: [],
   defaultQrPrintText: '',
   defaultQrPrintTextDown: '',
   checkUploadSize: true,

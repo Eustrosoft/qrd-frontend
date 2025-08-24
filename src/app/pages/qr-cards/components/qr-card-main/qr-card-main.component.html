@@ -68,7 +68,7 @@
   <ng-container content>
     <collapsible-container>
       <ui-grid-block collapsibleList gridTemplateRows="auto" gridTemplateColumns="stretch">
-        @for (file of selectors.qrCard()?.files; track file.id) {
+        @for (file of fileList(); track file.id) {
           <file-list-item
             collapsibleListItem
             [fileLink]="`/files/${file.id}`"

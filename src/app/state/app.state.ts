@@ -5,20 +5,14 @@ import { LocalStorageService } from '@shared/service/local-storage.service';
 import { Locale, Theme, ThemeContrast } from '@app/app.models';
 import { FetchSettings, PatchSettings, SetLocale, SetTheme } from '@app/state/app.actions';
 import { patch } from '@ngxs/store/operators';
-import {
-  ALL_QR_TABLE_COLS,
-  DEFAULT_LOCALE,
-  DEFAULT_SETTINGS,
-  LOCALE_KEY,
-  THEME_CONTRAST_KEY,
-  THEME_KEY,
-} from '@app/app.constants';
+import { DEFAULT_LOCALE, DEFAULT_SETTINGS, LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
 import { QrTableColumnFieldName, SettingsDto } from '@api/settings/settings-api.models';
 import { SettingsService } from '@shared/service/settings.service';
 import { catchError, Observable, of, switchMap, tap } from 'rxjs';
+import { ALL_QR_TABLE_COLS } from '@app/pages/qr-cards/qr-cards.constants';
 
 export interface AppStateModel {
   theme: Theme;

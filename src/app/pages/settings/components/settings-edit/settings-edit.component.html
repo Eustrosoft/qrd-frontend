@@ -1,7 +1,7 @@
 @if (!selectors.settingsState().isLoadingSettings) {
   <card-container [hideHeading]="true">
     <ng-container content>
-      <toolbar>
+      <toolbar [navigateTo]="['../']">
         @if (!isSmallScreen()) {
           <ng-container heading>
             <h1>{{ RouteTitles.settings }}</h1>

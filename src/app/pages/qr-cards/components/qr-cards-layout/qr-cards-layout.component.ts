@@ -18,12 +18,12 @@ import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
 import { ViewModeSettingsComponent } from '@shared/components/view-mode-settings/view-mode-settings.component';
 import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
-import { ALL_QR_TABLE_COLS } from '@app/app.constants';
 import { AppState } from '@app/state/app.state';
 import { PatchSettings } from '@app/state/app.actions';
 import { ColumnConfigOverlayComponent } from '@shared/components/column-config-overlay/column-config-overlay.component';
 import { SharedLocalization } from '@shared/shared.constants';
 import { RouterOutlet } from '@angular/router';
+import { ALL_QR_TABLE_COLS } from '@app/pages/qr-cards/qr-cards.constants';
 
 @Component({
   selector: 'qr-cards-layout',

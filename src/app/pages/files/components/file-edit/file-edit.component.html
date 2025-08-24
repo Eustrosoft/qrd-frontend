@@ -1,7 +1,7 @@
 @if (!selectors.isFileLoading()) {
   <card-container [hideHeading]="true">
     <ng-container content>
-      <toolbar [isActionButtonsShown]="false" ellipsis>
+      <toolbar [navigateTo]="['../']" [isActionButtonsShown]="false" ellipsis>
         <ng-container heading>
           @if (fileId) {
             <h1 ellipsis>

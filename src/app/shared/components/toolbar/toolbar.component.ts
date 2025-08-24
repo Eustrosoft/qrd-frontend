@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { MatMiniFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { ActivatedRoute, Router, UrlTree } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { Location } from '@angular/common';
@@ -22,12 +22,13 @@ export class ToolbarComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
 
-  public readonly navigateTo = input<string | UrlTree | null | undefined>(null);
+  // eslint-disable-next-line
+  public readonly navigateTo = input<unknown[] | null>(null);
   public readonly isActionButtonsShown = input<boolean>(true);
 
   protected goBack(): void {
     if (this.navigateTo()) {
-      this.router.navigate([this.navigateTo(), { relativeTo: this.activatedRoute }]);
+      this.router.navigate(this.navigateTo()!, { relativeTo: this.activatedRoute, replaceUrl: true });
       return;
     }
     this.location.back();
