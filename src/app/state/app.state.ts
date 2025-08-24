@@ -5,7 +5,14 @@ import { LocalStorageService } from '@shared/service/local-storage.service';
 import { Locale, Theme, ThemeContrast } from '@app/app.models';
 import { FetchSettings, PatchSettings, SetLocale, SetTheme } from '@app/state/app.actions';
 import { patch } from '@ngxs/store/operators';
-import { DEFAULT_LOCALE, DEFAULT_SETTINGS, LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/app.constants';
+import {
+  ALL_QR_TABLE_COLS,
+  DEFAULT_LOCALE,
+  DEFAULT_SETTINGS,
+  LOCALE_KEY,
+  THEME_CONTRAST_KEY,
+  THEME_KEY,
+} from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
@@ -69,6 +76,18 @@ export class AppState {
     settings,
   }: AppStateModel): Pick<AppStateModel, 'isLoadingSettings' | 'isSavingSettings' | 'settings'> {
     return { isLoadingSettings, isSavingSettings, settings };
+  }
+
+  @Selector()
+  public static getEnabledQrTableColumns$({ settings }: AppStateModel): string[] {
+    const columns = settings.qrTableColumns;
+
+    return columns.reduce<string[]>((acc, col) => {
+      if (col.enable && ALL_QR_TABLE_COLS.some((column) => column.fieldName === col.fieldName)) {
+        acc.push(col.fieldName);
+      }
+      return acc;
+    }, []);
   }
 
   @Selector()
@@ -140,7 +159,8 @@ export class AppState {
               isLoadingSettings: false,
               settings: patch({
                 language: settings?.language ?? DEFAULT_SETTINGS.language,
-                qrTableColumns: settings?.qrTableColumns ?? DEFAULT_SETTINGS.qrTableColumns,
+                qrTableColumns:
+                  settings?.qrTableColumns?.filter((col) => col.enable) ?? DEFAULT_SETTINGS.qrTableColumns,
                 defaultQrPrintText: settings?.defaultQrPrintText ?? DEFAULT_SETTINGS.defaultQrPrintText,
                 defaultQrPrintTextDown: settings?.defaultQrPrintTextDown ?? DEFAULT_SETTINGS.defaultQrPrintTextDown,
                 checkUploadSize: settings?.checkUploadSize ?? DEFAULT_SETTINGS.checkUploadSize,

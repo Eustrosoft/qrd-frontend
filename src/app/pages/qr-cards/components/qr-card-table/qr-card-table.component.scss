@@ -3,15 +3,29 @@
 @use 'sass:map';
 
 :host {
-  .mat-column-qr-picture {
+  .mat-column-code_picture /* stylelint-disable-line */ {
     min-width: mixins.rem(128);
   }
 
   .mat-column-name {
-    max-width: mixins.rem(136);
+    @include mixins.ellipsis;
+
+    max-width: mixins.rem(220);
   }
 
   .mat-column-description {
+    @include mixins.ellipsis;
+
     max-width: mixins.rem(220);
+  }
+
+  @media #{map.get(bp.$breakpoints, xsmall)} {
+    .mat-column-name {
+      max-width: mixins.rem(200);
+    }
+
+    .mat-column-description {
+      max-width: mixins.rem(160);
+    }
   }
 }

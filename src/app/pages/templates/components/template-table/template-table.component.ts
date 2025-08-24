@@ -7,6 +7,7 @@ import {
   inject,
   OnInit,
   output,
+  signal,
   viewChild,
 } from '@angular/core';
 import {
@@ -96,7 +97,7 @@ export class TemplateTableComponent implements OnInit, AfterViewInit {
 
   protected readonly sort = viewChild.required('sort', { read: MatSort });
 
-  public readonly displayedColumns = ['select', 'name', 'description', 'created', 'updated', 'actions'];
+  protected readonly displayedColumns = signal(['select', 'name', 'description', 'created', 'updated', 'actions']);
   protected readonly dataSource = new MatTableDataSource<TemplateDto>(this.selectors.templateList());
   protected readonly dataSourceEff = effect(() => {
     this.dataSource.data = this.selectors.templateList();

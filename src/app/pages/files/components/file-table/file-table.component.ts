@@ -7,6 +7,7 @@ import {
   inject,
   OnInit,
   output,
+  signal,
   viewChild,
 } from '@angular/core';
 import { TABLE_CONTEXT, TableContext } from '@cdk/tokens/table.tokens';
@@ -102,7 +103,7 @@ export class FileTableComponent implements OnInit, AfterViewInit {
 
   protected readonly sort = viewChild.required('sort', { read: MatSort });
 
-  public readonly displayedColumns = [
+  protected readonly displayedColumns = signal([
     'select',
     'name',
     'fileName',
@@ -111,7 +112,7 @@ export class FileTableComponent implements OnInit, AfterViewInit {
     'isPublic',
     'created',
     'actions',
-  ];
+  ]);
   protected readonly dataSource = new MatTableDataSource<FileDto>(this.selectors.fileList());
   protected readonly dataSourceEff = effect(() => {
     this.dataSource.data = this.selectors.fileList();

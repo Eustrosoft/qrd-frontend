@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  computed,
   DestroyRef,
   effect,
   inject,
@@ -42,6 +43,7 @@ import { ImgLoadStateDirective } from '@shared/directives/img-load-state.directi
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
+import { AppState } from '@app/state/app.state';
 
 @Component({
   selector: 'qr-card-table',
@@ -89,6 +91,7 @@ export class QrCardTableComponent implements OnInit, AfterViewInit {
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly qrCardsService = inject(QrCardsService);
 
+  protected readonly QrCardsLocalization = QrCardsLocalization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly AppRoutes = AppRoutes;
 
@@ -96,6 +99,7 @@ export class QrCardTableComponent implements OnInit, AfterViewInit {
     isQrCardListLoading: QrCardsState.isQrCardListLoading$,
     qrCardList: QrCardsState.getQrCardList$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
+    enabledQrTableColumns: AppState.getEnabledQrTableColumns$,
   });
   protected readonly actions = createDispatchMap({
     fetchQrCardList: FetchQrCardList,
@@ -104,8 +108,10 @@ export class QrCardTableComponent implements OnInit, AfterViewInit {
   });
 
   protected readonly sort = viewChild.required('sort', { read: MatSort });
-
-  public readonly displayedColumns = ['select', 'code', 'qr-picture', 'name', 'description', 'actions'];
+  protected readonly displayedColumns = computed(() => {
+    // ['select', 'code', 'qr-picture', 'name', 'description', 'actions'];
+    return ['select', ...this.selectors.enabledQrTableColumns(), 'actions'];
+  });
   protected readonly dataSource = new MatTableDataSource<QRDto>(this.selectors.qrCardList());
   protected readonly dataSourceEff = effect(() => {
     this.dataSource.data = this.selectors.qrCardList();
@@ -129,6 +135,4 @@ export class QrCardTableComponent implements OnInit, AfterViewInit {
   public ngAfterViewInit(): void {
     this.dataSource.sort = this.sort();
   }
-
-  protected readonly QrCardsLocalization = QrCardsLocalization;
 }

@@ -1,10 +1,12 @@
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   computed,
   contentChild,
   contentChildren,
+  effect,
   inject,
   input,
   viewChild,
@@ -47,8 +49,11 @@ import { SharedLocalization } from '@shared/shared.constants';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableContainerComponent<T> implements AfterContentInit {
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly rangeSelectorService = inject(RangeSelectorService);
   protected readonly ctx = inject<TableContext<T>>(TABLE_CONTEXT);
+
+  protected readonly SharedLocalization = SharedLocalization;
 
   private readonly headerRowDefs = contentChildren(MatHeaderRowDef);
   private readonly rowDefs = contentChildren(MatRowDef);
@@ -70,7 +75,10 @@ export class TableContainerComponent<T> implements AfterContentInit {
     return numSelected === numRows;
   });
 
-  protected readonly SharedLocalization = SharedLocalization;
+  protected readonly colEff = effect(() => {
+    this.ctx.columns();
+    this.cdr.markForCheck();
+  });
 
   public readonly isLoading = input<boolean>(false);
   public readonly selectionChanged = outputFromObservable(this.selectionModelChanges$);
