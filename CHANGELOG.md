@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.8.0...v1.9.0) (2025-08-24)
+
+
+### Features
+
+* **links:** добавлены ссылки для profile-info-overlay ([ebf0f80](https://github.com/Eustrosoft/qrd-frontend/commit/ebf0f80bbc2e5c0ee601257bbd98aafb4397a5c0))
+* **qr-card:** добавлена возможность замены шаблона ([4ecedd9](https://github.com/Eustrosoft/qrd-frontend/commit/4ecedd9e60c1f8b2eef7ef2d02acf9f4b002071d))
+* **qr-img:** доработка логики отображения изображения QR кода ([9d20886](https://github.com/Eustrosoft/qrd-frontend/commit/9d208864464087dec0ebbde0d0b3e100d30fe4ca))
+* **settings:** добавлен компонент настроек и смены пароля ([18baf5e](https://github.com/Eustrosoft/qrd-frontend/commit/18baf5e03212c1cf8af1feae31eab987b5fb85e6))
+* **table:** добавлено табличное представление для списка qr карточек, удален displayType ([090214c](https://github.com/Eustrosoft/qrd-frontend/commit/090214c73399b28b3519e777f4a476ae23298c57))
+* **table:** добавлено табличное представление для списка файлов ([415f006](https://github.com/Eustrosoft/qrd-frontend/commit/415f00666536b2bb0022d6e9eed13c2c7696049f))
+* **table:** добавлено табличное представление для списка шаблонов ([c1cfcec](https://github.com/Eustrosoft/qrd-frontend/commit/c1cfcec65688feafd2c74cf145913a01912ea64e))
+* **table:** доработана логика отображения таблицы и ее столбцов ([6fa67fc](https://github.com/Eustrosoft/qrd-frontend/commit/6fa67fcc9d34612b0b5d8a8a6289f476e60bb479))
+* **table:** доработано поведение таблицы ([4fa4392](https://github.com/Eustrosoft/qrd-frontend/commit/4fa4392a846b383d05d35bc81d9ea6e9fc4e9b30))
+* **temp:** доработана навигация ([4596199](https://github.com/Eustrosoft/qrd-frontend/commit/4596199836a8d92c146290b19639c149c558c504))
+
+
+### Bug Fixes
+
+* **date:** исправление работы с датами ([108d5d1](https://github.com/Eustrosoft/qrd-frontend/commit/108d5d1fec4c8630101e94d47538acaaf2593a8d))
+* **default-temp:** добавлена кнопка создания шаблона по-умолчанию ([fcfce45](https://github.com/Eustrosoft/qrd-frontend/commit/fcfce45f649a1e914a38393f0bae8f62305a644f))
+* **files:** убрана возможность редактировать файлы из шаблона в карточке ([5b64c09](https://github.com/Eustrosoft/qrd-frontend/commit/5b64c0941ab867cd7fc3e9abb76208a70d8617a1))
+* **misc:** исправление ошибок ui ([f0cbea5](https://github.com/Eustrosoft/qrd-frontend/commit/f0cbea571fd2b642f8a4941619d2919d8bb5fd8a))
+* **misc:** правки по замечаниям TODO ([8581118](https://github.com/Eustrosoft/qrd-frontend/commit/8581118dcaac10116021b234f48321983148c360))
+* **qr-list:** добавлена ссылка меню для сервиса qr.qxyz.ru ([d31da51](https://github.com/Eustrosoft/qrd-frontend/commit/d31da5159aa67820e1207d118fe1704dcc2db741))
+* **template:** разделены компоненты создания и редактирования шаблона ([7b13600](https://github.com/Eustrosoft/qrd-frontend/commit/7b1360043676e6be42df640505436cb0fdbd172d))
+* **view:** исправлен возможный баг с неверным переходом в редактирование ([0caedfe](https://github.com/Eustrosoft/qrd-frontend/commit/0caedfe30bb1b398716ae338ae26dbc9b1316106))
+* **view:** исправлены ошибки с атрибутами и файлами ([13048dd](https://github.com/Eustrosoft/qrd-frontend/commit/13048ddaa22c32802fd5d0b6cb4c9279dfdb219b))
+
 ## [1.8.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.7.0...v1.8.0) (2025-08-15)
 
 
