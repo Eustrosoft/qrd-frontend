@@ -39,11 +39,10 @@ import { TableContainerComponent } from '@shared/components/table-container/tabl
 import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.component';
 import { MatIcon } from '@angular/material/icon';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
-import { ImgLoadStateDirective } from '@shared/directives/img-load-state.directive';
-import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
 import { AppState } from '@app/state/app.state';
+import { QrRendererComponent } from '@shared/components/qr-renderer/qr-renderer.component';
 
 @Component({
   selector: 'qr-card-table',
@@ -67,8 +66,7 @@ import { AppState } from '@app/state/app.state';
     MoreMenuComponent,
     MatRow,
     ToHexPipe,
-    ImgLoadStateDirective,
-    UiSkeletonComponent,
+    QrRendererComponent,
   ],
   providers: [
     {

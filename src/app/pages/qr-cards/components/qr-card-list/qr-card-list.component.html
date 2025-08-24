@@ -10,16 +10,7 @@
     >
       <ng-container preview>
         @if (selectors.qrTableColumnVisibility().code_picture) {
-          <img
-            [src]="`https://qrgen.qxyz.ru/generate?q=${code}&amp;color=%23000000&amp;background=%23ffffff&amp;x=128&amp;fileType=SVG&amp;correctionLevel=L`"
-            alt="qr code"
-            imgLoadState
-            #imgLoadState="imgLoadState"
-            [hidden]="!imgLoadState.isLoaded"
-          />
-          @if (!imgLoadState.isLoaded) {
-            <ui-skeleton [style.flex]="'0 0 128px'" width="128" height="128" />
-          }
+          <qr-renderer [code]="code" style="flex: 0 0 128px" />
         }
       </ng-container>
       <ng-container content>

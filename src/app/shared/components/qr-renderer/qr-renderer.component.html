@@ -1,0 +1,4 @@
+<img [src]="srcUrl()" alt="qr code" imgLoadState #imgLoadState="imgLoadState" [hidden]="!imgLoadState.isLoaded" />
+@if (!imgLoadState.isLoaded) {
+  <ui-skeleton width="128" height="128" borderRadius="0" />
+}

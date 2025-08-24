@@ -13,7 +13,6 @@ import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { MatIcon } from '@angular/material/icon';
 import { outputFromObservable } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
-import { ImgLoadStateDirective } from '@shared/directives/img-load-state.directive';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
@@ -24,6 +23,7 @@ import { QRDto } from '@api/qr-cards/qrs-api.models';
 import { AppRoutes } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
+import { QrRendererComponent } from '@shared/components/qr-renderer/qr-renderer.component';
 
 @Component({
   selector: 'qr-card-list',
@@ -34,9 +34,9 @@ import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
     MatMenuItem,
     UiSkeletonComponent,
     MatIcon,
-    ImgLoadStateDirective,
     RouterLink,
     FallbackPipe,
+    QrRendererComponent,
   ],
   providers: [RangeSelectorService],
   templateUrl: './qr-card-list.component.html',

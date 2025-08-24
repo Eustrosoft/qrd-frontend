@@ -23,17 +23,7 @@
   <ng-container matColumnDef="code_picture">
     <th mat-header-cell mat-sort-header *matHeaderCellDef>QR</th>
     <td mat-cell *matCellDef="let element" [title]="element.code | toHex">
-      <img
-        [src]="`https://qrgen.qxyz.ru/generate?q=${element.code}&amp;color=%23000000&amp;background=%23ffffff&amp;x=128&amp;fileType=SVG&amp;correctionLevel=L`"
-        alt="qr code"
-        imgLoadState
-        #imgLoadState="imgLoadState"
-        [hidden]="!imgLoadState.isLoaded"
-        [style.display]="'block'"
-      />
-      @if (!imgLoadState.isLoaded) {
-        <ui-skeleton width="128" height="128" borderRadius="0" />
-      }
+      <qr-renderer [code]="element.code" />
     </td>
   </ng-container>
   <ng-container matColumnDef="name">
