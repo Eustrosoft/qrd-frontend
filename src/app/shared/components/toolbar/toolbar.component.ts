@@ -22,7 +22,6 @@ export class ToolbarComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
 
-  // eslint-disable-next-line
   public readonly navigateTo = input<unknown[] | null>(null);
   public readonly isActionButtonsShown = input<boolean>(true);
 
