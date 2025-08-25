@@ -1,0 +1,13 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  right: 0;
+  width: 100%;
+  bottom: 0;
+  height: mixins.rem(80);
+  z-index: 2;
+  display: block;
+  position: fixed;
+  background: var(--mat-sys-secondary-container);
+  box-shadow: var(--mat-sys-level5);
+}

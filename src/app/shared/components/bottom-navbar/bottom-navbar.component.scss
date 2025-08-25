@@ -1,14 +1,6 @@
 @use 'styles/mixins' as mixins;
 
 :host {
-  right: 0;
-  width: 100%;
-  bottom: 0;
-  z-index: 2;
-  position: fixed;
-  background: var(--mat-sys-primary-container);
-  box-shadow: var(--mat-sys-level5);
-
   .bottom-navbar {
     display: flex;
 

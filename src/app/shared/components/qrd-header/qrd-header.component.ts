@@ -10,7 +10,6 @@ import { ThemePickerOverlayComponent } from '@shared/components/theme-picker-ove
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component';
 import { MatListItem, MatNavList } from '@angular/material/list';
-import { BottomNavbarComponent } from '@shared/components/bottom-navbar/bottom-navbar.component';
 import { createSelectMap, select } from '@ngxs/store';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
@@ -35,12 +34,12 @@ import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.
     QrdLogoComponent,
     MatNavList,
     MatListItem,
-    BottomNavbarComponent,
     UiFlexBlockComponent,
     MiniProfileInfoComponent,
     CreateMenuOverlayComponent,
     MatIcon,
     OverlayAnimationDirective,
+    MatButton,
   ],
   templateUrl: './qrd-header.component.html',
   styleUrl: './qrd-header.component.scss',
