@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -9,6 +10,8 @@ import {
   OnDestroy,
   OnInit,
   signal,
+  TemplateRef,
+  viewChild,
 } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
@@ -49,7 +52,7 @@ import { FileAsUrlComponent } from '@app/pages/files/components/file-upload/file
 import { FileAttachmentModeComponent } from '@app/pages/files/components/file-upload/file-attachment-mode/file-attachment-mode.component';
 import { FileListItemComponent } from '@shared/components/file-list-item/file-list-item.component';
 import { FileUploadBlobComponent } from '@app/pages/files/components/file-upload/file-upload-blob/file-upload-blob.component';
-import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
+import { MatButton, MatFabButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
@@ -72,6 +75,8 @@ import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-match
 import { Iso8601DateFormatDirective } from '@shared/directives/iso8601-date-format.directive';
 import { FetchTemplate } from '@app/pages/templates/state/templates.actions';
 import { DEFAULT_EMPTY_ID } from '@app/app.constants';
+import { UiBottomMenuService } from '@ui/ui-bottom-menu/ui-bottom-menu.service';
+import { MobileToolbarComponent } from '@shared/components/mobile-toolbar/mobile-toolbar.component';
 
 @Component({
   selector: 'qr-card-edit',
@@ -109,17 +114,20 @@ import { DEFAULT_EMPTY_ID } from '@app/app.constants';
     IndicatorComponent,
     RouterLink,
     Iso8601DateFormatDirective,
+    MobileToolbarComponent,
+    MatMiniFabButton,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './qr-card-edit.component.html',
   styleUrl: './qr-card-edit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeactivate {
+export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy, CanComponentDeactivate {
   private readonly qrCardFormFactoryService = inject(QrCardFormFactoryService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly actions$ = inject(Actions);
   private readonly uiSidenavService = inject(UiSidenavService);
+  private readonly uiBottomMenuService = inject(UiBottomMenuService);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
@@ -208,6 +216,8 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
   protected readonly fileInEditIndex = signal<number | null>(null);
   protected readonly fileInEditMetadata = signal<FileEditableMetadata | null>(null);
 
+  protected readonly mobileToolbar = viewChild.required('mobileToolbar', { read: TemplateRef<unknown> });
+
   protected readonly RouteTitles = RouteTitles;
   protected readonly QrCardsLocalization = QrCardsLocalization;
   protected readonly SharedLocalization = SharedLocalization;
@@ -223,8 +233,13 @@ export class QrCardEditComponent implements OnInit, OnDestroy, CanComponentDeact
     this.initFormSubs();
   }
 
+  public ngAfterContentInit(): void {
+    this.uiBottomMenuService.renderTemplate(this.mobileToolbar());
+  }
+
   public ngOnDestroy(): void {
     this.actions.clearQrCard();
+    this.uiBottomMenuService.renderDefaultCmp();
   }
 
   protected initFormSubs(): void {

@@ -3,11 +3,4 @@
 :host {
   gap: mixins.rem(16);
   display: grid;
-
-  .save-fab-btn {
-    right: mixins.rem(16);
-    bottom: mixins.rem(96);
-    z-index: 2;
-    position: fixed !important;
-  }
 }

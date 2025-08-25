@@ -1,0 +1,11 @@
+<a routerLink="../" [relativeTo]="activatedRoute" class="mini-fab-md mini-fab-primary" mat-mini-fab>
+  <mat-icon class="icon-md icon-on-secondary">chevron_left</mat-icon>
+</a>
+<ui-flex-block gapSize="8">
+  <ng-content select="[content]" />
+  @if (showMoreMenu()) {
+    <more-menu>
+      <ng-content select="[menu-items]" />
+    </more-menu>
+  }
+</ui-flex-block>

@@ -1,4 +1,13 @@
-import { ComponentRef, Injectable, Injector, signal, Type, ViewContainerRef } from '@angular/core';
+import {
+  ComponentRef,
+  EmbeddedViewRef,
+  Injectable,
+  Injector,
+  signal,
+  TemplateRef,
+  Type,
+  ViewContainerRef,
+} from '@angular/core';
 import { BottomMenuConfig } from '@ui/ui-bottom-menu/ui-bottom-menu.models';
 import { BottomNavbarComponent } from '@shared/components/bottom-navbar/bottom-navbar.component';
 
@@ -15,6 +24,7 @@ export class UiBottomMenuService {
 
   private readonly _menuVcr = signal<ViewContainerRef | null>(null);
   private readonly _menuCmpRef = signal<ComponentRef<unknown> | undefined>(undefined);
+  private readonly _menuViewRef = signal<EmbeddedViewRef<unknown> | undefined>(undefined);
   private readonly _menuConfig = signal<BottomMenuConfig>(this.defaultMenuConfig);
 
   public setBottomMenuVcr(vcr: ViewContainerRef): void {
@@ -31,6 +41,11 @@ export class UiBottomMenuService {
     this.createComponent(cmp, cfg);
   }
 
+  public renderTemplate<T>(cmp: TemplateRef<T>): void {
+    this.clearCmpVcr();
+    this.createEmbeddedView(cmp);
+  }
+
   public renderDefaultCmp(): void {
     this.render(BottomNavbarComponent);
   }
@@ -43,6 +58,11 @@ export class UiBottomMenuService {
       injector: cfg.injector,
     });
     this._menuCmpRef.set(cmpRef);
+  }
+
+  private createEmbeddedView<T>(template: TemplateRef<T>, ctx: T | undefined = undefined): void {
+    const viewRef = this._menuVcr()?.createEmbeddedView<T>(template, ctx);
+    this._menuViewRef.set(viewRef);
   }
 
   private mergeConfig(config: Partial<BottomMenuConfig>): BottomMenuConfig {
