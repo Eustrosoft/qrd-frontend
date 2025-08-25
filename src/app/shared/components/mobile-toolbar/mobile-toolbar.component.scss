@@ -4,7 +4,7 @@
   gap: mixins.rem(8);
   height: 100%;
   display: flex;
-  padding: mixins.rem(8);
+  padding: var(--main-padding-vertical) var(--main-padding-horizontal);
   align-items: center;
   justify-content: space-between;
 }
