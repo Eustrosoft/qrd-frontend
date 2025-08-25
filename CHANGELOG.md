@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.1](https://github.com/Eustrosoft/qrd-frontend/compare/v1.10.0...v1.10.1) (2025-08-25)
+
+
+### Bug Fixes
+
+* **selection:** исправлена ошибка при выборе нескольких записей QR карточек ([99fe243](https://github.com/Eustrosoft/qrd-frontend/commit/99fe243d71c028cd1851275070ff0c769ef58f25))
+
 ## [1.10.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.9.2...v1.10.0) (2025-08-25)
 
 
