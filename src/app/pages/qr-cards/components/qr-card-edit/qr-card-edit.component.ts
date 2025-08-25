@@ -52,7 +52,7 @@ import { FileAsUrlComponent } from '@app/pages/files/components/file-upload/file
 import { FileAttachmentModeComponent } from '@app/pages/files/components/file-upload/file-attachment-mode/file-attachment-mode.component';
 import { FileListItemComponent } from '@shared/components/file-list-item/file-list-item.component';
 import { FileUploadBlobComponent } from '@app/pages/files/components/file-upload/file-upload-blob/file-upload-blob.component';
-import { MatButton, MatFabButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
+import { MatButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
@@ -103,7 +103,6 @@ import { MobileToolbarComponent } from '@shared/components/mobile-toolbar/mobile
     MatError,
     MatOption,
     MatInput,
-    MatFabButton,
     MatIconButton,
     MatHint,
     InteractionEffect,
