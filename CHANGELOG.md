@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.9.2...v1.10.0) (2025-08-25)
+
+
+### Features
+
+* **menu:** добавлен компонент динамического меню для моб. версии ([d69fae5](https://github.com/Eustrosoft/qrd-frontend/commit/d69fae565968e52ce3f4267844218ced7febbc78))
+* **mobile-menu:** компонент динамического меню интегрирован в qr-card-edit ([a1d04fc](https://github.com/Eustrosoft/qrd-frontend/commit/a1d04fcde2de59088cbcd76473dc72bc2137727c))
+
 ### [1.9.2](https://github.com/Eustrosoft/qrd-frontend/compare/v1.9.1...v1.9.2) (2025-08-24)
 
 
