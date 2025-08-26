@@ -25,7 +25,7 @@ export class FileUploadFormFactoryService {
     return this._fileAsUrlForm;
   }
 
-  public fileUploadFormHasUnsavedChanges = toSignal(
+  public readonly fileUploadFormHasUnsavedChanges = toSignal(
     this.fileUploadForm.valueChanges.pipe(
       startWith(this.fileUploadForm.getRawValue()),
       map((value) => easyHash(value)),
@@ -37,7 +37,7 @@ export class FileUploadFormFactoryService {
     { initialValue: false },
   );
 
-  public fileAsUrlFormHasUnsavedChanges = toSignal(
+  public readonly fileAsUrlFormHasUnsavedChanges = toSignal(
     this.fileAsUrlForm.valueChanges.pipe(
       startWith(this.fileAsUrlForm.getRawValue()),
       map((value) => easyHash(value)),

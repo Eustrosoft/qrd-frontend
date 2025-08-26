@@ -5,11 +5,19 @@ export const ConfirmationDialogLocalization = {
   confirmation: $localize`:@@confirmDialog.confirmation:Confirmation`,
   confirmationRequired: $localize`:@@confirmDialog.confirmationRequired:Confirmation required`,
   warning: $localize`:@@confirmDialog.warning:Warning`,
+  templateChange: $localize`:@@confirmDialog.templateChange:Changing the template will change all fields and data, proceed?`,
   localeChange: $localize`:@@confirmDialog.localeChange:Change of language requires reload, proceed?`,
   deletion: $localize`:@@confirmDialog.deletion:Deletion`,
   areYouSure: $localize`:@@confirmDialog.areYouSure:Are you sure?`,
   sure: $localize`:@@confirmDialog.sure:Yes, I am sure`,
   saveBeforeExit: $localize`:@@confirmDialog.saveBeforeExit:Looks like form contains unsaved changes. Save data before exit?`,
+};
+
+export const ChangeTemplateDialogData: ConfirmationDialogData = {
+  textContent: ConfirmationDialogLocalization.confirmation,
+  textSubContent: ConfirmationDialogLocalization.templateChange,
+  cancelButtonText: SharedLocalization.no,
+  confirmButtonText: SharedLocalization.yes,
 };
 
 export const DeletionDialogData: ConfirmationDialogData = {

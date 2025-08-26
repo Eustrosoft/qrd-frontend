@@ -1,5 +1,4 @@
 import { Icon, Locale, Theme, ThemeContrast } from '@app/app.models';
-import { SettingsDto } from '@api/settings/settings-api.models';
 
 export const AppRoutes = {
   login: 'login',
@@ -46,11 +45,3 @@ export const DEFAULT_EMPTY_ID = -1;
 export const SKELETON_TIMER = 300;
 export const DEFAULT_ITEMS_PER_PAGE = 20;
 export const QR_API_URL = '/qr/?q=';
-
-export const DEFAULT_SETTINGS: SettingsDto['settings'] = {
-  language: 'en-US',
-  qrTableColumns: [],
-  defaultQrPrintText: '',
-  defaultQrPrintTextDown: '',
-  checkUploadSize: true,
-};

@@ -75,7 +75,7 @@ export class SettingsEditComponent implements CanComponentDeactivate {
     defaultQrPrintTextDown: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_NAME_LENGTH)]),
   });
 
-  public formHasUnsavedChanges = toSignal(
+  public readonly formHasUnsavedChanges = toSignal(
     merge(
       this.form.valueChanges.pipe(
         startWith(this.form.getRawValue()),

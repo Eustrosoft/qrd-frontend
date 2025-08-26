@@ -114,7 +114,7 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     { requireSync: true },
   );
 
-  public formHasUnsavedChanges = toSignal(
+  public readonly formHasUnsavedChanges = toSignal(
     merge(
       this.form().valueChanges.pipe(
         startWith(this.form().getRawValue()),

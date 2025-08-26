@@ -132,8 +132,7 @@
       </ng-container>
       <ng-container content>
         @for (field of selectors.qrCard()?.form?.fields; track field) {
-          <ui-grid-block [gridTemplateColumns]="fieldsGridTemplateColumns()" gridAlignItems="center">
-            <p>{{ field.caption }}</p>
+          <ui-grid-block gridTemplateColumns="1fr" gridAlignItems="center">
             @if (
               field.fieldType === 'TEXT' ||
               field.fieldType === 'URL' ||
@@ -143,7 +142,7 @@
               field.fieldType === 'EDIT'
             ) {
               <mat-form-field class="form-field-lg" floatLabel="always">
-                <mat-label> {{ SharedLocalization.value }} </mat-label>
+                <mat-label> {{ field.caption }} </mat-label>
                 <input
                   [formControl]="form().controls.data.controls[field.name]"
                   [placeholder]="field.placeholder"
@@ -154,7 +153,7 @@
             }
             @if (field.fieldType === 'TEXTAREA') {
               <mat-form-field class="form-field-lg" floatLabel="always">
-                <mat-label> {{ SharedLocalization.value }} </mat-label>
+                <mat-label> {{ field.caption }} </mat-label>
                 <textarea
                   [formControl]="form().controls.data.controls[field.name]"
                   [placeholder]="field.placeholder"
@@ -165,7 +164,7 @@
             }
             @if (field.fieldType === 'DATE') {
               <mat-form-field class="form-field-lg" floatLabel="always">
-                <mat-label>{{ SharedLocalization.value }}</mat-label>
+                <mat-label>{{ field.caption }}</mat-label>
                 <input
                   [formControl]="form().controls.data.controls[field.name]"
                   [placeholder]="field.placeholder"

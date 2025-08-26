@@ -7,6 +7,7 @@ import {
   effect,
   inject,
   inputBinding,
+  linkedSignal,
   OnDestroy,
   OnInit,
   signal,
@@ -17,7 +18,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { distinctUntilChanged, filter, map, merge, Observable, of, pairwise, startWith, switchMap } from 'rxjs';
+import { distinctUntilChanged, EMPTY, map, merge, Observable, of, pairwise, startWith, switchMap } from 'rxjs';
 import { DictionaryItem } from '@shared/shared.models';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
@@ -77,6 +78,10 @@ import { FetchTemplate } from '@app/pages/templates/state/templates.actions';
 import { DEFAULT_EMPTY_ID } from '@app/app.constants';
 import { UiBottomMenuService } from '@ui/ui-bottom-menu/ui-bottom-menu.service';
 import { MobileToolbarComponent } from '@shared/components/mobile-toolbar/mobile-toolbar.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
+import { ChangeTemplateDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
+import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
 
 @Component({
   selector: 'qr-card-edit',
@@ -127,6 +132,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
   private readonly actions$ = inject(Actions);
   private readonly uiSidenavService = inject(UiSidenavService);
   private readonly uiBottomMenuService = inject(UiBottomMenuService);
+  private readonly matDialog = inject(MatDialog);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
@@ -136,7 +142,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     { requireSync: true },
   );
 
-  public formHasUnsavedChanges = toSignal(
+  public readonly formHasUnsavedChanges = toSignal(
     merge(
       this.form().valueChanges.pipe(
         startWith(this.form().getRawValue()),
@@ -241,11 +247,39 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     this.uiBottomMenuService.renderDefaultCmp();
   }
 
+  protected readonly prevFormId = toSignal(
+    this.form().controls.formId.valueChanges.pipe(
+      pairwise(),
+      map(([prev]) => prev),
+      startWith(this.form().controls.formId.getRawValue()),
+    ),
+    { requireSync: true },
+  );
+
+  protected readonly lastSelectedFormId = linkedSignal<number, number>({
+    source: this.prevFormId,
+    computation: (next, prev) => prev?.value ?? next,
+  });
+
   protected initFormSubs(): void {
     this.form()
       .controls.formId.valueChanges.pipe(
-        filter((formId) => !!formId && formId !== DEFAULT_EMPTY_ID),
-        switchMap(() => this.actions.replaceQrCardFields(this.form().getRawValue(), this.destroyRef)),
+        switchMap(() =>
+          this.matDialog
+            .open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(ConfirmationDialogComponent, {
+              data: ChangeTemplateDialogData,
+            })
+            .afterClosed(),
+        ),
+        switchMap((result) => {
+          if (!result) {
+            this.form().controls.formId.setValue(this.lastSelectedFormId(), { emitEvent: false });
+            this.lastSelectedFormId.set(this.form().controls.formId.getRawValue());
+            return EMPTY;
+          }
+          this.lastSelectedFormId.set(this.form().controls.formId.getRawValue());
+          return this.actions.replaceQrCardFields(this.form().getRawValue(), this.destroyRef);
+        }),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
