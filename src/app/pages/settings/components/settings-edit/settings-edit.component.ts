@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
+import {
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  OnDestroy,
+  TemplateRef,
+  viewChild,
+} from '@angular/core';
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
@@ -35,6 +45,8 @@ import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.
 import { AllQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { OverlayContainerComponent } from '@shared/components/overlay-container/overlay-container.component';
+import { MobileToolbarComponent } from '@shared/components/mobile-toolbar/mobile-toolbar.component';
+import { UiBottomMenuService } from '@ui/ui-bottom-menu/ui-bottom-menu.service';
 
 @Component({
   selector: 'settings-edit',
@@ -61,15 +73,17 @@ import { OverlayContainerComponent } from '@shared/components/overlay-container/
     OverlayAnimationDirective,
     CdkOverlayOrigin,
     OverlayContainerComponent,
+    MobileToolbarComponent,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './settings-edit.component.html',
   styleUrl: './settings-edit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsEditComponent implements CanComponentDeactivate {
+export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanComponentDeactivate {
   private readonly fb = inject(FormBuilder);
   private readonly actions$ = inject(Actions);
+  private readonly uiBottomMenuService = inject(UiBottomMenuService);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
 
@@ -79,6 +93,8 @@ export class SettingsEditComponent implements CanComponentDeactivate {
   protected readonly RouteTitles = RouteTitles;
   protected readonly AppRoutes = AppRoutes;
   protected readonly AllQrTableCols = AllQrTableCols;
+
+  protected readonly mobileToolbar = viewChild.required('mobileToolbar', { read: TemplateRef<unknown> });
 
   protected readonly form = this.fb.group<SettingsForm>({
     checkUploadSize: this.fb.nonNullable.control<boolean>(false),
@@ -128,6 +144,14 @@ export class SettingsEditComponent implements CanComponentDeactivate {
     }
     return 'repeat(3, 1fr)';
   });
+
+  public ngAfterContentInit(): void {
+    this.uiBottomMenuService.renderTemplate(this.mobileToolbar());
+  }
+
+  public ngOnDestroy(): void {
+    this.uiBottomMenuService.renderDefaultCmp();
+  }
 
   public canDeactivate(isConfirmed: boolean | undefined): Observable<boolean> {
     if (isConfirmed === undefined) {

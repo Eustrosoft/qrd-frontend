@@ -103,3 +103,21 @@
   <ui-skeleton height="262" />
   <ui-skeleton height="200" />
 }
+<ng-template #mobileToolbar>
+  <mobile-toolbar>
+    <ng-container content>
+      @if (!selectors.settingsState().isSavingSettings) {
+        <button (click)="saveData()" class="button-md" mat-flat-button>
+          <ui-flex-block gapSize="4">
+            {{ SharedLocalization.save }}
+            @if (formHasUnsavedChanges()) {
+              <indicator />
+            }
+          </ui-flex-block>
+        </button>
+      } @else {
+        <ui-skeleton height="40" width="128" />
+      }
+    </ng-container>
+  </mobile-toolbar>
+</ng-template>
