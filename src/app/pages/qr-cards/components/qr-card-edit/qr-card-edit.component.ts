@@ -82,6 +82,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ChangeTemplateDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
 import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
+import { TextareaAutoresizeDirective } from '@shared/directives/textarea-autoresize.directive';
 
 @Component({
   selector: 'qr-card-edit',
@@ -120,6 +121,7 @@ import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/c
     Iso8601DateFormatDirective,
     MobileToolbarComponent,
     MatMiniFabButton,
+    TextareaAutoresizeDirective,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './qr-card-edit.component.html',
