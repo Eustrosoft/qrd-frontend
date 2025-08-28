@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.12.0...v1.13.0) (2025-08-28)
+
+
+### Features
+
+* **deeplink:** доработано позиционирование при отсутствии аутентификации ([93fc0dc](https://github.com/Eustrosoft/qrd-frontend/commit/93fc0dca332e3bef6083d266eeb5884bc7fd5533))
+
 ## [1.12.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.11.0...v1.12.0) (2025-08-28)
 
 
