@@ -4,7 +4,7 @@ import { ChangePassword, FetchAuthInfo, Login, Logout, ResetAuthState, RestoreAu
 import { AuthService } from '@modules/auth/auth.service';
 import { catchError, Observable, switchMap, tap, throwError } from 'rxjs';
 import { AppRoutes, IS_AUTHENTICATED_KEY } from '@app/app.constants';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { patch } from '@ngxs/store/operators';
 import { LocalStorageService } from '@shared/service/local-storage.service';
 import { ParticipantDto } from '@api/api.models';
@@ -37,6 +37,7 @@ export class AuthState {
   private readonly authService = inject(AuthService);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
   private readonly snackbarService = inject(SnackbarService);
 
   @Selector()
@@ -67,7 +68,8 @@ export class AuthState {
         next: () => {
           setState(patch({ isAuthenticated: true }));
           this.localStorageService.set(IS_AUTHENTICATED_KEY, '1');
-          this.router.navigate([AppRoutes.qrCards]);
+          const deeplink = this.activatedRoute.snapshot.queryParamMap.get('deeplink');
+          this.router.navigateByUrl(deeplink ?? `/${AppRoutes.qrCards}`);
         },
       }),
       switchMap(() => dispatch(FetchAuthInfo)),
