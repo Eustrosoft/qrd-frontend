@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -8,6 +9,8 @@ import {
   OnDestroy,
   OnInit,
   signal,
+  TemplateRef,
+  viewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
@@ -23,7 +26,7 @@ import {
   FetchTemplate,
   SaveTemplate,
 } from '@app/pages/templates/state/templates.actions';
-import { MatButton, MatFabButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
+import { MatButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -61,6 +64,8 @@ import { FileUploadBlobComponent } from '@app/pages/files/components/file-upload
 import { FileAttachmentModeComponent } from '@app/pages/files/components/file-upload/file-attachment-mode/file-attachment-mode.component';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
 import { IndicatorComponent } from '@shared/components/indicator/indicator.component';
+import { MobileToolbarComponent } from '@shared/components/mobile-toolbar/mobile-toolbar.component';
+import { UiBottomMenuService } from '@ui/ui-bottom-menu/ui-bottom-menu.service';
 
 @Component({
   selector: 'template-edit',
@@ -86,7 +91,6 @@ import { IndicatorComponent } from '@shared/components/indicator/indicator.compo
     DatePipe,
     FileListItemComponent,
     MatProgressSpinner,
-    MatFabButton,
     MatSuffix,
     MatTooltip,
     MatMiniFabButton,
@@ -95,16 +99,18 @@ import { IndicatorComponent } from '@shared/components/indicator/indicator.compo
     FileUploadBlobComponent,
     FileAttachmentModeComponent,
     IndicatorComponent,
+    MobileToolbarComponent,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './template-edit.component.html',
   styleUrl: './template-edit.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDeactivate {
+export class TemplateEditComponent implements OnInit, AfterContentInit, OnDestroy, CanComponentDeactivate {
   private readonly templateFormFactoryService = inject(TemplateFormFactoryService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly actions$ = inject(Actions);
+  private readonly uiBottomMenuService = inject(UiBottomMenuService);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
@@ -191,6 +197,8 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
   protected readonly fileInEditIndex = signal<number | null>(null);
   protected readonly fileInEditMetadata = signal<FileEditableMetadata | null>(null);
 
+  protected readonly mobileToolbar = viewChild.required('mobileToolbar', { read: TemplateRef<unknown> });
+
   protected readonly RouteTitles = RouteTitles;
   protected readonly TemplatesLocalization = TemplatesLocalization;
   protected readonly SharedLocalization = SharedLocalization;
@@ -203,8 +211,13 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
     this.actions.fetchDictionaryByName('INPUT_TYPE', this.destroyRef);
   }
 
+  public ngAfterContentInit(): void {
+    this.uiBottomMenuService.renderTemplate(this.mobileToolbar());
+  }
+
   public ngOnDestroy(): void {
     this.actions.clearTemplate();
+    this.uiBottomMenuService.renderDefaultCmp();
   }
 
   protected addField(): void {

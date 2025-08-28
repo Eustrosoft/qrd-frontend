@@ -266,15 +266,6 @@
         } @else {
           <ui-skeleton height="312" />
         }
-        @if (isSmallScreen()) {
-          @if (!selectors.isSaveInProgress()) {
-            <button (click)="saveData()" class="fab-lg fab-primary-container save-fab-btn" mat-fab>
-              <mat-icon class="icon-primary">save</mat-icon>
-            </button>
-          } @else {
-            <ui-skeleton height="56" width="56" borderRadius="50%" class="save-fab-btn" />
-          }
-        }
       </ng-container>
     </card-container>
   } @else {
@@ -285,3 +276,21 @@
 } @else {
   <banner [title]="ErrorsLocalization.errorFetchingTemplate" />
 }
+<ng-template #mobileToolbar>
+  <mobile-toolbar>
+    <ng-container content>
+      @if (!selectors.isSaveInProgress()) {
+        <button (click)="saveData()" class="button-md" mat-flat-button>
+          <ui-flex-block gapSize="4">
+            {{ SharedLocalization.save }}
+            @if (formHasUnsavedChanges()) {
+              <indicator />
+            }
+          </ui-flex-block>
+        </button>
+      } @else {
+        <ui-skeleton height="40" width="128" />
+      }
+    </ng-container>
+  </mobile-toolbar>
+</ng-template>
