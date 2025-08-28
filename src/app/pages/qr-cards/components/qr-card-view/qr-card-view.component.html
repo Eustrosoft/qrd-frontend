@@ -1,45 +1,49 @@
-@if (!selectors.isQrCardLoading()) {
-  <toolbar>
-    <ng-container heading>
-      @if (!isXSmall()) {
-        <button
-          class="button-anchor-md-with-icon"
-          mat-button
-          interactionEffect
-          [targetSelectors]="['h1', 'mat-icon']"
-          [style.height]="'auto'"
-          [style.flex]="'auto'"
-          [style.justify-content]="'start'"
-          [style.overflow]="'hidden'"
-          #anchor
-          (click)="openCardPreview()"
-        >
-          <h1 truncate [host]="anchor._elementRef.nativeElement">QR №{{ selectors.qrCard()?.code | toHex }}</h1>
-          <mat-icon class="icon-primary">open_in_new</mat-icon>
-        </button>
-      }
-    </ng-container>
-    <ng-container action-buttons>
-      <a [routerLink]="`../${routeParams()['code']}/${AppRoutes.edit}`" class="button-md" mat-flat-button>
-        {{ SharedLocalization.edit }}
-      </a>
-      @if (!selectors.isDeleteInProgress()) {
-        <button
-          (click)="actions.deleteQrCards([selectors.qrCard()!.id], destroyRef, false, true)"
-          class="button-md"
-          mat-flat-button
-        >
-          {{ SharedLocalization.delete }}
-        </button>
-      } @else {
-        <ui-skeleton height="40" width="110" />
-      }
-    </ng-container>
-  </toolbar>
-  <router-outlet style="display: contents" />
+@if (!selectors.isQrCardLoadErr()) {
+  @if (!selectors.isQrCardLoading()) {
+    <toolbar>
+      <ng-container heading>
+        @if (!isXSmall()) {
+          <button
+            class="button-anchor-md-with-icon"
+            mat-button
+            interactionEffect
+            [targetSelectors]="['h1', 'mat-icon']"
+            [style.height]="'auto'"
+            [style.flex]="'auto'"
+            [style.justify-content]="'start'"
+            [style.overflow]="'hidden'"
+            #anchor
+            (click)="openCardPreview()"
+          >
+            <h1 truncate [host]="anchor._elementRef.nativeElement">QR №{{ selectors.qrCard()?.code | toHex }}</h1>
+            <mat-icon class="icon-primary">open_in_new</mat-icon>
+          </button>
+        }
+      </ng-container>
+      <ng-container action-buttons>
+        <a [routerLink]="`../${routeParams()['code']}/${AppRoutes.edit}`" class="button-md" mat-flat-button>
+          {{ SharedLocalization.edit }}
+        </a>
+        @if (!selectors.isDeleteInProgress()) {
+          <button
+            (click)="actions.deleteQrCards([selectors.qrCard()!.id], destroyRef, false, true)"
+            class="button-md"
+            mat-flat-button
+          >
+            {{ SharedLocalization.delete }}
+          </button>
+        } @else {
+          <ui-skeleton height="40" width="110" />
+        }
+      </ng-container>
+    </toolbar>
+    <router-outlet style="display: contents" />
+  } @else {
+    <ui-skeleton height="44" />
+    <ui-skeleton height="48" />
+    <ui-skeleton height="160" />
+    <ui-skeleton height="300" />
+  }
 } @else {
-  <ui-skeleton height="44" />
-  <ui-skeleton height="48" />
-  <ui-skeleton height="160" />
-  <ui-skeleton height="300" />
+  <banner [title]="ErrorsLocalization.errorFetchingCard" />
 }

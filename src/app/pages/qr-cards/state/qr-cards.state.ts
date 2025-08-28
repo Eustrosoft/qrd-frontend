@@ -46,7 +46,7 @@ export interface QrCardsStateModel {
   qrCardList: QRDto[];
   selectedQrCardList: number[];
   isQrCardLoading: boolean;
-  qrCardLoadErr: boolean;
+  isQrCardLoadErr: boolean;
   qrCard: QRDto | null;
   qrCardPreviewUrl: string;
   isDeleteInProgress: boolean;
@@ -70,7 +70,7 @@ const defaults: QrCardsStateModel = {
   qrCardList: [],
   selectedQrCardList: [],
   isQrCardLoading: false,
-  qrCardLoadErr: false,
+  isQrCardLoadErr: false,
   qrCard: null,
   qrCardPreviewUrl: '',
   isDeleteInProgress: false,
@@ -135,8 +135,8 @@ export class QrCardsState {
   }
 
   @Selector()
-  public static qrCardLoadErr$({ qrCardLoadErr }: QrCardsStateModel): boolean {
-    return qrCardLoadErr;
+  public static isQrCardLoadErr$({ isQrCardLoadErr }: QrCardsStateModel): boolean {
+    return isQrCardLoadErr;
   }
 
   @Selector()
@@ -236,7 +236,7 @@ export class QrCardsState {
     { code, destroyRef, showLoading, storeProp }: FetchQrCard,
   ): Observable<QRDto> {
     if (showLoading) {
-      setState(patch({ [storeProp]: true, qrCardLoadErr: false }));
+      setState(patch({ [storeProp]: true, isQrCardLoadErr: false }));
     }
     const qrHexCode = this.toHexPipe.transform(code);
     return timer(SKELETON_TIMER).pipe(
@@ -254,7 +254,7 @@ export class QrCardsState {
       }),
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
-        setState(patch({ [storeProp]: false, qrCardLoadErr: true }));
+        setState(patch({ [storeProp]: false, isQrCardLoadErr: true }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),
@@ -263,7 +263,7 @@ export class QrCardsState {
 
   @Action(ClearQrCard)
   public clearQrCard({ setState }: StateContext<QrCardsStateModel>): void {
-    setState(patch({ qrCard: null, qrCardLoadErr: false, isQrCardLoading: false }));
+    setState(patch({ qrCard: null, isQrCardLoadErr: false, isQrCardLoading: false }));
   }
 
   @Action(SetSelectedQrCards)

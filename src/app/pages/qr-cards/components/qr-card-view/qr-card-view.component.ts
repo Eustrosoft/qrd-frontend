@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, inputBinding, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { AppRoutes } from '@app/app.constants';
-import { TabLink } from '@shared/shared.models';
-import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
+import { SharedLocalization } from '@shared/shared.constants';
 import { MatButton } from '@angular/material/button';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { DeleteQrCards, FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
@@ -17,6 +16,8 @@ import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
+import { BannerComponent } from '@shared/components/banner/banner.component';
+import { ErrorsLocalization } from '@modules/error/error.constants';
 
 @Component({
   selector: 'qr-card-view',
@@ -30,6 +31,7 @@ import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
     TruncateDirective,
     ToHexPipe,
     ToolbarComponent,
+    BannerComponent,
   ],
   templateUrl: './qr-card-view.component.html',
   styleUrl: './qr-card-view.component.scss',
@@ -41,22 +43,23 @@ export class QrCardViewComponent implements OnInit {
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
+
   protected readonly selectors = createSelectMap({
     isQrCardLoading: QrCardsState.isQrCardLoading$,
+    isQrCardLoadErr: QrCardsState.isQrCardLoadErr$,
     qrCard: QrCardsState.getQrCard$,
     qrCardPreviewUrl: QrCardsState.getQrCardPreviewUrl$,
     isDeleteInProgress: QrCardsState.isDeleteInProgress$,
   });
+
   protected readonly actions = createDispatchMap({
     fetchQrCard: FetchQrCard,
     deleteQrCards: DeleteQrCards,
   });
-  protected readonly tabLinks: TabLink[] = [
-    { link: AppRoutes.qrCard, title: RouteTitles.card },
-    { link: AppRoutes.attrs, title: RouteTitles.attrs },
-  ];
-  protected readonly SharedLocalization = SharedLocalization;
+
   protected readonly AppRoutes = AppRoutes;
+  protected readonly SharedLocalization = SharedLocalization;
+  protected readonly ErrorsLocalization = ErrorsLocalization;
 
   public ngOnInit(): void {
     this.actions.fetchQrCard(this.routeParams()['code'], this.destroyRef);

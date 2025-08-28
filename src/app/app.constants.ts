@@ -15,6 +15,7 @@ export const AppRoutes = {
   new: 'new',
   edit: 'edit',
   settings: 'settings',
+  deeplink: 'deeplink',
   password: 'password',
   notFound: 'not-found',
   unauthenticated: 'unauthenticated',

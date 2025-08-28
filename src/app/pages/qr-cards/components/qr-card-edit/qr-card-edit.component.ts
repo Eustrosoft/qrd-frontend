@@ -163,7 +163,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
   protected readonly selectors = createSelectMap({
     qrCardActions: DictionaryRegistryState.getDictionary$<DictionaryItem>('qrCardActions'),
     isQrCardLoading: QrCardsState.isQrCardLoading$,
-    qrCardLoadErr: QrCardsState.qrCardLoadErr$,
+    isQrCardLoadErr: QrCardsState.isQrCardLoadErr$,
     isSaveInProgress: QrCardsState.isSaveInProgress$,
     isQrCardFilesLoading: QrCardsState.isQrCardFilesLoading$,
     qrCard: QrCardsState.getQrCard$,

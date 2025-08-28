@@ -132,7 +132,7 @@ export class TemplateEditComponent implements OnInit, OnDestroy, CanComponentDea
 
   protected readonly selectors = createSelectMap({
     isTemplateLoading: TemplatesState.isTemplateLoading$,
-    templateLoadErr: TemplatesState.templateLoadErr$,
+    isTemplateLoadErr: TemplatesState.isTemplateLoadErr$,
     isSaveInProgress: TemplatesState.isSaveInProgress$,
     isTemplateFilesLoading: TemplatesState.isTemplateFilesLoading$,
     template: TemplatesState.getTemplate$,

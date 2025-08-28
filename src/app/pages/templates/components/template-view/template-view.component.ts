@@ -15,6 +15,8 @@ import { AppRoutes } from '@app/app.constants';
 import { DeleteTemplates, FetchTemplate } from '@app/pages/templates/state/templates.actions';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { BannerComponent } from '@shared/components/banner/banner.component';
+import { ErrorsLocalization } from '@modules/error/error.constants';
 
 @Component({
   selector: 'template-view',
@@ -31,6 +33,7 @@ import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
     UiSkeletonComponent,
     UpperCasePipe,
     RouterLink,
+    BannerComponent,
   ],
   templateUrl: './template-view.component.html',
   styleUrl: './template-view.component.scss',
@@ -41,22 +44,28 @@ export class TemplateViewComponent implements OnInit {
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
+
   protected readonly selectors = createSelectMap({
     isTemplateLoading: TemplatesState.isTemplateLoading$,
+    isTemplateLoadErr: TemplatesState.isTemplateLoadErr$,
     template: TemplatesState.getTemplate$,
     isDeleteInProgress: TemplatesState.isDeleteInProgress$,
   });
+
   protected readonly actions = createDispatchMap({
     fetchTemplate: FetchTemplate,
     deleteTemplates: DeleteTemplates,
   });
+
   protected readonly tabLinks: TabLink[] = [
     { link: AppRoutes.template, title: RouteTitles.template },
     { link: AppRoutes.attrs, title: RouteTitles.attrs },
     { link: AppRoutes.usages, title: RouteTitles.usages },
   ];
+
   protected readonly AppRoutes = AppRoutes;
   protected readonly SharedLocalization = SharedLocalization;
+  protected readonly ErrorsLocalization = ErrorsLocalization;
 
   public ngOnInit(): void {
     this.actions.fetchTemplate(this.routeParams()['id'], this.destroyRef);

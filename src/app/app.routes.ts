@@ -13,6 +13,7 @@ import { AuthState } from '@modules/auth/state/auth.state';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { FilesState } from '@app/pages/files/state/files.state';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
+import { queryRedirectResolver } from '@shared/resolvers/query-redirect.resolver';
 
 export const routes: Routes = [
   {
@@ -58,6 +59,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadChildren: () => import('@app/pages/settings/settings.routes').then((m) => m.settingsRoutes),
   },
+  { path: AppRoutes.deeplink, resolve: { redirect: queryRedirectResolver }, children: [] },
   {
     path: AppRoutes.devSandbox,
     title: RouteTitles.devSandbox,

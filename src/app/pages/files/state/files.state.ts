@@ -34,6 +34,7 @@ export interface FilesStateModel {
   fileList: FileDto[];
   selectedFileList: number[];
   isFileLoading: boolean;
+  isFileLoadErr: boolean;
   file: FileDto | null;
   isFileDownloading: boolean;
   isDeleteInProgress: boolean;
@@ -46,6 +47,7 @@ const defaults: FilesStateModel = {
   fileList: [],
   selectedFileList: [],
   isFileLoading: false,
+  isFileLoadErr: false,
   file: null,
   isFileDownloading: false,
   isDeleteInProgress: false,
@@ -92,6 +94,11 @@ export class FilesState {
   @Selector()
   public static isFileLoading$({ isFileLoading }: FilesStateModel): boolean {
     return isFileLoading;
+  }
+
+  @Selector()
+  public static isFileLoadErr$({ isFileLoadErr }: FilesStateModel): boolean {
+    return isFileLoadErr;
   }
 
   @Selector()
@@ -146,7 +153,7 @@ export class FilesState {
 
   @Action(FetchFile)
   public fetchFile({ setState }: StateContext<FilesStateModel>, { id, destroyRef }: FetchFile): Observable<FileDto> {
-    setState(patch({ isFileLoading: true }));
+    setState(patch({ isFileLoading: true, isFileLoadErr: false }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.filesService.getFile(id)),
       tap({
@@ -156,7 +163,7 @@ export class FilesState {
       }),
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
-        setState(patch({ isFileLoading: false }));
+        setState(patch({ isFileLoading: false, isFileLoadErr: true }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),

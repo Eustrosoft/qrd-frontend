@@ -18,9 +18,10 @@ import { FileUploadState } from '@app/pages/files/components/file-upload/state/f
 import { FileAsUrlComponent } from '@app/pages/files/components/file-upload/file-as-url/file-as-url.component';
 import { FileUploadBlobComponent } from '@app/pages/files/components/file-upload/file-upload-blob/file-upload-blob.component';
 import { FileAttachmentModeComponent } from '@app/pages/files/components/file-upload/file-attachment-mode/file-attachment-mode.component';
-import { TemplatesLocalization } from '@app/pages/templates/templates.constants';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
+import { BannerComponent } from '@shared/components/banner/banner.component';
+import { ErrorsLocalization } from '@modules/error/error.constants';
 
 @Component({
   selector: 'file-edit',
@@ -32,6 +33,7 @@ import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
     FileUploadBlobComponent,
     FileAttachmentModeComponent,
     EllipsisDirective,
+    BannerComponent,
   ],
   templateUrl: './file-edit.component.html',
   styleUrl: './file-edit.component.scss',
@@ -48,6 +50,8 @@ export class FileEditComponent implements OnInit, CanComponentDeactivate {
   protected readonly fileUploadBlobCmp = viewChild(FileUploadBlobComponent);
   protected readonly fileAsUrlCmp = viewChild(FileAsUrlComponent);
 
+  protected readonly ErrorsLocalization = ErrorsLocalization;
+
   protected readonly fileEff = effect(() => {
     if (this.selectors.file()?.storagePath) {
       this.actions.setFileAttachmentMode('fileUrl');
@@ -61,6 +65,7 @@ export class FileEditComponent implements OnInit, CanComponentDeactivate {
     isLoading: FileUploadState.isLoading$,
     uploadState: FileUploadState.getUploadState$,
     isFileLoading: FilesState.isFileLoading$,
+    isFileLoadErr: FilesState.isFileLoadErr$,
     file: FilesState.getFile$,
     isFileDownloading: FilesState.isFileDownloading$,
   });
@@ -120,6 +125,4 @@ export class FileEditComponent implements OnInit, CanComponentDeactivate {
     }
     this.router.navigate(['../', uploadState.fileId], { relativeTo: this.activatedRoute });
   }
-
-  protected readonly TemplatesLocalization = TemplatesLocalization;
 }

@@ -41,7 +41,7 @@ export interface TemplatesStateModel {
   templateList: TemplateDto[];
   selectedTemplateList: number[];
   isTemplateLoading: boolean;
-  templateLoadErr: boolean;
+  isTemplateLoadErr: boolean;
   template: TemplateDto | null;
   isDeleteInProgress: boolean;
   isSaveInProgress: boolean;
@@ -58,7 +58,7 @@ const defaults: TemplatesStateModel = {
   templateList: [],
   selectedTemplateList: [],
   isTemplateLoading: false,
-  templateLoadErr: false,
+  isTemplateLoadErr: false,
   template: null,
   isDeleteInProgress: false,
   isSaveInProgress: false,
@@ -113,8 +113,8 @@ export class TemplatesState {
   }
 
   @Selector()
-  public static templateLoadErr$({ templateLoadErr }: TemplatesStateModel): boolean {
-    return templateLoadErr;
+  public static isTemplateLoadErr$({ isTemplateLoadErr }: TemplatesStateModel): boolean {
+    return isTemplateLoadErr;
   }
 
   @Selector()
@@ -192,7 +192,7 @@ export class TemplatesState {
     { id, destroyRef, showLoading, loadingStoreProp }: FetchTemplate,
   ): Observable<TemplateDto> {
     if (showLoading) {
-      setState(patch({ [loadingStoreProp]: true, templateLoadErr: false }));
+      setState(patch({ [loadingStoreProp]: true, isTemplateLoadErr: false }));
     }
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.templatesService.getTemplate(id)),
@@ -203,7 +203,7 @@ export class TemplatesState {
       }),
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
-        setState(patch({ [loadingStoreProp]: false, templateLoadErr: true }));
+        setState(patch({ [loadingStoreProp]: false, isTemplateLoadErr: true }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),
@@ -212,7 +212,7 @@ export class TemplatesState {
 
   @Action(ClearTemplate)
   public clearTemplate({ setState }: StateContext<TemplatesStateModel>): void {
-    setState(patch({ template: null, templateLoadErr: false, isTemplateLoading: false }));
+    setState(patch({ template: null, isTemplateLoadErr: false, isTemplateLoading: false }));
   }
 
   @Action(SetSelectedTemplates)
