@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.10.1...v1.11.0) (2025-08-28)
+
+
+### Features
+
+* **deeplink:** добавлен функционал позиционирования в приложении через query параметр ([03b40d5](https://github.com/Eustrosoft/qrd-frontend/commit/03b40d5f79c9ca1143e9a589eeafb3c9b8a7f40c))
+* **overlay:** доработан overlay-container, конфиг таблицы QR продублирован в настройки ([6c7297b](https://github.com/Eustrosoft/qrd-frontend/commit/6c7297bb5fd705fe2c50dc82c045770e9473c0ae))
+* **textarea:** добавлен autoresize ([d7db708](https://github.com/Eustrosoft/qrd-frontend/commit/d7db70858265e7e9a8521fa8cf75889b8084d83b))
+
+
+### Bug Fixes
+
+* **toolbar:** исправлены отступы в mobile-toolbar ([6ce68c1](https://github.com/Eustrosoft/qrd-frontend/commit/6ce68c151cf68e2b9f9d768e5c7cd64a4ca9591f))
+
 ### [1.10.1](https://github.com/Eustrosoft/qrd-frontend/compare/v1.10.0...v1.10.1) (2025-08-25)
 
 
