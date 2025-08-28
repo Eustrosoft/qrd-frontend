@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.11.0...v1.12.0) (2025-08-28)
+
+
+### Features
+
+* **toolbar:** mobile-toolbar интегрирован в редактирование настроек ([51ce12e](https://github.com/Eustrosoft/qrd-frontend/commit/51ce12e46c0586c826c244607a10dc97310eaf98))
+* **toolbar:** mobile-toolbar интегрирован в редактирование шаблона ([ed2f93e](https://github.com/Eustrosoft/qrd-frontend/commit/ed2f93e02052b1a9a71b906870febe53a6425704))
+
 ## [1.11.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.10.1...v1.11.0) (2025-08-28)
 
 
