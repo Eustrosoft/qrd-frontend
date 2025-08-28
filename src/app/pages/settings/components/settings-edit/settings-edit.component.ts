@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@a
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
-import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
+import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { SettingsForm } from '@app/pages/settings/settings.models';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, map, merge, Observable, of, pairwise, startWith } from 'rxjs';
@@ -30,6 +30,11 @@ import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { QrRangePipe } from '@shared/pipe/qr-range.pipe';
 import { RouterLink } from '@angular/router';
 import { AppRoutes } from '@app/app.constants';
+import { ColumnConfigOverlayComponent } from '@shared/components/column-config-overlay/column-config-overlay.component';
+import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
+import { AllQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
+import { CdkOverlayOrigin } from '@angular/cdk/overlay';
+import { OverlayContainerComponent } from '@shared/components/overlay-container/overlay-container.component';
 
 @Component({
   selector: 'settings-edit',
@@ -52,6 +57,10 @@ import { AppRoutes } from '@app/app.constants';
     UiSkeletonComponent,
     QrRangePipe,
     RouterLink,
+    ColumnConfigOverlayComponent,
+    OverlayAnimationDirective,
+    CdkOverlayOrigin,
+    OverlayContainerComponent,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './settings-edit.component.html',
@@ -61,6 +70,7 @@ import { AppRoutes } from '@app/app.constants';
 export class SettingsEditComponent implements CanComponentDeactivate {
   private readonly fb = inject(FormBuilder);
   private readonly actions$ = inject(Actions);
+  protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
 
   protected readonly SharedLocalization = SharedLocalization;
@@ -68,6 +78,7 @@ export class SettingsEditComponent implements CanComponentDeactivate {
   protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
   protected readonly RouteTitles = RouteTitles;
   protected readonly AppRoutes = AppRoutes;
+  protected readonly AllQrTableCols = AllQrTableCols;
 
   protected readonly form = this.fb.group<SettingsForm>({
     checkUploadSize: this.fb.nonNullable.control<boolean>(false),

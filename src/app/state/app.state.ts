@@ -12,7 +12,7 @@ import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
 import { QrTableColumnFieldName, SettingsDto } from '@api/settings/settings-api.models';
 import { SettingsService } from '@shared/service/settings.service';
 import { catchError, Observable, of, switchMap, tap } from 'rxjs';
-import { ALL_QR_TABLE_COLS } from '@app/pages/qr-cards/qr-cards.constants';
+import { AllQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
 import { DEFAULT_SETTINGS } from '@app/pages/settings/settings.constants';
 
 export interface AppStateModel {
@@ -78,7 +78,7 @@ export class AppState {
     const columns = settings.qrTableColumns;
 
     return columns.reduce<string[]>((acc, col) => {
-      if (col.enable && ALL_QR_TABLE_COLS.some((column) => column.fieldName === col.fieldName)) {
+      if (col.enable && AllQrTableCols.some((column) => column.fieldName === col.fieldName)) {
         acc.push(col.fieldName);
       }
       return acc;

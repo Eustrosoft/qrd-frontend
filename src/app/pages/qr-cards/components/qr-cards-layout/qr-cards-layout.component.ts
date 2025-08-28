@@ -11,19 +11,20 @@ import {
 } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { SelectionBarComponent } from '@shared/components/selection-bar/selection-bar.component';
 import { MatIcon } from '@angular/material/icon';
-import { MatButton, MatMiniFabButton } from '@angular/material/button';
+import { MatButton, MatFabButton, MatMiniFabButton } from '@angular/material/button';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
-import { ViewModeSettingsComponent } from '@shared/components/view-mode-settings/view-mode-settings.component';
 import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
 import { AppState } from '@app/state/app.state';
 import { PatchSettings } from '@app/state/app.actions';
 import { ColumnConfigOverlayComponent } from '@shared/components/column-config-overlay/column-config-overlay.component';
 import { SharedLocalization } from '@shared/shared.constants';
 import { RouterOutlet } from '@angular/router';
-import { ALL_QR_TABLE_COLS } from '@app/pages/qr-cards/qr-cards.constants';
+import { AllQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
+import { CdkOverlayOrigin } from '@angular/cdk/overlay';
+import { OverlayContainerComponent } from '@shared/components/overlay-container/overlay-container.component';
 
 @Component({
   selector: 'qr-cards-layout',
@@ -34,10 +35,12 @@ import { ALL_QR_TABLE_COLS } from '@app/pages/qr-cards/qr-cards.constants';
     MatMiniFabButton,
     UiSkeletonComponent,
     AnimatedIfDirective,
-    ViewModeSettingsComponent,
     OverlayAnimationDirective,
     ColumnConfigOverlayComponent,
     RouterOutlet,
+    CdkOverlayOrigin,
+    MatFabButton,
+    OverlayContainerComponent,
   ],
   templateUrl: './qr-cards-layout.component.html',
   styleUrl: './qr-cards-layout.component.scss',
@@ -50,7 +53,7 @@ export class QrCardsLayoutComponent {
   protected readonly destroyRef = inject(DestroyRef);
 
   protected readonly SharedLocalization = SharedLocalization;
-  protected readonly ALL_QR_TABLE_COLS = ALL_QR_TABLE_COLS;
+  protected readonly ALL_QR_TABLE_COLS = AllQrTableCols;
 
   protected readonly selectors = createSelectMap({
     searchValue: QrCardsState.getSearchValue$,

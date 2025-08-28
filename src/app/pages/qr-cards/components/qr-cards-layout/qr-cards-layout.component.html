@@ -5,18 +5,23 @@
 >
   <ng-content view-settings>
     @if (!isSmallScreen()) {
-      <view-mode-settings #vmSettings="vmSettings">
+      <overlay-container #overlayContainer="overlayContainer">
+        <ng-container trigger>
+          <button (click)="overlayContainer.openOverlay()" class="fab-md fab-secondary" cdkOverlayOrigin mat-fab>
+            <mat-icon class="icon-on-secondary">settings</mat-icon>
+          </button>
+        </ng-container>
         <column-config-overlay
           [allCols]="ALL_QR_TABLE_COLS"
           [selectedCols]="selectors.settingsState().settings.qrTableColumns"
           [isDisabled]="selectors.settingsState().isLoadingSettings || selectors.settingsState().isSavingSettings"
           (selectedColsChange)="actions.patchSettings({ qrTableColumns: $event })"
           overlayAnimation
-          [isOpen]="vmSettings.isOverlayOpen()"
-          (animationDone)="vmSettings.onOverlayClosed()"
-          (closeOverlay)="vmSettings.onOverlayClosed()"
+          [isOpen]="overlayContainer.isOverlayOpen()"
+          (animationDone)="overlayContainer.onOverlayClosed()"
+          (closeOverlay)="overlayContainer.onOverlayClosed()"
         />
-      </view-mode-settings>
+      </overlay-container>
     }
   </ng-content>
   <selection-bar

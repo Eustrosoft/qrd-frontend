@@ -1,15 +1,7 @@
-<button
-  (click)="openOverlay()"
-  class="fab-md fab-secondary"
-  cdkOverlayOrigin
-  #settingsTrigger="cdkOverlayOrigin"
-  mat-fab
->
-  <mat-icon class="icon-on-secondary">settings</mat-icon>
-</button>
+<ng-content select="[trigger]" />
 <ng-template
   cdkConnectedOverlay
-  [cdkConnectedOverlayOrigin]="settingsTrigger"
+  [cdkConnectedOverlayOrigin]="trigger()"
   [cdkConnectedOverlayOpen]="isOverlayAttached()"
   [cdkConnectedOverlayPositions]="overlayPositions()"
   [cdkConnectedOverlayScrollStrategy]="overlayScrollStrategy"

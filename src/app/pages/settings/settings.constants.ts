@@ -1,5 +1,5 @@
 import { SettingsDto } from '@api/settings/settings-api.models';
-import { ALL_QR_TABLE_COLS } from '@app/pages/qr-cards/qr-cards.constants';
+import { AllQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
 
 export const SettingsLocalization = {
   checkUploadSize: $localize`:@@settings.checkUploadSize:Check file size before uploading`,
@@ -7,6 +7,7 @@ export const SettingsLocalization = {
   defaultQrPrintTextDown: $localize`:@@settings.defaultQrPrintTextDown:Footer text for QR print`,
   main: $localize`:@@settings.main:Main`,
   changePassword: $localize`:@@settings.changePassword:Change password`,
+  qrTableSettings: $localize`:@@settings.qrTableSettings:QR table settings`,
   oldPassword: $localize`:@@settings.oldPassword:Old password`,
   newPassword: $localize`:@@settings.newPassword:New password`,
   repeatNewPassword: $localize`:@@settings.repeatNewPassword:Repeat new password`,
@@ -16,7 +17,7 @@ export const SettingsLocalization = {
 };
 export const DEFAULT_SETTINGS: SettingsDto['settings'] = {
   language: 'en-US',
-  qrTableColumns: [ALL_QR_TABLE_COLS[1], ALL_QR_TABLE_COLS[2], ALL_QR_TABLE_COLS[3]],
+  qrTableColumns: [AllQrTableCols[1], AllQrTableCols[2], AllQrTableCols[3]],
   defaultQrPrintText: '',
   defaultQrPrintTextDown: '',
   checkUploadSize: true,

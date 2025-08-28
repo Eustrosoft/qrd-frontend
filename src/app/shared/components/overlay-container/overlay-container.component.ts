@@ -1,23 +1,26 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { MatFabButton } from '@angular/material/button';
+import { ChangeDetectionStrategy, Component, computed, contentChild, inject, input, signal } from '@angular/core';
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, Overlay } from '@angular/cdk/overlay';
-import { MatIcon } from '@angular/material/icon';
 
 @Component({
-  selector: 'view-mode-settings',
-  imports: [CdkConnectedOverlay, MatIcon, CdkOverlayOrigin, MatFabButton],
-  templateUrl: './view-mode-settings.component.html',
+  selector: 'overlay-container',
+  imports: [CdkConnectedOverlay],
+  templateUrl: './overlay-container.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  exportAs: 'vmSettings',
+  exportAs: 'overlayContainer',
 })
-export class ViewModeSettingsComponent {
+export class OverlayContainerComponent {
   private readonly overlay = inject(Overlay);
+
+  public readonly originX = input<ConnectedPosition['originX']>('end');
+  public readonly overlayX = input<ConnectedPosition['overlayX']>('end');
+
+  protected readonly trigger = contentChild.required(CdkOverlayOrigin);
 
   protected readonly overlayPositions = computed<ConnectedPosition[]>(() => [
     {
-      originX: 'end',
+      originX: this.originX(),
       originY: 'bottom',
-      overlayX: 'end',
+      overlayX: this.overlayX(),
       overlayY: 'top',
       offsetY: 24,
     },
@@ -27,7 +30,7 @@ export class ViewModeSettingsComponent {
   protected readonly isOverlayAttached = signal<boolean>(false);
   protected readonly overlayScrollStrategy = this.overlay.scrollStrategies.close();
 
-  protected openOverlay(): void {
+  public openOverlay(): void {
     this.isOverlayAttached.set(true);
     this.isOverlayOpen.set(true);
   }
