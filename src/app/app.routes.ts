@@ -14,6 +14,7 @@ import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { FilesState } from '@app/pages/files/state/files.state';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { queryRedirectResolver } from '@shared/resolvers/query-redirect.resolver';
+import { loginGuard } from '@modules/auth/login.guard';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,7 @@ export const routes: Routes = [
     path: AppRoutes.login,
     title: RouteTitles.login,
     component: LoginComponent,
+    canActivate: [loginGuard],
   },
   {
     path: AppRoutes.qrCards,
@@ -107,5 +109,5 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '**', redirectTo: `/${AppRoutes.notFound}` },
+  { path: '**', redirectTo: AppRoutes.notFound },
 ];

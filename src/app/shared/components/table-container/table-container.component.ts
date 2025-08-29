@@ -48,10 +48,10 @@ import { SharedLocalization } from '@shared/shared.constants';
   styleUrl: './table-container.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableContainerComponent<T> implements AfterContentInit {
+export class TableContainerComponent<T, S extends keyof T> implements AfterContentInit {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly rangeSelectorService = inject(RangeSelectorService);
-  protected readonly ctx = inject<TableContext<T>>(TABLE_CONTEXT);
+  protected readonly ctx = inject<TableContext<T, S>>(TABLE_CONTEXT);
 
   protected readonly SharedLocalization = SharedLocalization;
 
@@ -96,9 +96,7 @@ export class TableContainerComponent<T> implements AfterContentInit {
       return;
     }
 
-    // TODO разобраться с типами
-    // eslint-disable-next-line
-    this.ctx.selectionModel.select(...this.ctx.dataSource.data.map((item) => <any>item[this.ctx.selectionKey]));
+    this.ctx.selectionModel.select(...this.ctx.dataSource.data.map((item: T) => item[this.ctx.selectionKey]));
   }
 
   protected makeSelect(item: T): void {

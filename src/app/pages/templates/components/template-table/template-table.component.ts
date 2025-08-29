@@ -64,7 +64,7 @@ import { MatButton } from '@angular/material/button';
   providers: [
     {
       provide: TABLE_CONTEXT,
-      useFactory: (cmp: TemplateTableComponent): TableContext<TemplateDto> => ({
+      useFactory: (cmp: TemplateTableComponent): TableContext<TemplateDto, 'id'> => ({
         dataSource: cmp.dataSource,
         selectionModel: cmp.selectionModel,
         selectionKey: 'id',

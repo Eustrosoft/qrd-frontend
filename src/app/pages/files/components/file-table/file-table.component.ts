@@ -69,7 +69,7 @@ import { BoolToTextPipe } from '@shared/pipe/bool-to-text.pipe';
   providers: [
     {
       provide: TABLE_CONTEXT,
-      useFactory: (cmp: FileTableComponent): TableContext<FileDto> => ({
+      useFactory: (cmp: FileTableComponent): TableContext<FileDto, 'id'> => ({
         dataSource: cmp.dataSource,
         selectionModel: cmp.selectionModel,
         selectionKey: 'id',

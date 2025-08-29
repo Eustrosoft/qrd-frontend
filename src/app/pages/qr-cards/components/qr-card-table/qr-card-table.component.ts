@@ -71,7 +71,7 @@ import { QrRendererComponent } from '@shared/components/qr-renderer/qr-renderer.
   providers: [
     {
       provide: TABLE_CONTEXT,
-      useFactory: (cmp: QrCardTableComponent): TableContext<QRDto> => ({
+      useFactory: (cmp: QrCardTableComponent): TableContext<QRDto, 'id'> => ({
         dataSource: cmp.dataSource,
         selectionModel: cmp.selectionModel,
         selectionKey: 'id',
