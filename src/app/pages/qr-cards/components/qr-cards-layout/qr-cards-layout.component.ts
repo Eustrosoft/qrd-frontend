@@ -22,7 +22,6 @@ import { PatchSettings } from '@app/state/app.actions';
 import { ColumnConfigOverlayComponent } from '@shared/components/column-config-overlay/column-config-overlay.component';
 import { SharedLocalization } from '@shared/shared.constants';
 import { RouterOutlet } from '@angular/router';
-import { AllQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { OverlayContainerComponent } from '@shared/components/overlay-container/overlay-container.component';
 
@@ -53,13 +52,13 @@ export class QrCardsLayoutComponent {
   protected readonly destroyRef = inject(DestroyRef);
 
   protected readonly SharedLocalization = SharedLocalization;
-  protected readonly ALL_QR_TABLE_COLS = AllQrTableCols;
 
   protected readonly selectors = createSelectMap({
     searchValue: QrCardsState.getSearchValue$,
     settingsState: AppState.getSettingsState$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
     isDeleteInProgress: QrCardsState.isDeleteInProgress$,
+    allQrCols: AppState.getAllQrCols$,
   });
   protected readonly actions = createDispatchMap({
     fetchQrCards: FetchQrCardList,

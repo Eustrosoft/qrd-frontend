@@ -42,7 +42,7 @@ import { RouterLink } from '@angular/router';
 import { AppRoutes } from '@app/app.constants';
 import { ColumnConfigOverlayComponent } from '@shared/components/column-config-overlay/column-config-overlay.component';
 import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
-import { AllQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
+import { BaseQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { OverlayContainerComponent } from '@shared/components/overlay-container/overlay-container.component';
 import { MobileToolbarComponent } from '@shared/components/mobile-toolbar/mobile-toolbar.component';
@@ -92,7 +92,7 @@ export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanCo
   protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
   protected readonly RouteTitles = RouteTitles;
   protected readonly AppRoutes = AppRoutes;
-  protected readonly AllQrTableCols = AllQrTableCols;
+  protected readonly BaseQrTableCols = BaseQrTableCols;
 
   protected readonly mobileToolbar = viewChild.required('mobileToolbar', { read: TemplateRef<unknown> });
 
@@ -120,6 +120,7 @@ export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanCo
 
   protected readonly selectors = createSelectMap({
     settingsState: AppState.getSettingsState$,
+    allQrCols: AppState.getAllQrCols$,
     authInfo: AuthState.getAuthInfo$,
   });
   protected readonly actions = createDispatchMap({

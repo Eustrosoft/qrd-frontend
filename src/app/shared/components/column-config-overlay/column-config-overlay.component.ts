@@ -20,6 +20,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { ColumnConfigOverlayLocalization } from '@shared/components/column-config-overlay/column-config-overlay.constants';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { BaseQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
 
 @Component({
   selector: 'column-config-overlay',
@@ -89,7 +90,7 @@ export class ColumnConfigOverlayComponent {
   }
 
   protected moveAllToList(): void {
-    const newSelected: Column[] = [];
+    const newSelected: Column[] = [BaseQrTableCols[1], BaseQrTableCols[2], BaseQrTableCols[3]];
     this.selectedCols.set(newSelected);
     this.selectedColsChange.emit(newSelected);
   }

@@ -12,7 +12,7 @@
           </button>
         </ng-container>
         <column-config-overlay
-          [allCols]="ALL_QR_TABLE_COLS"
+          [allCols]="selectors.allQrCols()"
           [selectedCols]="selectors.settingsState().settings.qrTableColumns"
           [isDisabled]="selectors.settingsState().isLoadingSettings || selectors.settingsState().isSavingSettings"
           (selectedColsChange)="actions.patchSettings({ qrTableColumns: $event })"

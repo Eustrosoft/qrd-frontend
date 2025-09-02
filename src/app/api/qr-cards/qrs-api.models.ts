@@ -9,3 +9,4 @@ export type QRChangeDto = Omit<components['schemas']['QRChangeDto'], 'data' | 'f
   data: Record<string, unknown>;
   filesIds: string[];
 };
+export type FieldDto = components['schemas']['FormFieldDto'];

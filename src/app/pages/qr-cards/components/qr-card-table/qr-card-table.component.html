@@ -1,49 +1,18 @@
-@let cols = displayedColumns();
+@let columns = displayedColumns();
 <table-container
   matSort
   #sort="matSort"
   [isLoading]="selectors.isQrCardListLoading()"
   (selectionChanged)="actions.setSelectedQrCards($event)"
 >
-  <ng-container matColumnDef="code">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.code }}</th>
-    <td mat-cell *matCellDef="let element">
-      <a
-        [routerLink]="`../${element.code}`"
-        [relativeTo]="activatedRoute"
-        [title]="element.code | toHex"
-        textInteractionEffect
-        class="button-anchor-md"
-        mat-button
-      >
-        {{ element.code | toHex }}
-      </a>
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="code_picture">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef>QR</th>
-    <td mat-cell *matCellDef="let element" [title]="element.code | toHex">
-      <qr-renderer [code]="element.code" />
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="name">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.name }}</th>
-    <td mat-cell *matCellDef="let element" [title]="element.name">
-      {{ element.name }}
-    </td>
-  </ng-container>
-  <ng-container matColumnDef="description">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.description }}</th>
-    <td mat-cell *matCellDef="let element" [title]="element.description">{{ element.description }}</td>
-  </ng-container>
-  <ng-container matColumnDef="created">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.createDate }}</th>
-    <td mat-cell *matCellDef="let element">{{ element.created | date: 'short' }}</td>
-  </ng-container>
-  <ng-container matColumnDef="updated">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.updateDate }}</th>
-    <td mat-cell *matCellDef="let element">{{ element.updated | date: 'short' }}</td>
-  </ng-container>
+  @for (col of selectors.qrTableColumns(); track col.fieldName) {
+    <ng-container [matColumnDef]="col.fieldName">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ col.name }}</th>
+      <td mat-cell *matCellDef="let element">
+        <qr-table-cell [column]="col" [value]="element" />
+      </td>
+    </ng-container>
+  }
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>{{ SharedLocalization.actions }}</th>
     <td mat-cell *matCellDef="let element">
@@ -76,9 +45,6 @@
       </more-menu>
     </td>
   </ng-container>
-  <ng-container matColumnDef="__unknown__">
-    <td mat-cell *matCellDef="let element"></td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="cols"></tr>
-  <tr mat-row *matRowDef="let row; columns: cols"></tr>
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr mat-row *matRowDef="let row; columns: columns"></tr>
 </table-container>

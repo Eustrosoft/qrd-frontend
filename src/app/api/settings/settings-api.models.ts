@@ -1,9 +1,9 @@
 export type QrTableColumnFieldName = 'code_picture' | 'code' | 'name' | 'description' | 'created' | 'updated';
 export type Column = {
   type: string;
-  fieldName: QrTableColumnFieldName;
+  fieldName: string;
   name: string;
-  enable: true;
+  enable: boolean;
 };
 export type SettingsDto = {
   settings: {

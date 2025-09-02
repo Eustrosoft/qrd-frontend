@@ -1,0 +1,49 @@
+@let type = column().type;
+@if (type === 'qr_code') {
+  <a
+    [routerLink]="`../${value().code}`"
+    [relativeTo]="activatedRoute"
+    [title]="value().code | toHex"
+    textInteractionEffect
+    class="button-anchor-md"
+    mat-button
+  >
+    {{ value().code | toHex }}
+  </a>
+}
+@if (type === 'qr_image') {
+  <qr-renderer [code]="value().code" />
+}
+@if (type === 'text') {
+  @let defaultText = value()[column().fieldName];
+  <p ellipsis [title]="defaultText">{{ defaultText }}</p>
+}
+@if (type === 'date') {
+  @let defaultDate = value()[column().fieldName] | date: 'short';
+  <p ellipsis [title]="defaultDate">{{ defaultDate }}</p>
+}
+@if (isTextLike()) {
+  @let text = value().data[column().fieldName];
+  <p ellipsis [title]="text">{{ text }}</p>
+}
+@if (type === 'TEXTAREA') {
+  <p style="white-space: pre-line; word-wrap: break-word; hyphens: auto">{{ value().data[column().fieldName] }}</p>
+}
+@if (type === 'DATE') {
+  @let date = (value().data[column().fieldName] ?? '' | date: 'shortDate') ?? value().data[column().fieldName];
+  <p ellipsis [title]="date">{{ date }}</p>
+}
+@if (type === 'EMAIL') {
+  @let email = value().data[column().fieldName];
+  <a
+    [title]="email"
+    [href]="`mailto:${email}`"
+    class="button-anchor-md"
+    style="display: inline"
+    mat-button
+    interactionEffect
+    ellipsis
+  >
+    {{ email }}
+  </a>
+}

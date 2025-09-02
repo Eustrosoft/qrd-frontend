@@ -25,3 +25,7 @@ export class PatchSettings {
   public static readonly type = '[Auth] Patch Settings';
   constructor(readonly payload: Partial<SettingsDto['settings']>) {}
 }
+
+export class FetchFields {
+  public static readonly type = '[Auth] Fetch Fields';
+}

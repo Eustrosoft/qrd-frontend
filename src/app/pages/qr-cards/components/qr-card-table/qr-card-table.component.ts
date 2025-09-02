@@ -32,8 +32,6 @@ import { SharedLocalization } from '@shared/shared.constants';
 import { AppRoutes } from '@app/app.constants';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { DeleteQrCards, FetchQrCardList, SetSelectedQrCards } from '@app/pages/qr-cards/state/qr-cards.actions';
-import { DatePipe } from '@angular/common';
-import { MatButton } from '@angular/material/button';
 import { MatMenuItem } from '@angular/material/menu';
 import { TableContainerComponent } from '@shared/components/table-container/table-container.component';
 import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.component';
@@ -42,13 +40,11 @@ import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
 import { AppState } from '@app/state/app.state';
-import { QrRendererComponent } from '@shared/components/qr-renderer/qr-renderer.component';
+import { QrTableCellComponent } from '@app/pages/qr-cards/components/qr-table-cell/qr-table-cell.component';
 
 @Component({
   selector: 'qr-card-table',
   imports: [
-    DatePipe,
-    MatButton,
     MatCell,
     MatCellDef,
     MatColumnDef,
@@ -66,7 +62,7 @@ import { QrRendererComponent } from '@shared/components/qr-renderer/qr-renderer.
     MoreMenuComponent,
     MatRow,
     ToHexPipe,
-    QrRendererComponent,
+    QrTableCellComponent,
   ],
   providers: [
     {
@@ -98,6 +94,8 @@ export class QrCardTableComponent implements OnInit, AfterViewInit {
     qrCardList: QrCardsState.getQrCardList$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
     enabledQrTableColumns: AppState.getEnabledQrTableColumns$,
+    qrTableColumns: AppState.getQrTableColumns$,
+    allQrCols: AppState.getAllQrCols$,
   });
   protected readonly actions = createDispatchMap({
     fetchQrCardList: FetchQrCardList,
@@ -108,7 +106,8 @@ export class QrCardTableComponent implements OnInit, AfterViewInit {
   protected readonly sort = viewChild.required('sort', { read: MatSort });
   protected readonly displayedColumns = computed(() => {
     // ['select', 'code', 'qr-picture', 'name', 'description', 'actions'];
-    return ['select', ...this.selectors.enabledQrTableColumns(), 'actions'];
+    const cols = this.selectors.qrTableColumns().map((col) => col.fieldName);
+    return ['select', ...cols, 'actions'];
   });
   protected readonly dataSource = new MatTableDataSource<QRDto>(this.selectors.qrCardList());
   protected readonly dataSourceEff = effect(() => {

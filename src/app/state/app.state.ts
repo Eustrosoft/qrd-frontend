@@ -3,17 +3,18 @@ import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { HtmlRendererService } from '@shared/service/html-renderer.service';
 import { LocalStorageService } from '@shared/service/local-storage.service';
 import { Locale, Theme, ThemeContrast } from '@app/app.models';
-import { FetchSettings, PatchSettings, SetLocale, SetTheme } from '@app/state/app.actions';
+import { FetchFields, FetchSettings, PatchSettings, SetLocale, SetTheme } from '@app/state/app.actions';
 import { patch } from '@ngxs/store/operators';
 import { DEFAULT_LOCALE, LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
-import { QrTableColumnFieldName, SettingsDto } from '@api/settings/settings-api.models';
+import { Column, QrTableColumnFieldName, SettingsDto } from '@api/settings/settings-api.models';
 import { SettingsService } from '@shared/service/settings.service';
 import { catchError, Observable, of, switchMap, tap } from 'rxjs';
-import { AllQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
+import { BaseQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
 import { DEFAULT_SETTINGS } from '@app/pages/settings/settings.constants';
+import { uniq } from '@shared/utils/functions/uniq.function';
 
 export interface AppStateModel {
   theme: Theme;
@@ -22,6 +23,8 @@ export interface AppStateModel {
   isLoadingSettings: boolean;
   isSavingSettings: boolean;
   settings: SettingsDto['settings'];
+  isLoadingFields: boolean;
+  qrFieldColumns: Column[];
 }
 
 const defaults: AppStateModel = {
@@ -31,6 +34,8 @@ const defaults: AppStateModel = {
   isLoadingSettings: false,
   isSavingSettings: false,
   settings: DEFAULT_SETTINGS,
+  isLoadingFields: false,
+  qrFieldColumns: BaseQrTableCols,
 } as const;
 
 const APP_STATE_TOKEN: StateToken<AppStateModel> = new StateToken<AppStateModel>('app');
@@ -74,11 +79,23 @@ export class AppState {
   }
 
   @Selector()
+  public static getAllQrCols$({ settings, qrFieldColumns }: AppStateModel): Column[] {
+    const columns = settings.qrTableColumns;
+
+    return uniq([...columns, ...qrFieldColumns, ...BaseQrTableCols], 'name');
+  }
+
+  @Selector()
+  public static getQrTableColumns$({ settings }: AppStateModel): Column[] {
+    return settings.qrTableColumns;
+  }
+
+  @Selector()
   public static getEnabledQrTableColumns$({ settings }: AppStateModel): string[] {
     const columns = settings.qrTableColumns;
 
     return columns.reduce<string[]>((acc, col) => {
-      if (col.enable && AllQrTableCols.some((column) => column.fieldName === col.fieldName)) {
+      if (col.enable && BaseQrTableCols.some((column) => column.fieldName === col.fieldName)) {
         acc.push(col.fieldName);
       }
       return acc;
@@ -154,8 +171,7 @@ export class AppState {
               isLoadingSettings: false,
               settings: patch({
                 language: settings?.language ?? DEFAULT_SETTINGS.language,
-                qrTableColumns:
-                  settings?.qrTableColumns?.filter((col) => col.enable) ?? DEFAULT_SETTINGS.qrTableColumns,
+                qrTableColumns: settings?.qrTableColumns ?? DEFAULT_SETTINGS.qrTableColumns,
                 defaultQrPrintText: settings?.defaultQrPrintText ?? DEFAULT_SETTINGS.defaultQrPrintText,
                 defaultQrPrintTextDown: settings?.defaultQrPrintTextDown ?? DEFAULT_SETTINGS.defaultQrPrintTextDown,
                 checkUploadSize: settings?.checkUploadSize ?? DEFAULT_SETTINGS.checkUploadSize,
@@ -195,6 +211,27 @@ export class AppState {
       catchError(() => {
         setState(patch({ isSavingSettings: false, settings: DEFAULT_SETTINGS }));
         return of(DEFAULT_SETTINGS);
+      }),
+    );
+  }
+
+  @Action(FetchFields)
+  public fetchFields({ setState }: StateContext<AppStateModel>): Observable<unknown> {
+    setState(patch({ isLoadingFields: true }));
+    return this.settingsService.getFields().pipe(
+      tap({
+        next: (qrFieldColumns) => {
+          setState(
+            patch({
+              isLoadingFields: false,
+              qrFieldColumns,
+            }),
+          );
+        },
+      }),
+      catchError(() => {
+        setState(patch({ isLoadingFields: false, qrFieldColumns: BaseQrTableCols }));
+        return of(BaseQrTableCols);
       }),
     );
   }

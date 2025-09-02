@@ -1,5 +1,5 @@
 import { SettingsDto } from '@api/settings/settings-api.models';
-import { AllQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
+import { BaseQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
 
 export const SettingsLocalization = {
   checkUploadSize: $localize`:@@settings.checkUploadSize:Check file size before uploading`,
@@ -17,7 +17,7 @@ export const SettingsLocalization = {
 };
 export const DEFAULT_SETTINGS: SettingsDto['settings'] = {
   language: 'en-US',
-  qrTableColumns: [AllQrTableCols[1], AllQrTableCols[2], AllQrTableCols[3]],
+  qrTableColumns: [BaseQrTableCols[1], BaseQrTableCols[2], BaseQrTableCols[3]],
   defaultQrPrintText: '',
   defaultQrPrintTextDown: '',
   checkUploadSize: true,

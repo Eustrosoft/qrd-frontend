@@ -2,7 +2,7 @@
   display: block;
 
   img {
-    width: var(--img-width);
     display: block;
+    min-width: var(--img-width);
   }
 }

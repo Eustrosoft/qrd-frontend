@@ -15,7 +15,7 @@ export const QrCardActionsLocalization = {
   hide: $localize`:@@qrCardActions.hide:Hide QR card`,
 } as const;
 
-export const AllQrTableCols: Column[] = [
+export const BaseQrTableCols: Column[] = [
   {
     type: 'qr_image',
     fieldName: 'code_picture',

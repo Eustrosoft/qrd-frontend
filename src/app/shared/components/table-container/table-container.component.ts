@@ -9,6 +9,7 @@ import {
   effect,
   inject,
   input,
+  untracked,
   viewChild,
 } from '@angular/core';
 import {
@@ -76,8 +77,14 @@ export class TableContainerComponent<T, S extends keyof T> implements AfterConte
   });
 
   protected readonly colEff = effect(() => {
-    this.ctx.columns();
-    this.cdr.markForCheck();
+    const addedCols = this.columnDefs().filter((def) => def.name === undefined);
+
+    untracked(() => {
+      addedCols.forEach((col) => {
+        this.table().addColumnDef(col);
+      });
+      this.cdr.markForCheck();
+    });
   });
 
   public readonly isLoading = input<boolean>(false);
