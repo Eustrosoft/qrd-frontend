@@ -38,6 +38,7 @@
 .form-field-lg {
   @include mat.form-field-overrides(
     (
+      outlined-label-text-populated-size: 1.25rem,
       filled-container-shape: 12px,
       outlined-container-shape: 12px,
       disabled-input-text-placeholder-color: color-mix(in srgb, var(--mat-sys-on-surface) 16%, transparent),

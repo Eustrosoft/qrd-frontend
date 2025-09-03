@@ -25,6 +25,7 @@ import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overl
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { MatMenuItem } from '@angular/material/menu';
 import { ViewListItemComponent } from '@shared/components/view-list-item/view-list-item.component';
+import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
 
 @Component({
   selector: 'dev-sandbox',
@@ -57,6 +58,7 @@ import { ViewListItemComponent } from '@shared/components/view-list-item/view-li
     EllipsisDirective,
     MatMenuItem,
     ViewListItemComponent,
+    UiAlertComponent,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }],
   templateUrl: './dev-sandbox.component.html',

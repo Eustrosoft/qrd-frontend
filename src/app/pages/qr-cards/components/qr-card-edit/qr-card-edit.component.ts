@@ -19,7 +19,7 @@ import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionS
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, EMPTY, map, merge, Observable, of, pairwise, startWith, switchMap } from 'rxjs';
-import { DictionaryItem } from '@shared/shared.models';
+import { DictionaryItem, Option } from '@shared/shared.models';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
 import { FileEditableMetadata } from '@api/files/files-api.models';
@@ -83,6 +83,7 @@ import { ConfirmationDialogComponent } from '@shared/components/confirmation-dia
 import { ChangeTemplateDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
 import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
 import { TextareaAutoresizeDirective } from '@shared/directives/textarea-autoresize.directive';
+import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 
 @Component({
   selector: 'qr-card-edit',
@@ -122,6 +123,7 @@ import { TextareaAutoresizeDirective } from '@shared/directives/textarea-autores
     MobileToolbarComponent,
     MatMiniFabButton,
     TextareaAutoresizeDirective,
+    FallbackPipe,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './qr-card-edit.component.html',
@@ -184,11 +186,15 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     clearQrCard: ClearQrCard,
   });
 
-  protected readonly fieldsGridTemplateColumns = computed<string>(() => {
-    if (this.isSmallScreen()) {
-      return '';
-    }
-    return '1fr 2fr';
+  protected readonly lostAttributes = computed<Option<string>[]>(() => {
+    const data = this.selectors.qrCard()?.data ?? {};
+    const fieldNames = this.selectors.qrCard()?.form?.fields?.map((field) => field.name) ?? [];
+    return Object.keys(data).reduce((acc: Option<string>[], key) => {
+      if (!fieldNames.includes(key)) {
+        acc.push({ value: key, viewValue: data[key] });
+      }
+      return acc;
+    }, []);
   });
 
   protected readonly gridTemplateColumns = computed<string>(() => {
@@ -321,7 +327,10 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
 
   protected openCardPreview(): void {
     this.uiSidenavService.open(QrViewComponent, {
-      bindings: [inputBinding('iframeSrc', this.selectors.qrCardPreviewUrl)],
+      bindings: [
+        inputBinding('iframeSrc', this.selectors.qrCardPreviewUrl),
+        inputBinding('isPreviewingUnsaved', this.formHasUnsavedChanges),
+      ],
       position: 'end',
       width: this.isXSmall() ? 'full' : 'sm',
       isFixed: true,

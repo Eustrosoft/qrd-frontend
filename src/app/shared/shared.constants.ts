@@ -102,6 +102,7 @@ export const RouteTitles = {
   cards: $localize`:@@routes.cards:Cards`,
   card: $localize`:@@routes.card:Card`,
   attrs: $localize`:@@routes.attrs:Attributes`,
+  lostAttrs: $localize`:@@routes.lostAttrs:Lost attributes`,
   usages: $localize`:@@routes.usages:Usages`,
   templates: $localize`:@@routes.templates:Templates`,
   template: $localize`:@@routes.template:Template`,

@@ -69,7 +69,7 @@ export type CursorType =
   | 'zoom-in'
   | 'zoom-out';
 export type Overflow = 'hidden' | 'visible' | 'clip' | 'scroll' | 'auto';
-export type Option<T> = { value: T; viewValue: string };
+export type Option<T = unknown> = { value: T; viewValue: string };
 export type TabLink = { link: string; title: string };
 export type FileStorageTypeItem = { text: string; icon: string };
 export type DictionaryItem = {

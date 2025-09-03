@@ -23,6 +23,7 @@ import { CollapsibleListItemDirective } from '@shared/directives/collapsible-lis
 import { CollapsibleListDirective } from '@shared/directives/collapsible-list.directive';
 import { AttrListItemComponent } from '@shared/components/attr-list-item/attr-list-item.component';
 import { FileDto } from '@api/files/files-api.models';
+import { Option } from '@shared/shared.models';
 
 @Component({
   selector: 'qr-card-main',
@@ -66,6 +67,17 @@ export class QrCardMainComponent {
     const qrCard = this.selectors.qrCard();
     // eslint-disable-next-line
     return [...(qrCard?.files ?? []), ...(qrCard?.form?.files ?? [])];
+  });
+
+  protected readonly lostAttributes = computed<Option<string>[]>(() => {
+    const data = this.selectors.qrCard()?.data ?? {};
+    const fieldNames = this.selectors.qrCard()?.form?.fields?.map((field) => field.name) ?? [];
+    return Object.keys(data).reduce((acc: Option<string>[], key: string) => {
+      if (!fieldNames.includes(key)) {
+        acc.push({ value: key, viewValue: data[key] });
+      }
+      return acc;
+    }, []);
   });
 
   protected readonly infoGridTemplateColumns = computed<string>(() => {

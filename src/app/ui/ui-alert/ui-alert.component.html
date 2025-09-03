@@ -1,0 +1,16 @@
+@if (icon()) {
+  <mat-icon class="icon-md">
+    {{ icon() }}
+  </mat-icon>
+}
+<ui-grid-block gridTemplateColumns="1fr">
+  @if (title()) {
+    <h4>{{ title() }}</h4>
+  }
+  <ng-content />
+</ui-grid-block>
+@if (isClosable()) {
+  <button (click)="closed.emit()" class="icon-button-sm" mat-icon-button>
+    <mat-icon class="icon-primary">close</mat-icon>
+  </button>
+}

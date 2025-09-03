@@ -132,52 +132,59 @@
       </ng-container>
       <ng-container content>
         @for (field of selectors.qrCard()?.form?.fields; track field) {
-          <ui-grid-block gridTemplateColumns="1fr" gridAlignItems="center">
-            @if (
-              field.fieldType === 'TEXT' ||
-              field.fieldType === 'URL' ||
-              field.fieldType === 'EMAIL' ||
-              field.fieldType === 'NUMBER' ||
-              field.fieldType === 'PHONE' ||
-              field.fieldType === 'EDIT'
-            ) {
-              <mat-form-field class="form-field-lg" floatLabel="always">
-                <mat-label> {{ field.caption }} </mat-label>
-                <input
-                  [formControl]="form().controls.data.controls[field.name]"
-                  [placeholder]="field.placeholder"
-                  type="text"
-                  matInput
-                />
-              </mat-form-field>
-            }
-            @if (field.fieldType === 'TEXTAREA') {
-              <mat-form-field class="form-field-lg" floatLabel="always">
-                <mat-label> {{ field.caption }} </mat-label>
-                <textarea
-                  [formControl]="form().controls.data.controls[field.name]"
-                  [placeholder]="field.placeholder"
-                  type="text"
-                  textareaAutoresize
-                  matInput
-                ></textarea>
-              </mat-form-field>
-            }
-            @if (field.fieldType === 'DATE') {
-              <mat-form-field class="form-field-lg" floatLabel="always">
-                <mat-label>{{ field.caption }}</mat-label>
-                <input
-                  [formControl]="form().controls.data.controls[field.name]"
-                  [placeholder]="field.placeholder"
-                  [matDatepicker]="datepicker"
-                  iso8601DateFormat
-                  matInput
-                />
-                <mat-datepicker-toggle matIconSuffix [for]="datepicker" />
-                <mat-datepicker #datepicker />
-              </mat-form-field>
-            }
-          </ui-grid-block>
+          @if (
+            field.fieldType === 'TEXT' ||
+            field.fieldType === 'URL' ||
+            field.fieldType === 'EMAIL' ||
+            field.fieldType === 'NUMBER' ||
+            field.fieldType === 'PHONE' ||
+            field.fieldType === 'EDIT'
+          ) {
+            <mat-form-field class="form-field-lg" floatLabel="always">
+              <mat-label> {{ field.caption | fallback: field.name }} </mat-label>
+              <input
+                [formControl]="form().controls.data.controls[field.name]"
+                [placeholder]="field.placeholder"
+                type="text"
+                matInput
+              />
+            </mat-form-field>
+          }
+          @if (field.fieldType === 'TEXTAREA') {
+            <mat-form-field class="form-field-lg" floatLabel="always">
+              <mat-label> {{ field.caption }} </mat-label>
+              <textarea
+                [formControl]="form().controls.data.controls[field.name]"
+                [placeholder]="field.placeholder"
+                type="text"
+                textareaAutoresize
+                matInput
+              ></textarea>
+            </mat-form-field>
+          }
+          @if (field.fieldType === 'DATE') {
+            <mat-form-field class="form-field-lg" floatLabel="always">
+              <mat-label>{{ field.caption }}</mat-label>
+              <input
+                [formControl]="form().controls.data.controls[field.name]"
+                [placeholder]="field.placeholder"
+                [matDatepicker]="datepicker"
+                iso8601DateFormat
+                matInput
+              />
+              <mat-datepicker-toggle matIconSuffix [for]="datepicker" />
+              <mat-datepicker #datepicker />
+            </mat-form-field>
+          }
+        }
+        @if (lostAttributes().length) {
+          <h2>{{ RouteTitles.lostAttrs }}</h2>
+          @for (lostAttr of lostAttributes(); track lostAttr) {
+            <mat-form-field class="form-field-lg" floatLabel="always">
+              <mat-label> {{ lostAttr.value }} </mat-label>
+              <input [value]="lostAttr.viewValue" type="text" disabled matInput />
+            </mat-form-field>
+          }
         }
       </ng-container>
     </card-container>

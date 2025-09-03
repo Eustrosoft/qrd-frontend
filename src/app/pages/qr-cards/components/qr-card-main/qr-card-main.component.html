@@ -46,7 +46,7 @@
         @for (field of selectors.qrCard()?.form?.fields; track field.id) {
           <attr-list-item
             collapsibleListItem
-            [caption]="field.caption"
+            [caption]="field.caption | fallback: field.name"
             [value]="selectors.qrCard()?.data?.[field.name]"
             [placeholder]="field.placeholder"
             [type]="field.fieldType"
@@ -55,6 +55,17 @@
           />
         } @empty {
           {{ SharedLocalization.noAttrs }}
+        }
+        @if (lostAttributes().length) {
+          <h2>{{ RouteTitles.lostAttrs }}</h2>
+          @for (lostAttr of lostAttributes(); track lostAttr.value) {
+            <attr-list-item
+              collapsibleListItem
+              [caption]="lostAttr.value"
+              [value]="lostAttr.viewValue"
+              [hideIconAttrs]="true"
+            />
+          }
         }
       </ui-grid-block>
     </collapsible-container>

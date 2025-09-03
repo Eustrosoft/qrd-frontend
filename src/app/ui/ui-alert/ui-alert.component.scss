@@ -1,0 +1,72 @@
+@use 'styles/mixins' as mixins;
+@use '@angular/material' as mat;
+
+:host {
+  gap: mixins.rem(16);
+  display: flex;
+  padding: mixins.rem(16);
+  max-height: fit-content;
+  align-items: center;
+  border-radius: mixins.rem(12);
+
+  mat-icon,
+  button {
+    align-self: flex-start;
+  }
+
+  ui-grid-block {
+    flex: 1;
+  }
+
+  &.alert-success {
+    color: var(--mat-extended-success-on-color-container);
+    background: var(--mat-extended-success-color-container);
+
+    mat-icon {
+      @include mat.icon-overrides(
+        (
+          color: var(--mat-extended-success-on-color-container),
+        )
+      );
+    }
+  }
+
+  &.alert-warning {
+    color: var(--mat-extended-warning-on-color-container);
+    background: var(--mat-extended-warning-color-container);
+
+    mat-icon {
+      @include mat.icon-overrides(
+        (
+          color: var(--mat-extended-warning-on-color-container),
+        )
+      );
+    }
+  }
+
+  &.alert-info {
+    color: var(--mat-sys-on-tertiary-container);
+    background: var(--mat-sys-tertiary-container);
+
+    mat-icon {
+      @include mat.icon-overrides(
+        (
+          color: var(--mat-sys-on-tertiary-container),
+        )
+      );
+    }
+  }
+
+  &.alert-danger {
+    color: var(--mat-sys-on-error-container);
+    background: var(--mat-sys-error-container);
+
+    mat-icon {
+      @include mat.icon-overrides(
+        (
+          color: var(--mat-sys-on-error-container),
+        )
+      );
+    }
+  }
+}

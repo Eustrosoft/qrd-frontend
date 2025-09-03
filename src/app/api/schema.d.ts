@@ -747,6 +747,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/api/secured/forms/{id}/related": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get usages in system */
+        get: operations["findRelated"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/api/secured/forms/fields": {
         parameters: {
             query?: never;
@@ -773,6 +790,23 @@ export interface paths {
         };
         /** Find all files for current user */
         get: operations["findAll_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/api/secured/files/{id}/related": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get usages in system */
+        get: operations["findRelated_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -965,6 +999,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             data: components["schemas"]["JsonNode"];
             filesIds: number[];
             /** Format: int64 */
@@ -986,6 +1021,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             fileName: string;
             fileType: string;
             extension: string;
@@ -1009,6 +1045,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             data: string;
             fields: components["schemas"]["FormFieldDto"][];
             files: components["schemas"]["FileDto"][];
@@ -1022,6 +1059,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             caption: string;
             placeholder: string;
             /** Format: int32 */
@@ -1040,6 +1078,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             /** Format: int64 */
             code: number;
             data: {
@@ -1060,6 +1099,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
         };
         File: {
             /** Format: int64 */
@@ -1086,6 +1126,25 @@ export interface components {
             storagePath: string;
             /** Format: int64 */
             fileSize: number;
+            qrs: components["schemas"]["QR"][];
+            forms: components["schemas"]["Form"][];
+        };
+        Form: {
+            /** Format: int64 */
+            id: number;
+            type: string;
+            name: string;
+            description: string;
+            /** Format: int64 */
+            participantId: number;
+            /** Format: date-time */
+            created: string;
+            /** Format: date-time */
+            updated: string;
+            data: string;
+            fields: components["schemas"]["FormField"][];
+            files: components["schemas"]["File"][];
+            qrs: components["schemas"]["QR"][];
         };
         FormChangeDto: {
             /** Format: int64 */
@@ -1096,9 +1155,28 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             data: components["schemas"]["JsonNode"];
             files: components["schemas"]["File"][];
             fields: components["schemas"]["FormFieldChangeDto"][];
+        };
+        FormField: {
+            /** Format: int64 */
+            id: number;
+            name: string;
+            /** Format: int64 */
+            formId: number;
+            form: components["schemas"]["Form"];
+            caption: string;
+            /** Format: int64 */
+            participantId: number;
+            /** Format: int32 */
+            fieldOrder: number;
+            placeholder: string;
+            /** @enum {string} */
+            fieldType: "TEXT" | "NUMBER" | "FILE" | "MEDIA_FILE" | "DATE" | "URL" | "PHONE" | "EMAIL" | "TEXTAREA" | "EDIT";
+            isStatic: boolean;
+            isPublic: boolean;
         };
         FormFieldChangeDto: {
             name?: string;
@@ -1113,6 +1191,29 @@ export interface components {
             /** Format: int64 */
             id?: number;
         };
+        QR: {
+            /** Format: int64 */
+            id: number;
+            type: string;
+            name: string;
+            description: string;
+            /** Format: int64 */
+            participantId: number;
+            /** Format: date-time */
+            created: string;
+            /** Format: date-time */
+            updated: string;
+            /** Format: int64 */
+            code: number;
+            data: string;
+            /** Format: int64 */
+            formId: number;
+            form: components["schemas"]["Form"];
+            files: components["schemas"]["File"][];
+            /** @enum {string} */
+            action: "STD" | "REDIRECT" | "REDIRECT_QR_SVC" | "HIDE";
+            redirect: string;
+        };
         FileChangeDto: {
             /** Format: int64 */
             id: number;
@@ -1122,6 +1223,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             storagePath: string;
             isActive: boolean;
             isPublic: boolean;
@@ -1135,6 +1237,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             username: string;
             email: string;
             roles: components["schemas"]["RoleDto"][];
@@ -1159,6 +1262,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             /** Format: int64 */
             from: number;
             /** Format: int64 */
@@ -1173,6 +1277,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             active: boolean;
         };
         QRRange: {
@@ -1191,41 +1296,6 @@ export interface components {
             from: number;
             /** Format: int64 */
             to: number;
-        };
-        Form: {
-            /** Format: int64 */
-            id: number;
-            type: string;
-            name: string;
-            description: string;
-            /** Format: int64 */
-            participantId: number;
-            /** Format: date-time */
-            created: string;
-            /** Format: date-time */
-            updated: string;
-            data: string;
-            fields: components["schemas"]["FormField"][];
-            files: components["schemas"]["File"][];
-            qrs: components["schemas"]["QR"][];
-        };
-        FormField: {
-            /** Format: int64 */
-            id: number;
-            name: string;
-            /** Format: int64 */
-            formId: number;
-            form: components["schemas"]["Form"];
-            caption: string;
-            /** Format: int64 */
-            participantId: number;
-            /** Format: int32 */
-            fieldOrder: number;
-            placeholder: string;
-            /** @enum {string} */
-            fieldType: "TEXT" | "NUMBER" | "FILE" | "MEDIA_FILE" | "DATE" | "URL" | "PHONE" | "EMAIL" | "TEXTAREA" | "EDIT";
-            isStatic: boolean;
-            isPublic: boolean;
         };
         Participant: {
             /** Format: int64 */
@@ -1257,29 +1327,6 @@ export interface components {
             ranges: components["schemas"]["QRRange"][];
             qrs: components["schemas"]["QR"][];
         };
-        QR: {
-            /** Format: int64 */
-            id: number;
-            type: string;
-            name: string;
-            description: string;
-            /** Format: int64 */
-            participantId: number;
-            /** Format: date-time */
-            created: string;
-            /** Format: date-time */
-            updated: string;
-            /** Format: int64 */
-            code: number;
-            data: string;
-            /** Format: int64 */
-            formId: number;
-            form: components["schemas"]["Form"];
-            files: components["schemas"]["File"][];
-            /** @enum {string} */
-            action: "STD" | "REDIRECT" | "REDIRECT_QR_SVC" | "HIDE";
-            redirect: string;
-        };
         Role: {
             /** Format: int64 */
             id: number;
@@ -1307,6 +1354,7 @@ export interface components {
             updated?: string;
             name?: string;
             description?: string;
+            type?: string;
             firstName: string;
             lastName?: string;
             email: string;
@@ -1325,6 +1373,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             data: components["schemas"]["JsonNode"];
             filesIds: number[];
             /** Format: int64 */
@@ -1346,6 +1395,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             /** Format: binary */
             file: string;
             storagePath: string;
@@ -1368,6 +1418,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             data: components["schemas"]["JsonNode"];
             fields: components["schemas"]["FormFieldCreationDto"][];
             files: components["schemas"]["File"][];
@@ -1399,6 +1450,7 @@ export interface components {
             fileSize: number;
             description: string;
             name: string;
+            type: string;
             /** Format: int64 */
             participantId: number;
             /** Format: int64 */
@@ -1421,6 +1473,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             /** Format: int64 */
             fileId: number;
             /** Format: int64 */
@@ -1456,6 +1509,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             username: string;
             email: string;
             roles: components["schemas"]["RoleDto"][];
@@ -1480,6 +1534,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             username: string;
             email: string;
             roles: components["schemas"]["RoleDto"][];
@@ -1502,6 +1557,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
             username: string;
             password: string;
             email: string;
@@ -1533,6 +1589,7 @@ export interface components {
             updated: string;
             name: string;
             description: string;
+            type: string;
         };
         ParticipantBlockDto: {
             /** Format: int64 */
@@ -1569,8 +1626,8 @@ export interface components {
             description: string;
         };
         ParticipantAdminSimpleProjection: {
-            address: string;
             roles: components["schemas"]["Role"][];
+            address: string;
             username: string;
             active: boolean;
             email: string;
@@ -1581,6 +1638,7 @@ export interface components {
             ranges: components["schemas"]["QRRange"][];
             description: string;
             name: string;
+            type: string;
             /** Format: int64 */
             participantId: number;
             /** Format: int64 */
@@ -4249,6 +4307,55 @@ export interface operations {
             };
         };
     };
+    findRelated: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["EntityDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["EntityDto"][];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["EntityDto"][];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["EntityDto"][];
+                };
+            };
+        };
+    };
     findAllFormFields: {
         parameters: {
             query?: never;
@@ -4339,6 +4446,57 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["FileDto"][];
+                };
+            };
+        };
+    };
+    findRelated_1: {
+        parameters: {
+            query?: {
+                type?: "QR" | "FM";
+            };
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["EntityDto"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["EntityDto"][];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["EntityDto"][];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["EntityDto"][];
                 };
             };
         };

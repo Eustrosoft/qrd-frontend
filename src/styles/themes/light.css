@@ -52,4 +52,8 @@
   --mat-extended-success-on-color: #fff;
   --mat-extended-success-color-container: #a9f2cc;
   --mat-extended-success-on-color-container: #002114;
+  --mat-extended-warning-color: #78590c;
+  --mat-extended-warning-on-color: #fff;
+  --mat-extended-warning-color-container: #ffdea0;
+  --mat-extended-warning-on-color-container: #5c4300;
 }

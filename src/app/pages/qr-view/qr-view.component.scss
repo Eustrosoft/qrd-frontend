@@ -7,7 +7,7 @@
   overflow: hidden;
   grid-template-rows: auto 1fr;
 
-  .close-button {
+  ui-grid-block {
     margin: mixins.rem(8);
   }
 

@@ -6,6 +6,7 @@ export const QrCardsLocalization = {
   previewCard: $localize`:@@qrCards.previewCard:Preview card`,
   creation: $localize`:@@qrCards.creation:Create new QR card`,
   editing: $localize`:@@qrCards.editing:Edit QR card`,
+  previewingUnsaved: $localize`:@@qrCards.previewingUnsaved:Save QR card to see last changes`,
 } as const;
 
 export const QrCardActionsLocalization = {
