@@ -141,6 +141,7 @@
     "shared.openTemplate": "Открыть шаблон",
     "shared.noFiles": "Файлы отсутствуют",
     "shared.noAttrs": "Атрибуты отсутствуют",
+    "shared.noUsages": "Нет использований",
     "shared.empty": "Пусто",
     "shared.cardPreview": "Предпросмотр карточки",
     "shared.card": "Карточка",

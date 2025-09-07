@@ -12,7 +12,7 @@ import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { TabLink } from '@shared/shared.models';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { AppRoutes } from '@app/app.constants';
-import { DeleteTemplates, FetchTemplate } from '@app/pages/templates/state/templates.actions';
+import { DeleteTemplates, FetchTemplate, FetchTemplateUsages } from '@app/pages/templates/state/templates.actions';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { BannerComponent } from '@shared/components/banner/banner.component';
@@ -49,11 +49,13 @@ export class TemplateViewComponent implements OnInit {
     isTemplateLoading: TemplatesState.isTemplateLoading$,
     isTemplateLoadErr: TemplatesState.isTemplateLoadErr$,
     template: TemplatesState.getTemplate$,
+    templateUsagesState: TemplatesState.getTemplateUsagesState$,
     isDeleteInProgress: TemplatesState.isDeleteInProgress$,
   });
 
   protected readonly actions = createDispatchMap({
     fetchTemplate: FetchTemplate,
+    fetchTemplateUsages: FetchTemplateUsages,
     deleteTemplates: DeleteTemplates,
   });
 
@@ -69,5 +71,6 @@ export class TemplateViewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.actions.fetchTemplate(this.routeParams()['id'], this.destroyRef);
+    this.actions.fetchTemplateUsages(this.routeParams()['id'], this.destroyRef);
   }
 }

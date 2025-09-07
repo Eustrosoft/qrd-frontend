@@ -1,5 +1,5 @@
 @if (!selectors.isTemplateLoadErr()) {
-  @if (!selectors.isTemplateLoading()) {
+  @if (!selectors.isTemplateLoading() && !selectors.templateUsagesState().isTemplateUsagesLoading) {
     <toolbar>
       <ng-container heading>
         @if (!isXSmall()) {

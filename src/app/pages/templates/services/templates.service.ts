@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TemplateDto } from '@api/templates/templates-api.models';
 import { HttpClient } from '@angular/common/http';
+import { EntityDto } from '@api/api.models';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,10 @@ export class TemplatesService {
 
   public getTemplate(id: number): Observable<TemplateDto> {
     return this.http.get<TemplateDto>(`/qrCodeDemo/v1/api/secured/forms/${id}`);
+  }
+
+  public getTemplateUsages(id: number): Observable<EntityDto[]> {
+    return this.http.get<EntityDto[]>(`/qrCodeDemo/v1/api/secured/forms/${id}/related`);
   }
 
   public createTemplate(payload: Partial<TemplateDto>): Observable<TemplateDto> {

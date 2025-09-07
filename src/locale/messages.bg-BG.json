@@ -141,6 +141,7 @@
     "shared.openTemplate": "Open template",
     "shared.noFiles": "No files",
     "shared.noAttrs": "No attributes",
+    "shared.noUsages": "No usages",
     "shared.empty": "Empty",
     "shared.cardPreview": "Card preview",
     "shared.card": "Card",

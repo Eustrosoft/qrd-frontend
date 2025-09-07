@@ -7,10 +7,19 @@ import { FilesState } from '@app/pages/files/state/files.state';
 import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
 import { RouterLink } from '@angular/router';
 import { AppRoutes } from '@app/app.constants';
+import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
+import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 
 @Component({
   selector: 'file-usages',
-  imports: [CardContainerComponent, UiGridBlockComponent, UiBadgeComponent, RouterLink],
+  imports: [
+    CardContainerComponent,
+    UiGridBlockComponent,
+    UiBadgeComponent,
+    RouterLink,
+    EllipsisDirective,
+    FallbackPipe,
+  ],
   templateUrl: './file-usages.component.html',
   styleUrl: './file-usages.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

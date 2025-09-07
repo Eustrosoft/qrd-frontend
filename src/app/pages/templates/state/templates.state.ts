@@ -16,6 +16,7 @@ import {
   FetchFileList,
   FetchTemplate,
   FetchTemplateList,
+  FetchTemplateUsages,
   ResetTemplatesState,
   SaveTemplate,
   SelectAllTemplates,
@@ -33,6 +34,7 @@ import { FilesService } from '@app/pages/files/services/files.service';
 import { SnackbarService } from '@shared/service/snackbar.service';
 
 import { NotificationSnackbarLocalization } from '@modules/error/error.constants';
+import { EntityDto } from '@api/api.models';
 
 export interface TemplatesStateModel {
   searchValue: string;
@@ -43,6 +45,8 @@ export interface TemplatesStateModel {
   isTemplateLoading: boolean;
   isTemplateLoadErr: boolean;
   template: TemplateDto | null;
+  isTemplateUsagesLoading: boolean;
+  qrTemplateUsages: EntityDto[] | null;
   isDeleteInProgress: boolean;
   isSaveInProgress: boolean;
   isTemplateFilesLoading: boolean;
@@ -60,6 +64,8 @@ const defaults: TemplatesStateModel = {
   isTemplateLoading: false,
   isTemplateLoadErr: false,
   template: null,
+  isTemplateUsagesLoading: false,
+  qrTemplateUsages: null,
   isDeleteInProgress: false,
   isSaveInProgress: false,
   isTemplateFilesLoading: false,
@@ -143,6 +149,17 @@ export class TemplatesState {
   }
 
   @Selector()
+  public static getTemplateUsagesState$({
+    isTemplateUsagesLoading,
+    qrTemplateUsages,
+  }: TemplatesStateModel): Pick<TemplatesStateModel, 'isTemplateUsagesLoading' | 'qrTemplateUsages'> {
+    return {
+      isTemplateUsagesLoading,
+      qrTemplateUsages,
+    };
+  }
+
+  @Selector()
   public static getSelectedTemplateList$({ selectedTemplateList }: TemplatesStateModel): number[] {
     return selectedTemplateList;
   }
@@ -204,6 +221,28 @@ export class TemplatesState {
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
         setState(patch({ [loadingStoreProp]: false, isTemplateLoadErr: true }));
+        return throwError(() => err);
+      }),
+      takeUntilDestroyed(destroyRef),
+    );
+  }
+
+  @Action(FetchTemplateUsages)
+  public fetchTemplateUsages(
+    { setState }: StateContext<TemplatesStateModel>,
+    { id, destroyRef }: FetchTemplateUsages,
+  ): Observable<EntityDto[]> {
+    setState(patch({ isTemplateUsagesLoading: true, isTemplateLoadErr: false }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.templatesService.getTemplateUsages(id)),
+      tap({
+        next: (qrTemplateUsages) => {
+          setState(patch({ qrTemplateUsages, isTemplateUsagesLoading: false }));
+        },
+      }),
+      catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
+        setState(patch({ isTemplateUsagesLoading: false, isTemplateLoadErr: true }));
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),

@@ -5,14 +5,18 @@
   <ng-container content>
     <ui-grid-block gridTemplateColumns="1fr">
       @for (qrUsage of selectors.fileUsagesState().qrFileUsages; track qrUsage.id) {
-        <ui-badge
-          padding="8px 16px"
-          color="var(--mat-sys-on-tertiary-container)"
-          background="var(--mat-sys-tertiary-container)"
-          cursor="pointer"
-        >
-          {{ qrUsage.name }}
-        </ui-badge>
+        <a href="javascript:void(0)" [title]="qrUsage.name | fallback: SharedLocalization.noName" ellipsis>
+          <ui-badge
+            padding="8px 16px"
+            color="var(--mat-sys-on-tertiary-container)"
+            background="var(--mat-sys-tertiary-container)"
+            cursor="pointer"
+          >
+            <p ellipsis>
+              {{ qrUsage.name | fallback: SharedLocalization.noName }}
+            </p>
+          </ui-badge>
+        </a>
       } @empty {
         <p>{{ SharedLocalization.noUsages }}</p>
       }
@@ -26,14 +30,20 @@
   <ng-container content>
     <ui-grid-block gridTemplateColumns="1fr">
       @for (templateUsage of selectors.fileUsagesState().templateFileUsages; track templateUsage.id) {
-        <a [routerLink]="`/${AppRoutes.templates}/${templateUsage.id}`">
+        <a
+          [routerLink]="`/${AppRoutes.templates}/${templateUsage.id}`"
+          [title]="templateUsage.name | fallback: SharedLocalization.noName"
+          ellipsis
+        >
           <ui-badge
             padding="8px 16px"
             color="var(--mat-sys-on-tertiary-container)"
             background="var(--mat-sys-tertiary-container)"
             cursor="pointer"
           >
-            {{ templateUsage.name }}
+            <p ellipsis>
+              {{ templateUsage.name | fallback: SharedLocalization.noName }}
+            </p>
           </ui-badge>
         </a>
       } @empty {

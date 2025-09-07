@@ -22,6 +22,14 @@ export class FetchTemplate {
   ) {}
 }
 
+export class FetchTemplateUsages {
+  public static readonly type = '[Templates] Fetch Template Usages';
+  constructor(
+    readonly id: number,
+    readonly destroyRef: DestroyRef,
+  ) {}
+}
+
 export class ClearTemplate {
   public static readonly type = '[Templates] Clear Template';
 }

@@ -1,1 +1,25 @@
-<h1>{{ SharedLocalization.dev }}</h1>
+<card-container>
+  <ng-container heading>
+    <h1>{{ RouteTitles.cards }}</h1>
+  </ng-container>
+  <ng-container content>
+    <ui-grid-block gridTemplateColumns="1fr">
+      @for (qrUsage of selectors.templateUsagesState().qrTemplateUsages; track qrUsage.id) {
+        <a href="javascript:void(0)" [title]="qrUsage.name | fallback: SharedLocalization.noName" ellipsis>
+          <ui-badge
+            padding="8px 16px"
+            color="var(--mat-sys-on-tertiary-container)"
+            background="var(--mat-sys-tertiary-container)"
+            cursor="pointer"
+          >
+            <p ellipsis>
+              {{ qrUsage.name | fallback: SharedLocalization.noName }}
+            </p>
+          </ui-badge>
+        </a>
+      } @empty {
+        <p>{{ SharedLocalization.noUsages }}</p>
+      }
+    </ui-grid-block>
+  </ng-container>
+</card-container>
