@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.13.0...v1.14.0) (2025-09-07)
+
+
+### Features
+
+* **alert, attrs:** добавлен alert, доработано отображение атрибутов и названий ([910d6ea](https://github.com/Eustrosoft/qrd-frontend/commit/910d6eadea925acd26180d5f107122dba4af5cb4))
+* **file-usages:** добавлена информации об использовании файлов в других сущностях ([809e94f](https://github.com/Eustrosoft/qrd-frontend/commit/809e94f92c4c573eb906529f49a395d3beceb238))
+* **file-usages:** добавлена информации об использовании шаблонов в карточках ([b31dc94](https://github.com/Eustrosoft/qrd-frontend/commit/b31dc94e89f427e081582887a302841b3df33e87))
+* **table:** возможность настраивать столбцы таблицы ([ec6ea38](https://github.com/Eustrosoft/qrd-frontend/commit/ec6ea3818b919a7d3a9132644e5c569296bfd1ce))
+
+
+### Bug Fixes
+
+* **typing:** исправление определения типов ([32c0dc7](https://github.com/Eustrosoft/qrd-frontend/commit/32c0dc7e381ddf055ed258a062df658186209ecf))
+
 ## [1.13.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.12.0...v1.13.0) (2025-08-28)
 
 
