@@ -1,4 +1,8 @@
-import { components } from '@api/schema';
+import { components, operations } from '@api/schema';
+
+export type UsagesQueryParams = operations['findRelated_1']['parameters']['query'];
+
+export type EntityDto = components['schemas']['EntityDto'];
 
 export type UserLoginDto = components['schemas']['UserLoginDto'];
 export type ParticipantDto = components['schemas']['ParticipantDto'];

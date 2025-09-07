@@ -1,5 +1,5 @@
 @if (!selectors.isFileLoadErr()) {
-  @if (!selectors.isFileLoading()) {
+  @if (!selectors.isFileLoading() && !selectors.fileUsagesState().isFileUsagesLoading) {
     <toolbar>
       <ng-container heading>
         <h1 ellipsis>{{ selectors.file()?.name | fallback: SharedLocalization.noName }}</h1>
@@ -52,7 +52,7 @@
   } @else {
     <ui-skeleton height="44" />
     <ui-skeleton height="48" />
-    <ui-skeleton height="220" />
+    <ui-skeleton height="224" />
   }
 } @else {
   <banner [title]="ErrorsLocalization.errorFetchingFile" />

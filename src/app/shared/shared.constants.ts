@@ -29,6 +29,7 @@ export const SharedLocalization = {
   openTemplate: $localize`:@@shared.openTemplate:Open template`,
   noFiles: $localize`:@@shared.noFiles:No files`,
   noAttrs: $localize`:@@shared.noAttrs:No attributes`,
+  noUsages: $localize`:@@shared.noUsages:No usages`,
   empty: $localize`:@@shared.empty:Empty`,
   cardPreview: $localize`:@@shared.cardPreview:Card preview`,
   card: $localize`:@@shared.card:Card`,

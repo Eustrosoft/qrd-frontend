@@ -1,7 +1,20 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { FileDto } from '@api/files/files-api.models';
-import { catchError, concatMap, EMPTY, from, Observable, of, switchMap, tap, throwError, timer, toArray } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  EMPTY,
+  from,
+  Observable,
+  of,
+  switchMap,
+  tap,
+  throwError,
+  timer,
+  toArray,
+  zip,
+} from 'rxjs';
 import { patch } from '@ngxs/store/operators';
 import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -10,6 +23,7 @@ import {
   DownloadFile,
   FetchFile,
   FetchFileList,
+  FetchFileUsages,
   SelectAllFiles,
   SetFileListSearchValue,
   SetSelectedFiles,
@@ -26,6 +40,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '@shared/service/snackbar.service';
 import { ErrorsLocalization, NotificationSnackbarLocalization } from '@modules/error/error.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
+import { EntityDto } from '@api/api.models';
 
 export interface FilesStateModel {
   searchValue: string;
@@ -36,6 +51,9 @@ export interface FilesStateModel {
   isFileLoading: boolean;
   isFileLoadErr: boolean;
   file: FileDto | null;
+  isFileUsagesLoading: boolean;
+  qrFileUsages: EntityDto[] | null;
+  templateFileUsages: EntityDto[] | null;
   isFileDownloading: boolean;
   isDeleteInProgress: boolean;
 }
@@ -49,6 +67,9 @@ const defaults: FilesStateModel = {
   isFileLoading: false,
   isFileLoadErr: false,
   file: null,
+  isFileUsagesLoading: false,
+  qrFileUsages: null,
+  templateFileUsages: null,
   isFileDownloading: false,
   isDeleteInProgress: false,
 } as const;
@@ -117,6 +138,19 @@ export class FilesState {
   }
 
   @Selector()
+  public static getFileUsagesState$({
+    isFileUsagesLoading,
+    qrFileUsages,
+    templateFileUsages,
+  }: FilesStateModel): Pick<FilesStateModel, 'isFileUsagesLoading' | 'qrFileUsages' | 'templateFileUsages'> {
+    return {
+      isFileUsagesLoading,
+      qrFileUsages,
+      templateFileUsages,
+    };
+  }
+
+  @Selector()
   public static getSelectedFileList$({ selectedFileList }: FilesStateModel): number[] {
     return selectedFileList;
   }
@@ -161,12 +195,36 @@ export class FilesState {
           setState(patch({ file, isFileLoading: false }));
         },
       }),
+      takeUntilDestroyed(destroyRef),
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
         setState(patch({ isFileLoading: false, isFileLoadErr: true }));
         return throwError(() => err);
       }),
+    );
+  }
+
+  @Action(FetchFileUsages)
+  public fetchFileUsages(
+    { setState }: StateContext<FilesStateModel>,
+    { id, destroyRef }: FetchFileUsages,
+  ): Observable<unknown> {
+    setState(patch({ isFileUsagesLoading: true, isFileLoadErr: false }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() =>
+        zip([this.filesService.getFileUsages(id, { type: 'QR' }), this.filesService.getFileUsages(id, { type: 'FM' })]),
+      ),
+      tap({
+        next: ([qrFileUsages, templateFileUsages]) => {
+          setState(patch({ qrFileUsages, templateFileUsages, isFileUsagesLoading: false }));
+        },
+      }),
       takeUntilDestroyed(destroyRef),
+      catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
+        setState(patch({ isFileUsagesLoading: false, isFileLoadErr: true }));
+        return throwError(() => err);
+      }),
     );
   }
 

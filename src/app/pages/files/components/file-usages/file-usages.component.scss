@@ -1,0 +1,7 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  gap: mixins.rem(24);
+  display: grid;
+  grid-template-columns: 1fr;
+}

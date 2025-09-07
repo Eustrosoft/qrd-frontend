@@ -19,6 +19,14 @@ export class FetchFile {
   ) {}
 }
 
+export class FetchFileUsages {
+  public static readonly type = '[Files] Fetch File Usages';
+  constructor(
+    readonly id: number,
+    readonly destroyRef: DestroyRef,
+  ) {}
+}
+
 export class SetSelectedFiles {
   public static readonly type = '[Files] Set Selected Files';
   constructor(readonly selectedFileList: number[]) {}

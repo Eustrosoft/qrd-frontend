@@ -1,5 +1,5 @@
 import { DOCUMENT, inject, Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   FileBlobUploadRequest,
@@ -7,6 +7,7 @@ import {
   FileDto,
   FileUrlUploadRequest,
 } from '@api/files/files-api.models';
+import { EntityDto, UsagesQueryParams } from '@api/api.models';
 
 @Injectable({
   providedIn: 'root',
@@ -75,5 +76,10 @@ export class FilesService {
     link.download = fileName;
     link.click();
     URL.revokeObjectURL(objectUrl);
+  }
+
+  public getFileUsages(id: number, type: UsagesQueryParams): Observable<EntityDto[]> {
+    const params = new HttpParams({ fromObject: type });
+    return this.http.get<EntityDto[]>(`/qrCodeDemo/v1/api/secured/files/${id}/related`, { params });
   }
 }

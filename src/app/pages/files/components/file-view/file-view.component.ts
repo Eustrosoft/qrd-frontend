@@ -10,7 +10,7 @@ import { TabLink } from '@shared/shared.models';
 import { AppRoutes } from '@app/app.constants';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { FilesState } from '@app/pages/files/state/files.state';
-import { DeleteFiles, DownloadFile, FetchFile } from '@app/pages/files/state/files.actions';
+import { DeleteFiles, DownloadFile, FetchFile, FetchFileUsages } from '@app/pages/files/state/files.actions';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
@@ -47,12 +47,14 @@ export class FileViewComponent implements OnInit {
     isFileLoading: FilesState.isFileLoading$,
     isFileLoadErr: FilesState.isFileLoadErr$,
     file: FilesState.getFile$,
+    fileUsagesState: FilesState.getFileUsagesState$,
     isFileDownloading: FilesState.isFileDownloading$,
     isDeleteInProgress: FilesState.isDeleteInProgress$,
   });
 
   protected readonly actions = createDispatchMap({
     fetchFile: FetchFile,
+    fetchFileUsages: FetchFileUsages,
     downloadFile: DownloadFile,
     deleteFiles: DeleteFiles,
   });
@@ -68,5 +70,6 @@ export class FileViewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.actions.fetchFile(this.routeParams()['id'], this.destroyRef);
+    this.actions.fetchFileUsages(this.routeParams()['id'], this.destroyRef);
   }
 }
