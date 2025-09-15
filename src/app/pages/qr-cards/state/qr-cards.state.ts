@@ -341,7 +341,7 @@ export class QrCardsState {
   }
 
   @Action(AddFileToQrCard)
-  public addFileToTemplate(
+  public addFileToQrCard(
     { setState, dispatch }: StateContext<QrCardsStateModel>,
     { qrCardId, qrCardCode, fileId, destroyRef }: AddFileToQrCard,
   ): Observable<void> {

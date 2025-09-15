@@ -375,7 +375,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     this.isUploadVisible.set(false);
     if (state?.fileId && this.qrCardCode) {
       this.actions.addFileToQrCard(
-        +this.qrCardCode,
+        this.selectors.qrCard()!.id,
         this.selectors.qrCard()!.code.toString(),
         state.fileId,
         this.destroyRef,
@@ -387,7 +387,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     this.isFileSelectorVisible.set(false);
     for (const fileId of fileIdList) {
       this.actions.addFileToQrCard(
-        +this.qrCardCode!,
+        this.selectors.qrCard()!.id,
         this.selectors.qrCard()!.code.toString(),
         fileId,
         this.destroyRef,
