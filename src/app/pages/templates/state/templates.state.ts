@@ -1,6 +1,6 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
-import { catchError, concatMap, EMPTY, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
+import { catchError, concatMap, EMPTY, from, map, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { patch } from '@ngxs/store/operators';
 import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -35,6 +35,7 @@ import { SnackbarService } from '@shared/service/snackbar.service';
 
 import { NotificationSnackbarLocalization } from '@modules/error/error.constants';
 import { EntityDto } from '@api/api.models';
+import { TemplateFormFactoryService } from '@app/pages/templates/services/template-form-factory.service';
 
 export interface TemplatesStateModel {
   searchValue: string;
@@ -89,6 +90,7 @@ export class TemplatesState {
   private readonly matDialog = inject(MatDialog);
   private readonly snackbarService = inject(SnackbarService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly templateFormFactoryService = inject(TemplateFormFactoryService);
 
   @Selector()
   public static getSearchValue$({ searchValue }: TemplatesStateModel): string {
@@ -339,15 +341,16 @@ export class TemplatesState {
 
   @Action(AddFileToTemplate)
   public addFileToTemplate(
-    { setState, dispatch }: StateContext<TemplatesStateModel>,
+    { setState }: StateContext<TemplatesStateModel>,
     { templateId, fileId, destroyRef }: AddFileToTemplate,
-  ): Observable<void> {
+  ): Observable<unknown> {
     setState(patch({ isTemplateFilesLoading: true }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.templatesService.addFileToTemplate(templateId, { id: fileId })),
-      switchMap(() => dispatch(new FetchTemplate(templateId, destroyRef, false))),
+      switchMap(() => this.templatesService.getTemplate(templateId).pipe(map((temp) => temp.files))),
       tap({
-        next: () => {
+        next: (files) => {
+          this.templateFormFactoryService.patchFiles(files ?? [], false);
           setState(patch({ isTemplateFilesLoading: false }));
         },
       }),

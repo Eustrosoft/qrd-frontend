@@ -84,6 +84,7 @@ import { ChangeTemplateDialogData } from '@shared/components/confirmation-dialog
 import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
 import { TextareaAutoresizeDirective } from '@shared/directives/textarea-autoresize.directive';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
+import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 
 @Component({
   selector: 'qr-card-edit',
@@ -138,6 +139,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
   private readonly uiBottomMenuService = inject(UiBottomMenuService);
   private readonly matDialog = inject(MatDialog);
   protected readonly destroyRef = inject(DestroyRef);
+  protected readonly toHexPipe = inject(ToHexPipe);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly qrCardCode = this.activatedRoute.snapshot.paramMap.get('code')!;
@@ -376,7 +378,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     if (state?.fileId && this.qrCardCode) {
       this.actions.addFileToQrCard(
         this.selectors.qrCard()!.id,
-        this.selectors.qrCard()!.code.toString(),
+        this.toHexPipe.transform(this.selectors.qrCard()!.code.toString()),
         state.fileId,
         this.destroyRef,
       );
@@ -388,7 +390,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     for (const fileId of fileIdList) {
       this.actions.addFileToQrCard(
         this.selectors.qrCard()!.id,
-        this.selectors.qrCard()!.code.toString(),
+        this.toHexPipe.transform(this.selectors.qrCard()!.code.toString()),
         fileId,
         this.destroyRef,
       );

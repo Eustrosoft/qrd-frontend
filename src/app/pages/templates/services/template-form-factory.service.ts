@@ -12,7 +12,9 @@ import { FieldType } from '@api/templates/templates-api.models';
 import { MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
 import { SharedFormFactoryService } from '@shared/service/shared-form-factory.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TemplateFormFactoryService {
   private readonly fb = inject(FormBuilder);
   private readonly sharedFormFactoryService = inject(SharedFormFactoryService);

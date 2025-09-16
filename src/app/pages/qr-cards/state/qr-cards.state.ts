@@ -18,7 +18,7 @@ import {
 } from './qr-cards.actions';
 import { patch } from '@ngxs/store/operators';
 import { QRChangeDto, QRDto } from '@api/qr-cards/qrs-api.models';
-import { catchError, concatMap, EMPTY, from, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
+import { catchError, concatMap, EMPTY, from, map, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
 import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, QR_API_URL, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -38,6 +38,7 @@ import { FilesService } from '@app/pages/files/services/files.service';
 import { TemplateDto } from '@api/templates/templates-api.models';
 import { TemplatesService } from '@app/pages/templates/services/templates.service';
 import { QRRangeDto } from '@api/ranges/ranges-api.models';
+import { QrCardFormFactoryService } from '@app/pages/qr-cards/services/qr-card-form-factory.service';
 
 export interface QrCardsStateModel {
   searchValue: string;
@@ -103,6 +104,7 @@ export class QrCardsState {
   private readonly pxToRemPipe = inject(PxToRemPipe);
   private readonly matDialog = inject(MatDialog);
   private readonly snackbarService = inject(SnackbarService);
+  private readonly qrCardFormFactoryService = inject(QrCardFormFactoryService);
 
   @Selector()
   public static getSearchValue$({ searchValue }: QrCardsStateModel): string {
@@ -342,15 +344,16 @@ export class QrCardsState {
 
   @Action(AddFileToQrCard)
   public addFileToQrCard(
-    { setState, dispatch }: StateContext<QrCardsStateModel>,
+    { setState }: StateContext<QrCardsStateModel>,
     { qrCardId, qrCardCode, fileId, destroyRef }: AddFileToQrCard,
-  ): Observable<void> {
+  ): Observable<unknown> {
     setState(patch({ isQrCardFilesLoading: true }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.qrCardsService.addFileToQrCard(qrCardId, { id: fileId })),
-      switchMap(() => dispatch(new FetchQrCard(qrCardCode, destroyRef, false))),
+      switchMap(() => this.qrCardsService.getQrCard(qrCardCode).pipe(map((qrCard) => qrCard.files))),
       tap({
-        next: () => {
+        next: (files) => {
+          this.qrCardFormFactoryService.patchFiles(files ?? [], false);
           setState(patch({ isQrCardFilesLoading: false }));
         },
       }),
