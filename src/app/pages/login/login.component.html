@@ -43,9 +43,27 @@
     [flexAlignItems]="isXSmall() ? 'flex-end' : 'center'"
     [flexJustifyContent]="isXSmall() ? 'center' : 'flex-end'"
   >
-    <button class="button-md" mat-button>{{ SignUpLocalization.signUp }}</button>
-    <button class="button-md" mat-button>{{ SignUpLocalization.forgotPwd }}</button>
-    @if (!isAuthInfoLoading()) {
+    @if (selectors.configState().config.qrdConf?.signUpUri?.disabled === false) {
+      <a
+        [href]="selectors.configState().config.qrdConf?.signUpUri?.uri ?? '#'"
+        rel="noopener noreferrer"
+        class="button-md"
+        mat-button
+      >
+        {{ SignUpLocalization.signUp }}
+      </a>
+    }
+    @if (selectors.configState().config.qrdConf?.forgotPassUri?.disabled === false) {
+      <a
+        [href]="selectors.configState().config.qrdConf?.forgotPassUri?.uri ?? '#'"
+        rel="noopener noreferrer"
+        class="button-md"
+        mat-button
+      >
+        {{ SignUpLocalization.forgotPwd }}
+      </a>
+    }
+    @if (!selectors.isAuthInfoLoading()) {
       <button (click)="submitForm()" class="button-lg" mat-flat-button>{{ SharedLocalization.login }}</button>
     } @else {
       <ui-skeleton [width]="isXSmall() ? '100%' : '94'" height="48" />

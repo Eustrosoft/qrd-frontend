@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, model } from '@angular/core';
 import { SharedLocalization } from '@shared/shared.constants';
-import { MatAnchor, MatButton } from '@angular/material/button';
 import { IS_SMALL, IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { RouterLink } from '@angular/router';
 import { MatFormField, MatLabel } from '@angular/material/input';
@@ -28,7 +27,6 @@ import { VERSION } from '@cdk/tokens/version.token';
 @Component({
   selector: 'qrd-footer',
   imports: [
-    MatAnchor,
     RouterLink,
     MatFormField,
     MatLabel,
@@ -40,7 +38,6 @@ import { VERSION } from '@cdk/tokens/version.token';
     QrdLogoComponent,
     UiFlexBlockComponent,
     UiGridBlockComponent,
-    MatButton,
     InteractionEffect,
   ],
   templateUrl: './qrd-footer.component.html',
@@ -55,6 +52,7 @@ export class QrdFooterComponent {
   protected readonly selectors = createSelectMap({
     locale: AppState.getLocale$,
     availableLocales: DictionaryRegistryState.getDictionary$<Option<string>>('locales'),
+    configState: AppState.getConfigState$,
   });
   protected readonly setLocale = dispatch(SetLocale);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);

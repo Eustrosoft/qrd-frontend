@@ -18,14 +18,18 @@ export class SetLocale {
 }
 
 export class FetchSettings {
-  public static readonly type = '[Auth] Fetch Settings';
+  public static readonly type = '[App] Fetch Settings';
 }
 
 export class PatchSettings {
-  public static readonly type = '[Auth] Patch Settings';
+  public static readonly type = '[App] Patch Settings';
   constructor(readonly payload: Partial<SettingsDto['settings']>) {}
 }
 
 export class FetchFields {
-  public static readonly type = '[Auth] Fetch Fields';
+  public static readonly type = '[App] Fetch Fields';
+}
+
+export class FetchConfig {
+  public static readonly type = '[App] Fetch Config';
 }

@@ -6,11 +6,13 @@ export const ErrorsLocalization = {
   unknownErr: $localize`:@@errors.unknownErr:Unknown error`,
   smthWentWrong: $localize`:@@errors.smthWentWrong:Something went wrong`,
   pageNotFound: $localize`:@@errors.notFound:Page not found`,
+  // eslint-disable-next-line max-len
+  pageNotFoundDescription: $localize`:@@errors.pageNotFoundDescription:We do not have the requested page. It may have been deleted or an incorrect address was specified in the request`,
+  noConfig: $localize`:@@errors.noConfig:No config`,
+  noConfigDescription: $localize`:@@errors.noConfigDescription:Can't load app. Config is missing`,
   unauthenticatedRoute: $localize`:@@errors.unauthenticatedRoute:Session expired`,
   unauthenticated: $localize`:@@errors.unauthenticated:Your session expired`,
   unauthenticatedAction: $localize`:@@errors.unauthenticatedAction:You will be redirected to login in 5 seconds`,
-  // eslint-disable-next-line max-len
-  pageNotFoundDescription: $localize`:@@errors.pageNotFoundDescription:We do not have the requested page. It may have been deleted or an incorrect address was specified in the request`,
   errorCode: $localize`:@@errors.errorCode:Error code`,
   errorLoadingPreview: $localize`:@@errors.errorLoadingPreview:Error loading preview`,
   errorUploadingFile: $localize`:@@errors.errorUploadingFile:Error during uploading`,

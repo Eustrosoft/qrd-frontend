@@ -1,0 +1,51 @@
+{
+  "header": {
+    "img": { "uri": "./img.png", "alt": "alt img text" },
+    "title": "QR for business",
+    "tagline": "",
+    "links": [
+      { "title": "QR Cards", "uri": "qr-cards" },
+      { "title": "Templates", "uri": "templates" },
+      { "title": "Files", "uri": "files" },
+      { "title": "Docs", "uri": "docs" }
+    ]
+  },
+  "footer": {
+    "img": { "uri": "./img.png", "alt": "alt img text" },
+    "title": "QR Demo",
+    "tagline": "QR for all",
+    "blocks": [
+      {
+        "title": "QR Demo",
+        "links": [
+          { "title": "Training video", "uri": "about" },
+          { "title": "Login", "uri": "login" }
+        ]
+      },
+      {
+        "title": "Services",
+        "links": [
+          { "title": "QXYZ", "uri": "https://qxyz.ru" },
+          { "title": "QR Demo", "uri": "https://qrdemo.qxyz.ru" }
+        ]
+      },
+      {
+        "title": "Contacts",
+        "links": [
+          {
+            "title": "qrdemo@eustrosoft.org",
+            "uri": "mailto:qrdemo@eustrosoft.org"
+          },
+          {
+            "title": "+7(995)116-16-01",
+            "uri": "tel:+79951161601"
+          }
+        ]
+      }
+    ],
+    "copyright": {
+      "title": "eustrosoft.org",
+      "uri": "https://eustrosoft.org"
+    }
+  }
+}

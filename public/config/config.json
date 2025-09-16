@@ -1,0 +1,22 @@
+{
+  "qrdConf": {
+    "signUpUri": { "uri": "#", "disabled": true },
+    "forgotPassUri": { "uri": "#", "disabled": true },
+    "oldAppUri": { "uri": "/lk/", "disabled": false },
+    "langList": [
+      {
+        "lang": "en-US",
+        "name": "Engish (US)",
+        "default": true
+      },
+      {
+        "lang": "ru-RU",
+        "name": "Русский"
+      },
+      {
+        "lang": "bg-BG",
+        "name": "Български"
+      }
+    ]
+  }
+}

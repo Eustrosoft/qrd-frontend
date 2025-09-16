@@ -90,6 +90,11 @@
                 "input": "public",
                 "glob": "*.webmanifest",
                 "output": "/"
+              },
+              {
+                "input": "public/config",
+                "glob": "*.json",
+                "output": "/config"
               }
             ],
             "styles": ["src/styles.scss"],

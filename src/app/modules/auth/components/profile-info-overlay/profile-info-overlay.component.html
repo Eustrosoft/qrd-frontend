@@ -35,10 +35,19 @@
   >
     {{ SharedLocalization.settings }}
   </a>
-  <hr />
-  <a href="/lk" target="_blank" rel="noopener noreferrer" class="button-anchor-md" mat-button textInteractionEffect>
-    {{ ProfileInfoOverlayLocalization.oldApp }}
-  </a>
+  @if (configState().config.qrdConf?.oldAppUri?.disabled === false) {
+    <hr />
+    <a
+      [href]="configState().config.qrdConf?.oldAppUri?.uri"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="button-anchor-md"
+      mat-button
+      textInteractionEffect
+    >
+      {{ ProfileInfoOverlayLocalization.oldApp }}
+    </a>
+  }
   <hr />
 </ui-grid-block>
 

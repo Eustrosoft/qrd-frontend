@@ -2,19 +2,21 @@ import { DOCUMENT, inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { HtmlRendererService } from '@shared/service/html-renderer.service';
 import { LocalStorageService } from '@shared/service/local-storage.service';
-import { Locale, Theme, ThemeContrast } from '@app/app.models';
-import { FetchFields, FetchSettings, PatchSettings, SetLocale, SetTheme } from '@app/state/app.actions';
+import { AppConfig, AppLayoutConfig, Locale, Theme, ThemeContrast } from '@app/app.models';
+import { FetchConfig, FetchFields, FetchSettings, PatchSettings, SetLocale, SetTheme } from '@app/state/app.actions';
 import { patch } from '@ngxs/store/operators';
-import { DEFAULT_LOCALE, LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/app.constants';
+import { AppRoutes, DEFAULT_LOCALE, LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
 import { Column, QrTableColumnFieldName, SettingsDto } from '@api/settings/settings-api.models';
 import { SettingsService } from '@shared/service/settings.service';
-import { catchError, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, EMPTY, Observable, of, switchMap, tap } from 'rxjs';
 import { BaseQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
 import { DEFAULT_SETTINGS } from '@app/pages/settings/settings.constants';
 import { uniq } from '@shared/utils/functions/uniq.function';
+import { ConfigService } from '@shared/service/config.service';
+import { Router } from '@angular/router';
 
 export interface AppStateModel {
   theme: Theme;
@@ -25,6 +27,10 @@ export interface AppStateModel {
   settings: SettingsDto['settings'];
   isLoadingFields: boolean;
   qrFieldColumns: Column[];
+  isLoadingConfig: boolean;
+  config: Partial<AppConfig>;
+  isLoadingLayoutConfig: boolean;
+  layoutConfig: Partial<AppLayoutConfig>;
 }
 
 const defaults: AppStateModel = {
@@ -36,6 +42,10 @@ const defaults: AppStateModel = {
   settings: DEFAULT_SETTINGS,
   isLoadingFields: false,
   qrFieldColumns: BaseQrTableCols,
+  isLoadingConfig: false,
+  config: {},
+  isLoadingLayoutConfig: false,
+  layoutConfig: {},
 } as const;
 
 const APP_STATE_TOKEN: StateToken<AppStateModel> = new StateToken<AppStateModel>('app');
@@ -49,6 +59,8 @@ export class AppState {
   private readonly htmlLoaderService = inject(HtmlRendererService);
   private readonly localStorageService = inject(LocalStorageService);
   private readonly settingsService = inject(SettingsService);
+  private readonly configService = inject(ConfigService);
+  private readonly router = inject(Router);
   private readonly window = inject(WINDOW);
   private readonly document = inject(DOCUMENT);
   private readonly prefersDark = inject(PREFERS_DARK_TOKEN);
@@ -76,6 +88,14 @@ export class AppState {
     settings,
   }: AppStateModel): Pick<AppStateModel, 'isLoadingSettings' | 'isSavingSettings' | 'settings'> {
     return { isLoadingSettings, isSavingSettings, settings };
+  }
+
+  @Selector()
+  public static getConfigState$({
+    isLoadingConfig,
+    config,
+  }: AppStateModel): Pick<AppStateModel, 'isLoadingConfig' | 'config'> {
+    return { isLoadingConfig, config };
   }
 
   @Selector()
@@ -232,6 +252,28 @@ export class AppState {
       catchError(() => {
         setState(patch({ isLoadingFields: false, qrFieldColumns: BaseQrTableCols }));
         return of(BaseQrTableCols);
+      }),
+    );
+  }
+
+  @Action(FetchConfig)
+  public fetchConfig({ setState }: StateContext<AppStateModel>): Observable<unknown> {
+    setState(patch({ isLoadingConfig: true }));
+    return this.configService.fetchConfig().pipe(
+      tap({
+        next: (config) => {
+          setState(
+            patch({
+              isLoadingConfig: false,
+              config,
+            }),
+          );
+        },
+      }),
+      catchError(() => {
+        setState(patch({ isLoadingConfig: false }));
+        this.router.navigate([AppRoutes.noConfig]);
+        return EMPTY;
       }),
     );
   }

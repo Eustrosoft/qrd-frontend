@@ -11,6 +11,17 @@ export type LocaleJson = {
   locale: Locale;
   translations: Record<string, string>;
 };
+export type ConfigUri = { title?: string; uri?: string; disabled?: boolean };
+export type ConfigLocaleItem = { lang?: Locale; name?: string; default?: boolean };
+export type AppConfig = {
+  qrdConf?: {
+    signUpUri?: ConfigUri;
+    forgotPassUri?: ConfigUri;
+    oldAppUri?: ConfigUri;
+    langList?: ConfigLocaleItem[];
+  };
+};
+export type AppLayoutConfig = {};
 export type Icon = 'arrow-bottom' | 'cringe' | 'not-found' | 'palette' | 'timeout' | 'unknown-err';
 export type Dictionaries =
   | 'locales'

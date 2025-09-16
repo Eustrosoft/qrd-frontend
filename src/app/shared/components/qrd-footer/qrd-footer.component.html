@@ -11,8 +11,8 @@
         [(ngModel)]="localeModel"
         (selectionChange)="updateLocale($event)"
       >
-        @for (locale of selectors.availableLocales().list; track locale.value) {
-          <mat-option class="option-sm" [value]="locale.value">{{ locale.viewValue }}</mat-option>
+        @for (locale of selectors.configState().config.qrdConf?.langList; track locale.lang) {
+          <mat-option class="option-sm" [value]="locale.lang">{{ locale.name }}</mat-option>
         }
       </mat-select>
     </mat-form-field>

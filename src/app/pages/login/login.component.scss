@@ -47,6 +47,7 @@
 
   .login-card {
     padding: mixins.rem(32) mixins.rem(24);
+    min-width: mixins.rem(384);
     background: var(--mat-sys-surface-container);
     border-radius: mixins.rem(12);
   }
@@ -56,6 +57,10 @@
 
     .button-lg {
       width: 100%;
+    }
+
+    .login-card {
+      min-width: 100%;
     }
   }
 }
