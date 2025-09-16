@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-
 import { DEFAULT_CHUNK_SIZE } from '@app/pages/files/files.constants';
 
 @Injectable({

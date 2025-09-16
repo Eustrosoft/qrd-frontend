@@ -1,13 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, createSelector, NgxsAfterBootstrap, State, StateContext, StateToken } from '@ngxs/store';
-import { Dictionaries, DictionaryState, Locale } from '@app/app.models';
+import { Dictionaries, DictionaryState } from '@app/app.models';
 import { DictionaryItem, Option } from '@shared/shared.models';
 import { ThemePickerOverlayLocalization } from '@shared/components/theme-picker-overlay/theme-picker-overlay.constants';
 import { patch } from '@ngxs/store/operators';
-import { LocalesLocalization, RouteTitles } from '@shared/shared.constants';
-import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
-import { BottomNavbarLink } from '@shared/components/bottom-navbar/bottom-navbar.models';
-import { HeaderNavbarLink } from '@shared/components/qrd-header/qrd-header.models';
 import { FetchDictionaryByName } from '@shared/state/dictionary-registry.actions';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
@@ -68,73 +64,6 @@ export class DictionaryRegistryState implements NgxsAfterBootstrap {
               {
                 value: '-hc',
                 viewValue: ThemePickerOverlayLocalization.highContrast,
-              },
-            ],
-            isLoading: false,
-            isLoadError: false,
-          }),
-          locales: patch<DictionaryState<Option<Locale>>>({
-            list: [
-              {
-                value: 'ru-RU',
-                viewValue: LocalesLocalization.ruRu,
-              },
-              {
-                value: 'en-US',
-                viewValue: LocalesLocalization.enUS,
-              },
-              {
-                value: 'bg-BG',
-                viewValue: LocalesLocalization.bgBg,
-              },
-            ],
-            isLoading: false,
-            isLoadError: false,
-          }),
-          headerNavbarLinks: patch<DictionaryState<HeaderNavbarLink>>({
-            list: [
-              {
-                title: HeaderLocalization.cards,
-                route: '/qr-cards',
-              },
-              {
-                title: HeaderLocalization.templates,
-                route: '/templates',
-              },
-              {
-                title: HeaderLocalization.files,
-                route: '/files',
-              },
-              {
-                title: HeaderLocalization.docs,
-                route: '/not-found',
-              },
-            ],
-            isLoading: false,
-            isLoadError: false,
-          }),
-          bottomNavbarLinks: patch<DictionaryState<BottomNavbarLink>>({
-            list: [
-              {
-                icon: 'article',
-                route: '/qr-cards',
-                title: RouteTitles.cards,
-              },
-              {
-                icon: 'difference',
-                route: '/templates',
-                title: RouteTitles.templates,
-              },
-              {
-                icon: 'folder',
-                iconActive: 'folder_open',
-                route: '/files',
-                title: RouteTitles.files,
-              },
-              {
-                icon: 'note_add',
-                route: '/not-found',
-                title: RouteTitles.docs,
               },
             ],
             isLoading: false,

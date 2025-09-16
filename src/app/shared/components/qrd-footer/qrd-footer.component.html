@@ -1,8 +1,10 @@
-<ui-grid-block [gridTemplateColumns]="gridTemplateColumns()">
+<ui-grid-block [gridTemplateColumns]="gridTemplateColumns()" gridAlignItems="start">
   <ui-grid-block gridTemplateColumns="1fr" gridJustifyItems="start">
     <qrd-logo>
-      <p><b>QR Demo</b></p>
-      <p>{{ FooterLocalization.qrForAll }}</p>
+      <p>
+        <b>{{ selectors.layoutConfigState().layoutConfig.footer?.title }}</b>
+      </p>
+      <p>{{ selectors.layoutConfigState().layoutConfig.footer?.tagline }}</p>
     </qrd-logo>
     <mat-form-field subscriptSizing="dynamic" class="form-field-sm">
       <mat-label>{{ SharedLocalization.language }}</mat-label>
@@ -17,30 +19,33 @@
       </mat-select>
     </mat-form-field>
   </ui-grid-block>
-  <ui-flex-block gapSize="2" flexDirection="column" flexAlignItems="flex-start">
-    <p><b>QR Demo</b></p>
-    <a class="primary" interactionEffect>{{ FooterLocalization.trainingVideo }}</a>
-    <a class="primary" routerLink="/login" interactionEffect>{{ FooterLocalization.loginPage }}</a>
-  </ui-flex-block>
-  <ui-flex-block gapSize="2" flexDirection="column" [flexAlignItems]="isSmallScreen() ? 'flex-start' : 'center'">
-    <p>
-      <b>{{ FooterLocalization.services }}</b>
-    </p>
-    <a class="primary" href="https://qxyz.ru" target="_blank" interactionEffect>QXYZ</a>
-    <a class="primary" href="https://qrdemo.qxyz.ru" target="_blank" interactionEffect>QR Demo</a>
-  </ui-flex-block>
-  <ui-flex-block gapSize="2" flexDirection="column" [flexAlignItems]="isSmallScreen() ? 'flex-start' : 'flex-end'">
-    <p>
-      <b>{{ FooterLocalization.contacts }}</b>
-    </p>
-    <a class="primary" href="mailto:qrdemo@eustrosoft.org" interactionEffect> qrdemo&#64;eustrosoft.org </a>
-    <a class="primary" href="tel:+79951161601" interactionEffect>+7 (995) 116-16-01</a>
-  </ui-flex-block>
+  @for (block of selectors.layoutConfigState().layoutConfig.footer?.blocks; track block) {
+    <ui-grid-block rowGapSize="8" gridTemplateColumns="1fr">
+      <p>
+        <b>{{ block.title }}</b>
+      </p>
+      @for (link of block.links; track link) {
+        <a class="primary" [href]="link.uri" target="_blank" rel="noopener noreferrer" interactionEffect>
+          {{ link.title }}
+        </a>
+      }
+    </ui-grid-block>
+  }
 </ui-grid-block>
-<ui-flex-block gapSize="4" flexAlignSelf="flex-end">
+<ui-flex-block gapSize="4" flexJustifySelf="flex-end">
   <small>v{{ version }}</small>
-  <small>© {{ currentYear }}</small>
-  <small>
-    <a class="primary" href="https://eustrosoft.org" target="_blank" interactionEffect> eustrosoft.org </a>
-  </small>
+  @if (selectors.layoutConfigState().layoutConfig.footer?.copyright) {
+    <small>
+      © {{ currentYear }}
+      <a
+        class="primary"
+        [href]="selectors.layoutConfigState().layoutConfig.footer?.copyright?.uri"
+        target="_blank"
+        rel="noopener noreferrer"
+        interactionEffect
+      >
+        {{ selectors.layoutConfigState().layoutConfig.footer?.copyright?.title }}
+      </a>
+    </small>
+  }
 </ui-flex-block>

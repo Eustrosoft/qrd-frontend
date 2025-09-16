@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, model } from '@angular/core';
 import { SharedLocalization } from '@shared/shared.constants';
 import { IS_SMALL, IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
-import { RouterLink } from '@angular/router';
 import { MatFormField, MatLabel } from '@angular/material/input';
 import { MatOption, MatSelect, MatSelectChange } from '@angular/material/select';
 import { Locale } from '@app/app.models';
@@ -10,8 +9,6 @@ import { AppState } from '@app/state/app.state';
 import { FormsModule } from '@angular/forms';
 import { SetLocale } from '@app/state/app.actions';
 import { FooterLocalization } from '@shared/components/qrd-footer/qrd-footer.constants';
-import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
-import { Option } from '@shared/shared.models';
 import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
@@ -27,7 +24,6 @@ import { VERSION } from '@cdk/tokens/version.token';
 @Component({
   selector: 'qrd-footer',
   imports: [
-    RouterLink,
     MatFormField,
     MatLabel,
     MatOption,
@@ -51,8 +47,8 @@ export class QrdFooterComponent {
   private readonly isSmall = inject(IS_SMALL);
   protected readonly selectors = createSelectMap({
     locale: AppState.getLocale$,
-    availableLocales: DictionaryRegistryState.getDictionary$<Option<string>>('locales'),
     configState: AppState.getConfigState$,
+    layoutConfigState: AppState.getLayoutConfigState$,
   });
   protected readonly setLocale = dispatch(SetLocale);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);

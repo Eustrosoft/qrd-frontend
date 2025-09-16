@@ -6,18 +6,18 @@
   }
   <qrd-logo routerLink="/">
     @if (!isSmallScreen()) {
-      <p class="bold on-primary-container-color">{{ HeaderLocalization.qrForBusiness }}</p>
+      <p class="bold on-primary-container-color">{{ selectors.layoutConfigState().layoutConfig.header?.title }}</p>
     }
   </qrd-logo>
 </ui-flex-block>
 <ui-flex-block flexAlignItems="center">
   @if (!isSmallScreen() && selectors.isAuthenticated()) {
     <mat-nav-list class="header-navbar">
-      @for (link of selectors.navbarLinks().list; track link.title) {
+      @for (link of selectors.layoutConfigState().layoutConfig.header?.nav; track link.title) {
         <a
           class="header-navbar-link"
           [activated]="rla.isActive"
-          [routerLink]="link.route"
+          [routerLink]="link.uri"
           #rla="routerLinkActive"
           routerLinkActive="active"
           mat-list-item

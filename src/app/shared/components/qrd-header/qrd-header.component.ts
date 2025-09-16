@@ -4,14 +4,12 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { SharedLocalization } from '@shared/shared.constants';
 import { PaletteAnimationDirective } from '@shared/directives/palette-animation.directive';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { HeaderNavbarLink } from '@shared/components/qrd-header/qrd-header.models';
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, Overlay } from '@angular/cdk/overlay';
 import { ThemePickerOverlayComponent } from '@shared/components/theme-picker-overlay/theme-picker-overlay.component';
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component';
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { createSelectMap, select } from '@ngxs/store';
-import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { AuthState } from '@modules/auth/state/auth.state';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
@@ -19,6 +17,7 @@ import { MiniProfileInfoComponent } from '@modules/auth/components/mini-profile-
 import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overlay/create-menu-overlay.component';
 import { MatIcon } from '@angular/material/icon';
 import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
+import { AppState } from '@app/state/app.state';
 
 @Component({
   selector: 'qrd-header',
@@ -52,7 +51,7 @@ export class QrdHeaderComponent {
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly selectors = createSelectMap({
     isAuthenticated: select(AuthState.isAuthenticated$),
-    navbarLinks: select(DictionaryRegistryState.getDictionary$<HeaderNavbarLink>('headerNavbarLinks')),
+    layoutConfigState: select(AppState.getLayoutConfigState$),
   });
 
   protected readonly HeaderLocalization = HeaderLocalization;

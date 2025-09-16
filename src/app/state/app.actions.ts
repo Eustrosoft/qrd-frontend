@@ -33,3 +33,8 @@ export class FetchFields {
 export class FetchConfig {
   public static readonly type = '[App] Fetch Config';
 }
+
+export class FetchLayoutConfig {
+  public static readonly type = '[App] Fetch Layout Config';
+  constructor(readonly locale: Locale) {}
+}

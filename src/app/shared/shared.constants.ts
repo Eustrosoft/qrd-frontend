@@ -1,5 +1,8 @@
 import { FileStorageType } from '@api/files/files-api.models';
 import { FileStorageTypeItem } from '@shared/shared.models';
+import { AppLayoutConfig } from '@app/app.models';
+import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
+import { FooterLocalization } from '@shared/components/qrd-footer/qrd-footer.constants';
 
 export const SharedLocalization = {
   login: $localize`:@@shared.login:Login`,
@@ -122,5 +125,56 @@ export const FileStorageTypeMap = new Map<FileStorageType | null | undefined, Fi
   ['URL', { text: SharedLocalization.storedExternally, icon: 'http' }],
 ]);
 
-export const WEB_REGEXP =
+export const WebRegExp =
   /^(https?:\/\/)?([a-zA-Zа-яёА-ЯЁ0-9-]+\.)+[a-zA-Zа-яёА-ЯЁ]{2,}(\/[a-zA-Zа-яёА-ЯЁ0-9-._~:/?#[\]@!$&'()*+,;=]*)?$/;
+
+export const DefaultLayoutConfig: AppLayoutConfig = {
+  logo: { uri: 'public/img/logo.webp', alt: 'logo' },
+  header: {
+    title: HeaderLocalization.qrForBusiness,
+    tagline: '',
+    nav: [
+      { title: HeaderLocalization.cards, uri: 'qr-cards' },
+      { title: HeaderLocalization.templates, uri: 'templates' },
+      { title: HeaderLocalization.files, uri: 'files' },
+      { title: HeaderLocalization.docs, uri: 'docs' },
+    ],
+  },
+  footer: {
+    title: 'QR Demo',
+    tagline: FooterLocalization.qrForAll,
+    blocks: [
+      {
+        title: 'QR Demo',
+        links: [
+          { title: FooterLocalization.trainingVideo, uri: 'about' },
+          { title: FooterLocalization.loginPage, uri: 'login' },
+        ],
+      },
+      {
+        title: FooterLocalization.services,
+        links: [
+          { title: 'QXYZ', uri: 'https://qxyz.ru' },
+          { title: 'QR Demo', uri: 'https://qrdemo.qxyz.ru' },
+        ],
+      },
+      {
+        title: FooterLocalization.contacts,
+        links: [
+          {
+            title: 'qrdemo@eustrosoft.org',
+            uri: 'mailto:qrdemo@eustrosoft.org',
+          },
+          {
+            title: '+7(995)116-16-01',
+            uri: 'tel:+79951161601',
+          },
+        ],
+      },
+    ],
+    copyright: {
+      title: 'eustrosoft.org',
+      uri: 'https://eustrosoft.org',
+    },
+  },
+};

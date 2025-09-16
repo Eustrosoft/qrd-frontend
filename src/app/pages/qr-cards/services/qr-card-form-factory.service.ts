@@ -5,7 +5,7 @@ import { MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH, MAX_URL_LENGTH } from '@app/pa
 import { SharedFormFactoryService } from '@shared/service/shared-form-factory.service';
 import { FileFormGroup } from '@shared/shared.models';
 import { TemplateField } from '@api/templates/templates-api.models';
-import { WEB_REGEXP } from '@shared/shared.constants';
+import { WebRegExp } from '@shared/shared.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -81,7 +81,7 @@ export class QrCardFormFactoryService {
       action: this.fb.nonNullable.control<QrCardAction>('STD'),
       redirect: this.fb.nonNullable.control<string>('', [
         Validators.maxLength(MAX_URL_LENGTH),
-        Validators.pattern(WEB_REGEXP),
+        Validators.pattern(WebRegExp),
       ]),
       data: this.makeDataFormRecord(fieldList ?? []),
       files: this.sharedFormFactoryService.makeFileFormGroupArray(initialData?.files ?? []),

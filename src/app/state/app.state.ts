@@ -3,7 +3,15 @@ import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { HtmlRendererService } from '@shared/service/html-renderer.service';
 import { LocalStorageService } from '@shared/service/local-storage.service';
 import { AppConfig, AppLayoutConfig, Locale, Theme, ThemeContrast } from '@app/app.models';
-import { FetchConfig, FetchFields, FetchSettings, PatchSettings, SetLocale, SetTheme } from '@app/state/app.actions';
+import {
+  FetchConfig,
+  FetchFields,
+  FetchLayoutConfig,
+  FetchSettings,
+  PatchSettings,
+  SetLocale,
+  SetTheme,
+} from '@app/state/app.actions';
 import { patch } from '@ngxs/store/operators';
 import { AppRoutes, DEFAULT_LOCALE, LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
@@ -96,6 +104,14 @@ export class AppState {
     config,
   }: AppStateModel): Pick<AppStateModel, 'isLoadingConfig' | 'config'> {
     return { isLoadingConfig, config };
+  }
+
+  @Selector()
+  public static getLayoutConfigState$({
+    isLoadingLayoutConfig,
+    layoutConfig,
+  }: AppStateModel): Pick<AppStateModel, 'isLoadingLayoutConfig' | 'layoutConfig'> {
+    return { isLoadingLayoutConfig, layoutConfig };
   }
 
   @Selector()
@@ -273,6 +289,30 @@ export class AppState {
       catchError(() => {
         setState(patch({ isLoadingConfig: false }));
         this.router.navigate([AppRoutes.noConfig]);
+        return EMPTY;
+      }),
+    );
+  }
+
+  @Action(FetchLayoutConfig)
+  public fetchLayoutConfig(
+    { setState }: StateContext<AppStateModel>,
+    { locale }: FetchLayoutConfig,
+  ): Observable<unknown> {
+    setState(patch({ isLoadingLayoutConfig: true }));
+    return this.configService.fetchLayoutConfig(locale).pipe(
+      tap({
+        next: (layoutConfig) => {
+          setState(
+            patch({
+              isLoadingLayoutConfig: false,
+              layoutConfig,
+            }),
+          );
+        },
+      }),
+      catchError(() => {
+        setState(patch({ isLoadingLayoutConfig: false }));
         return EMPTY;
       }),
     );

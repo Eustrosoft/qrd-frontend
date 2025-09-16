@@ -1,35 +1,35 @@
 {
   "logo": { "uri": "public/img/logo.webp", "alt": "logo" },
   "header": {
-    "title": "QR for business",
+    "title": "QR-коды для бизнеса",
     "tagline": "",
     "nav": [
-      { "title": "QR Cards", "uri": "qr-cards", "icon": "article" },
-      { "title": "Templates", "uri": "templates", "icon": "difference" },
-      { "title": "Files", "uri": "files", "icon": "folder", "iconActive": "folder_open" },
-      { "title": "Docs", "uri": "docs", "icon": "note_add" }
+      { "title": "Карточки", "uri": "qr-cards", "icon": "article" },
+      { "title": "Шаблоны", "uri": "templates", "icon": "difference" },
+      { "title": "Файлы", "uri": "files", "icon": "folder", "iconActive": "folder_open" },
+      { "title": "Документы", "uri": "docs", "icon": "note_add" }
     ]
   },
   "footer": {
     "title": "QR Demo",
-    "tagline": "QR for all",
+    "tagline": "QR коды для всех",
     "blocks": [
       {
         "title": "QR Demo",
         "links": [
-          { "title": "Training video", "uri": "about" },
-          { "title": "Login", "uri": "login" }
+          { "title": "Обучающее видео", "uri": "about" },
+          { "title": "Вход", "uri": "login" }
         ]
       },
       {
-        "title": "Services",
+        "title": "Сервисы",
         "links": [
           { "title": "QXYZ", "uri": "https://qxyz.ru" },
           { "title": "QR Demo", "uri": "https://qrdemo.qxyz.ru" }
         ]
       },
       {
-        "title": "Contacts",
+        "title": "Контакты",
         "links": [
           {
             "title": "qrdemo@eustrosoft.org",

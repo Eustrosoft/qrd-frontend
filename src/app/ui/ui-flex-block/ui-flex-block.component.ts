@@ -15,6 +15,7 @@ import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
     '[style.justify-content]': 'flexJustifyContent()',
     '[style.flex]': 'flex()',
     '[style.align-self]': 'flexAlignSelf()',
+    '[style.justify-self]': 'flexJustifySelf()',
     '[style.overflow]': 'overflow()',
   },
 })
@@ -30,6 +31,7 @@ export class UiFlexBlockComponent {
   public readonly flexJustifyContent: InputSignal<FlexJustifyContent> = input<FlexJustifyContent>('');
   public readonly flex: InputSignal<string | number> = input<string | number>('');
   public readonly flexAlignSelf: InputSignal<FlexAlignItems> = input<FlexAlignItems>('');
+  public readonly flexJustifySelf: InputSignal<FlexJustifyContent> = input<FlexJustifyContent>('');
   public readonly flexWrap: InputSignal<FlexWrap> = input<FlexWrap>('nowrap');
   public readonly overflow: InputSignal<Overflow> = input<Overflow>('visible');
 }

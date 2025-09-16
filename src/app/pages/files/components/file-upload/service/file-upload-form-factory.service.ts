@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { FileAsUrlForm, FileAsUrlFormGroup, FileUploadForm, FileUploadFormGroup } from '@app/pages/files/files.models';
-import { WEB_REGEXP } from '@shared/shared.constants';
+import { WebRegExp } from '@shared/shared.constants';
 import { MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH, MAX_URL_LENGTH } from '@app/pages/files/files.constants';
 import { distinctUntilChanged, map, pairwise, startWith, Subject, takeUntil } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -68,7 +68,7 @@ export class FileUploadFormFactoryService {
       storagePath: this.fb.nonNullable.control<string>('', [
         Validators.required,
         Validators.maxLength(MAX_URL_LENGTH),
-        Validators.pattern(WEB_REGEXP),
+        Validators.pattern(WebRegExp),
       ]),
     });
   }

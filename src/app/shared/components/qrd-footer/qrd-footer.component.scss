@@ -5,10 +5,9 @@
 
 :host {
   gap: mixins.rem(4);
-  display: flex;
+  display: grid;
   padding: mixins.rem(16) mixins.rem(24);
   background: var(--mat-sys-surface-container);
-  flex-direction: column;
 
   img {
     border-radius: mixins.rem(4);
