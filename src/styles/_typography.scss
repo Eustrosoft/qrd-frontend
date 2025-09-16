@@ -45,3 +45,11 @@ small {
     font-weight: 700;
   }
 }
+
+a {
+  cursor: pointer;
+
+  &.primary {
+    color: var(--mat-sys-primary);
+  }
+}

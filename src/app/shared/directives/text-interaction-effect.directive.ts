@@ -91,6 +91,7 @@ export class InteractionEffect {
   private resetState(): void {
     this.applyToTargets((element) => {
       this.renderer.removeStyle(element, 'color');
+      this.renderer.removeStyle(element, 'transition');
     });
   }
 }

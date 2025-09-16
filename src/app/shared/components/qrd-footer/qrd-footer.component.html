@@ -1,5 +1,5 @@
 <ui-grid-block [gridTemplateColumns]="gridTemplateColumns()">
-  <ui-flex-block flexDirection="column" flexAlignItems="flex-start">
+  <ui-grid-block gridTemplateColumns="1fr" gridJustifyItems="start">
     <qrd-logo>
       <p><b>QR Demo</b></p>
       <p>{{ FooterLocalization.qrForAll }}</p>
@@ -16,33 +16,31 @@
         }
       </mat-select>
     </mat-form-field>
-  </ui-flex-block>
+  </ui-grid-block>
   <ui-flex-block gapSize="2" flexDirection="column" flexAlignItems="flex-start">
     <p><b>QR Demo</b></p>
-    <a class="button-anchor-md" mat-button interactionEffect>{{ FooterLocalization.trainingVideo }}</a>
-    <a class="button-anchor-md" routerLink="/login" mat-button interactionEffect>{{ FooterLocalization.loginPage }}</a>
+    <a class="primary" interactionEffect>{{ FooterLocalization.trainingVideo }}</a>
+    <a class="primary" routerLink="/login" interactionEffect>{{ FooterLocalization.loginPage }}</a>
   </ui-flex-block>
   <ui-flex-block gapSize="2" flexDirection="column" [flexAlignItems]="isSmallScreen() ? 'flex-start' : 'center'">
     <p>
       <b>{{ FooterLocalization.services }}</b>
     </p>
-    <a class="button-anchor-md" href="https://qxyz.ru" target="_blank" mat-button interactionEffect>QXYZ</a>
-    <a class="button-anchor-md" href="https://qrdemo.qxyz.ru" target="_blank" mat-button interactionEffect>QR Demo</a>
+    <a class="primary" href="https://qxyz.ru" target="_blank" interactionEffect>QXYZ</a>
+    <a class="primary" href="https://qrdemo.qxyz.ru" target="_blank" interactionEffect>QR Demo</a>
   </ui-flex-block>
   <ui-flex-block gapSize="2" flexDirection="column" [flexAlignItems]="isSmallScreen() ? 'flex-start' : 'flex-end'">
     <p>
       <b>{{ FooterLocalization.contacts }}</b>
     </p>
-    <a class="button-anchor-md" href="mailto:qrdemo@eustrosoft.org" mat-button interactionEffect>
-      qrdemo&#64;eustrosoft.org
-    </a>
-    <a class="button-anchor-md" href="tel:+79951161601" mat-button interactionEffect>+7 (995) 116-16-01</a>
+    <a class="primary" href="mailto:qrdemo@eustrosoft.org" interactionEffect> qrdemo&#64;eustrosoft.org </a>
+    <a class="primary" href="tel:+79951161601" interactionEffect>+7 (995) 116-16-01</a>
   </ui-flex-block>
 </ui-grid-block>
 <ui-flex-block gapSize="4" flexAlignSelf="flex-end">
   <small>v{{ version }}</small>
   <small>© {{ currentYear }}</small>
-  <a class="button-anchor-sm" href="https://eustrosoft.org" target="_blank" mat-button interactionEffect>
-    eustrosoft.org
-  </a>
+  <small>
+    <a class="primary" href="https://eustrosoft.org" target="_blank" interactionEffect> eustrosoft.org </a>
+  </small>
 </ui-flex-block>
