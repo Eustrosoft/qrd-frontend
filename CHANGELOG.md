@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.14.0...v1.15.0) (2025-09-17)
+
+
+### Features
+
+* **config:** добавлен config.json ([45806b2](https://github.com/Eustrosoft/qrd-frontend/commit/45806b2baecb33d295fea9ec681b90783b2bc8dc))
+* **layout-config:** добавлена конфигурация для footer и header ([6f50a68](https://github.com/Eustrosoft/qrd-frontend/commit/6f50a68a3f1a0cac4eeef696bade75e7bf078a33))
+* **sidenav:** меню навигации продублировано в sidenav ([f7533c2](https://github.com/Eustrosoft/qrd-frontend/commit/f7533c2e42c13d5074df99702506ce1e69176729))
+
+
+### Bug Fixes
+
+* **choose:** исправлен метод прикрепления файла к карточке ([1e26ec8](https://github.com/Eustrosoft/qrd-frontend/commit/1e26ec828c5faeb25b17ca8d024829fbb5a1311d))
+* **file:** исправлено удаление несохраненных данных при прикреплении файла ([827bf6a](https://github.com/Eustrosoft/qrd-frontend/commit/827bf6a561f09005800e4a585bfa17e4679c84f4))
+* **footer:** замена mat-button на обычную <a> ссылку ([4f43043](https://github.com/Eustrosoft/qrd-frontend/commit/4f43043982692d4cc40faf1bfdbbae18fa333c21))
+
 ## [1.14.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.13.0...v1.14.0) (2025-09-07)
 
 
