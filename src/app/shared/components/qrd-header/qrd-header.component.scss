@@ -20,6 +20,10 @@
     }
   }
 
+  &.no-auth {
+    padding: mixins.rem(12) mixins.rem(24);
+  }
+
   @media #{map.get(bp.$breakpoints, xsmall)} {
     padding: mixins.rem(12) mixins.rem(24) mixins.rem(12) mixins.rem(4);
   }

@@ -1,0 +1,10 @@
+@use 'styles/mixins' as mixins;
+
+:host {
+  gap: mixins.rem(16);
+  display: grid;
+
+  .header-mirror {
+    padding: mixins.rem(12) mixins.rem(24) mixins.rem(12) mixins.rem(4);
+  }
+}

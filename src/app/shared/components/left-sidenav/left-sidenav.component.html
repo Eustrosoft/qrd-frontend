@@ -1,0 +1,21 @@
+<ui-flex-block class="header-mirror" gapSize="8" flexAlignItems="center">
+  <button (click)="closeSidenavMenu()" class="icon-button-sm" mat-icon-button>
+    <mat-icon class="icon-primary">menu</mat-icon>
+  </button>
+  <qrd-logo routerLink="/" />
+</ui-flex-block>
+<mat-nav-list>
+  @for (link of selectors.layoutConfigState().layoutConfig.header?.nav; track link.title) {
+    <a
+      class="header-navbar-link"
+      [activated]="rla.isActive"
+      [routerLink]="link.uri"
+      #rla="routerLinkActive"
+      routerLinkActive="active"
+      mat-list-item
+      (click)="closeSidenavMenu()"
+    >
+      {{ link.title }}
+    </a>
+  }
+</mat-nav-list>

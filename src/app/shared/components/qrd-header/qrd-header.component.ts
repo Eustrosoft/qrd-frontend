@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, DOCUMENT, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { MatAnchor, MatButton, MatIconButton } from '@angular/material/button';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { SharedLocalization } from '@shared/shared.constants';
@@ -6,7 +6,6 @@ import { PaletteAnimationDirective } from '@shared/directives/palette-animation.
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, Overlay } from '@angular/cdk/overlay';
 import { ThemePickerOverlayComponent } from '@shared/components/theme-picker-overlay/theme-picker-overlay.component';
-import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component';
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { createSelectMap, select } from '@ngxs/store';
@@ -18,6 +17,7 @@ import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overl
 import { MatIcon } from '@angular/material/icon';
 import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
 import { AppState } from '@app/state/app.state';
+import { LeftSidenavComponent } from '@shared/components/left-sidenav/left-sidenav.component';
 
 @Component({
   selector: 'qrd-header',
@@ -43,9 +43,11 @@ import { AppState } from '@app/state/app.state';
   templateUrl: './qrd-header.component.html',
   styleUrl: './qrd-header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.no-auth]': '!selectors.isAuthenticated()',
+  },
 })
 export class QrdHeaderComponent {
-  private readonly document = inject(DOCUMENT);
   private readonly overlay = inject(Overlay);
   private readonly uiSidenavService = inject(UiSidenavService);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
@@ -54,7 +56,6 @@ export class QrdHeaderComponent {
     layoutConfigState: select(AppState.getLayoutConfigState$),
   });
 
-  protected readonly HeaderLocalization = HeaderLocalization;
   protected readonly SharedLocalization = SharedLocalization;
 
   protected readonly actionsFlexGapSize = computed<string>(() => {
@@ -122,15 +123,9 @@ export class QrdHeaderComponent {
   }
 
   protected openSidenavMenu(): void {
-    this.uiSidenavService.open(MatButton, {
-      content: [[this.document.createTextNode(SharedLocalization.close)]],
+    this.uiSidenavService.open(LeftSidenavComponent, {
       position: 'start',
       width: 'full',
     });
-    const closeAction = (): void => {
-      this.uiSidenavService.close();
-      this.uiSidenavService.sidenavCmpRef()?.location.nativeElement.removeEventListener('click', closeAction);
-    };
-    this.uiSidenavService.sidenavCmpRef()?.location.nativeElement.addEventListener('click', closeAction);
   }
 }
