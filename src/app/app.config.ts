@@ -18,7 +18,7 @@ import { provideInitializers } from '@core/providers/initializers.provider';
 import { localizedDateAdapterFactory } from '@cdk/factories/localized-date-adapter.factory';
 import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { RuDateAdapterParsePipe } from '@shared/pipe/ru-adapter-parse.pipe';
-import { TemplatePageTitleStrategy } from '@cdk/classes/title-strategy.class';
+import { RouteTitleStrategy } from '@cdk/classes/title-strategy.class';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 import { AuthState } from '@modules/auth/state/auth.state';
 import { httpErrorInterceptor } from '@modules/error/http-error.interceptor';
@@ -61,7 +61,7 @@ export const appConfig: ApplicationConfig = {
       useFactory: localizedDateAdapterFactory,
       deps: [LOCALE_ID, RuDateAdapterParsePipe, Iso8601DateFormatPipe],
     },
-    { provide: TitleStrategy, useClass: TemplatePageTitleStrategy },
+    { provide: TitleStrategy, useClass: RouteTitleStrategy },
     { provide: APP_BASE_HREF, useValue: environment.baseHref },
     { provide: LocationStrategy, useClass: CustomLocationStrategy },
   ],

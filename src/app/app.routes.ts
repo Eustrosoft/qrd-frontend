@@ -56,6 +56,12 @@ export const routes: Routes = [
     providers: [provideStates([FilesState])],
   },
   {
+    path: AppRoutes.docs,
+    title: RouteTitles.docs,
+    canActivate: [authGuard],
+    loadChildren: () => import('@app/pages/docs/docs.routes').then((m) => m.docsRoutes),
+  },
+  {
     path: AppRoutes.settings,
     title: RouteTitles.settings,
     canActivate: [authGuard],

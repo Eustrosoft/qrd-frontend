@@ -4,7 +4,7 @@ import { inject, Injectable } from '@angular/core';
 import { SharedLocalization } from '@shared/shared.constants';
 
 @Injectable({ providedIn: 'root' })
-export class TemplatePageTitleStrategy extends TitleStrategy {
+export class RouteTitleStrategy extends TitleStrategy {
   private readonly title: Title = inject(Title);
   private readonly defaultTitle: string = SharedLocalization.defaultTitle;
 

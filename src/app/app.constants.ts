@@ -9,6 +9,8 @@ export const AppRoutes = {
   template: 'template',
   files: 'files',
   file: 'file',
+  docs: 'docs',
+  doc: 'doc',
   usages: 'usages',
   list: 'list',
   table: 'table',
