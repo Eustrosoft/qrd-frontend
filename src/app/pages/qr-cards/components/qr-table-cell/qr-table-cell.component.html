@@ -1,7 +1,7 @@
 @let type = column().type;
 @if (type === 'qr_code') {
   <a
-    [routerLink]="`../${value().code}`"
+    [routerLink]="`../${value().id}`"
     [relativeTo]="activatedRoute"
     [title]="value().code | toHex"
     textInteractionEffect

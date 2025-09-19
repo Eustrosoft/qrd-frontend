@@ -14,7 +14,7 @@ export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup | Red
     const router = inject(Router);
     const qrCardFormFactoryService = inject(QrCardFormFactoryService);
 
-    const code = route.paramMap.get('code')!;
+    const id = route.paramMap.get('id')!;
     const qrCard = select(QrCardsState.getQrCard$);
 
     qrCardFormFactoryService.reset();
@@ -37,7 +37,7 @@ export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup | Red
       return qrCardFormFactoryService.form;
     };
 
-    dispatch(FetchQrCard)(code);
+    dispatch(FetchQrCard)(id);
     return merge(
       actions$.pipe(
         ofActionSuccessful(FetchQrCard),

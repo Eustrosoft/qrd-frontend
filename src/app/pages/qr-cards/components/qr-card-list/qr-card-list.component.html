@@ -3,7 +3,7 @@
     @let code = qrCard.code | toHex;
     <view-list-item
       [title]="code"
-      [navigateTo]="`../${qrCard.code}`"
+      [navigateTo]="`../${qrCard.id}`"
       [isPreviewShown]="true"
       [isSelected]="selectionModel.isSelected(qrCard.id)"
       (checkboxChanged)="makeSelect(qrCard)"
@@ -26,7 +26,7 @@
         }
       </ng-container>
       <ng-container menu-items>
-        <a [routerLink]="`../${qrCard.code}`" [relativeTo]="activatedRoute" mat-menu-item>
+        <a [routerLink]="`../${qrCard.id}`" [relativeTo]="activatedRoute" mat-menu-item>
           <mat-icon>outbound</mat-icon>
           {{ SharedLocalization.open }}
         </a>

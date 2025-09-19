@@ -15,7 +15,11 @@ export class SetQrCardListSearchValue {
 export class FetchQrCard {
   public static readonly type = '[Qr Cards] Fetch Qr Card';
   constructor(
-    readonly code: string,
+    readonly id: number | string,
+    /**
+     * @deprecated убрать после фикса form: null
+     */
+    readonly code?: string,
     readonly destroyRef?: DestroyRef,
     readonly showLoading: boolean = true,
     readonly storeProp: keyof QrCardsStateModel = 'isQrCardLoading',

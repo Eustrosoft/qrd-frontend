@@ -48,7 +48,7 @@ export interface paths {
             cookie?: never;
         };
         /** Find form by ID */
-        get: operations["findById_1"];
+        get: operations["findById_2"];
         /** Update form metadata by ID */
         put: operations["update_1"];
         post?: never;
@@ -84,7 +84,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get file by ID */
-        get: operations["findById_2"];
+        get: operations["findById_3"];
         /** Update file metadata by ID */
         put: operations["update_2"];
         post?: never;
@@ -103,7 +103,7 @@ export interface paths {
             cookie?: never;
         };
         /** Find participant by ID */
-        get: operations["findById_3"];
+        get: operations["findById_4"];
         /** Update participant data */
         put: operations["updateParticipant"];
         post?: never;
@@ -514,7 +514,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /** Get QR by id */
+        get: operations["findById_1"];
         put?: never;
         post?: never;
         /** Delete QR */
@@ -1853,7 +1854,7 @@ export interface operations {
             };
         };
     };
-    findById_1: {
+    findById_2: {
         parameters: {
             query?: never;
             header?: never;
@@ -2039,7 +2040,7 @@ export interface operations {
             };
         };
     };
-    findById_2: {
+    findById_3: {
         parameters: {
             query?: never;
             header?: never;
@@ -2182,7 +2183,7 @@ export interface operations {
             };
         };
     };
-    findById_3: {
+    findById_4: {
         parameters: {
             query?: never;
             header?: never;
@@ -3545,6 +3546,55 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    findById_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["QRDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["QRDto"];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["QRDto"];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["QRDto"];
+                };
             };
         };
     };

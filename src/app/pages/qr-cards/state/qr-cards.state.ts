@@ -235,20 +235,21 @@ export class QrCardsState {
   @Action(FetchQrCard)
   public fetchQrCard(
     { setState }: StateContext<QrCardsStateModel>,
-    { code, destroyRef, showLoading, storeProp }: FetchQrCard,
+    { id, destroyRef, showLoading, storeProp }: FetchQrCard,
   ): Observable<QRDto> {
     if (showLoading) {
       setState(patch({ [storeProp]: true, isQrCardLoadErr: false }));
     }
-    const qrHexCode = this.toHexPipe.transform(code);
     return timer(SKELETON_TIMER).pipe(
-      switchMap(() => this.qrCardsService.getQrCard(qrHexCode)),
+      switchMap(() => this.qrCardsService.getQrCardById(id)),
+      // TODO убрать после фикса form: null в response карточки по id
+      switchMap((qrCard) => this.qrCardsService.getQrCard(this.toHexPipe.transform(qrCard.code))),
       tap({
         next: (qrCard) => {
           setState(
             patch({
               qrCard,
-              qrCardPreviewUrl: `${QR_API_URL}${qrHexCode}`,
+              qrCardPreviewUrl: `${QR_API_URL}${this.toHexPipe.transform(qrCard.code)}`,
               [storeProp]: false,
             }),
           );
@@ -374,7 +375,7 @@ export class QrCardsState {
     setState(patch({ isQrCardLoading: true }));
     return timer(SKELETON_TIMER).pipe(
       concatMap(() => dispatch(new SaveQrCard(formValue, destroyRef))),
-      concatMap(() => dispatch(new FetchQrCard(formValue.code?.toString()!, destroyRef))),
+      concatMap(() => dispatch(new FetchQrCard(formValue.id!, formValue.code?.toString()!, destroyRef))),
       tap({
         next: () => {
           setState(patch({ isQrCardLoading: false }));

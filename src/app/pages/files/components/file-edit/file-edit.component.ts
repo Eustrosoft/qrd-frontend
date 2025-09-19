@@ -65,7 +65,7 @@ export class FileEditComponent implements OnInit, CanComponentDeactivate {
 
   protected readonly titleEff = effect(() => {
     this.title.setTitle(
-      `${SharedLocalization.defaultTitle} | ${RouteTitles.edit} ${RouteTitles.file} ${this.selectors.file()?.name ?? ''}`,
+      `${SharedLocalization.defaultTitle} | ${RouteTitles.edit} - ${RouteTitles.file} ${this.selectors.file()?.name ?? ''}`,
     );
   });
 

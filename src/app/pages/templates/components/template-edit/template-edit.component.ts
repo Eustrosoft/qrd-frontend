@@ -161,7 +161,7 @@ export class TemplateEditComponent implements OnInit, AfterContentInit, OnDestro
 
   protected readonly titleEff = effect(() => {
     this.title.setTitle(
-      `${SharedLocalization.defaultTitle} | ${RouteTitles.edit} ${RouteTitles.template} ${this.selectors.template()?.name ?? ''}`,
+      `${SharedLocalization.defaultTitle} | ${RouteTitles.edit} - ${RouteTitles.template} ${this.selectors.template()?.name ?? ''}`,
     );
   });
 

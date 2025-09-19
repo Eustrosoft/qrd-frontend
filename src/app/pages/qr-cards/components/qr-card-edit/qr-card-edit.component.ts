@@ -85,6 +85,7 @@ import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/c
 import { TextareaAutoresizeDirective } from '@shared/directives/textarea-autoresize.directive';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'qr-card-edit',
@@ -138,6 +139,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
   private readonly uiSidenavService = inject(UiSidenavService);
   private readonly uiBottomMenuService = inject(UiBottomMenuService);
   private readonly matDialog = inject(MatDialog);
+  private readonly title = inject(Title);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly toHexPipe = inject(ToHexPipe);
   protected readonly isXSmall = inject(IS_XSMALL);
@@ -186,6 +188,12 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     fetchTemplate: FetchTemplate,
     fetchFileList: FetchFileList,
     clearQrCard: ClearQrCard,
+  });
+
+  protected readonly titleEff = effect(() => {
+    this.title.setTitle(
+      `${SharedLocalization.defaultTitle} | ${RouteTitles.edit} - ${RouteTitles.card} ${this.selectors.qrCard()?.name ?? ''}`,
+    );
   });
 
   protected readonly lostAttributes = computed<Option<string>[]>(() => {
@@ -364,7 +372,13 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
   protected fileMetadataUpdated(): void {
     this.fileInEditIndex.set(null);
     this.fileInEditMetadata.set(null);
-    this.actions.fetchQrCard(this.selectors.qrCard()!.code.toString(), this.destroyRef, true, 'isQrCardFilesLoading');
+    this.actions.fetchQrCard(
+      this.selectors.qrCard()!.id,
+      this.selectors.qrCard()!.code.toString(),
+      this.destroyRef,
+      true,
+      'isQrCardFilesLoading',
+    );
   }
 
   protected showFileSelection(): void {

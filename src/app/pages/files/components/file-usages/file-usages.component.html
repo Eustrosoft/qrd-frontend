@@ -5,7 +5,11 @@
   <ng-container content>
     <ui-grid-block gridTemplateColumns="1fr">
       @for (qrUsage of selectors.fileUsagesState().qrFileUsages; track qrUsage.id) {
-        <a href="javascript:void(0)" [title]="qrUsage.name | fallback: SharedLocalization.noName" ellipsis>
+        <a
+          [routerLink]="`/${AppRoutes.qrCards}/${qrUsage.id}`"
+          [title]="qrUsage.name | fallback: SharedLocalization.noName"
+          ellipsis
+        >
           <ui-badge
             padding="8px 16px"
             color="var(--mat-sys-on-tertiary-container)"

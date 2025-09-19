@@ -8,10 +8,18 @@ import { createSelectMap } from '@ngxs/store';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'template-usages',
-  imports: [CardContainerComponent, UiBadgeComponent, UiGridBlockComponent, EllipsisDirective, FallbackPipe],
+  imports: [
+    CardContainerComponent,
+    UiBadgeComponent,
+    UiGridBlockComponent,
+    EllipsisDirective,
+    FallbackPipe,
+    RouterLink,
+  ],
   templateUrl: './template-usages.component.html',
   styleUrl: './template-usages.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -11,9 +11,6 @@ import { unsavedDataGuard } from '@shared/guards/unsaved-data.guard';
 import { QrCardCreateComponent } from '@app/pages/qr-cards/components/qr-card-create/qr-card-create.component';
 import { QrCardListComponent } from '@app/pages/qr-cards/components/qr-card-list/qr-card-list.component';
 import { QrCardTableComponent } from '@app/pages/qr-cards/components/qr-card-table/qr-card-table.component';
-import { routeParamTitleResolver } from '@shared/resolvers/route-param-title.resolver';
-import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
-import { inject } from '@angular/core';
 
 export const qrCardsRoutes: Routes = [
   {
@@ -45,9 +42,9 @@ export const qrCardsRoutes: Routes = [
         title: RouteTitles.newCard,
       },
       {
-        path: ':code',
+        path: ':id',
         component: QrCardViewComponent,
-        title: routeParamTitleResolver(RouteTitles.card, 'code', (param) => inject(ToHexPipe).transform(param)),
+        title: RouteTitles.card,
         children: [
           {
             path: '',
@@ -61,9 +58,9 @@ export const qrCardsRoutes: Routes = [
         ],
       },
       {
-        path: `:code/${AppRoutes.edit}`,
+        path: `:id/${AppRoutes.edit}`,
         component: QrCardEditComponent,
-        title: routeParamTitleResolver(RouteTitles.edit, 'code', (param) => inject(ToHexPipe).transform(param)),
+        title: RouteTitles.card,
         canDeactivate: [unsavedDataGuard<QrCardEditComponent>()],
         resolve: { qrCardForm: qrCardFormResolver() },
         data: { mode: 'edit' },

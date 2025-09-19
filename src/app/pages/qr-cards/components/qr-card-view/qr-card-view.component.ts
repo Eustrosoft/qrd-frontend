@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, inputBinding, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, inputBinding, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { AppRoutes } from '@app/app.constants';
-import { SharedLocalization } from '@shared/shared.constants';
+import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { MatButton } from '@angular/material/button';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { DeleteQrCards, FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
@@ -18,6 +18,7 @@ import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { BannerComponent } from '@shared/components/banner/banner.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'qr-card-view',
@@ -40,6 +41,7 @@ import { ErrorsLocalization } from '@modules/error/error.constants';
 export class QrCardViewComponent implements OnInit {
   private readonly uiSidenavService = inject(UiSidenavService);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly title = inject(Title);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
@@ -57,12 +59,18 @@ export class QrCardViewComponent implements OnInit {
     deleteQrCards: DeleteQrCards,
   });
 
+  protected readonly titleEff = effect(() => {
+    this.title.setTitle(
+      `${SharedLocalization.defaultTitle} | ${RouteTitles.card} ${this.selectors.qrCard()?.name ?? ''}`,
+    );
+  });
+
   protected readonly AppRoutes = AppRoutes;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly ErrorsLocalization = ErrorsLocalization;
 
   public ngOnInit(): void {
-    this.actions.fetchQrCard(this.routeParams()['code'], this.destroyRef);
+    this.actions.fetchQrCard(this.routeParams()['id'], this.routeParams()['code'], this.destroyRef);
   }
 
   protected openCardPreview(): void {

@@ -28,6 +28,10 @@ export class QrCardsService {
     return this.http.get<QRRangeDto[]>('/qrCodeDemo/v1/api/secured/ranges');
   }
 
+  public getQrCardById(id: number | string): Observable<QRDto> {
+    return this.http.get<QRDto>(`/qrCodeDemo/v1/api/secured/qrs/${id}`);
+  }
+
   public getQrCard(code: string): Observable<QRDto> {
     const params = new HttpParams({ fromObject: { q: code } });
     return this.http.get<QRDto>('/qrCodeDemo/v1/api/secured/qrs/code', { params });
