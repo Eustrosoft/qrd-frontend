@@ -3,7 +3,7 @@ import { HttpClient, HttpContext } from '@angular/common/http';
 import { catchError, Observable, of } from 'rxjs';
 import { APP_BASE_HREF } from '@angular/common';
 import { AppConfig, AppLayoutConfig, Locale } from '@app/app.models';
-import { DefaultLayoutConfig } from '@shared/shared.constants';
+import { DefaultConfig, DefaultLayoutConfig } from '@shared/shared.constants';
 import { SUPPRESS_HTTP_ERROR_INTERCEPTOR } from '@modules/error/error.constants';
 
 @Injectable({
@@ -14,10 +14,12 @@ export class ConfigService {
   private readonly baseHref = inject(APP_BASE_HREF);
 
   public fetchConfig(): Observable<AppConfig> {
-    return this.http.get<AppConfig>(`${this.baseHref}config/config.json?t=${new Date().getTime()}`, {
-      responseType: 'json',
-      context: new HttpContext().set(SUPPRESS_HTTP_ERROR_INTERCEPTOR, true),
-    });
+    return this.http
+      .get<AppConfig>(`${this.baseHref}config/config.json?t=${new Date().getTime()}`, {
+        responseType: 'json',
+        context: new HttpContext().set(SUPPRESS_HTTP_ERROR_INTERCEPTOR, true),
+      })
+      .pipe(catchError(() => of(DefaultConfig)));
   }
 
   public fetchLayoutConfig(locale: Locale): Observable<AppLayoutConfig> {

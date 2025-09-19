@@ -1,6 +1,6 @@
 import { FileStorageType } from '@api/files/files-api.models';
 import { FileStorageTypeItem } from '@shared/shared.models';
-import { AppLayoutConfig } from '@app/app.models';
+import { AppConfig, AppLayoutConfig } from '@app/app.models';
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 import { FooterLocalization } from '@shared/components/qrd-footer/qrd-footer.constants';
 
@@ -131,6 +131,29 @@ export const FileStorageTypeMap = new Map<FileStorageType | null | undefined, Fi
 
 export const WebRegExp =
   /^(https?:\/\/)?([a-zA-Zа-яёА-ЯЁ0-9-]+\.)+[a-zA-Zа-яёА-ЯЁ]{2,}(\/[a-zA-Zа-яёА-ЯЁ0-9-._~:/?#[\]@!$&'()*+,;=]*)?$/;
+
+export const DefaultConfig: AppConfig = {
+  qrdConf: {
+    signUpUri: { uri: '#', disabled: true },
+    forgotPassUri: { uri: '#', disabled: true },
+    oldAppUri: { uri: '/lk/', disabled: false },
+    langList: [
+      {
+        lang: 'en-US',
+        name: 'Engish (US)',
+        default: true,
+      },
+      {
+        lang: 'ru-RU',
+        name: 'Русский',
+      },
+      {
+        lang: 'bg-BG',
+        name: 'Български',
+      },
+    ],
+  },
+};
 
 export const DefaultLayoutConfig: AppLayoutConfig = {
   logo: { uri: 'public/img/logo.webp', alt: 'logo' },

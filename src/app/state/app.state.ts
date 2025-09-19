@@ -13,7 +13,7 @@ import {
   SetTheme,
 } from '@app/state/app.actions';
 import { patch } from '@ngxs/store/operators';
-import { AppRoutes, DEFAULT_LOCALE, LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/app.constants';
+import { DEFAULT_LOCALE, LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
@@ -288,7 +288,6 @@ export class AppState {
       }),
       catchError(() => {
         setState(patch({ isLoadingConfig: false }));
-        this.router.navigate([AppRoutes.noConfig]);
         return EMPTY;
       }),
     );

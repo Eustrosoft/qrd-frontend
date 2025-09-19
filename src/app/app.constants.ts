@@ -20,7 +20,6 @@ export const AppRoutes = {
   deeplink: 'deeplink',
   password: 'password',
   notFound: 'not-found',
-  noConfig: 'no-config',
   unauthenticated: 'unauthenticated',
   devSandbox: 'dev-sandbox',
 } as const;

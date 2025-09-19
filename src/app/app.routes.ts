@@ -75,24 +75,6 @@ export const routes: Routes = [
     loadChildren: () => import('@app/pages/dev-sandbox/dev-sandbox.routes').then((m) => m.devSandboxRoutes),
   },
   {
-    path: AppRoutes.noConfig,
-    title: ErrorsLocalization.noConfig,
-    loadComponent: () => import('@app/pages/error-page/error-page.component').then((m) => m.ErrorPageComponent),
-    providers: [
-      {
-        provide: ERROR_CONFIG,
-        useFactory: (router: Router): ErrorConfig =>
-          errorConfigFactory({
-            title: ErrorsLocalization.noConfig,
-            message: ErrorsLocalization.noConfigDescription,
-            icon: 'not-found',
-            buttonList: [{ buttonText: SharedLocalization.mainPage, buttonAction: () => router.navigate(['/']) }],
-          }),
-        deps: [Router],
-      },
-    ],
-  },
-  {
     path: AppRoutes.notFound,
     title: ErrorsLocalization.pageNotFound,
     loadComponent: () => import('@app/pages/error-page/error-page.component').then((m) => m.ErrorPageComponent),
