@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
@@ -16,6 +16,7 @@ import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { BannerComponent } from '@shared/components/banner/banner.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'file-view',
@@ -39,8 +40,9 @@ import { ErrorsLocalization } from '@modules/error/error.constants';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileViewComponent implements OnInit {
-  protected readonly destroyRef = inject(DestroyRef);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly title = inject(Title);
+  protected readonly destroyRef = inject(DestroyRef);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
 
   protected readonly selectors = createSelectMap({
@@ -57,6 +59,12 @@ export class FileViewComponent implements OnInit {
     fetchFileUsages: FetchFileUsages,
     downloadFile: DownloadFile,
     deleteFiles: DeleteFiles,
+  });
+
+  protected readonly titleEff = effect(() => {
+    this.title.setTitle(
+      `${SharedLocalization.defaultTitle} | ${RouteTitles.file} ${this.selectors.file()?.name ?? ''}`,
+    );
   });
 
   protected readonly tabLinks: TabLink[] = [

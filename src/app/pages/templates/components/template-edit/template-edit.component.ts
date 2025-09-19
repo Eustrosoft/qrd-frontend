@@ -66,6 +66,7 @@ import { FileUploadState } from '@app/pages/files/components/file-upload/state/f
 import { IndicatorComponent } from '@shared/components/indicator/indicator.component';
 import { MobileToolbarComponent } from '@shared/components/mobile-toolbar/mobile-toolbar.component';
 import { UiBottomMenuService } from '@ui/ui-bottom-menu/ui-bottom-menu.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'template-edit',
@@ -111,6 +112,7 @@ export class TemplateEditComponent implements OnInit, AfterContentInit, OnDestro
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly actions$ = inject(Actions);
   private readonly uiBottomMenuService = inject(UiBottomMenuService);
+  private readonly title = inject(Title);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
@@ -146,6 +148,7 @@ export class TemplateEditComponent implements OnInit, AfterContentInit, OnDestro
     filesState: TemplatesState.getFilesState$,
     fileAttachmentMode: FileUploadState.getFileAttachmentMode$,
   });
+
   protected readonly actions = createDispatchMap({
     fetchTemplate: FetchTemplate,
     createTemplate: CreateTemplate,
@@ -154,6 +157,12 @@ export class TemplateEditComponent implements OnInit, AfterContentInit, OnDestro
     fetchFileList: FetchFileList,
     fetchDictionaryByName: FetchDictionaryByName,
     clearTemplate: ClearTemplate,
+  });
+
+  protected readonly titleEff = effect(() => {
+    this.title.setTitle(
+      `${SharedLocalization.defaultTitle} | ${RouteTitles.edit} ${RouteTitles.template} ${this.selectors.template()?.name ?? ''}`,
+    );
   });
 
   protected readonly gridTemplateColumns = computed<string>(() => {

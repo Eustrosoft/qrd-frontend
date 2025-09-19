@@ -41,7 +41,7 @@ export const templatesRoutes: Routes = [
       {
         path: AppRoutes.new,
         component: TemplateCreateComponent,
-        title: RouteTitles.template,
+        title: RouteTitles.newTemplate,
       },
       {
         path: ':id',

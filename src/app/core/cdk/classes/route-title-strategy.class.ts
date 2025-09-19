@@ -5,8 +5,8 @@ import { SharedLocalization } from '@shared/shared.constants';
 
 @Injectable({ providedIn: 'root' })
 export class RouteTitleStrategy extends TitleStrategy {
-  private readonly title: Title = inject(Title);
-  private readonly defaultTitle: string = SharedLocalization.defaultTitle;
+  private readonly title = inject(Title);
+  private readonly defaultTitle = SharedLocalization.defaultTitle;
 
   constructor() {
     super();

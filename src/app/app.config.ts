@@ -18,7 +18,7 @@ import { provideInitializers } from '@core/providers/initializers.provider';
 import { localizedDateAdapterFactory } from '@cdk/factories/localized-date-adapter.factory';
 import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { RuDateAdapterParsePipe } from '@shared/pipe/ru-adapter-parse.pipe';
-import { RouteTitleStrategy } from '@cdk/classes/title-strategy.class';
+import { RouteTitleStrategy } from '@cdk/classes/route-title-strategy.class';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
 import { AuthState } from '@modules/auth/state/auth.state';
 import { httpErrorInterceptor } from '@modules/error/http-error.interceptor';

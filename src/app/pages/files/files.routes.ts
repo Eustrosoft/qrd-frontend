@@ -38,7 +38,7 @@ export const filesRoutes: Routes = [
       {
         path: AppRoutes.new,
         component: FileEditComponent,
-        title: RouteTitles.file,
+        title: RouteTitles.newFile,
       },
       {
         path: ':id',

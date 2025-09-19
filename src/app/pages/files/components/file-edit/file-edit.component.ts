@@ -22,6 +22,8 @@ import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { BannerComponent } from '@shared/components/banner/banner.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
+import { Title } from '@angular/platform-browser';
+import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 
 @Component({
   selector: 'file-edit',
@@ -44,6 +46,7 @@ export class FileEditComponent implements OnInit, CanComponentDeactivate {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly actions$ = inject(Actions);
+  private readonly title = inject(Title);
   protected readonly isXSmall = inject(IS_XSMALL);
 
   protected readonly fileId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -60,6 +63,12 @@ export class FileEditComponent implements OnInit, CanComponentDeactivate {
     }
   });
 
+  protected readonly titleEff = effect(() => {
+    this.title.setTitle(
+      `${SharedLocalization.defaultTitle} | ${RouteTitles.edit} ${RouteTitles.file} ${this.selectors.file()?.name ?? ''}`,
+    );
+  });
+
   protected readonly selectors = createSelectMap({
     fileAttachmentMode: FileUploadState.getFileAttachmentMode$,
     isLoading: FileUploadState.isLoading$,
@@ -69,6 +78,7 @@ export class FileEditComponent implements OnInit, CanComponentDeactivate {
     file: FilesState.getFile$,
     isFileDownloading: FilesState.isFileDownloading$,
   });
+
   protected readonly actions = createDispatchMap({
     fetchFile: FetchFile,
     updateFileMetadata: UpdateFileMetadata,

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { MatButton } from '@angular/material/button';
@@ -17,6 +17,7 @@ import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { BannerComponent } from '@shared/components/banner/banner.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'template-view',
@@ -35,12 +36,14 @@ import { ErrorsLocalization } from '@modules/error/error.constants';
     RouterLink,
     BannerComponent,
   ],
+
   templateUrl: './template-view.component.html',
   styleUrl: './template-view.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TemplateViewComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly title = inject(Title);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
@@ -57,6 +60,12 @@ export class TemplateViewComponent implements OnInit {
     fetchTemplate: FetchTemplate,
     fetchTemplateUsages: FetchTemplateUsages,
     deleteTemplates: DeleteTemplates,
+  });
+
+  protected readonly titleEff = effect(() => {
+    this.title.setTitle(
+      `${SharedLocalization.defaultTitle} | ${RouteTitles.template} ${this.selectors.template()?.name ?? ''}`,
+    );
   });
 
   protected readonly tabLinks: TabLink[] = [
