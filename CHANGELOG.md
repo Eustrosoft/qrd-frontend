@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.16.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.15.0...v1.16.0) (2025-09-19)
+
+
+### Features
+
+* **docs:** добавлен компонент документов ([4830383](https://github.com/Eustrosoft/qrd-frontend/commit/4830383b5105f45f957255780b16ba84602c257f))
+* **qrCards:** code заменен на id ([22326c9](https://github.com/Eustrosoft/qrd-frontend/commit/22326c90c6f95825bd741e53375fc52697f3a1a1))
+* **title:** доработано отображение title для разных страниц приложения ([de09a03](https://github.com/Eustrosoft/qrd-frontend/commit/de09a0393f6f4b4380a77df560f6fd9207dc2ee5))
+
 ## [1.15.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.14.0...v1.15.0) (2025-09-17)
 
 
