@@ -20,6 +20,7 @@ export type AppConfig = {
     signUpUri?: ConfigUri;
     forgotPassUri?: ConfigUri;
     oldAppUri?: ConfigUri;
+    qrgenUri?: string;
     langList?: ConfigLocaleItem[];
   };
 };

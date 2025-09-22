@@ -3,6 +3,9 @@ import { ImgLoadStateDirective } from '@shared/directives/img-load-state.directi
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 import { HttpParams } from '@angular/common/http';
+import { AppState } from '@app/state/app.state';
+import { select } from '@ngxs/store';
+import { DefaultConfig } from '@shared/shared.constants';
 
 @Component({
   selector: 'qr-renderer',
@@ -22,6 +25,8 @@ export class QrRendererComponent {
 
   protected readonly remWidth = computed(() => this.pxToRemPipe.transform(this.width().toString()));
 
+  private readonly configState = select(AppState.getConfigState$);
+
   protected readonly srcUrl = computed(() => {
     const params = new HttpParams({
       fromObject: {
@@ -33,6 +38,6 @@ export class QrRendererComponent {
         correctionLevel: 'L',
       },
     });
-    return `https://qrgen.qxyz.ru/generate?${params.toString()}`;
+    return `${this.configState().config.qrdConf?.qrgenUri ?? DefaultConfig.qrdConf?.qrgenUri}?${params.toString()}`;
   });
 }
