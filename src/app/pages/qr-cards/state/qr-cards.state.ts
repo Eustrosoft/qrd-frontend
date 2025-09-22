@@ -300,7 +300,7 @@ export class QrCardsState {
       tap({
         next: (qrCard) => {
           this.snackbarService.success(NotificationSnackbarLocalization.saved);
-          this.router.navigate([AppRoutes.qrCards, qrCard.code, AppRoutes.edit]).then(() => {
+          this.router.navigate([AppRoutes.qrCards, qrCard.id, AppRoutes.edit]).then(() => {
             setState(patch({ isSaveInProgress: false }));
           });
         },
