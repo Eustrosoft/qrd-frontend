@@ -1,7 +1,8 @@
 export type Environment = {
   name: string;
   production: boolean;
-  stage: boolean;
+  preproduction: boolean;
+  dev: boolean;
   baseHref: string;
 };
 export type Theme = 'system' | 'light' | 'dark';

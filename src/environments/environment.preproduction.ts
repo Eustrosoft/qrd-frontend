@@ -1,8 +1,9 @@
 import { Environment } from '@app/app.models';
 
 export const environment: Environment = {
-  name: 'stage',
+  name: 'preproduction',
   production: false,
-  stage: true,
+  preproduction: true,
+  dev: false,
   baseHref: '/lk/v2/',
 };

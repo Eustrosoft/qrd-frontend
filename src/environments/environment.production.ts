@@ -3,6 +3,7 @@ import { Environment } from '@app/app.models';
 export const environment: Environment = {
   name: 'production',
   production: true,
-  stage: false,
-  baseHref: '/',
+  preproduction: false,
+  dev: false,
+  baseHref: '/lk/v2/',
 };
