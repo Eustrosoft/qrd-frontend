@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.18.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.17.0...v1.18.0) (2025-09-23)
+
+
+### Features
+
+* **template:** добавлена возможность создания карточки из шаблона ([c944922](https://github.com/Eustrosoft/qrd-frontend/commit/c944922ce96989633f6f46cb1253d4a19cbe99d2))
+* **tooltip:** добавлены подсказки для настроек печати ([1dc51a5](https://github.com/Eustrosoft/qrd-frontend/commit/1dc51a59c2f6f24d811cd5e7297e3243a60b54eb))
+* **view:** доработка action-buttons в компонентах просмотра, правки toolbar ([af68cd6](https://github.com/Eustrosoft/qrd-frontend/commit/af68cd6d86acce456c698ab5a76248f5eaae5c98))
+
+
+### Bug Fixes
+
+* **qr-edit:** исправлено прикрепление и загрузка файла в qr карточку ([afb4414](https://github.com/Eustrosoft/qrd-frontend/commit/afb441444935a2403aa41961dc4d26294011685f))
+
 ## [1.17.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.16.0...v1.17.0) (2025-09-22)
 
 
