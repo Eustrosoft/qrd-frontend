@@ -36,7 +36,7 @@ import {
 } from '@app/pages/files/files.constants';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import {
-  AddFileToQrCard,
+  AddFilesToQrCard,
   ClearQrCard,
   FetchFileList,
   FetchQrCard,
@@ -144,7 +144,6 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
   protected readonly toHexPipe = inject(ToHexPipe);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
-  protected readonly qrCardCode = this.activatedRoute.snapshot.paramMap.get('code')!;
   protected readonly form = toSignal<QrCardFormGroup>(
     this.activatedRoute.data.pipe(map((data) => data['qrCardForm'])),
     { requireSync: true },
@@ -182,7 +181,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
   protected readonly actions = createDispatchMap({
     fetchQrCard: FetchQrCard,
     saveQrCard: SaveQrCard,
-    addFileToQrCard: AddFileToQrCard,
+    addFileToQrCard: AddFilesToQrCard,
     replaceQrCardFields: ReplaceQrCardFields,
     fetchTemplateList: FetchTemplateList,
     fetchTemplate: FetchTemplate,
@@ -387,27 +386,25 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     this.actions.fetchFileList(this.destroyRef);
   }
 
-  protected addFileToTemplate(state: UploadState | null): void {
+  protected addFileToQrCard(state: UploadState | null): void {
     this.isUploadVisible.set(false);
-    if (state?.fileId && this.qrCardCode) {
+    if (state?.fileId) {
       this.actions.addFileToQrCard(
         this.selectors.qrCard()!.id,
         this.toHexPipe.transform(this.selectors.qrCard()!.code.toString()),
-        state.fileId,
+        [state.fileId],
         this.destroyRef,
       );
     }
   }
 
-  protected addExistingFilesToTemplate(fileIdList: number[]): void {
+  protected addExistingFilesToQrCard(fileIdList: number[]): void {
     this.isFileSelectorVisible.set(false);
-    for (const fileId of fileIdList) {
-      this.actions.addFileToQrCard(
-        this.selectors.qrCard()!.id,
-        this.toHexPipe.transform(this.selectors.qrCard()!.code.toString()),
-        fileId,
-        this.destroyRef,
-      );
-    }
+    this.actions.addFileToQrCard(
+      this.selectors.qrCard()!.id,
+      this.toHexPipe.transform(this.selectors.qrCard()!.code.toString()),
+      fileIdList,
+      this.destroyRef,
+    );
   }
 }

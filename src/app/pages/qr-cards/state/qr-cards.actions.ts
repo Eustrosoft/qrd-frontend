@@ -55,12 +55,12 @@ export class SaveQrCard {
   ) {}
 }
 
-export class AddFileToQrCard {
-  public static readonly type = '[Qr Cards] Add File To Qr Card';
+export class AddFilesToQrCard {
+  public static readonly type = '[Qr Cards] Add Files To Qr Card';
   constructor(
     readonly qrCardId: number,
     readonly qrCardCode: string,
-    readonly fileId: number,
+    readonly fileIdList: number[],
     readonly destroyRef: DestroyRef,
   ) {}
 }

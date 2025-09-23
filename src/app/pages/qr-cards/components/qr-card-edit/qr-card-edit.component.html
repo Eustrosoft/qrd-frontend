@@ -263,10 +263,10 @@
           @if (isUploadVisible()) {
             <file-attachment-mode />
             @if (selectors.fileAttachmentMode() === 'upload') {
-              <file-upload-blob (uploadCompleted)="addFileToTemplate($event)" />
+              <file-upload-blob (uploadCompleted)="addFileToQrCard($event)" />
             }
             @if (selectors.fileAttachmentMode() === 'fileUrl') {
-              <file-as-url (uploadCompleted)="addFileToTemplate($event)" />
+              <file-as-url (uploadCompleted)="addFileToQrCard($event)" />
             }
           }
           @if (isFileSelectorVisible()) {
@@ -302,7 +302,7 @@
                 </mat-select>
               </mat-form-field>
               <button
-                (click)="addExistingFilesToTemplate(select.value ?? [])"
+                (click)="addExistingFilesToQrCard(select.value ?? [])"
                 class="button-lg button-secondary"
                 mat-flat-button
               >

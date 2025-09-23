@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import {
-  AddFileToQrCard,
+  AddFilesToQrCard,
   ClearQrCard,
   CreateQrCard,
   DeleteQrCards,
@@ -343,14 +343,19 @@ export class QrCardsState {
     );
   }
 
-  @Action(AddFileToQrCard)
+  @Action(AddFilesToQrCard)
   public addFileToQrCard(
     { setState }: StateContext<QrCardsStateModel>,
-    { qrCardId, qrCardCode, fileId, destroyRef }: AddFileToQrCard,
+    { qrCardId, qrCardCode, fileIdList, destroyRef }: AddFilesToQrCard,
   ): Observable<unknown> {
     setState(patch({ isQrCardFilesLoading: true }));
     return timer(SKELETON_TIMER).pipe(
-      switchMap(() => this.qrCardsService.addFileToQrCard(qrCardId, { id: fileId })),
+      switchMap(() =>
+        from(fileIdList).pipe(
+          concatMap((fileId) => this.qrCardsService.addFileToQrCard(qrCardId, { id: fileId })),
+          toArray(),
+        ),
+      ),
       switchMap(() => this.qrCardsService.getQrCard(qrCardCode).pipe(map((qrCard) => qrCard.files))),
       tap({
         next: (files) => {
