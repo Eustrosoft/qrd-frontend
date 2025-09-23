@@ -36,6 +36,7 @@ export const SharedLocalization = {
   empty: $localize`:@@shared.empty:Empty`,
   cardPreview: $localize`:@@shared.cardPreview:Card preview`,
   card: $localize`:@@shared.card:Card`,
+  createCard: $localize`:@@shared.createCard:Create card`,
   actions: $localize`:@@shared.actions:Actions`,
   search: $localize`:@@shared.search:Search`,
   list: $localize`:@@shared.list:List`,

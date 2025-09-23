@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, effect, inject, OnInit } from '@angular/core';
 import { ErrorStateMatcher, MatOption } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
@@ -24,6 +24,8 @@ import { MatIcon } from '@angular/material/icon';
 import { MatSelect } from '@angular/material/select';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { QrRangePipe } from '@shared/pipe/qr-range.pipe';
+import { ActivatedRoute } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'qr-card-create',
@@ -56,6 +58,8 @@ import { QrRangePipe } from '@shared/pipe/qr-range.pipe';
 })
 export class QrCardCreateComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly queryParams = toSignal(this.activatedRoute.queryParamMap, { requireSync: true });
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
@@ -70,6 +74,13 @@ export class QrCardCreateComponent implements OnInit {
     createQrCard: CreateQrCard,
     fetchTemplateList: FetchTemplateList,
     fetchQrRangeList: FetchQrRangeList,
+  });
+
+  protected readonly queryParamsEff = effect(() => {
+    const templateId = this.queryParams().get('templateId');
+    if (templateId) {
+      this.form.controls.formId.patchValue(+templateId);
+    }
   });
 
   protected readonly gridTemplateColumns = computed<string>(() => {

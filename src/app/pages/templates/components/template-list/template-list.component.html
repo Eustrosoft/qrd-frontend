@@ -17,6 +17,14 @@
           <mat-icon>outbound</mat-icon>
           {{ SharedLocalization.open }}
         </a>
+        <a
+          [routerLink]="`/${AppRoutes.qrCards}/${AppRoutes.new}`"
+          [queryParams]="{ templateId: template.id }"
+          mat-menu-item
+        >
+          <mat-icon>add_circle</mat-icon>
+          {{ SharedLocalization.createCard }}
+        </a>
         <a [routerLink]="`../${template.id}/${AppRoutes.edit}`" mat-menu-item>
           <mat-icon>edit</mat-icon>
           {{ SharedLocalization.edit }}

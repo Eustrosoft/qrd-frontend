@@ -12,6 +12,14 @@
         </a>
         @if (isSmallScreen()) {
           <more-menu>
+            <a
+              [routerLink]="`/${AppRoutes.qrCards}/${AppRoutes.new}`"
+              [queryParams]="{ templateId: selectors.template()!.id }"
+              mat-menu-item
+            >
+              <mat-icon>add_circle</mat-icon>
+              {{ SharedLocalization.createCard }}
+            </a>
             @if (!selectors.isDeleteInProgress()) {
               <button
                 (click)="actions.deleteTemplates([selectors.template()!.id], destroyRef, false, true)"
@@ -27,6 +35,14 @@
             }
           </more-menu>
         } @else {
+          <a
+            [routerLink]="`/${AppRoutes.qrCards}/${AppRoutes.new}`"
+            [queryParams]="{ templateId: selectors.template()!.id }"
+            class="button-md"
+            mat-flat-button
+          >
+            {{ SharedLocalization.createCard }}
+          </a>
           @if (!selectors.isDeleteInProgress()) {
             <button
               (click)="actions.deleteTemplates([selectors.template()!.id], destroyRef, false, true)"
