@@ -29,7 +29,7 @@ import { CardContainerComponent } from '@shared/components/card-container/card-c
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { IndicatorComponent } from '@shared/components/indicator/indicator.component';
 import { MatButton } from '@angular/material/button';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { MatError } from '@angular/material/form-field';
@@ -47,6 +47,8 @@ import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { OverlayContainerComponent } from '@shared/components/overlay-container/overlay-container.component';
 import { MobileToolbarComponent } from '@shared/components/mobile-toolbar/mobile-toolbar.component';
 import { UiBottomMenuService } from '@ui/ui-bottom-menu/ui-bottom-menu.service';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'settings-edit',
@@ -74,6 +76,9 @@ import { UiBottomMenuService } from '@ui/ui-bottom-menu/ui-bottom-menu.service';
     CdkOverlayOrigin,
     OverlayContainerComponent,
     MobileToolbarComponent,
+    MatIcon,
+    MatTooltip,
+    MatSuffix,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './settings-edit.component.html',

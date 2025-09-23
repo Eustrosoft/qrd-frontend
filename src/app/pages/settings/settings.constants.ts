@@ -5,6 +5,10 @@ export const SettingsLocalization = {
   checkUploadSize: $localize`:@@settings.checkUploadSize:Check file size before uploading`,
   defaultQrPrintText: $localize`:@@settings.defaultQrPrintText:Header text for QR print`,
   defaultQrPrintTextDown: $localize`:@@settings.defaultQrPrintTextDown:Footer text for QR print`,
+  qrPrintVars: $localize`:@@settings.qrPrintUse:Use:
+    \n {{qr-code}} - for card number
+    \n {{qr-link}} - to link current card inside text
+  `,
   main: $localize`:@@settings.main:Main`,
   changePassword: $localize`:@@settings.changePassword:Change password`,
   qrTableSettings: $localize`:@@settings.qrTableSettings:QR table settings`,

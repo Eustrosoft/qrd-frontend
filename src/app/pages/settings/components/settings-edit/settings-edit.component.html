@@ -31,8 +31,18 @@
     <ng-container content>
       <ui-grid-block gridAlignItems="center" [gridTemplateColumns]="gridTemplateColumns()">
         <mat-form-field class="form-field-lg">
-          <mat-label> {{ SettingsLocalization.defaultQrPrintText }} </mat-label>
+          <mat-label>
+            {{ SettingsLocalization.defaultQrPrintText }}
+          </mat-label>
           <input [formControl]="form.controls.defaultQrPrintText" matInput />
+          <mat-icon
+            class="icon-primary"
+            matSuffix
+            matTooltipPosition="above"
+            [matTooltip]="SettingsLocalization.qrPrintVars"
+          >
+            info
+          </mat-icon>
           @if (form.controls.defaultQrPrintText.touched && form.controls.defaultQrPrintText.hasError('maxlength')) {
             <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_NAME_LENGTH }}</mat-error>
           }
@@ -40,6 +50,14 @@
         <mat-form-field class="form-field-lg">
           <mat-label> {{ SettingsLocalization.defaultQrPrintTextDown }} </mat-label>
           <input [formControl]="form.controls.defaultQrPrintTextDown" matInput />
+          <mat-icon
+            class="icon-primary"
+            matSuffix
+            matTooltipPosition="above"
+            [matTooltip]="SettingsLocalization.qrPrintVars"
+          >
+            info
+          </mat-icon>
           @if (
             form.controls.defaultQrPrintTextDown.touched && form.controls.defaultQrPrintTextDown.hasError('maxlength')
           ) {
