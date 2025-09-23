@@ -138,6 +138,7 @@ export const DefaultConfig: AppConfig = {
     forgotPassUri: { uri: '#', disabled: true },
     oldAppUri: { uri: '/lk/', disabled: false },
     qrgenUri: 'https://qrgen.qxyz.ru/generate',
+    qrUri: 'https://qr.qxyz.ru',
     langList: [
       {
         lang: 'en-US',

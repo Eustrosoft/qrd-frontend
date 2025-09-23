@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { patch } from '@ngxs/store/operators';
 import { LocalStorageService } from '@shared/service/local-storage.service';
 import { ParticipantDto } from '@api/api.models';
-import { FetchSettings } from '@app/state/app.actions';
+import { FetchSettings, ResetAppState } from '@app/state/app.actions';
 import { SnackbarService } from '@shared/service/snackbar.service';
 import { SettingsLocalization } from '@app/pages/settings/settings.constants';
 
@@ -82,11 +82,17 @@ export class AuthState {
   }
 
   @Action(Logout)
-  public logout({ setState }: StateContext<AuthStateModel>): Observable<void> {
+  public logout({ setState, dispatch }: StateContext<AuthStateModel>): Observable<void> {
     setState(patch({ isAuthenticated: false }));
     this.localStorageService.set(IS_AUTHENTICATED_KEY, '0');
     this.router.navigate([AppRoutes.login]);
-    return this.authService.logout();
+    return this.authService.logout().pipe(
+      tap({
+        next: () => {
+          dispatch([ResetAuthState, ResetAppState]);
+        },
+      }),
+    );
   }
 
   @Action(FetchAuthInfo)

@@ -57,6 +57,7 @@ export class QrCardListComponent implements OnInit {
   protected readonly AppRoutes = AppRoutes;
 
   protected readonly selectors = createSelectMap({
+    configState: AppState.getConfigState$,
     isQrCardListLoading: QrCardsState.isQrCardListLoading$,
     qrCardListSkeletonLoaders: QrCardsState.getQrCardListSkeletonLoaders$,
     qrCardList: QrCardsState.getQrCardList$,

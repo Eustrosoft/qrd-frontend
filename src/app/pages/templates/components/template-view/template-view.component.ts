@@ -14,10 +14,13 @@ import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { AppRoutes } from '@app/app.constants';
 import { DeleteTemplates, FetchTemplate, FetchTemplateUsages } from '@app/pages/templates/state/templates.actions';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
-import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { BannerComponent } from '@shared/components/banner/banner.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { Title } from '@angular/platform-browser';
+import { MatMenuItem } from '@angular/material/menu';
+import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'template-view',
@@ -35,6 +38,9 @@ import { Title } from '@angular/platform-browser';
     UpperCasePipe,
     RouterLink,
     BannerComponent,
+    MatIcon,
+    MatMenuItem,
+    MoreMenuComponent,
   ],
 
   templateUrl: './template-view.component.html',
@@ -46,6 +52,7 @@ export class TemplateViewComponent implements OnInit {
   private readonly title = inject(Title);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly isXSmall = inject(IS_XSMALL);
+  protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
 
   protected readonly selectors = createSelectMap({

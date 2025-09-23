@@ -38,3 +38,7 @@ export class FetchLayoutConfig {
   public static readonly type = '[App] Fetch Layout Config';
   constructor(readonly locale: Locale) {}
 }
+
+export class ResetAppState {
+  public static readonly type = '[App] Reset App State';
+}

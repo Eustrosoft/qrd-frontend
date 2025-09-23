@@ -12,9 +12,6 @@ import { Location } from '@angular/common';
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    '[class.with-action-buttons]': 'isActionButtonsShown()',
-  },
 })
 export class ToolbarComponent {
   private readonly router = inject(Router);

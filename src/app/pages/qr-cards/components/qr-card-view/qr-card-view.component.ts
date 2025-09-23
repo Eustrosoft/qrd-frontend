@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, inputBinding, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  effect,
+  inject,
+  inputBinding,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { AppRoutes } from '@app/app.constants';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
@@ -14,11 +23,16 @@ import { TruncateDirective } from '@shared/directives/truncate.directive';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
-import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { BannerComponent } from '@shared/components/banner/banner.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { Title } from '@angular/platform-browser';
+import { MatMenuItem } from '@angular/material/menu';
+import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.component';
+import { AppState } from '@app/state/app.state';
+import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
+import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
 
 @Component({
   selector: 'qr-card-view',
@@ -33,6 +47,8 @@ import { Title } from '@angular/platform-browser';
     ToHexPipe,
     ToolbarComponent,
     BannerComponent,
+    MatMenuItem,
+    MoreMenuComponent,
   ],
   templateUrl: './qr-card-view.component.html',
   styleUrl: './qr-card-view.component.scss',
@@ -42,11 +58,15 @@ export class QrCardViewComponent implements OnInit {
   private readonly uiSidenavService = inject(UiSidenavService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly title = inject(Title);
+  private readonly toHexPipe = inject(ToHexPipe);
+  protected readonly qrCardsService = inject(QrCardsService);
   protected readonly isXSmall = inject(IS_XSMALL);
+  protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
 
   protected readonly selectors = createSelectMap({
+    configState: AppState.getConfigState$,
     isQrCardLoading: QrCardsState.isQrCardLoading$,
     isQrCardLoadErr: QrCardsState.isQrCardLoadErr$,
     qrCard: QrCardsState.getQrCard$,
@@ -59,6 +79,8 @@ export class QrCardViewComponent implements OnInit {
     deleteQrCards: DeleteQrCards,
   });
 
+  protected readonly qrCardCode = computed(() => this.toHexPipe.transform(this.selectors.qrCard()?.code));
+
   protected readonly titleEff = effect(() => {
     this.title.setTitle(
       `${SharedLocalization.defaultTitle} | ${RouteTitles.card} ${this.selectors.qrCard()?.name ?? ''}`,
@@ -66,6 +88,7 @@ export class QrCardViewComponent implements OnInit {
   });
 
   protected readonly AppRoutes = AppRoutes;
+  protected readonly QrCardsLocalization = QrCardsLocalization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly ErrorsLocalization = ErrorsLocalization;
 

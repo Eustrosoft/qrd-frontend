@@ -17,6 +17,10 @@ import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { BannerComponent } from '@shared/components/banner/banner.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { Title } from '@angular/platform-browser';
+import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
+import { MatMenuItem } from '@angular/material/menu';
+import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'file-view',
@@ -34,6 +38,9 @@ import { Title } from '@angular/platform-browser';
     FallbackPipe,
     ToolbarComponent,
     BannerComponent,
+    MatIcon,
+    MatMenuItem,
+    MoreMenuComponent,
   ],
   templateUrl: './file-view.component.html',
   styleUrl: './file-view.component.scss',
@@ -42,6 +49,7 @@ import { Title } from '@angular/platform-browser';
 export class FileViewComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly title = inject(Title);
+  protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
 

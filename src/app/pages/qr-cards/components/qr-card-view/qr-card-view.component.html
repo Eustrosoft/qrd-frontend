@@ -24,16 +24,47 @@
         <a [routerLink]="`../${routeParams()['id']}/${AppRoutes.edit}`" class="button-md" mat-flat-button>
           {{ SharedLocalization.edit }}
         </a>
-        @if (!selectors.isDeleteInProgress()) {
-          <button
-            (click)="actions.deleteQrCards([selectors.qrCard()!.id], destroyRef, false, true)"
-            class="button-md"
-            mat-flat-button
-          >
-            {{ SharedLocalization.delete }}
-          </button>
+        @if (isSmallScreen()) {
+          <more-menu>
+            @if (!selectors.isDeleteInProgress()) {
+              <button (click)="actions.deleteQrCards([selectors.qrCard()!.id], destroyRef, false, true)" mat-menu-item>
+                <mat-icon>delete</mat-icon>
+                {{ SharedLocalization.delete }}
+              </button>
+            } @else {
+              <div disabled mat-menu-item>
+                <ui-skeleton height="40" />
+              </div>
+            }
+            <a
+              [href]="`${this.selectors.configState().config.qrdConf?.qrUri}?q=${this.qrCardCode()}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              mat-menu-item
+            >
+              <mat-icon>open_in_new</mat-icon>
+              {{ QrCardsLocalization.viewCard }}
+            </a>
+            <button (click)="qrCardsService.openPrint(this.qrCardCode())" mat-menu-item>
+              <mat-icon>print</mat-icon>
+              {{ SharedLocalization.print }}
+            </button>
+          </more-menu>
         } @else {
-          <ui-skeleton height="40" width="110" />
+          @if (!selectors.isDeleteInProgress()) {
+            <button
+              (click)="actions.deleteQrCards([selectors.qrCard()!.id], destroyRef, false, true)"
+              class="button-md"
+              mat-flat-button
+            >
+              {{ SharedLocalization.delete }}
+            </button>
+          } @else {
+            <ui-skeleton height="40" width="110" />
+          }
+          <button (click)="qrCardsService.openPrint(this.qrCardCode())" class="button-md" mat-flat-button>
+            {{ SharedLocalization.print }}
+          </button>
         }
       </ng-container>
     </toolbar>

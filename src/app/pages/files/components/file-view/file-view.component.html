@@ -5,37 +5,72 @@
         <h1 ellipsis>{{ selectors.file()?.name | fallback: SharedLocalization.noName }}</h1>
       </ng-container>
       <ng-container action-buttons>
-        @if (!selectors.isFileDownloading()) {
-          <button
-            (click)="
-              actions.downloadFile(
-                selectors.file()!.id,
-                selectors.file()!.fileName,
-                selectors.file()!.fileStorageType,
-                selectors.file()!.storagePath
-              )
-            "
-            class="button-md"
-            mat-flat-button
-          >
-            {{ SharedLocalization.download }}
-          </button>
-        } @else {
-          <ui-skeleton height="40" width="116" />
-        }
         <a [routerLink]="`../${selectors.file()?.id}/${AppRoutes.edit}`" class="button-md" mat-flat-button>
           {{ SharedLocalization.edit }}
         </a>
-        @if (!selectors.isDeleteInProgress()) {
-          <button
-            (click)="actions.deleteFiles([selectors.file()!.id], destroyRef, false, true)"
-            class="button-md"
-            mat-flat-button
-          >
-            {{ SharedLocalization.delete }}
-          </button>
+        @if (isSmallScreen()) {
+          <more-menu>
+            @if (!selectors.isFileDownloading()) {
+              <button
+                (click)="
+                  actions.downloadFile(
+                    selectors.file()!.id,
+                    selectors.file()!.fileName,
+                    selectors.file()!.fileStorageType,
+                    selectors.file()!.storagePath
+                  )
+                "
+                mat-menu-item
+              >
+                <mat-icon>download</mat-icon>
+                {{ SharedLocalization.download }}
+              </button>
+            } @else {
+              <div disabled mat-menu-item>
+                <ui-skeleton height="40" />
+              </div>
+            }
+            @if (!selectors.isDeleteInProgress()) {
+              <button (click)="actions.deleteFiles([selectors.file()!.id], destroyRef, false, true)" mat-menu-item>
+                <mat-icon>delete</mat-icon>
+                {{ SharedLocalization.delete }}
+              </button>
+            } @else {
+              <div disabled mat-menu-item>
+                <ui-skeleton height="40" />
+              </div>
+            }
+          </more-menu>
         } @else {
-          <ui-skeleton height="40" width="110" />
+          @if (!selectors.isFileDownloading()) {
+            <button
+              (click)="
+                actions.downloadFile(
+                  selectors.file()!.id,
+                  selectors.file()!.fileName,
+                  selectors.file()!.fileStorageType,
+                  selectors.file()!.storagePath
+                )
+              "
+              class="button-md"
+              mat-flat-button
+            >
+              {{ SharedLocalization.download }}
+            </button>
+          } @else {
+            <ui-skeleton height="40" width="116" />
+          }
+          @if (!selectors.isDeleteInProgress()) {
+            <button
+              (click)="actions.deleteFiles([selectors.file()!.id], destroyRef, false, true)"
+              class="button-md"
+              mat-flat-button
+            >
+              {{ SharedLocalization.delete }}
+            </button>
+          } @else {
+            <ui-skeleton height="40" width="110" />
+          }
         }
       </ng-container>
     </toolbar>

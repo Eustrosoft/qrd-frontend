@@ -9,6 +9,7 @@ import {
   FetchLayoutConfig,
   FetchSettings,
   PatchSettings,
+  ResetAppState,
   SetLocale,
   SetTheme,
 } from '@app/state/app.actions';
@@ -315,5 +316,10 @@ export class AppState {
         return EMPTY;
       }),
     );
+  }
+
+  @Action(ResetAppState)
+  public resetAppState({ setState }: StateContext<AppStateModel>): void {
+    setState(defaults);
   }
 }

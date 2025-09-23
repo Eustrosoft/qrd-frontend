@@ -1,25 +1,7 @@
 @use 'styles/mixins' as mixins;
-@use 'styles/breakpoints' as bp;
-@use 'sass:map';
 
 :host {
   gap: mixins.rem(16);
   display: flex;
   justify-content: space-between;
-
-  &:not(.with-action-buttons) {
-    grid-template-columns: 1fr;
-  }
-
-  @media #{map.get(bp.$breakpoints, xsmall)} {
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media #{map.get(bp.$breakpoints, small)} {
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: repeat(2, 1fr);
-  }
 }

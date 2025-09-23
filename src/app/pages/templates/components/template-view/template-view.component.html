@@ -10,16 +10,34 @@
         <a [routerLink]="`../${routeParams()['id']}/${AppRoutes.edit}`" class="button-md" mat-flat-button>
           {{ SharedLocalization.edit }}
         </a>
-        @if (!selectors.isDeleteInProgress()) {
-          <button
-            (click)="actions.deleteTemplates([selectors.template()!.id], destroyRef, false, true)"
-            class="button-md"
-            mat-flat-button
-          >
-            {{ SharedLocalization.delete }}
-          </button>
+        @if (isSmallScreen()) {
+          <more-menu>
+            @if (!selectors.isDeleteInProgress()) {
+              <button
+                (click)="actions.deleteTemplates([selectors.template()!.id], destroyRef, false, true)"
+                mat-menu-item
+              >
+                <mat-icon>delete</mat-icon>
+                {{ SharedLocalization.delete }}
+              </button>
+            } @else {
+              <div disabled mat-menu-item>
+                <ui-skeleton height="40" />
+              </div>
+            }
+          </more-menu>
         } @else {
-          <ui-skeleton height="40" width="110" />
+          @if (!selectors.isDeleteInProgress()) {
+            <button
+              (click)="actions.deleteTemplates([selectors.template()!.id], destroyRef, false, true)"
+              class="button-md"
+              mat-flat-button
+            >
+              {{ SharedLocalization.delete }}
+            </button>
+          } @else {
+            <ui-skeleton height="40" width="110" />
+          }
         }
       </ng-container>
     </toolbar>
