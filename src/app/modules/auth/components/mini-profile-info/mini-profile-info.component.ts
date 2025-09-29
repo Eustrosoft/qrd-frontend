@@ -11,6 +11,7 @@ import { ProfileInfoOverlayComponent } from '@modules/auth/components/profile-in
 import { MatIcon } from '@angular/material/icon';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
+import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 
 @Component({
   selector: 'mini-profile-info',
@@ -37,6 +38,8 @@ export class MiniProfileInfoComponent {
     isAuthInfoLoading: select(AuthState.isAuthInfoLoading$),
     authInfo: select(AuthState.getAuthInfo$),
   });
+
+  protected readonly HeaderLocalization = HeaderLocalization;
 
   protected readonly isOverlayOpen = signal<boolean>(false);
   protected readonly isOverlayAttached = signal<boolean>(false);

@@ -13,7 +13,14 @@
     }
   </ui-flex-block>
 }
-<button (click)="openOverlay()" class="icon-button-sm" mat-icon-button cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+<button
+  (click)="openOverlay()"
+  class="icon-button-sm"
+  mat-icon-button
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  [attr.aria-label]="HeaderLocalization.openProfileMenu"
+>
   <mat-icon class="icon-primary" svgIcon="qrd:arrow-bottom"></mat-icon>
 </button>
 <ng-template

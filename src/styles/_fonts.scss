@@ -1,13 +1,21 @@
 @font-face {
-  src: url('../../public/fonts/Lato-Regular.ttf') format('truetype');
+  src:
+    local('Lato Regular'),
+    local('Lato-Regular'),
+    url('../../public/fonts/Lato-Regular.ttf') format('truetype');
   font-weight: 400;
   font-family: Lato, sans-serif;
+  font-display: swap;
 }
 
 @font-face {
-  src: url('../../public/fonts/Lato-Bold.ttf') format('truetype');
+  src:
+    local('Lato Bold'),
+    local('Lato-Bold'),
+    url('../../public/fonts/Lato-Bold.ttf') format('truetype');
   font-weight: 700;
   font-family: Lato, sans-serif;
+  font-display: swap;
 }
 
 @font-face {
@@ -15,6 +23,7 @@
   font-style: normal;
   font-weight: 400;
   font-family: 'Material Symbols Outlined';
+  font-display: swap;
 }
 
 .material-symbols-outlined {

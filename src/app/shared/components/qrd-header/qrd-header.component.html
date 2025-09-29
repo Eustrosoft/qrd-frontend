@@ -1,6 +1,11 @@
 <ui-flex-block gapSize="8" flexAlignItems="center">
   @if (isSmallScreen() && selectors.isAuthenticated()) {
-    <button (click)="openSidenavMenu()" class="icon-button-sm" mat-icon-button>
+    <button
+      (click)="openSidenavMenu()"
+      class="icon-button-sm"
+      mat-icon-button
+      [attr.aria-label]="HeaderLocalization.openSidenav"
+    >
       <mat-icon class="icon-primary">menu</mat-icon>
     </button>
   }
@@ -35,6 +40,7 @@
         mat-icon-button
         cdkOverlayOrigin
         #createTrigger="cdkOverlayOrigin"
+        [attr.aria-label]="HeaderLocalization.openCreateMenu"
       >
         <mat-icon class="icon-primary">dashboard_customize</mat-icon>
       </button>
@@ -62,6 +68,7 @@
       paletteAnimation
       cdkOverlayOrigin
       #themeTrigger="cdkOverlayOrigin"
+      [attr.aria-label]="HeaderLocalization.openThemeMenu"
     >
       <mat-icon class="icon-primary" svgIcon="qrd:palette"></mat-icon>
     </button>

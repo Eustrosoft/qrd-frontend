@@ -15,6 +15,7 @@ import { DefaultConfig } from '@shared/shared.constants';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[style.--img-width]': 'remWidth()',
+    '[style.--img-height]': 'remHeight()',
   },
 })
 export class QrRendererComponent {
@@ -22,8 +23,10 @@ export class QrRendererComponent {
 
   public readonly code = input.required<string>();
   public readonly width = input<number>(128);
+  public readonly height = input<number>(128);
 
   protected readonly remWidth = computed(() => this.pxToRemPipe.transform(this.width().toString()));
+  protected readonly remHeight = computed(() => this.pxToRemPipe.transform(this.height().toString()));
 
   private readonly configState = select(AppState.getConfigState$);
 

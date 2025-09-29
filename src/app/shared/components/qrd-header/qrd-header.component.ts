@@ -18,6 +18,7 @@ import { MatIcon } from '@angular/material/icon';
 import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
 import { AppState } from '@app/state/app.state';
 import { LeftSidenavComponent } from '@shared/components/left-sidenav/left-sidenav.component';
+import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 
 @Component({
   selector: 'qrd-header',
@@ -56,6 +57,7 @@ export class QrdHeaderComponent {
     layoutConfigState: select(AppState.getLayoutConfigState$),
   });
 
+  protected readonly HeaderLocalization = HeaderLocalization;
   protected readonly SharedLocalization = SharedLocalization;
 
   protected readonly actionsFlexGapSize = computed<string>(() => {

@@ -1,6 +1,6 @@
 <ui-flex-block flexDirection="row" flexAlignItems="center">
   <img
-    [src]="layoutConfigState().layoutConfig.logo?.uri"
+    [ngSrc]="layoutConfigState().layoutConfig.logo?.uri ?? DefaultLayoutConfig.logo!.uri!"
     [alt]="layoutConfigState().layoutConfig.logo?.alt"
     width="40"
     height="40"

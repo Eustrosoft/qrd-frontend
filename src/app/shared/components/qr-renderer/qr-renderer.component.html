@@ -1,4 +1,12 @@
-<img [src]="srcUrl()" alt="qr code" imgLoadState #imgLoadState="imgLoadState" [hidden]="!imgLoadState.isLoaded" />
+<img
+  [src]="srcUrl()"
+  [width]="width()"
+  alt="qr code"
+  imgLoadState
+  #imgLoadState="imgLoadState"
+  [hidden]="!imgLoadState.isLoaded"
+  loading="lazy"
+/>
 @if (!imgLoadState.isLoaded) {
   <ui-skeleton width="128" height="128" borderRadius="0" />
 }
