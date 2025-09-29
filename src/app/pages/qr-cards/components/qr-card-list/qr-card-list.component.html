@@ -10,7 +10,7 @@
     >
       <ng-container preview>
         @if (selectors.qrTableColumnVisibility().code_picture) {
-          <qr-renderer [code]="code" style="flex: 0 0 128px" />
+          <qr-renderer [code]="code" [priority]="$index < 10" style="flex: 0 0 128px" />
         }
       </ng-container>
       <ng-container content>

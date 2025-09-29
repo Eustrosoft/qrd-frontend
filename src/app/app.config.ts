@@ -3,6 +3,7 @@ import {
   PreloadAllModules,
   provideRouter,
   TitleStrategy,
+  withEnabledBlockingInitialNavigation,
   withInMemoryScrolling,
   withPreloading,
 } from '@angular/router';
@@ -35,6 +36,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withPreloading(PreloadAllModules),
+      withEnabledBlockingInitialNavigation(),
       withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' }),
     ),
     provideStore(

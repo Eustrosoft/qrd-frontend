@@ -1,11 +1,12 @@
 <img
-  [src]="srcUrl()"
+  [ngSrc]="srcUrl()"
   [width]="width()"
+  [height]="height()"
+  [priority]="priority()"
   alt="qr code"
   imgLoadState
   #imgLoadState="imgLoadState"
-  [hidden]="!imgLoadState.isLoaded"
-  loading="lazy"
+  [style.visibility]="imgLoadState.isLoaded ? 'visible' : 'hidden'"
 />
 @if (!imgLoadState.isLoaded) {
   <ui-skeleton width="128" height="128" borderRadius="0" />

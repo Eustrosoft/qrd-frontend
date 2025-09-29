@@ -1,8 +1,14 @@
 :host {
   display: block;
+  position: relative;
 
   img {
     display: block;
     min-width: var(--img-width);
+  }
+
+  ui-skeleton {
+    top: 0;
+    position: absolute !important;
   }
 }

@@ -8,9 +8,11 @@
     <router-outlet />
   </main>
   <ui-bottom-menu />
-  @defer (on immediate) {
+  @defer (on viewport) {
     <qrd-footer />
-  } @loading {
+  } @placeholder {
+    <ui-skeleton height="220" borderRadius="0" />
+  } @loading (after 5s) {
     <ui-skeleton height="220" borderRadius="0" />
   }
 </ui-sidenav>

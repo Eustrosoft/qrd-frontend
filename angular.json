@@ -110,7 +110,7 @@
             "production": {
               "aot": true,
               "optimization": true,
-              "outputHashing": "all",
+              "outputHashing": "bundles",
               "namedChunks": false,
               "extractLicenses": true,
               "budgets": [
@@ -136,7 +136,7 @@
             "preproduction": {
               "aot": true,
               "optimization": true,
-              "outputHashing": "all",
+              "outputHashing": "bundles",
               "namedChunks": false,
               "extractLicenses": true,
               "budgets": [
