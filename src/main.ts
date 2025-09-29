@@ -5,6 +5,7 @@ import localeRu from '@angular/common/locales/ru';
 import localeRuExtra from '@angular/common/locales/extra/ru';
 import localeEn from '@angular/common/locales/en';
 import localeEnExtra from '@angular/common/locales/extra/en';
+import localeBgExtra from '@angular/common/locales/extra/bg';
 import { LocalStorageService } from '@shared/service/local-storage.service';
 import { Injector } from '@angular/core';
 import { LocaleLoaderService } from '@shared/service/locale-loader.service';
@@ -18,6 +19,7 @@ import { environment } from '@environment';
 
 registerLocaleData(localeRu, 'ru-RU', localeRuExtra);
 registerLocaleData(localeEn, 'en-US', localeEnExtra);
+registerLocaleData(localeEn, 'bg-BG', localeBgExtra);
 
 async function initApp(): Promise<void> {
   const injector = Injector.create({

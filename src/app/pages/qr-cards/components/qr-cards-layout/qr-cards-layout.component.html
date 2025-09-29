@@ -7,7 +7,13 @@
     @if (!isSmallScreen()) {
       <overlay-container #overlayContainer="overlayContainer">
         <ng-container trigger>
-          <button (click)="overlayContainer.openOverlay()" class="fab-md fab-secondary" cdkOverlayOrigin mat-fab>
+          <button
+            (click)="overlayContainer.openOverlay()"
+            class="fab-md fab-secondary"
+            cdkOverlayOrigin
+            mat-fab
+            [attr.aria-label]="SharedLocalization.openDataAttrsMenu"
+          >
             <mat-icon class="icon-on-secondary">settings</mat-icon>
           </button>
         </ng-container>

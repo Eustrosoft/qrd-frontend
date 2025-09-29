@@ -1,5 +1,10 @@
 <ui-flex-block flexAlignItems="center" overflow="hidden" flexJustifyContent="flex-start" flex="auto">
-  <button (click)="goBack()" class="mini-fab-md mini-fab-primary" mat-mini-fab>
+  <button
+    (click)="goBack()"
+    class="mini-fab-md mini-fab-primary"
+    mat-mini-fab
+    [attr.aria-label]="SharedLocalization.goBack"
+  >
     <mat-icon class="icon-md icon-on-secondary">chevron_left</mat-icon>
   </button>
   <ng-content select="[heading]" />

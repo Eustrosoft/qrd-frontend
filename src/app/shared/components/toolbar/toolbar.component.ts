@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { Location } from '@angular/common';
+import { SharedLocalization } from '@shared/shared.constants';
 
 @Component({
   selector: 'toolbar',
@@ -21,6 +22,8 @@ export class ToolbarComponent {
 
   public readonly navigateTo = input<unknown[] | null>(null);
   public readonly isActionButtonsShown = input<boolean>(true);
+
+  protected readonly SharedLocalization = SharedLocalization;
 
   protected goBack(): void {
     if (this.navigateTo()) {

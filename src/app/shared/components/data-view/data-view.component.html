@@ -16,16 +16,28 @@
           matSuffix
           class="icon-button-sm"
           mat-icon-button
+          [attr.aria-label]="SharedLocalization.clearSearchString"
         >
           <mat-icon class="icon-primary">clear</mat-icon>
         </button>
       }
-      <button (click)="searchClicked.emit()" matSuffix class="icon-button-sm" mat-icon-button>
+      <button
+        (click)="searchClicked.emit()"
+        matSuffix
+        class="icon-button-sm"
+        mat-icon-button
+        [attr.aria-label]="SharedLocalization.performSearch"
+      >
         <mat-icon class="icon-primary">search</mat-icon>
       </button>
     </mat-form-field>
     @if (!isSmallScreen()) {
-      <button (click)="advancedSearchClicked.emit()" class="fab-md fab-secondary" mat-fab>
+      <button
+        (click)="advancedSearchClicked.emit()"
+        class="fab-md fab-secondary"
+        mat-fab
+        [attr.aria-label]="SharedLocalization.openAdvancedSearch"
+      >
         <mat-icon class="icon-on-secondary">manage_search</mat-icon>
       </button>
     }
@@ -33,7 +45,12 @@
   </ui-flex-block>
   <ui-flex-block gapSize="8" flexJustifyContent="flex-end">
     @if (isSmallScreen()) {
-      <button (click)="advancedSearchClicked.emit()" class="fab-md fab-secondary" mat-fab>
+      <button
+        (click)="advancedSearchClicked.emit()"
+        class="fab-md fab-secondary"
+        mat-fab
+        [attr.aria-label]="SharedLocalization.openAdvancedSearch"
+      >
         <mat-icon class="icon-on-secondary">manage_search</mat-icon>
       </button>
     }

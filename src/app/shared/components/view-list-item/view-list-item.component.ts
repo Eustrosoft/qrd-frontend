@@ -5,6 +5,7 @@ import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { ActivatedRoute, RouterLink, UrlTree } from '@angular/router';
 import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.component';
+import { SharedLocalization } from '@shared/shared.constants';
 
 @Component({
   selector: 'view-list-item',
@@ -18,6 +19,7 @@ export class ViewListItemComponent {
   protected readonly activatedRoute = inject(ActivatedRoute);
 
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
+  protected readonly SharedLocalization = SharedLocalization;
 
   public readonly isSelected = input<boolean>(false);
   public readonly isPreviewShown = input<boolean>(false);

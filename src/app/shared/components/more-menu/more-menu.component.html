@@ -1,4 +1,10 @@
-<button (click)="$event.stopPropagation()" class="icon-button-md" mat-icon-button [matMenuTriggerFor]="menu">
+<button
+  (click)="$event.stopPropagation()"
+  class="icon-button-md"
+  mat-icon-button
+  [matMenuTriggerFor]="menu"
+  [attr.aria-label]="SharedLocalization.openMoreMenu"
+>
   <mat-icon class="icon-primary icon-md">more_vert</mat-icon>
 </button>
 <mat-menu #menu="matMenu">

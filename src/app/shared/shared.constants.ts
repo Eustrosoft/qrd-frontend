@@ -38,7 +38,12 @@ export const SharedLocalization = {
   card: $localize`:@@shared.card:Card`,
   createCard: $localize`:@@shared.createCard:Create card`,
   actions: $localize`:@@shared.actions:Actions`,
+  openAdvancedSearch: $localize`:@@shared.openAdvancedSearch:Open advanced search`,
+  openDataAttrsMenu: $localize`:@@shared.openDataAttrsCfg:Open attrs view settings menu`,
   search: $localize`:@@shared.search:Search`,
+  performSearch: $localize`:@@shared.performSearch:Perform search`,
+  clearSearchString: $localize`:@@shared.clearSearchString:Clear search string`,
+  openMoreMenu: $localize`:@@shared.openMoreMenu:Open more menu`,
   list: $localize`:@@shared.list:List`,
   table: $localize`:@@shared.table:Table`,
   open: $localize`:@@shared.open:Open`,
@@ -48,6 +53,7 @@ export const SharedLocalization = {
   create: $localize`:@@shared.create:Create`,
   delete: $localize`:@@shared.delete:Delete`,
   deleteRelation: $localize`:@@shared.deleteRelation:Delete relation`,
+  selectRecord: $localize`:@@shared.selectRecord:Select record checkbox`,
   selected: $localize`:@@shared.selected:Selected`,
   selectAll: $localize`:@@shared.selectAll:Select all`,
   createDate: $localize`:@@shared.createDate:Created at`,
@@ -82,6 +88,7 @@ export const SharedLocalization = {
   dev: $localize`:@@shared.dev:Under development`,
   showMore: $localize`:@@shared.showMore:Show more`,
   showLess: $localize`:@@shared.showLess:Show less`,
+  goBack: $localize`:@@shared.goBack:Go back`,
 } as const;
 
 export const SizeUnitsLocalization = {

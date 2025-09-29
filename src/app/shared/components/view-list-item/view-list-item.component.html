@@ -1,4 +1,8 @@
-<mat-checkbox [checked]="isSelected()" (change)="checkboxChanged.emit($event.checked)" />
+<mat-checkbox
+  [checked]="isSelected()"
+  (change)="checkboxChanged.emit($event.checked)"
+  [aria-label]="SharedLocalization.selectRecord"
+/>
 <a [routerLink]="navigateTo()" [relativeTo]="activatedRoute" ui-flex-block flex="auto" flexAlignItems="center" ellipsis>
   @if (!isSmallScreen() && isPreviewShown()) {
     <ng-content select="[preview]" />
