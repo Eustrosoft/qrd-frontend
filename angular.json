@@ -74,7 +74,7 @@
                 "input": "public",
                 "glob": "**/*",
                 "output": "/public",
-                "ignore": ["*.webmanifest"]
+                "ignore": ["*.webmanifest", "config"]
               },
               {
                 "input": "src/styles/themes",
