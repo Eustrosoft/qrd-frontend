@@ -24,9 +24,10 @@ import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state
 import { AuthState } from '@modules/auth/state/auth.state';
 import { httpErrorInterceptor } from '@modules/error/http-error.interceptor';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
-import { APP_BASE_HREF, LocationStrategy } from '@angular/common';
+import { LocationStrategy } from '@angular/common';
 import { CustomLocationStrategy } from '@cdk/classes/custom-location-strategy.class';
 import { Iso8601DateFormatPipe } from '@shared/pipe/iso8601-date-format.pipe';
+import { provideBaseHref } from '@core/providers/base-href.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -64,7 +65,7 @@ export const appConfig: ApplicationConfig = {
       deps: [LOCALE_ID, RuDateAdapterParsePipe, Iso8601DateFormatPipe],
     },
     { provide: TitleStrategy, useClass: RouteTitleStrategy },
-    { provide: APP_BASE_HREF, useValue: environment.baseHref },
+    provideBaseHref(),
     { provide: LocationStrategy, useClass: CustomLocationStrategy },
   ],
 };

@@ -131,7 +131,7 @@
                   "with": "src/environments/environment.production.ts"
                 }
               ],
-              "baseHref": "/lk/v2/"
+              "baseHref": "./"
             },
             "preproduction": {
               "aot": true,
@@ -157,7 +157,7 @@
                   "with": "src/environments/environment.preproduction.ts"
                 }
               ],
-              "baseHref": "/lk/v2/"
+              "baseHref": "./"
             },
             "development": {
               "optimization": false,

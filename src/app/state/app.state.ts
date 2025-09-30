@@ -25,7 +25,6 @@ import { BaseQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
 import { DEFAULT_SETTINGS } from '@app/pages/settings/settings.constants';
 import { uniq } from '@shared/utils/functions/uniq.function';
 import { ConfigService } from '@shared/service/config.service';
-import { Router } from '@angular/router';
 
 export interface AppStateModel {
   theme: Theme;
@@ -69,7 +68,6 @@ export class AppState {
   private readonly localStorageService = inject(LocalStorageService);
   private readonly settingsService = inject(SettingsService);
   private readonly configService = inject(ConfigService);
-  private readonly router = inject(Router);
   private readonly window = inject(WINDOW);
   private readonly document = inject(DOCUMENT);
   private readonly prefersDark = inject(PREFERS_DARK_TOKEN);

@@ -5,5 +5,4 @@ export const environment: Environment = {
   production: false,
   preproduction: true,
   dev: false,
-  baseHref: '/lk/v2/',
 };

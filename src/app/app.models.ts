@@ -3,7 +3,6 @@ export type Environment = {
   production: boolean;
   preproduction: boolean;
   dev: boolean;
-  baseHref: string;
 };
 export type Theme = 'system' | 'light' | 'dark';
 export type ThemeContrast = '' | '-mc' | '-hc';

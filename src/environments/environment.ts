@@ -5,5 +5,4 @@ export const environment: Environment = {
   production: false,
   preproduction: false,
   dev: true,
-  baseHref: '/',
 };
