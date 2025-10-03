@@ -48,8 +48,7 @@ export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup | Red
         map(
           () =>
             new RedirectCommand(
-              router.getCurrentNavigation()?.previousNavigation?.extractedUrl ??
-                router.createUrlTree([AppRoutes.qrCards]),
+              router.currentNavigation()?.previousNavigation?.extractedUrl ?? router.createUrlTree([AppRoutes.qrCards]),
             ),
         ),
       ),
