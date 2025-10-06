@@ -221,7 +221,7 @@ export class FilesState {
       }),
       takeUntilDestroyed(destroyRef),
       catchError((err) => {
-        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetchRelated);
         setState(patch({ isFileUsagesLoading: false, isFileLoadErr: true }));
         return throwError(() => err);
       }),

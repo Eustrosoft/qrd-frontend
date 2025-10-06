@@ -8,6 +8,7 @@ export interface NotificationSnackbarData {
   icon: string;
   iconClass: string;
   hideCloseButton?: boolean;
+  action?: string;
 }
 
 export type SnackbarTask<T = unknown, D = unknown> =

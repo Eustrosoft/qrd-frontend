@@ -6,14 +6,11 @@
     (
       filled-container-shape: 8px,
       outlined-container-shape: 8px,
+      container-height: 40px,
+      container-vertical-padding: 8px,
       disabled-input-text-placeholder-color: color-mix(in srgb, var(--mat-sys-on-surface) 16%, transparent),
       filled-input-text-placeholder-color: color-mix(in srgb, var(--mat-sys-on-surface) 16%, transparent),
       outlined-input-text-placeholder-color: color-mix(in srgb, var(--mat-sys-on-surface) 16%, transparent),
-    )
-  );
-  @include mat.form-field-density(
-    (
-      density: -4,
     )
   );
 }
@@ -23,6 +20,7 @@
     (
       filled-container-shape: 8px,
       outlined-container-shape: 8px,
+      container-height: 48px,
       disabled-input-text-placeholder-color: color-mix(in srgb, var(--mat-sys-on-surface) 16%, transparent),
       filled-input-text-placeholder-color: color-mix(in srgb, var(--mat-sys-on-surface) 16%, transparent),
       outlined-input-text-placeholder-color: color-mix(in srgb, var(--mat-sys-on-surface) 16%, transparent),

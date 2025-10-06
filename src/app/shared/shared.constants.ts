@@ -147,6 +147,7 @@ export const DefaultConfig: AppConfig = {
     oldAppUri: { uri: '/lk/', disabled: false },
     qrgenUri: 'https://qrgen.qxyz.ru/generate',
     qrUri: 'https://qr.qxyz.ru',
+    pollInterval: 21600000, // every 6 hours
     langList: [
       {
         lang: 'en-US',

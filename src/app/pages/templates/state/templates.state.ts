@@ -243,7 +243,7 @@ export class TemplatesState {
         },
       }),
       catchError((err) => {
-        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetchRelated);
         setState(patch({ isTemplateUsagesLoading: false, isTemplateLoadErr: true }));
         return throwError(() => err);
       }),

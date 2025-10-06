@@ -1,10 +1,13 @@
 <ui-sidenav>
   @defer (on immediate) {
     <qrd-header />
+    <div class="banner-wrapper">
+      <network-status-banner *animatedIf="isOffline()" />
+    </div>
   } @loading {
     <ui-skeleton height="64" borderRadius="0" />
   }
-  <main>
+  <main [class.is-offline]="isOffline()">
     <router-outlet />
   </main>
   <ui-bottom-menu />

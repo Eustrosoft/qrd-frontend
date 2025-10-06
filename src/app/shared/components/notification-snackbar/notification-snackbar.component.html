@@ -5,8 +5,15 @@
     <p>{{ data.subtitle }}</p>
   }
 </ui-grid-block>
-@if (!data.hideCloseButton) {
-  <button (click)="matSnackBarRef.dismiss()" class="icon-button-sm" mat-icon-button>
-    <mat-icon class="icon-primary">close</mat-icon>
-  </button>
-}
+<ui-flex-block flexAlignItems="center">
+  @if (data.action) {
+    <button (click)="matSnackBarRef.dismissWithAction()" class="button-md" mat-flat-button>
+      {{ data.action }}
+    </button>
+  }
+  @if (!data.hideCloseButton) {
+    <button (click)="matSnackBarRef.dismiss()" class="icon-button-sm" mat-icon-button>
+      <mat-icon class="icon-primary">close</mat-icon>
+    </button>
+  }
+</ui-flex-block>

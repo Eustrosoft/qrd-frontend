@@ -1,5 +1,5 @@
 import { inject, Injectable, inputBinding } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { QRChangeDto, QRCreationDto, QRDto } from '@api/qr-cards/qrs-api.models';
 import { Observable } from 'rxjs';
 import { QRRangeDto } from '@api/ranges/ranges-api.models';
@@ -9,6 +9,7 @@ import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { select } from '@ngxs/store';
 import { AppState } from '@app/state/app.state';
+import { SUPPRESS_HTTP_ERROR_INTERCEPTOR } from '@modules/error/error.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,9 @@ export class QrCardsService {
   private readonly settingsState = select(AppState.getSettingsState$);
 
   public getQrCardList(): Observable<QRDto[]> {
-    return this.http.get<QRDto[]>('/qrCodeDemo/v1/api/secured/qrs');
+    return this.http.get<QRDto[]>('/qrCodeDemo/v1/api/secured/qrs', {
+      context: new HttpContext().set(SUPPRESS_HTTP_ERROR_INTERCEPTOR, true),
+    });
   }
 
   public getQrRangeList(): Observable<QRRangeDto[]> {
@@ -29,12 +32,17 @@ export class QrCardsService {
   }
 
   public getQrCardById(id: number | string): Observable<QRDto> {
-    return this.http.get<QRDto>(`/qrCodeDemo/v1/api/secured/qrs/${id}`);
+    return this.http.get<QRDto>(`/qrCodeDemo/v1/api/secured/qrs/${id}`, {
+      context: new HttpContext().set(SUPPRESS_HTTP_ERROR_INTERCEPTOR, true),
+    });
   }
 
   public getQrCard(code: string): Observable<QRDto> {
     const params = new HttpParams({ fromObject: { q: code } });
-    return this.http.get<QRDto>('/qrCodeDemo/v1/api/secured/qrs/code', { params });
+    return this.http.get<QRDto>('/qrCodeDemo/v1/api/secured/qrs/code', {
+      params,
+      context: new HttpContext().set(SUPPRESS_HTTP_ERROR_INTERCEPTOR, true),
+    });
   }
 
   public createQrCard(payload: QRCreationDto): Observable<QRDto> {

@@ -27,13 +27,17 @@ export const ErrorsLocalization = {
 
 export const NotificationSnackbarLocalization = {
   success: $localize`:@@notificationSnackbar.success:Success`,
+  info: $localize`:@@notificationSnackbar.info:Info`,
   warning: $localize`:@@notificationSnackbar.warning:Warning`,
   danger: $localize`:@@notificationSnackbar.danger:Danger`,
   created: $localize`:@@notificationSnackbar.created:Created successfully`,
   uploaded: $localize`:@@notificationSnackbar.uploaded:Uploaded successfully`,
   saved: $localize`:@@notificationSnackbar.saved:Saved successfully`,
   deleted: $localize`:@@notificationSnackbar.deleted:Deleted successfully`,
+  offline: $localize`:@@notificationSnackbar.offline:No internet connection`,
+  newVersion: $localize`:@@notificationSnackbar.newVersion:New version available. Reload?`,
   errOnFetch: $localize`:@@notificationSnackbar.errOnFetch:Error occurred while fetching record`,
+  errOnFetchRelated: $localize`:@@notificationSnackbar.errOnFetchRelated:Error occurred while fetching related records`,
   errOnFetchList: $localize`:@@notificationSnackbar.errOnFetchList:Error occurred while fetching record list`,
   errOnCreate: $localize`:@@notificationSnackbar.errOnCreate:Error occurred while creating record`,
   errOnSave: $localize`:@@notificationSnackbar.errOnSave:Error occurred while saving`,
