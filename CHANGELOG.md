@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.18.1...v2.0.0) (2025-10-07)
+
+
+### Features
+
+* **baseHref:** изменена логика работы baseHref ([8e0c9a0](https://github.com/Eustrosoft/qrd-frontend/commit/8e0c9a095ce807439742fa76cd8d6d7a75ba69d5))
+* **ngsw:** обновлен angular, интегрирован service worker ([3407283](https://github.com/Eustrosoft/qrd-frontend/commit/3407283422eb6a9b5fea78c1f4f24d8d9ebc8158))
+
 ### [1.18.1](https://github.com/Eustrosoft/qrd-frontend/compare/v1.18.0...v1.18.1) (2025-09-29)
 
 ## [1.18.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.17.0...v1.18.0) (2025-09-23)
