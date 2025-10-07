@@ -29,7 +29,7 @@
           {{ QrCardsLocalization.previewCard }}
         </button>
         <a
-          [href]="`${this.selectors.configState().config.qrdConf?.qrUri}?q=${code}`"
+          [href]="`${selectors.configState().config.qrdConf?.qrUri}?q=${code}`"
           target="_blank"
           rel="noopener noreferrer"
           mat-menu-item
@@ -37,6 +37,13 @@
           <mat-icon>open_in_new</mat-icon>
           {{ QrCardsLocalization.viewCard }}
         </a>
+        <button
+          (click)="qrCardsService.copyToClipboard(`${selectors.configState().config.qrdConf?.qrUri}?q=${code}`)"
+          mat-menu-item
+        >
+          <mat-icon>share</mat-icon>
+          {{ SharedLocalization.share }}
+        </button>
         <button (click)="qrCardsService.openPrint(code)" mat-menu-item>
           <mat-icon>print</mat-icon>
           {{ SharedLocalization.print }}

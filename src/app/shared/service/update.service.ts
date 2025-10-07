@@ -1,4 +1,4 @@
-import { ApplicationRef, DOCUMENT, inject, Injectable } from '@angular/core';
+import { ApplicationRef, DOCUMENT, inject, Injectable, isDevMode } from '@angular/core';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { concat, filter, first, interval, switchMap } from 'rxjs';
 import { SnackbarService } from '@shared/service/snackbar.service';
@@ -18,7 +18,7 @@ export class UpdateService {
   private readonly configState = select(AppState.getConfigState$);
 
   constructor() {
-    const appIsStable$ = this.appRef.isStable.pipe(first((isStable) => isStable));
+    const appIsStable$ = this.appRef.isStable.pipe(first((isStable) => isStable && !isDevMode()));
     const pollInterval$ = interval(
       this.configState().config.qrdConf?.pollInterval ?? DefaultConfig.qrdConf?.pollInterval,
     );
@@ -35,7 +35,7 @@ export class UpdateService {
     this.swUpdate.versionUpdates
       .pipe(
         filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY'),
-        switchMap(() => this.snackbarService.withActionOnce(NotificationSnackbarLocalization.newVersion).onAction()),
+        switchMap(() => this.snackbarService.showOnce(NotificationSnackbarLocalization.newVersion, 'OK').onAction()),
       )
       .subscribe(() => {
         this.document.location.reload();

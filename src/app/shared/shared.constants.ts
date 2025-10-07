@@ -90,6 +90,9 @@ export const SharedLocalization = {
   showLess: $localize`:@@shared.showLess:Show less`,
   goBack: $localize`:@@shared.goBack:Go back`,
   refresh: $localize`:@@shared.refresh:Refresh`,
+  copy: $localize`:@@shared.copy:Copy`,
+  copied: $localize`:@@shared.copied:Copied`,
+  share: $localize`:@@shared.share:Share`,
 } as const;
 
 export const SizeUnitsLocalization = {

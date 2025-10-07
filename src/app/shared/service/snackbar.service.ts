@@ -1,5 +1,13 @@
 import { EmbeddedViewRef, inject, Injectable, TemplateRef } from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
+import {
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatSnackBar,
+  MatSnackBarConfig,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarRef,
+  MatSnackBarVerticalPosition,
+  TextOnlySnackBar,
+} from '@angular/material/snack-bar';
 import { concatMap, Subject } from 'rxjs';
 import { ComponentType } from '@angular/cdk/portal';
 import { PxToRemPipe } from '@app/shared/pipe/px-to-rem.pipe';
@@ -18,6 +26,7 @@ import { NotificationSnackbarLocalization } from '@modules/error/error.constants
 export class SnackbarService {
   private readonly pxToRemPipe = inject(PxToRemPipe);
   private readonly matSnackBar = inject(MatSnackBar);
+  private readonly matSnackBarDefaultOpts = inject(MAT_SNACK_BAR_DEFAULT_OPTIONS);
   private readonly snackBarQueue = new Subject<SnackbarTask>();
 
   constructor() {
@@ -44,21 +53,27 @@ export class SnackbarService {
     });
   }
 
-  public withActionOnce(
+  public showOnce(
     message: string = NotificationSnackbarLocalization.info,
-    action: string = 'OK',
+    action?: string,
+    icon: string = 'info',
+    iconClass: string = 'icon-secondary',
+    horizontalPosition?: MatSnackBarHorizontalPosition,
+    verticalPosition?: MatSnackBarVerticalPosition,
     duration: number = DEFAULT_SNACKBAR_DURATION,
   ): MatSnackBarRef<NotificationSnackbarComponent> {
     return this.showComponentSnackbar(NotificationSnackbarComponent, {
       data: {
         title: message,
-        icon: 'info',
-        iconClass: 'icon-secondary',
+        icon,
+        iconClass,
         titleFontSize: this.pxToRemPipe.transform('16px'),
         action,
       },
       duration,
       panelClass: 'snackbar-panel',
+      horizontalPosition,
+      verticalPosition,
     });
   }
 

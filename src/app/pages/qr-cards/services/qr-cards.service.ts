@@ -10,6 +10,9 @@ import { WINDOW } from '@cdk/tokens/window.token';
 import { select } from '@ngxs/store';
 import { AppState } from '@app/state/app.state';
 import { SUPPRESS_HTTP_ERROR_INTERCEPTOR } from '@modules/error/error.constants';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { SnackbarService } from '@shared/service/snackbar.service';
+import { SharedLocalization } from '@shared/shared.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +22,8 @@ export class QrCardsService {
   private readonly uiSidenavService = inject(UiSidenavService);
   private readonly isXSmall = inject(IS_XSMALL);
   private readonly window = inject(WINDOW);
+  private readonly clipboard = inject(Clipboard);
+  private readonly snackbarService = inject(SnackbarService);
   private readonly settingsState = select(AppState.getSettingsState$);
 
   public getQrCardList(): Observable<QRDto[]> {
@@ -68,6 +73,12 @@ export class QrCardsService {
       width: this.isXSmall() ? 'full' : 'sm',
       isFixed: true,
     });
+  }
+
+  public copyToClipboard(text: string): void {
+    if (this.clipboard.copy(text)) {
+      this.snackbarService.showOnce(SharedLocalization.copied, undefined, 'task_alt', 'icon-success', 'center', 'top');
+    }
   }
 
   public openPrint(code: string): void {

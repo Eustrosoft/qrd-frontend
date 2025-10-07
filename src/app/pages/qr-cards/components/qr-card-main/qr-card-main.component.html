@@ -16,16 +16,21 @@
         </card-field>
       }
       <card-field [caption]="`${SharedLocalization.cardPreview}:`">
-        <button
-          class="button-anchor-md-with-icon"
-          mat-button
-          interactionEffect
-          [targetSelectors]="['p', 'mat-icon']"
-          (click)="openCardPreview()"
-        >
-          <p>QR №{{ selectors.qrCard()?.code | toHex }}</p>
-          <mat-icon class="icon-primary">open_in_new</mat-icon>
-        </button>
+        <ui-flex-block gapSize="2" flexAlignItems="center">
+          <a
+            href="#"
+            class="primary"
+            interactionEffect
+            [targetSelectors]="['p', 'mat-icon']"
+            (click)="$event.preventDefault(); openCardPreview()"
+          >
+            <ui-flex-block gapSize="4">
+              <span>{{ qrCardLink() }}</span>
+              <mat-icon class="icon-primary icon-xs">open_in_new</mat-icon>
+            </ui-flex-block>
+          </a>
+          <copy-button [copyValue]="qrCardLink()" />
+        </ui-flex-block>
       </card-field>
       <card-field [caption]="`${SharedLocalization.name}:`">
         {{ selectors.qrCard()?.name | fallback: SharedLocalization.noName }}
