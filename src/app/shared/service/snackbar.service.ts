@@ -1,6 +1,5 @@
 import { EmbeddedViewRef, inject, Injectable, TemplateRef } from '@angular/core';
 import {
-  MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatSnackBar,
   MatSnackBarConfig,
   MatSnackBarHorizontalPosition,
@@ -26,7 +25,6 @@ import { NotificationSnackbarLocalization } from '@modules/error/error.constants
 export class SnackbarService {
   private readonly pxToRemPipe = inject(PxToRemPipe);
   private readonly matSnackBar = inject(MatSnackBar);
-  private readonly matSnackBarDefaultOpts = inject(MAT_SNACK_BAR_DEFAULT_OPTIONS);
   private readonly snackBarQueue = new Subject<SnackbarTask>();
 
   constructor() {

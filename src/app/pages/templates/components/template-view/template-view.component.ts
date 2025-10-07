@@ -79,7 +79,6 @@ export class TemplateViewComponent implements OnInit {
 
   protected readonly tabLinks: TabLink[] = [
     { link: AppRoutes.template, title: RouteTitles.template },
-    { link: AppRoutes.attrs, title: RouteTitles.attrs },
     { link: AppRoutes.usages, title: RouteTitles.usages },
   ];
 
