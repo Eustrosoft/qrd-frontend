@@ -25,7 +25,6 @@ import { QrViewComponent } from '@app/pages/qr-view/qr-view.component';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
-import { BannerComponent } from '@shared/components/banner/banner.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { Title } from '@angular/platform-browser';
 import { MatMenuItem } from '@angular/material/menu';
@@ -33,6 +32,8 @@ import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.compon
 import { AppState } from '@app/state/app.state';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
 import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
+import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 
 @Component({
   selector: 'qr-card-view',
@@ -46,9 +47,10 @@ import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
     TruncateDirective,
     ToHexPipe,
     ToolbarComponent,
-    BannerComponent,
     MatMenuItem,
     MoreMenuComponent,
+    UiAlertComponent,
+    UiFlexBlockComponent,
   ],
   templateUrl: './qr-card-view.component.html',
   styleUrl: './qr-card-view.component.scss',

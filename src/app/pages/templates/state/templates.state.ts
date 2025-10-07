@@ -40,6 +40,7 @@ import { TemplateFormFactoryService } from '@app/pages/templates/services/templa
 export interface TemplatesStateModel {
   searchValue: string;
   isTemplateListLoading: boolean;
+  isTemplateListLoadErr: boolean;
   templateListSkeletonLoaders: number;
   templateList: TemplateDto[];
   selectedTemplateList: number[];
@@ -59,6 +60,7 @@ export interface TemplatesStateModel {
 const defaults: TemplatesStateModel = {
   searchValue: '',
   isTemplateListLoading: false,
+  isTemplateListLoadErr: false,
   templateListSkeletonLoaders: DEFAULT_ITEMS_PER_PAGE,
   templateList: [],
   selectedTemplateList: [],
@@ -100,6 +102,11 @@ export class TemplatesState {
   @Selector()
   public static isTemplateListLoading$({ isTemplateListLoading }: TemplatesStateModel): boolean {
     return isTemplateListLoading;
+  }
+
+  @Selector()
+  public static isTemplateListLoadErr$({ isTemplateListLoadErr }: TemplatesStateModel): boolean {
+    return isTemplateListLoadErr;
   }
 
   @Selector()
@@ -180,18 +187,17 @@ export class TemplatesState {
     { setState }: StateContext<TemplatesStateModel>,
     { destroyRef }: FetchTemplateList,
   ): Observable<TemplateDto[]> {
-    setState(patch({ isTemplateListLoading: true }));
+    setState(patch({ isTemplateListLoading: true, isTemplateListLoadErr: false }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.templatesService.getTemplateList()),
       tap({
-        next: (fileList) => {
-          setState(patch({ templateList: fileList, isTemplateListLoading: false }));
+        next: (templateList) => {
+          setState(patch({ templateList, isTemplateListLoading: false }));
         },
       }),
       takeUntilDestroyed(destroyRef),
       catchError((err) => {
-        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetchList);
-        setState(patch({ isTemplateListLoading: false }));
+        setState(patch({ isTemplateListLoading: false, isTemplateListLoadErr: true, templateList: [] }));
         return throwError(() => err);
       }),
     );
@@ -243,7 +249,7 @@ export class TemplatesState {
         },
       }),
       catchError((err) => {
-        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetchRelated);
         setState(patch({ isTemplateUsagesLoading: false, isTemplateLoadErr: true }));
         return throwError(() => err);
       }),

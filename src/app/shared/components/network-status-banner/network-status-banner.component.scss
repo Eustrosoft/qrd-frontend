@@ -1,0 +1,40 @@
+:host {
+  @keyframes slide-in {
+    0% {
+      opacity: 0;
+      clip-path: inset(0 0 100% 0);
+    }
+
+    100% {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes slide-out {
+    0% {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+    }
+
+    100% {
+      opacity: 0;
+      clip-path: inset(0 0 100% 0);
+    }
+  }
+
+  width: 100%;
+  color: var(--mat-sys-on-error-container);
+  display: block;
+  position: absolute;
+  background: var(--mat-sys-error-container);
+  text-align: center;
+
+  &.animate-enter {
+    animation: slide-in 0.3s ease-out forwards;
+  }
+
+  &.animate-leave {
+    animation: slide-out 0.3s ease-in forwards;
+  }
+}

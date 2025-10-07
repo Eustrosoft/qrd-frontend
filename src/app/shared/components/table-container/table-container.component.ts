@@ -9,6 +9,7 @@ import {
   effect,
   inject,
   input,
+  output,
   untracked,
   viewChild,
 } from '@angular/core';
@@ -30,6 +31,10 @@ import { outputFromObservable, toSignal } from '@angular/core/rxjs-interop';
 import { TABLE_CONTEXT, TableContext } from '@cdk/tokens/table.tokens';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { SharedLocalization } from '@shared/shared.constants';
+import { MatButton } from '@angular/material/button';
+import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { ErrorsLocalization } from '@modules/error/error.constants';
 
 @Component({
   selector: 'table-container',
@@ -43,6 +48,9 @@ import { SharedLocalization } from '@shared/shared.constants';
     MatProgressBar,
     MatNoDataRow,
     MatColumnDef,
+    MatButton,
+    UiAlertComponent,
+    UiFlexBlockComponent,
   ],
   providers: [RangeSelectorService],
   templateUrl: './table-container.component.html',
@@ -54,6 +62,7 @@ export class TableContainerComponent<T, S extends keyof T> implements AfterConte
   private readonly rangeSelectorService = inject(RangeSelectorService);
   protected readonly ctx = inject<TableContext<T, S>>(TABLE_CONTEXT);
 
+  protected readonly ErrorsLocalization = ErrorsLocalization;
   protected readonly SharedLocalization = SharedLocalization;
 
   private readonly headerRowDefs = contentChildren(MatHeaderRowDef);
@@ -88,7 +97,9 @@ export class TableContainerComponent<T, S extends keyof T> implements AfterConte
   });
 
   public readonly isLoading = input<boolean>(false);
+  public readonly isLoadErr = input<boolean>(false);
   public readonly selectionChanged = outputFromObservable(this.selectionModelChanges$);
+  public readonly refresh = output<void>();
 
   public ngAfterContentInit(): void {
     this.columnDefs().forEach((columnDef) => this.table().addColumnDef(columnDef));

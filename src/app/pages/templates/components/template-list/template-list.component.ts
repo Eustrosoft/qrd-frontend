@@ -16,6 +16,10 @@ import { SharedLocalization } from '@shared/shared.constants';
 import { DeleteTemplates, FetchTemplateList, SetSelectedTemplates } from '@app/pages/templates/state/templates.actions';
 import { RangeSelectorService } from '@shared/service/range-selector.service';
 import { TemplateDto } from '@api/templates/templates-api.models';
+import { MatButton } from '@angular/material/button';
+import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { ErrorsLocalization } from '@modules/error/error.constants';
 
 @Component({
   selector: 'template-list',
@@ -27,6 +31,9 @@ import { TemplateDto } from '@api/templates/templates-api.models';
     UiSkeletonComponent,
     ViewListItemComponent,
     RouterLink,
+    MatButton,
+    UiAlertComponent,
+    UiFlexBlockComponent,
   ],
   providers: [RangeSelectorService],
   templateUrl: './template-list.component.html',
@@ -39,6 +46,7 @@ export class TemplateListComponent implements OnInit {
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly selectors = createSelectMap({
     isTemplateListLoading: TemplatesState.isTemplateListLoading$,
+    isTemplateListLoadErr: TemplatesState.isTemplateListLoadErr$,
     templateListSkeletonLoaders: TemplatesState.getTemplateListSkeletonLoaders$,
     templateList: TemplatesState.getTemplateList$,
     selectedTemplateList: TemplatesState.getSelectedTemplateList$,
@@ -73,6 +81,7 @@ export class TemplateListComponent implements OnInit {
   });
 
   protected readonly AppRoutes = AppRoutes;
+  protected readonly ErrorsLocalization = ErrorsLocalization;
   protected readonly SharedLocalization = SharedLocalization;
 
   public ngOnInit(): void {

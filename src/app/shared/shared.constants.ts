@@ -89,6 +89,10 @@ export const SharedLocalization = {
   showMore: $localize`:@@shared.showMore:Show more`,
   showLess: $localize`:@@shared.showLess:Show less`,
   goBack: $localize`:@@shared.goBack:Go back`,
+  refresh: $localize`:@@shared.refresh:Refresh`,
+  copy: $localize`:@@shared.copy:Copy`,
+  copied: $localize`:@@shared.copied:Copied`,
+  share: $localize`:@@shared.share:Share`,
 } as const;
 
 export const SizeUnitsLocalization = {
@@ -147,6 +151,7 @@ export const DefaultConfig: AppConfig = {
     oldAppUri: { uri: '/lk/', disabled: false },
     qrgenUri: 'https://qrgen.qxyz.ru/generate',
     qrUri: 'https://qr.qxyz.ru',
+    pollInterval: 21600000, // every 6 hours
     langList: [
       {
         lang: 'en-US',

@@ -1,5 +1,5 @@
 <ui-grid-block [gridTemplateColumns]="isSmallScreen() ? '1fr' : '1fr auto'">
-  <ui-flex-block gapSize="8">
+  <ui-flex-block gapSize="8" flexAlignItems="center">
     <mat-form-field class="form-field-md search-bar">
       <input
         [value]="searchValue()"
@@ -43,7 +43,7 @@
     }
     <ng-content select="[view-settings]" />
   </ui-flex-block>
-  <ui-flex-block gapSize="8" flexJustifyContent="flex-end">
+  <ui-flex-block gapSize="8" flexJustifyContent="flex-end" flexAlignItems="center">
     @if (isSmallScreen()) {
       <button
         (click)="advancedSearchClicked.emit()"

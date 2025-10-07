@@ -1,0 +1,48 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": ["/favicon.ico", "/index.csr.html", "/index.html", "/manifest.webmanifest", "/*.css", "/*.js"]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": ["/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"]
+      }
+    },
+    {
+      "name": "custom-icons",
+      "installMode": "prefetch",
+      "resources": {
+        "files": ["/public/icons/**/*.svg"]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "configs",
+      "urls": ["/config/config.json", "/config/layout-config.*.json"],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 1,
+        "maxAge": "1h"
+      }
+    },
+    {
+      "name": "locales",
+      "urls": ["/locale/messages.*.json"],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 1,
+        "maxAge": "1d"
+      }
+    }
+  ]
+}

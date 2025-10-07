@@ -11,6 +11,10 @@ import { createSelectMap } from '@ngxs/store';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { AttrListItemComponent } from '@shared/components/attr-list-item/attr-list-item.component';
+import { CollapsibleContainerComponent } from '@shared/components/collapsible-container/collapsible-container.component';
+import { CollapsibleListDirective } from '@shared/directives/collapsible-list.directive';
+import { CollapsibleListItemDirective } from '@shared/directives/collapsible-list-item.directive';
 
 @Component({
   selector: 'template-main',
@@ -23,6 +27,10 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
     FileListItemComponent,
     UiGridBlockComponent,
     UiFlexBlockComponent,
+    AttrListItemComponent,
+    CollapsibleContainerComponent,
+    CollapsibleListDirective,
+    CollapsibleListItemDirective,
   ],
   templateUrl: './template-main.component.html',
   styleUrl: './template-main.component.scss',

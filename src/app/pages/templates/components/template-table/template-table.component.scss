@@ -3,6 +3,8 @@
 @use 'sass:map';
 
 :host {
+  display: grid;
+
   .mat-column-name {
     max-width: mixins.rem(220);
 

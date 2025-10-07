@@ -92,6 +92,7 @@ export class QrCardTableComponent implements OnInit, AfterViewInit {
   protected readonly selectors = createSelectMap({
     configState: AppState.getConfigState$,
     isQrCardListLoading: QrCardsState.isQrCardListLoading$,
+    isQrCardListLoadErr: QrCardsState.isQrCardListLoadErr$,
     qrCardList: QrCardsState.getQrCardList$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
     enabledQrTableColumns: AppState.getEnabledQrTableColumns$,

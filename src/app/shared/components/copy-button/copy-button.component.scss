@@ -1,0 +1,10 @@
+:host {
+  position: relative;
+
+  .tooltip-trigger {
+    top: 0;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+}

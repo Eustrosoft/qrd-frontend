@@ -24,6 +24,9 @@ import { CollapsibleListDirective } from '@shared/directives/collapsible-list.di
 import { AttrListItemComponent } from '@shared/components/attr-list-item/attr-list-item.component';
 import { FileDto } from '@api/files/files-api.models';
 import { Option } from '@shared/shared.models';
+import { AppState } from '@app/state/app.state';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { CopyButtonComponent } from '@shared/components/copy-button/copy-button.component';
 
 @Component({
   selector: 'qr-card-main',
@@ -38,12 +41,13 @@ import { Option } from '@shared/shared.models';
     FileListItemComponent,
     DatePipe,
     BytesToSizePipe,
-    ToHexPipe,
     FallbackPipe,
     CollapsibleContainerComponent,
     CollapsibleListItemDirective,
     CollapsibleListDirective,
     AttrListItemComponent,
+    UiFlexBlockComponent,
+    CopyButtonComponent,
   ],
   templateUrl: './qr-card-main.component.html',
   styleUrl: './qr-card-main.component.scss',
@@ -51,6 +55,7 @@ import { Option } from '@shared/shared.models';
 })
 export class QrCardMainComponent {
   private readonly uiSidenavService = inject(UiSidenavService);
+  private readonly toHexPipe = inject(ToHexPipe);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
 
@@ -59,9 +64,15 @@ export class QrCardMainComponent {
   protected readonly AppRoutes = AppRoutes;
 
   protected readonly selectors = createSelectMap({
+    configState: AppState.getConfigState$,
     qrCard: QrCardsState.getQrCard$,
     qrCardPreviewUrl: QrCardsState.getQrCardPreviewUrl$,
   });
+
+  protected readonly qrCardLink = computed<string>(
+    () =>
+      `${this.selectors.configState().config.qrdConf?.qrUri}?q=${this.toHexPipe.transform(this.selectors.qrCard()?.code)}`,
+  );
 
   protected readonly fileList = computed<FileDto[]>(() => {
     const qrCard = this.selectors.qrCard();

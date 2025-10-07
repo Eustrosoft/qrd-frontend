@@ -1,6 +1,13 @@
-import { inject, Injectable, TemplateRef } from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarDismiss } from '@angular/material/snack-bar';
-import { concatMap, Observable, Subject } from 'rxjs';
+import { EmbeddedViewRef, inject, Injectable, TemplateRef } from '@angular/core';
+import {
+  MatSnackBar,
+  MatSnackBarConfig,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarRef,
+  MatSnackBarVerticalPosition,
+  TextOnlySnackBar,
+} from '@angular/material/snack-bar';
+import { concatMap, Subject } from 'rxjs';
 import { ComponentType } from '@angular/cdk/portal';
 import { PxToRemPipe } from '@app/shared/pipe/px-to-rem.pipe';
 import { DEFAULT_SNACKBAR_DURATION, DEFAULT_SUCCESS_SNACKBAR_DURATION } from '@core/core.constants';
@@ -21,7 +28,7 @@ export class SnackbarService {
   private readonly snackBarQueue = new Subject<SnackbarTask>();
 
   constructor() {
-    this.snackBarQueue.pipe(concatMap((snackbarData) => this.processTask(snackbarData))).subscribe();
+    this.snackBarQueue.pipe(concatMap((snackbarData) => this.processTask(snackbarData).afterDismissed())).subscribe();
   }
 
   public success(
@@ -41,6 +48,30 @@ export class SnackbarService {
         duration,
         panelClass: 'snackbar-panel',
       },
+    });
+  }
+
+  public showOnce(
+    message: string = NotificationSnackbarLocalization.info,
+    action?: string,
+    icon: string = 'info',
+    iconClass: string = 'icon-secondary',
+    horizontalPosition?: MatSnackBarHorizontalPosition,
+    verticalPosition?: MatSnackBarVerticalPosition,
+    duration: number = DEFAULT_SNACKBAR_DURATION,
+  ): MatSnackBarRef<NotificationSnackbarComponent> {
+    return this.showComponentSnackbar(NotificationSnackbarComponent, {
+      data: {
+        title: message,
+        icon,
+        iconClass,
+        titleFontSize: this.pxToRemPipe.transform('16px'),
+        action,
+      },
+      duration,
+      panelClass: 'snackbar-panel',
+      horizontalPosition,
+      verticalPosition,
     });
   }
 
@@ -116,7 +147,7 @@ export class SnackbarService {
     this.snackBarQueue.next(task);
   }
 
-  private processTask(task: SnackbarTask): Observable<MatSnackBarDismiss> {
+  private processTask(task: SnackbarTask): MatSnackBarRef<unknown> {
     switch (task.type) {
       case 'text':
         return this.showTextSnackbar(task.message, task.action, task.config);
@@ -133,21 +164,18 @@ export class SnackbarService {
     message: string,
     action?: string,
     config?: MatSnackBarConfig,
-  ): Observable<MatSnackBarDismiss> {
-    return this.matSnackBar.open(message, action, config).afterDismissed();
+  ): MatSnackBarRef<TextOnlySnackBar> {
+    return this.matSnackBar.open(message, action, config);
   }
 
-  private showComponentSnackbar<T, D>(
-    component: ComponentType<T>,
-    config?: MatSnackBarConfig<D>,
-  ): Observable<MatSnackBarDismiss> {
-    return this.matSnackBar.openFromComponent<T, D>(component, config).afterDismissed();
+  private showComponentSnackbar<T, D>(component: ComponentType<T>, config?: MatSnackBarConfig<D>): MatSnackBarRef<T> {
+    return this.matSnackBar.openFromComponent<T, D>(component, config);
   }
 
   private showTemplateSnackbar<T>(
     template: TemplateRef<T>,
     config?: MatSnackBarConfig,
-  ): Observable<MatSnackBarDismiss> {
-    return this.matSnackBar.openFromTemplate(template, config).afterDismissed();
+  ): MatSnackBarRef<EmbeddedViewRef<T>> {
+    return this.matSnackBar.openFromTemplate(template, config);
   }
 }

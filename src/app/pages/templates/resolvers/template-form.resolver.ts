@@ -38,7 +38,7 @@ export const templateFormResolver = (): ResolveFn<Observable<TemplateFormGroup |
         map(
           () =>
             new RedirectCommand(
-              router.getCurrentNavigation()?.previousNavigation?.extractedUrl ??
+              router.currentNavigation()?.previousNavigation?.extractedUrl ??
                 router.createUrlTree([AppRoutes.templates]),
             ),
         ),

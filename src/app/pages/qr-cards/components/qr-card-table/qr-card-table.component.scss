@@ -3,6 +3,8 @@
 @use 'sass:map';
 
 :host {
+  display: grid;
+
   .mat-column-code_picture /* stylelint-disable-line */ {
     min-width: mixins.rem(128);
   }

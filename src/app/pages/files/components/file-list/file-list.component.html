@@ -38,7 +38,23 @@
       </ng-container>
     </view-list-item>
   } @empty {
-    <p>{{ SharedLocalization.emptyList }}</p>
+    <ui-alert
+      [type]="selectors.isFileListLoadErr() ? 'danger' : 'info'"
+      [icon]="selectors.isFileListLoadErr() ? 'error' : 'info'"
+      [title]="selectors.isFileListLoadErr() ? ErrorsLocalization.errorFetchingCardList : SharedLocalization.emptyList"
+      [isClosable]="false"
+    >
+      <ui-flex-block>
+        <button
+          (click)="actions.fetchFileList(destroyRef)"
+          class="button-lg"
+          [class.button-error]="selectors.isFileListLoadErr()"
+          mat-flat-button
+        >
+          {{ SharedLocalization.refresh }}
+        </button>
+      </ui-flex-block>
+    </ui-alert>
   }
 } @else {
   @for (sk of selectors.fileListSkeletonLoaders(); track sk) {

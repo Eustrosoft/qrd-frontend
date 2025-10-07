@@ -1,4 +1,4 @@
-import { ApplicationConfig, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, isDevMode, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
 import {
   PreloadAllModules,
   provideRouter,
@@ -28,6 +28,8 @@ import { LocationStrategy } from '@angular/common';
 import { CustomLocationStrategy } from '@cdk/classes/custom-location-strategy.class';
 import { Iso8601DateFormatPipe } from '@shared/pipe/iso8601-date-format.pipe';
 import { provideBaseHref } from '@core/providers/base-href.provider';
+import { provideServiceWorker } from '@angular/service-worker';
+import { UpdateService } from '@shared/service/update.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -67,5 +69,10 @@ export const appConfig: ApplicationConfig = {
     { provide: TitleStrategy, useClass: RouteTitleStrategy },
     provideBaseHref(),
     { provide: LocationStrategy, useClass: CustomLocationStrategy },
+    UpdateService,
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
 };

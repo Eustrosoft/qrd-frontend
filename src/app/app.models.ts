@@ -21,6 +21,7 @@ export type AppConfig = {
     oldAppUri?: ConfigUri;
     qrgenUri?: string;
     qrUri?: string;
+    pollInterval?: number;
     langList?: ConfigLocaleItem[];
   };
 };

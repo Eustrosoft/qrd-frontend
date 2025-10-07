@@ -5,6 +5,7 @@
     "oldAppUri": { "uri": "/lk/", "disabled": false },
     "qrgenUri": "https://qrgen.qxyz.ru/generate",
     "qrUri": "https://qr.qxyz.ru",
+    "pollInterval": 21600000,
     "langList": [
       {
         "lang": "en-US",

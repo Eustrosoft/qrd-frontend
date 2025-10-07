@@ -86,6 +86,7 @@ export class TemplateTableComponent implements OnInit, AfterViewInit {
 
   protected readonly selectors = createSelectMap({
     isTemplateListLoading: TemplatesState.isTemplateListLoading$,
+    isTemplateListLoadErr: TemplatesState.isTemplateListLoadErr$,
     templateList: TemplatesState.getTemplateList$,
     selectedTemplateList: TemplatesState.getSelectedTemplateList$,
   });

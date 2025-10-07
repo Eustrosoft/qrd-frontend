@@ -36,7 +36,25 @@
       </ng-container>
     </view-list-item>
   } @empty {
-    <p>{{ SharedLocalization.emptyList }}</p>
+    <ui-alert
+      [type]="selectors.isTemplateListLoadErr() ? 'danger' : 'info'"
+      [icon]="selectors.isTemplateListLoadErr() ? 'error' : 'info'"
+      [title]="
+        selectors.isTemplateListLoadErr() ? ErrorsLocalization.errorFetchingCardList : SharedLocalization.emptyList
+      "
+      [isClosable]="false"
+    >
+      <ui-flex-block>
+        <button
+          (click)="actions.fetchTemplateList(destroyRef)"
+          class="button-lg"
+          [class.button-error]="selectors.isTemplateListLoadErr()"
+          mat-flat-button
+        >
+          {{ SharedLocalization.refresh }}
+        </button>
+      </ui-flex-block>
+    </ui-alert>
   }
 } @else {
   @for (sk of selectors.templateListSkeletonLoaders(); track sk) {

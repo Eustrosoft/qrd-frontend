@@ -73,5 +73,11 @@
     <ui-skeleton height="220" />
   }
 } @else {
-  <banner [title]="ErrorsLocalization.errorFetchingTemplate" />
+  <ui-alert type="danger" icon="error" [title]="ErrorsLocalization.errorFetchingTemplate" [isClosable]="false">
+    <ui-flex-block>
+      <button (click)="ngOnInit()" class="button-lg button-error" mat-flat-button>
+        {{ SharedLocalization.refresh }}
+      </button>
+    </ui-flex-block>
+  </ui-alert>
 }

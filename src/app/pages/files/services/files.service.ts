@@ -1,5 +1,5 @@
 import { DOCUMENT, inject, Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   FileBlobUploadRequest,
@@ -8,6 +8,7 @@ import {
   FileUrlUploadRequest,
 } from '@api/files/files-api.models';
 import { EntityDto, UsagesQueryParams } from '@api/api.models';
+import { SUPPRESS_HTTP_ERROR_INTERCEPTOR } from '@modules/error/error.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -17,11 +18,15 @@ export class FilesService {
   private readonly http = inject(HttpClient);
 
   public getFileList(): Observable<FileDto[]> {
-    return this.http.get<FileDto[]>('/qrCodeDemo/v1/api/secured/files');
+    return this.http.get<FileDto[]>('/qrCodeDemo/v1/api/secured/files', {
+      context: new HttpContext().set(SUPPRESS_HTTP_ERROR_INTERCEPTOR, true),
+    });
   }
 
   public getFile(id: number): Observable<FileDto> {
-    return this.http.get<FileDto>(`/qrCodeDemo/v1/api/secured/files/${id}`);
+    return this.http.get<FileDto>(`/qrCodeDemo/v1/api/secured/files/${id}`, {
+      context: new HttpContext().set(SUPPRESS_HTTP_ERROR_INTERCEPTOR, true),
+    });
   }
 
   public uploadBlobFile(formData: FileBlobUploadRequest): Observable<FileBlobUploadResponse> {
@@ -80,6 +85,9 @@ export class FilesService {
 
   public getFileUsages(id: number, type: UsagesQueryParams): Observable<EntityDto[]> {
     const params = new HttpParams({ fromObject: type });
-    return this.http.get<EntityDto[]>(`/qrCodeDemo/v1/api/secured/files/${id}/related`, { params });
+    return this.http.get<EntityDto[]>(`/qrCodeDemo/v1/api/secured/files/${id}/related`, {
+      params,
+      context: new HttpContext().set(SUPPRESS_HTTP_ERROR_INTERCEPTOR, true),
+    });
   }
 }

@@ -10,5 +10,5 @@ export const loginGuard: CanActivateFn = (): boolean | UrlTree => {
     return true;
   }
 
-  return router.getCurrentNavigation()?.previousNavigation?.extractedUrl ?? router.createUrlTree(['/']);
+  return router.currentNavigation()?.previousNavigation?.extractedUrl ?? router.createUrlTree(['/']);
 };

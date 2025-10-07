@@ -13,5 +13,10 @@
     padding: var(--main-padding-vertical) var(--main-padding-horizontal);
     max-width: mixins.rem(1280);
     min-height: calc(100svh - 72px);
+    transition: padding-top 0.3s ease-in-out;
+
+    &.is-offline {
+      padding-top: calc(var(--main-padding-vertical) + 24px);
+    }
   }
 }

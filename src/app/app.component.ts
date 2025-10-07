@@ -11,6 +11,10 @@ import { HideNgVersionDirective } from '@shared/directives/hide-ng-version.direc
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { UiBottomMenuComponent } from '@ui/ui-bottom-menu/ui-bottom-menu.component';
 import { UiBottomMenuService } from '@ui/ui-bottom-menu/ui-bottom-menu.service';
+import { UpdateService } from '@shared/service/update.service';
+import { NetworkStatusBannerComponent } from '@shared/components/network-status-banner/network-status-banner.component';
+import { IS_OFFLINE } from '@cdk/tokens/is-offline.token';
+import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
 
 @Component({
   selector: 'app-root',
@@ -21,13 +25,22 @@ import { UiBottomMenuService } from '@ui/ui-bottom-menu/ui-bottom-menu.service';
     QrdFooterComponent,
     UiSkeletonComponent,
     UiBottomMenuComponent,
+    NetworkStatusBannerComponent,
+    AnimatedIfDirective,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [HideNgVersionDirective],
+  host: {
+    '[class.is-offline]': 'isOffline()',
+  },
 })
 export class AppComponent implements AfterViewInit {
+  constructor(private readonly updateService: UpdateService) {}
+
+  protected readonly isOffline = inject(IS_OFFLINE);
+
   private readonly prefersDark = inject(PREFERS_DARK_TOKEN);
   private readonly uiBottomMenuService = inject(UiBottomMenuService);
 

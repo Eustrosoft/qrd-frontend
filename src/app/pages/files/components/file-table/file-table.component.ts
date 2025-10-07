@@ -91,7 +91,8 @@ export class FileTableComponent implements OnInit, AfterViewInit {
   protected readonly AppRoutes = AppRoutes;
 
   protected readonly selectors = createSelectMap({
-    isFileListLoading$: FilesState.isFileListLoading$,
+    isFileListLoading: FilesState.isFileListLoading$,
+    isFileListLoadErr: FilesState.isFileListLoadErr$,
     fileList: FilesState.getFileList$,
     selectedFileList: FilesState.getSelectedFileList$,
   });

@@ -10,25 +10,48 @@
     </ui-grid-block>
   </ng-container>
 </card-container>
+<card-container [hideHeading]="true">
+  <ng-container content>
+    <collapsible-container>
+      <ui-grid-block collapsibleList gridTemplateRows="auto" gridTemplateColumns="stretch">
+        @for (field of selectors.template()?.fields; track field.id) {
+          <attr-list-item
+            collapsibleListItem
+            [caption]="field.caption"
+            [placeholder]="field.placeholder | fallback: SharedLocalization.empty"
+            [type]="field.fieldType"
+            [isPublic]="field.isPublic"
+            [isStatic]="field.isStatic"
+          />
+        } @empty {
+          {{ SharedLocalization.noAttrs }}
+        }
+      </ui-grid-block>
+    </collapsible-container>
+  </ng-container>
+</card-container>
 <card-container>
   <ng-container heading>
     <h1>{{ RouteTitles.files }}</h1>
   </ng-container>
   <ng-container content>
-    <ui-flex-block flexDirection="column">
-      @for (file of selectors.template()?.files; track file.id) {
-        <file-list-item
-          [fileLink]="`/files/${file.id}`"
-          [fileStorageType]="file.fileStorageType"
-          [name]="file?.name ?? ''"
-          [fileSize]="file.fileSize | bytesToSize"
-          [isPublic]="file.isPublic"
-          [isActive]="file.isActive"
-          [updated]="(file.updated | date: 'short') ?? ''"
-        />
-      } @empty {
-        {{ SharedLocalization.noFiles }}
-      }
-    </ui-flex-block>
+    <collapsible-container>
+      <ui-grid-block collapsibleList gridTemplateRows="auto" gridTemplateColumns="stretch">
+        @for (file of selectors.template()?.files; track file.id) {
+          <file-list-item
+            collapsibleListItem
+            [fileLink]="`/files/${file.id}`"
+            [fileStorageType]="file.fileStorageType"
+            [name]="file?.name ?? ''"
+            [fileSize]="file.fileSize | bytesToSize"
+            [isPublic]="file.isPublic"
+            [isActive]="file.isActive"
+            [updated]="(file.updated | date: 'short') ?? ''"
+          />
+        } @empty {
+          {{ SharedLocalization.noFiles }}
+        }
+      </ui-grid-block>
+    </collapsible-container>
   </ng-container>
 </card-container>

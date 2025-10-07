@@ -43,6 +43,7 @@ import { QrCardFormFactoryService } from '@app/pages/qr-cards/services/qr-card-f
 export interface QrCardsStateModel {
   searchValue: string;
   isQrCardListLoading: boolean;
+  isQrCardListLoadErr: boolean;
   qrCardListSkeletonLoaders: number;
   qrCardList: QRDto[];
   selectedQrCardList: number[];
@@ -67,6 +68,7 @@ export interface QrCardsStateModel {
 const defaults: QrCardsStateModel = {
   searchValue: '',
   isQrCardListLoading: false,
+  isQrCardListLoadErr: false,
   qrCardListSkeletonLoaders: DEFAULT_ITEMS_PER_PAGE,
   qrCardList: [],
   selectedQrCardList: [],
@@ -114,6 +116,11 @@ export class QrCardsState {
   @Selector()
   public static isQrCardListLoading$({ isQrCardListLoading }: QrCardsStateModel): boolean {
     return isQrCardListLoading;
+  }
+
+  @Selector()
+  public static isQrCardListLoadErr$({ isQrCardListLoadErr }: QrCardsStateModel): boolean {
+    return isQrCardListLoadErr;
   }
 
   @Selector()
@@ -200,7 +207,7 @@ export class QrCardsState {
 
   @Action(FetchQrCardList)
   public fetchQrCardList({ setState }: StateContext<QrCardsStateModel>): Observable<QRDto[]> {
-    setState(patch({ isQrCardListLoading: true }));
+    setState(patch({ isQrCardListLoading: true, isQrCardListLoadErr: false }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.qrCardsService.getQrCardList()),
       tap({
@@ -217,8 +224,7 @@ export class QrCardsState {
         },
       }),
       catchError((err) => {
-        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetchList);
-        setState(patch({ isQrCardListLoading: false }));
+        setState(patch({ isQrCardListLoading: false, isQrCardListLoadErr: true, qrCardList: [] }));
         return throwError(() => err);
       }),
     );

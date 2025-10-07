@@ -45,6 +45,7 @@ import { EntityDto } from '@api/api.models';
 export interface FilesStateModel {
   searchValue: string;
   isFileListLoading: boolean;
+  isFileListLoadErr: boolean;
   fileListSkeletonLoaders: number;
   fileList: FileDto[];
   selectedFileList: number[];
@@ -61,6 +62,7 @@ export interface FilesStateModel {
 const defaults: FilesStateModel = {
   searchValue: '',
   isFileListLoading: false,
+  isFileListLoadErr: false,
   fileListSkeletonLoaders: DEFAULT_ITEMS_PER_PAGE,
   fileList: [],
   selectedFileList: [],
@@ -98,6 +100,11 @@ export class FilesState {
   @Selector()
   public static isFileListLoading$({ isFileListLoading }: FilesStateModel): boolean {
     return isFileListLoading;
+  }
+
+  @Selector()
+  public static isFileListLoadErr$({ isFileListLoadErr }: FilesStateModel): boolean {
+    return isFileListLoadErr;
   }
 
   @Selector()
@@ -160,7 +167,7 @@ export class FilesState {
     { setState }: StateContext<FilesStateModel>,
     { destroyRef }: FetchFileList,
   ): Observable<FileDto[]> {
-    setState(patch({ isFileListLoading: true }));
+    setState(patch({ isFileListLoading: true, isFileListLoadErr: false }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.filesService.getFileList()),
       tap({
@@ -170,8 +177,7 @@ export class FilesState {
       }),
       takeUntilDestroyed(destroyRef),
       catchError((err) => {
-        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetchList);
-        setState(patch({ isFileListLoading: false }));
+        setState(patch({ isFileListLoading: false, isFileListLoadErr: true, fileList: [] }));
         return throwError(() => err);
       }),
     );
@@ -221,7 +227,7 @@ export class FilesState {
       }),
       takeUntilDestroyed(destroyRef),
       catchError((err) => {
-        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetch);
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnFetchRelated);
         setState(patch({ isFileUsagesLoading: false, isFileLoadErr: true }));
         return throwError(() => err);
       }),
