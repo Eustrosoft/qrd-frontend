@@ -1,8 +1,10 @@
 <table-container
   matSort
   #sort="matSort"
-  [isLoading]="selectors.isFileListLoading$()"
+  [isLoading]="selectors.isFileListLoading()"
+  [isLoadErr]="selectors.isFileListLoadErr()"
   (selectionChanged)="actions.setSelectedFiles($event)"
+  (refresh)="actions.fetchFileList(destroyRef)"
 >
   <ng-container matColumnDef="name">
     <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.name }}</th>

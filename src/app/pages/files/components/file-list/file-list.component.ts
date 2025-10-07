@@ -20,6 +20,9 @@ import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { AppRoutes } from '@app/app.constants';
 import { FileDto } from '@api/files/files-api.models';
 import { RangeSelectorService } from '@shared/service/range-selector.service';
+import { MatButton } from '@angular/material/button';
+import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
+import { ErrorsLocalization } from '@modules/error/error.constants';
 
 @Component({
   selector: 'file-list',
@@ -35,6 +38,8 @@ import { RangeSelectorService } from '@shared/service/range-selector.service';
     BytesToSizePipe,
     DatePipe,
     FallbackPipe,
+    MatButton,
+    UiAlertComponent,
   ],
   templateUrl: './file-list.component.html',
   styleUrl: './file-list.component.scss',
@@ -47,6 +52,7 @@ export class FileListComponent implements OnInit {
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly selectors = createSelectMap({
     isFileListLoading: FilesState.isFileListLoading$,
+    isFileListLoadErr: FilesState.isFileListLoadErr$,
     fileListSkeletonLoaders: FilesState.getFileListSkeletonLoaders$,
     fileList: FilesState.getFileList$,
     selectedFileList: FilesState.getSelectedFileList$,
@@ -82,6 +88,7 @@ export class FileListComponent implements OnInit {
   });
 
   protected readonly AppRoutes = AppRoutes;
+  protected readonly ErrorsLocalization = ErrorsLocalization;
   protected readonly SharedLocalization = SharedLocalization;
 
   public ngOnInit(): void {

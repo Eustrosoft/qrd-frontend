@@ -3,7 +3,9 @@
   matSort
   #sort="matSort"
   [isLoading]="selectors.isQrCardListLoading()"
+  [isLoadErr]="selectors.isQrCardListLoadErr()"
   (selectionChanged)="actions.setSelectedQrCards($event)"
+  (refresh)="actions.fetchQrCardList(destroyRef)"
 >
   @for (col of selectors.qrTableColumns(); track col.fieldName) {
     <ng-container [matColumnDef]="col.fieldName">

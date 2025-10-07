@@ -15,12 +15,13 @@ import { AppRoutes } from '@app/app.constants';
 import { DeleteTemplates, FetchTemplate, FetchTemplateUsages } from '@app/pages/templates/state/templates.actions';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
-import { BannerComponent } from '@shared/components/banner/banner.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { Title } from '@angular/platform-browser';
 import { MatMenuItem } from '@angular/material/menu';
 import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.component';
 import { MatIcon } from '@angular/material/icon';
+import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 
 @Component({
   selector: 'template-view',
@@ -37,10 +38,11 @@ import { MatIcon } from '@angular/material/icon';
     UiSkeletonComponent,
     UpperCasePipe,
     RouterLink,
-    BannerComponent,
     MatIcon,
     MatMenuItem,
     MoreMenuComponent,
+    UiAlertComponent,
+    UiFlexBlockComponent,
   ],
 
   templateUrl: './template-view.component.html',

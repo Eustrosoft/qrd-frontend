@@ -20,8 +20,20 @@
   <ng-content />
   <tr *matNoDataRow>
     @if (!isLoading()) {
-      <td style="padding: 0 16px" colspan="2">
-        <h3>{{ SharedLocalization.emptyList }}</h3>
+      <td colspan="100%">
+        <ui-alert
+          [type]="isLoadErr() ? 'danger' : 'info'"
+          [icon]="isLoadErr() ? 'error' : 'info'"
+          [title]="isLoadErr() ? ErrorsLocalization.errorFetchingCardList : SharedLocalization.emptyList"
+          [isClosable]="false"
+          borderRadius="0"
+        >
+          <ui-flex-block>
+            <button (click)="refresh.emit()" class="button-lg" [class.button-error]="isLoadErr()" mat-flat-button>
+              {{ SharedLocalization.refresh }}
+            </button>
+          </ui-flex-block>
+        </ui-alert>
       </td>
     }
   </tr>

@@ -89,6 +89,7 @@ export const SharedLocalization = {
   showMore: $localize`:@@shared.showMore:Show more`,
   showLess: $localize`:@@shared.showLess:Show less`,
   goBack: $localize`:@@shared.goBack:Go back`,
+  refresh: $localize`:@@shared.refresh:Refresh`,
 } as const;
 
 export const SizeUnitsLocalization = {

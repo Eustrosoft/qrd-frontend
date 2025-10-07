@@ -18,6 +18,7 @@ export const ErrorsLocalization = {
   errorAddingFileUrl: $localize`:@@errors.errorAddingFileUrl:Error adding file URL`,
   errorFetchingFileList: $localize`:@@errors.errorFetchingFileList:Error while fetching file list`,
   errorFetchingFile: $localize`:@@errors.errorFetchingFile:Error while fetching file`,
+  errorFetchingCardList: $localize`:@@errors.errorFetchingCardList:Error while fetching card list`,
   errorFetchingCard: $localize`:@@errors.errorFetchingCard:Error while fetching card`,
   errorFetchingTemplate: $localize`:@@errors.errorFetchingTemplate:Error while fetching template`,
   errorFetchingTemplateList: $localize`:@@errors.errorFetchingTemplateList:Error while fetching template list`,

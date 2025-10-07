@@ -3,7 +3,9 @@
   matSort
   #sort="matSort"
   [isLoading]="selectors.isTemplateListLoading()"
+  [isLoadErr]="selectors.isTemplateListLoadErr()"
   (selectionChanged)="actions.setSelectedTemplates($event)"
+  (refresh)="actions.fetchTemplateList(destroyRef)"
 >
   <ng-container matColumnDef="name">
     <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ SharedLocalization.name }}</th>

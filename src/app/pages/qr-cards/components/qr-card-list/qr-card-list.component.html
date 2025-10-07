@@ -58,7 +58,25 @@
       </ng-container>
     </view-list-item>
   } @empty {
-    <p>{{ SharedLocalization.emptyList }}</p>
+    <ui-alert
+      [type]="selectors.isQrCardListLoadErr() ? 'danger' : 'info'"
+      [icon]="selectors.isQrCardListLoadErr() ? 'error' : 'info'"
+      [title]="
+        selectors.isQrCardListLoadErr() ? ErrorsLocalization.errorFetchingCardList : SharedLocalization.emptyList
+      "
+      [isClosable]="false"
+    >
+      <ui-flex-block>
+        <button
+          (click)="actions.fetchQrCards(destroyRef)"
+          class="button-lg"
+          [class.button-error]="selectors.isQrCardListLoadErr()"
+          mat-flat-button
+        >
+          {{ SharedLocalization.refresh }}
+        </button>
+      </ui-flex-block>
+    </ui-alert>
   }
 } @else {
   @for (sk of selectors.qrCardListSkeletonLoaders(); track sk) {

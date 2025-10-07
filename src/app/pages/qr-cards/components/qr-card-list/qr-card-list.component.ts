@@ -24,6 +24,10 @@ import { AppRoutes } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
 import { QrRendererComponent } from '@shared/components/qr-renderer/qr-renderer.component';
+import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
+import { MatButton } from '@angular/material/button';
+import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { ErrorsLocalization } from '@modules/error/error.constants';
 
 @Component({
   selector: 'qr-card-list',
@@ -37,6 +41,9 @@ import { QrRendererComponent } from '@shared/components/qr-renderer/qr-renderer.
     RouterLink,
     FallbackPipe,
     QrRendererComponent,
+    UiAlertComponent,
+    MatButton,
+    UiFlexBlockComponent,
   ],
   providers: [RangeSelectorService],
   templateUrl: './qr-card-list.component.html',
@@ -53,12 +60,14 @@ export class QrCardListComponent implements OnInit {
   protected readonly rangeSelectorService = inject(RangeSelectorService);
   protected readonly qrCardsService = inject(QrCardsService);
   protected readonly QrCardsLocalization = QrCardsLocalization;
+  protected readonly ErrorsLocalization = ErrorsLocalization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly AppRoutes = AppRoutes;
 
   protected readonly selectors = createSelectMap({
     configState: AppState.getConfigState$,
     isQrCardListLoading: QrCardsState.isQrCardListLoading$,
+    isQrCardListLoadErr: QrCardsState.isQrCardListLoadErr$,
     qrCardListSkeletonLoaders: QrCardsState.getQrCardListSkeletonLoaders$,
     qrCardList: QrCardsState.getQrCardList$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,

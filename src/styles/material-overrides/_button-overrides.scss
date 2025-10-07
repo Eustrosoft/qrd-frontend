@@ -16,6 +16,14 @@
   );
 }
 
+.button-error {
+  @include mat.button-overrides(
+    (
+      filled-container-color: var(--mat-sys-error),
+    )
+  );
+}
+
 .button-md {
   @include mat.button-overrides(
     (

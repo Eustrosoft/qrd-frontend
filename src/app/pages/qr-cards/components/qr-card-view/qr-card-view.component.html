@@ -37,7 +37,7 @@
               </div>
             }
             <a
-              [href]="`${this.selectors.configState().config.qrdConf?.qrUri}?q=${this.qrCardCode()}`"
+              [href]="`${selectors.configState().config.qrdConf?.qrUri}?q=${qrCardCode()}`"
               target="_blank"
               rel="noopener noreferrer"
               mat-menu-item
@@ -45,7 +45,7 @@
               <mat-icon>open_in_new</mat-icon>
               {{ QrCardsLocalization.viewCard }}
             </a>
-            <button (click)="qrCardsService.openPrint(this.qrCardCode())" mat-menu-item>
+            <button (click)="qrCardsService.openPrint(qrCardCode())" mat-menu-item>
               <mat-icon>print</mat-icon>
               {{ SharedLocalization.print }}
             </button>
@@ -62,7 +62,7 @@
           } @else {
             <ui-skeleton height="40" width="110" />
           }
-          <button (click)="qrCardsService.openPrint(this.qrCardCode())" class="button-md" mat-flat-button>
+          <button (click)="qrCardsService.openPrint(qrCardCode())" class="button-md" mat-flat-button>
             {{ SharedLocalization.print }}
           </button>
         }
@@ -76,5 +76,11 @@
     <ui-skeleton height="300" />
   }
 } @else {
-  <banner [title]="ErrorsLocalization.errorFetchingCard" />
+  <ui-alert type="danger" icon="error" [title]="ErrorsLocalization.errorFetchingCard" [isClosable]="false">
+    <ui-flex-block>
+      <button (click)="ngOnInit()" class="button-lg button-error" mat-flat-button>
+        {{ SharedLocalization.refresh }}
+      </button>
+    </ui-flex-block>
+  </ui-alert>
 }
