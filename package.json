@@ -3,7 +3,7 @@
   "version": "1.18.1",
   "scripts": {
     "start": "npx eslint ./src && ng serve --configuration=development",
-    "start:http-server": "npm run build:preproduction && http-server -p 8080 -c-1 dist -P https://qrdemo.dev40.qxyz.ru",
+    "start:http-server": "npm run build:preproduction && http-server -p 8080 -c-1 dist -P https://qrdemo.dev40.qxyz.ru -b",
     "build:production": "ng build --configuration production && npm run compress",
     "build:preproduction": "ng build --configuration preproduction && npm run compress",
     "build:stats-json": "ng build --configuration=production --stats-json",

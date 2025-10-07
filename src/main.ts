@@ -8,13 +8,14 @@ import localeBgExtra from '@angular/common/locales/extra/bg';
 import { LocalStorageService } from '@shared/service/local-storage.service';
 import { DOCUMENT, Injector } from '@angular/core';
 import { LocaleLoaderService } from '@shared/service/locale-loader.service';
-import { DEFAULT_LOCALE, LOCALE_KEY } from '@app/app.constants';
+import { LOCALE_KEY } from '@app/app.constants';
 import { firstValueFrom } from 'rxjs';
 import { loadTranslations } from '@angular/localize';
 import { Locale } from '@app/app.models';
 import { HttpClient } from '@angular/common/http';
 import { httpClient } from '@cdk/factories/before-bootstrap-http.factory';
 import { provideBaseHref } from '@core/providers/base-href.provider';
+import { WINDOW } from '@cdk/tokens/window.token';
 
 registerLocaleData(localeRu, 'ru-RU', localeRuExtra);
 registerLocaleData(localeEn, 'en-US', localeEnExtra);
@@ -25,6 +26,7 @@ async function initApp(): Promise<void> {
     providers: [
       { provide: DOCUMENT, useValue: document },
       { provide: HttpClient, useValue: httpClient },
+      { provide: WINDOW, useValue: window },
       LocalStorageService,
       LocaleLoaderService,
       provideBaseHref(),
@@ -35,7 +37,7 @@ async function initApp(): Promise<void> {
   const localeLoaderService = injector.get(LocaleLoaderService);
 
   // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  const currentLocale = localStorageService.get<Locale>(LOCALE_KEY) || DEFAULT_LOCALE;
+  const currentLocale = localStorageService.get<Locale>(LOCALE_KEY) || localeLoaderService.getBrowserLang();
   const { translations } = await firstValueFrom(localeLoaderService.fetchLocale(currentLocale));
   loadTranslations(translations);
 
