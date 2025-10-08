@@ -11,6 +11,7 @@ import { unsavedDataGuard } from '@shared/guards/unsaved-data.guard';
 import { QrCardCreateComponent } from '@app/pages/qr-cards/components/qr-card-create/qr-card-create.component';
 import { QrCardListComponent } from '@app/pages/qr-cards/components/qr-card-list/qr-card-list.component';
 import { QrCardTableComponent } from '@app/pages/qr-cards/components/qr-card-table/qr-card-table.component';
+import { viewModeRedirect } from '@shared/utils/functions/view-mode-redirect.function';
 
 export const qrCardsRoutes: Routes = [
   {
@@ -24,7 +25,7 @@ export const qrCardsRoutes: Routes = [
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: AppRoutes.list,
+            redirectTo: viewModeRedirect('qrCardListViewMode'),
           },
           {
             path: AppRoutes.list,

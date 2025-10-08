@@ -10,6 +10,7 @@ import { FileEditComponent } from '@app/pages/files/components/file-edit/file-ed
 import { unsavedDataGuard } from '@shared/guards/unsaved-data.guard';
 import { FileListComponent } from '@app/pages/files/components/file-list/file-list.component';
 import { FileTableComponent } from '@app/pages/files/components/file-table/file-table.component';
+import { viewModeRedirect } from '@shared/utils/functions/view-mode-redirect.function';
 
 export const filesRoutes: Routes = [
   {
@@ -23,7 +24,7 @@ export const filesRoutes: Routes = [
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: AppRoutes.list,
+            redirectTo: viewModeRedirect('fileListViewMode'),
           },
           {
             path: AppRoutes.list,

@@ -24,8 +24,8 @@ import { MatIcon } from '@angular/material/icon';
 export class ThemePickerOverlayComponent implements OnInit {
   public readonly closeClick = output<void>();
   protected readonly selectors = createSelectMap({
-    theme: AppState.getTheme$,
-    contrast: AppState.getContrast$,
+    theme: AppState.getSlices.theme,
+    contrast: AppState.getSlices.contrast,
     availableThemes: DictionaryRegistryState.getDictionary$<Option<string>>('themes'),
     availableContrast: DictionaryRegistryState.getDictionary$<Option<string>>('contrast'),
   });

@@ -12,12 +12,12 @@ import {
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
-import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
-import { SettingsForm } from '@app/pages/settings/settings.models';
+import { IS_SMALL, IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
+import { SettingsForm, ViewMode } from '@app/pages/settings/settings.models';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, map, merge, Observable, of, pairwise, startWith } from 'rxjs';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
-import { PatchSettings } from '@app/state/app.actions';
+import { PatchSettings, PatchViewModeSettings } from '@app/state/app.actions';
 import { AppState } from '@app/state/app.state';
 import { AuthState } from '@modules/auth/state/auth.state';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -42,13 +42,14 @@ import { RouterLink } from '@angular/router';
 import { AppRoutes } from '@app/app.constants';
 import { ColumnConfigOverlayComponent } from '@shared/components/column-config-overlay/column-config-overlay.component';
 import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
-import { BaseQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { OverlayContainerComponent } from '@shared/components/overlay-container/overlay-container.component';
 import { MobileToolbarComponent } from '@shared/components/mobile-toolbar/mobile-toolbar.component';
 import { UiBottomMenuService } from '@ui/ui-bottom-menu/ui-bottom-menu.service';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { Option } from '@shared/shared.models';
 
 @Component({
   selector: 'settings-edit',
@@ -79,6 +80,8 @@ import { MatTooltip } from '@angular/material/tooltip';
     MatIcon,
     MatTooltip,
     MatSuffix,
+    MatButtonToggleGroup,
+    MatButtonToggle,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './settings-edit.component.html',
@@ -89,15 +92,19 @@ export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanCo
   private readonly fb = inject(FormBuilder);
   private readonly actions$ = inject(Actions);
   private readonly uiBottomMenuService = inject(UiBottomMenuService);
-  protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
+  protected readonly isXSmall = inject(IS_XSMALL);
+  protected readonly isSmall = inject(IS_SMALL);
 
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly SettingsLocalization = SettingsLocalization;
   protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
   protected readonly RouteTitles = RouteTitles;
   protected readonly AppRoutes = AppRoutes;
-  protected readonly BaseQrTableCols = BaseQrTableCols;
+  protected readonly displayTypeList: Option<ViewMode>[] = [
+    { value: 'list', viewValue: SharedLocalization.list },
+    { value: 'table', viewValue: SharedLocalization.table },
+  ];
 
   protected readonly mobileToolbar = viewChild.required('mobileToolbar', { read: TemplateRef<unknown> });
 
@@ -105,6 +112,10 @@ export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanCo
     checkUploadSize: this.fb.nonNullable.control<boolean>(false),
     defaultQrPrintText: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_NAME_LENGTH)]),
     defaultQrPrintTextDown: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_NAME_LENGTH)]),
+    qrCardListViewMode: this.fb.nonNullable.control<ViewMode>('list'),
+    templateListViewMode: this.fb.nonNullable.control<ViewMode>('list'),
+    templateAttrsEditViewMode: this.fb.nonNullable.control<ViewMode>('table'),
+    fileListViewMode: this.fb.nonNullable.control<ViewMode>('list'),
   });
 
   public readonly formHasUnsavedChanges = toSignal(
@@ -125,20 +136,27 @@ export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanCo
 
   protected readonly selectors = createSelectMap({
     settingsState: AppState.getSettingsState$,
+    viewModeSettings: AppState.getSlices.viewModeSettings,
     allQrCols: AppState.getAllQrCols$,
     authInfo: AuthState.getAuthInfo$,
   });
   protected readonly actions = createDispatchMap({
     patchSettings: PatchSettings,
+    patchViewModeSettings: PatchViewModeSettings,
   });
 
   protected readonly settingsEff = effect(() => {
     const settingsState = this.selectors.settingsState();
+    const viewModeSettings = this.selectors.viewModeSettings();
     this.form.patchValue(
       {
         checkUploadSize: settingsState.settings.checkUploadSize,
         defaultQrPrintText: settingsState.settings.defaultQrPrintText,
         defaultQrPrintTextDown: settingsState.settings.defaultQrPrintTextDown,
+        qrCardListViewMode: viewModeSettings.qrCardListViewMode,
+        templateListViewMode: viewModeSettings.templateListViewMode,
+        templateAttrsEditViewMode: viewModeSettings.templateAttrsEditViewMode,
+        fileListViewMode: viewModeSettings.fileListViewMode,
       },
       { emitEvent: false },
     );
@@ -147,6 +165,16 @@ export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanCo
   protected readonly gridTemplateColumns = computed<string>(() => {
     if (this.isSmallScreen()) {
       return 'repeat(1, 1fr)';
+    }
+    return 'repeat(3, 1fr)';
+  });
+
+  protected readonly viewModeGridTemplateColumns = computed<string>(() => {
+    if (this.isXSmall()) {
+      return 'repeat(1, 1fr)';
+    }
+    if (this.isSmall()) {
+      return 'repeat(2, 1fr)';
     }
     return 'repeat(3, 1fr)';
   });
@@ -191,6 +219,15 @@ export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanCo
       return;
     }
 
+    const { qrCardListViewMode, templateListViewMode, templateAttrsEditViewMode, fileListViewMode } =
+      this.form.getRawValue();
+
+    this.actions.patchViewModeSettings({
+      qrCardListViewMode,
+      templateListViewMode,
+      templateAttrsEditViewMode,
+      fileListViewMode,
+    });
     this.actions.patchSettings(this.form.getRawValue());
   }
 }

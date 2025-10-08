@@ -44,7 +44,7 @@ export class AppComponent implements AfterViewInit {
   private readonly prefersDark = inject(PREFERS_DARK_TOKEN);
   private readonly uiBottomMenuService = inject(UiBottomMenuService);
 
-  private readonly theme = select(AppState.getTheme$);
+  private readonly theme = select(AppState.getSlices.theme);
   private readonly setTheme = dispatch(SetTheme);
 
   private readonly colorSchemeEffect = effect(() => {

@@ -10,7 +10,6 @@ import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { createSelectMap } from '@ngxs/store';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
-import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { AttrListItemComponent } from '@shared/components/attr-list-item/attr-list-item.component';
 import { CollapsibleContainerComponent } from '@shared/components/collapsible-container/collapsible-container.component';
 import { CollapsibleListDirective } from '@shared/directives/collapsible-list.directive';
@@ -26,7 +25,6 @@ import { CollapsibleListItemDirective } from '@shared/directives/collapsible-lis
     FallbackPipe,
     FileListItemComponent,
     UiGridBlockComponent,
-    UiFlexBlockComponent,
     AttrListItemComponent,
     CollapsibleContainerComponent,
     CollapsibleListDirective,

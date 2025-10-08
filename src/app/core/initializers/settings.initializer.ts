@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ActionCompletion, Actions, dispatch, ofActionCompleted } from '@ngxs/store';
 import { firstValueFrom, zip } from 'rxjs';
-import { FetchFields, FetchSettings } from '@app/state/app.actions';
+import { FetchFields, FetchSettings, FetchViewModeSettings } from '@app/state/app.actions';
 import { IS_AUTHENTICATED_KEY } from '@app/app.constants';
 import { LocalStorageService } from '@shared/service/local-storage.service';
 
@@ -16,6 +16,7 @@ export const settingsInitializer = ():
   if (isAuthenticated) {
     dispatch(FetchSettings)();
     dispatch(FetchFields)();
+    dispatch(FetchViewModeSettings)();
     return firstValueFrom(
       zip([actions.pipe(ofActionCompleted(FetchSettings)), actions.pipe(ofActionCompleted(FetchFields))]),
     );

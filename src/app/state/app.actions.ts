@@ -1,5 +1,6 @@
 import { Locale, Theme, ThemeContrast } from '@app/app.models';
 import { SettingsDto } from '@api/settings/settings-api.models';
+import { ViewModeSettings } from '@app/pages/settings/settings.models';
 
 export class SetTheme {
   public static readonly type = '[App] Set Theme';
@@ -21,9 +22,18 @@ export class FetchSettings {
   public static readonly type = '[App] Fetch Settings';
 }
 
+export class FetchViewModeSettings {
+  public static readonly type = '[App] Fetch View Mode Settings';
+}
+
 export class PatchSettings {
   public static readonly type = '[App] Patch Settings';
   constructor(readonly payload: Partial<SettingsDto['settings']>) {}
+}
+
+export class PatchViewModeSettings {
+  public static readonly type = '[App] Patch View Mode Settings';
+  constructor(readonly payload: ViewModeSettings) {}
 }
 
 export class FetchFields {

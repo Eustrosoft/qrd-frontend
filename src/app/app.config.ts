@@ -57,7 +57,7 @@ export const appConfig: ApplicationConfig = {
     provideMaterialConfig(),
     {
       provide: LOCALE_ID,
-      useFactory: (store: Store): string => store.selectSnapshot(AppState.getLocale$),
+      useFactory: (store: Store): string => store.selectSnapshot(AppState.getSlices.locale),
       deps: [Store],
     },
     provideNativeDateAdapter(),

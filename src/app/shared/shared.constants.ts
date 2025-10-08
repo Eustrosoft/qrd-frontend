@@ -3,6 +3,8 @@ import { FileStorageTypeItem } from '@shared/shared.models';
 import { AppConfig, AppLayoutConfig } from '@app/app.models';
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 import { FooterLocalization } from '@shared/components/qrd-footer/qrd-footer.constants';
+import { ViewMode } from '@app/pages/settings/settings.models';
+import { AppRoutes } from '@app/app.constants';
 
 export const SharedLocalization = {
   login: $localize`:@@shared.login:Login`,
@@ -220,3 +222,8 @@ export const DefaultLayoutConfig: AppLayoutConfig = {
     },
   },
 };
+
+export const viewModeRoutesMap = new Map<ViewMode, string>([
+  ['list', AppRoutes.list],
+  ['table', AppRoutes.table],
+]);

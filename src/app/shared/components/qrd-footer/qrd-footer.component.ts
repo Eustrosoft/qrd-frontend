@@ -46,7 +46,7 @@ export class QrdFooterComponent {
   private readonly isXSmall = inject(IS_XSMALL);
   private readonly isSmall = inject(IS_SMALL);
   protected readonly selectors = createSelectMap({
-    locale: AppState.getLocale$,
+    locale: AppState.getSlices.locale,
     configState: AppState.getConfigState$,
     layoutConfigState: AppState.getLayoutConfigState$,
   });

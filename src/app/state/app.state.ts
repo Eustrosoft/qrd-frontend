@@ -1,5 +1,14 @@
 import { DOCUMENT, inject, Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
+import {
+  Action,
+  createPickSelector,
+  createPropertySelectors,
+  createSelector,
+  Selector,
+  State,
+  StateContext,
+  StateToken,
+} from '@ngxs/store';
 import { HtmlRendererService } from '@shared/service/html-renderer.service';
 import { LocalStorageService } from '@shared/service/local-storage.service';
 import { AppConfig, AppLayoutConfig, Locale, Theme, ThemeContrast } from '@app/app.models';
@@ -8,13 +17,15 @@ import {
   FetchFields,
   FetchLayoutConfig,
   FetchSettings,
+  FetchViewModeSettings,
   PatchSettings,
+  PatchViewModeSettings,
   ResetAppState,
   SetLocale,
   SetTheme,
 } from '@app/state/app.actions';
 import { patch } from '@ngxs/store/operators';
-import { DEFAULT_LOCALE, LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY } from '@app/app.constants';
+import { DEFAULT_LOCALE, LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY, VIEW_MODE_SETTINGS_KEY } from '@app/app.constants';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
@@ -22,9 +33,10 @@ import { Column, QrTableColumnFieldName, SettingsDto } from '@api/settings/setti
 import { SettingsService } from '@shared/service/settings.service';
 import { catchError, EMPTY, Observable, of, switchMap, tap } from 'rxjs';
 import { BaseQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
-import { DEFAULT_SETTINGS } from '@app/pages/settings/settings.constants';
+import { DEFAULT_SETTINGS, DEFAULT_VIEW_MODE_SETTINGS } from '@app/pages/settings/settings.constants';
 import { uniq } from '@shared/utils/functions/uniq.function';
 import { ConfigService } from '@shared/service/config.service';
+import { ViewModeSettings } from '@app/pages/settings/settings.models';
 
 export interface AppStateModel {
   theme: Theme;
@@ -33,6 +45,7 @@ export interface AppStateModel {
   isLoadingSettings: boolean;
   isSavingSettings: boolean;
   settings: SettingsDto['settings'];
+  viewModeSettings: ViewModeSettings;
   isLoadingFields: boolean;
   qrFieldColumns: Column[];
   isLoadingConfig: boolean;
@@ -48,6 +61,7 @@ const defaults: AppStateModel = {
   isLoadingSettings: false,
   isSavingSettings: false,
   settings: DEFAULT_SETTINGS,
+  viewModeSettings: DEFAULT_VIEW_MODE_SETTINGS,
   isLoadingFields: false,
   qrFieldColumns: BaseQrTableCols,
   isLoadingConfig: false,
@@ -73,45 +87,22 @@ export class AppState {
   private readonly prefersDark = inject(PREFERS_DARK_TOKEN);
   private readonly prefersContrast = inject(PREFERS_CONTRAST_TOKEN);
 
-  @Selector()
-  public static getTheme$({ theme }: AppStateModel): Theme {
-    return theme;
-  }
+  private static readonly getFullState = createSelector([AppState], (state: AppStateModel) => state);
 
-  @Selector()
-  public static getContrast$({ contrast }: AppStateModel): ThemeContrast {
-    return contrast;
-  }
+  public static getSlices = createPropertySelectors<AppStateModel>(AppState);
 
-  @Selector()
-  public static getLocale$({ locale }: AppStateModel): Locale {
-    return locale;
-  }
+  public static getSettingsState$ = createPickSelector(AppState.getFullState, [
+    'isLoadingSettings',
+    'isSavingSettings',
+    'settings',
+  ]);
 
-  @Selector()
-  public static getSettingsState$({
-    isLoadingSettings,
-    isSavingSettings,
-    settings,
-  }: AppStateModel): Pick<AppStateModel, 'isLoadingSettings' | 'isSavingSettings' | 'settings'> {
-    return { isLoadingSettings, isSavingSettings, settings };
-  }
+  public static getConfigState$ = createPickSelector(AppState.getFullState, ['isLoadingConfig', 'config']);
 
-  @Selector()
-  public static getConfigState$({
-    isLoadingConfig,
-    config,
-  }: AppStateModel): Pick<AppStateModel, 'isLoadingConfig' | 'config'> {
-    return { isLoadingConfig, config };
-  }
-
-  @Selector()
-  public static getLayoutConfigState$({
-    isLoadingLayoutConfig,
-    layoutConfig,
-  }: AppStateModel): Pick<AppStateModel, 'isLoadingLayoutConfig' | 'layoutConfig'> {
-    return { isLoadingLayoutConfig, layoutConfig };
-  }
+  public static getLayoutConfigState$ = createPickSelector(AppState.getFullState, [
+    'isLoadingLayoutConfig',
+    'layoutConfig',
+  ]);
 
   @Selector()
   public static getAllQrCols$({ settings, qrFieldColumns }: AppStateModel): Column[] {
@@ -120,10 +111,10 @@ export class AppState {
     return uniq([...columns, ...qrFieldColumns, ...BaseQrTableCols], 'name');
   }
 
-  @Selector()
-  public static getQrTableColumns$({ settings }: AppStateModel): Column[] {
-    return settings.qrTableColumns;
-  }
+  public static getQrTableColumns$ = createSelector(
+    [AppState.getSlices.settings],
+    (settings) => settings.qrTableColumns,
+  );
 
   @Selector()
   public static getEnabledQrTableColumns$({ settings }: AppStateModel): string[] {
@@ -222,6 +213,24 @@ export class AppState {
     );
   }
 
+  @Action(FetchViewModeSettings)
+  public fetchViewModeSettings({ setState }: StateContext<AppStateModel>): void {
+    const value = this.localStorageService.get<string>(VIEW_MODE_SETTINGS_KEY);
+    const parsedValue: Partial<ViewModeSettings> = JSON.parse(value ?? '{}');
+
+    setState(
+      patch({
+        viewModeSettings: patch({
+          qrCardListViewMode: parsedValue?.qrCardListViewMode ?? DEFAULT_VIEW_MODE_SETTINGS.qrCardListViewMode,
+          templateListViewMode: parsedValue?.templateListViewMode ?? DEFAULT_VIEW_MODE_SETTINGS.templateListViewMode,
+          templateAttrsEditViewMode:
+            parsedValue?.templateAttrsEditViewMode ?? DEFAULT_VIEW_MODE_SETTINGS.templateAttrsEditViewMode,
+          fileListViewMode: parsedValue?.fileListViewMode ?? DEFAULT_VIEW_MODE_SETTINGS.fileListViewMode,
+        }),
+      }),
+    );
+  }
+
   @Action(PatchSettings)
   public patchSettings(
     { getState, setState, dispatch }: StateContext<AppStateModel>,
@@ -248,6 +257,16 @@ export class AppState {
         return of(DEFAULT_SETTINGS);
       }),
     );
+  }
+
+  @Action(PatchViewModeSettings)
+  public patchViewModeSettings(
+    { setState, dispatch }: StateContext<AppStateModel>,
+    { payload }: PatchViewModeSettings,
+  ): void {
+    setState(patch({ viewModeSettings: payload }));
+    this.localStorageService.set(VIEW_MODE_SETTINGS_KEY, JSON.stringify(payload));
+    dispatch(FetchViewModeSettings);
   }
 
   @Action(FetchFields)

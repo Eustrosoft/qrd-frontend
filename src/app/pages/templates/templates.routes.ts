@@ -12,6 +12,7 @@ import { templateFormResolver } from '@app/pages/templates/resolvers/template-fo
 import { TemplateCreateComponent } from '@app/pages/templates/components/template-create/template-create.component';
 import { TemplateListComponent } from '@app/pages/templates/components/template-list/template-list.component';
 import { TemplateTableComponent } from '@app/pages/templates/components/template-table/template-table.component';
+import { viewModeRedirect } from '@shared/utils/functions/view-mode-redirect.function';
 
 export const templatesRoutes: Routes = [
   {
@@ -25,7 +26,7 @@ export const templatesRoutes: Routes = [
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: AppRoutes.list,
+            redirectTo: viewModeRedirect('templateListViewMode'),
           },
           {
             path: AppRoutes.list,

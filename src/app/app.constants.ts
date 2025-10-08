@@ -28,6 +28,7 @@ export const THEME_KEY = 'qrd-user-theme';
 export const THEME_CONTRAST_KEY = 'qrd-user-theme-contrast';
 export const LOCALE_KEY = 'qrd-user-locale';
 export const IS_AUTHENTICATED_KEY = 'qrd-user-is-authenticated';
+export const VIEW_MODE_SETTINGS_KEY = 'qrd-view-mode-settings';
 
 export const THEMES = new Set<Theme>(['system', 'light', 'dark']);
 export const THEMES_CONTRAST = new Set<ThemeContrast>(['', '-mc', '-hc']);

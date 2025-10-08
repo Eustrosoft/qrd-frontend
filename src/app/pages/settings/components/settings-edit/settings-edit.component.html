@@ -100,6 +100,47 @@
   </card-container>
   <card-container>
     <ng-container heading>
+      <h1>{{ SettingsLocalization.viewMode }}</h1>
+    </ng-container>
+    <ng-container content>
+      <ui-grid-block gridJustifyItems="flex-start" [gridTemplateColumns]="viewModeGridTemplateColumns()">
+        <ui-grid-block gridJustifyItems="flex-start" rowGapSize="4" gridTemplateColumns="1fr">
+          <p>{{ SettingsLocalization.qrCardsViewMode }}</p>
+          <mat-button-toggle-group [formControl]="form.controls.qrCardListViewMode">
+            @for (option of displayTypeList; track option.value) {
+              <mat-button-toggle [value]="option.value">{{ option.viewValue }}</mat-button-toggle>
+            }
+          </mat-button-toggle-group>
+        </ui-grid-block>
+        <ui-grid-block gridJustifyItems="flex-start" rowGapSize="4" gridTemplateColumns="1fr">
+          <p>{{ SettingsLocalization.templatesViewMode }}</p>
+          <mat-button-toggle-group [formControl]="form.controls.templateListViewMode">
+            @for (option of displayTypeList; track option.value) {
+              <mat-button-toggle [value]="option.value">{{ option.viewValue }}</mat-button-toggle>
+            }
+          </mat-button-toggle-group>
+        </ui-grid-block>
+        <ui-grid-block gridJustifyItems="flex-start" rowGapSize="4" gridTemplateColumns="1fr">
+          <p>{{ SettingsLocalization.templateAttrsEditViewMode }}</p>
+          <mat-button-toggle-group [formControl]="form.controls.templateAttrsEditViewMode">
+            @for (option of displayTypeList; track option.value) {
+              <mat-button-toggle [value]="option.value">{{ option.viewValue }}</mat-button-toggle>
+            }
+          </mat-button-toggle-group>
+        </ui-grid-block>
+        <ui-grid-block gridJustifyItems="flex-start" rowGapSize="4" gridTemplateColumns="1fr">
+          <p>{{ SettingsLocalization.filesViewMode }}</p>
+          <mat-button-toggle-group [formControl]="form.controls.fileListViewMode">
+            @for (option of displayTypeList; track option.value) {
+              <mat-button-toggle [value]="option.value">{{ option.viewValue }}</mat-button-toggle>
+            }
+          </mat-button-toggle-group>
+        </ui-grid-block>
+      </ui-grid-block>
+    </ng-container>
+  </card-container>
+  <card-container>
+    <ng-container heading>
       <h1>{{ SharedLocalization.ranges }}</h1>
     </ng-container>
     <ng-container content>
