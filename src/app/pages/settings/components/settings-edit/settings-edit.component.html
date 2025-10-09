@@ -106,7 +106,7 @@
       <ui-grid-block gridJustifyItems="flex-start" [gridTemplateColumns]="viewModeGridTemplateColumns()">
         <ui-grid-block gridJustifyItems="flex-start" rowGapSize="4" gridTemplateColumns="1fr">
           <p>{{ SettingsLocalization.qrCardsViewMode }}</p>
-          <mat-button-toggle-group [formControl]="form.controls.qrCardListViewMode">
+          <mat-button-toggle-group [formControl]="form.controls.cardsViewMode">
             @for (option of displayTypeList; track option.value) {
               <mat-button-toggle [value]="option.value">{{ option.viewValue }}</mat-button-toggle>
             }
@@ -114,7 +114,7 @@
         </ui-grid-block>
         <ui-grid-block gridJustifyItems="flex-start" rowGapSize="4" gridTemplateColumns="1fr">
           <p>{{ SettingsLocalization.templatesViewMode }}</p>
-          <mat-button-toggle-group [formControl]="form.controls.templateListViewMode">
+          <mat-button-toggle-group [formControl]="form.controls.templatesViewMode">
             @for (option of displayTypeList; track option.value) {
               <mat-button-toggle [value]="option.value">{{ option.viewValue }}</mat-button-toggle>
             }
@@ -130,7 +130,7 @@
         </ui-grid-block>
         <ui-grid-block gridJustifyItems="flex-start" rowGapSize="4" gridTemplateColumns="1fr">
           <p>{{ SettingsLocalization.filesViewMode }}</p>
-          <mat-button-toggle-group [formControl]="form.controls.fileListViewMode">
+          <mat-button-toggle-group [formControl]="form.controls.filesViewMode">
             @for (option of displayTypeList; track option.value) {
               <mat-button-toggle [value]="option.value">{{ option.viewValue }}</mat-button-toggle>
             }

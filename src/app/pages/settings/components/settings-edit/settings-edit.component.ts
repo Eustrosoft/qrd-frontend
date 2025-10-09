@@ -112,10 +112,10 @@ export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanCo
     checkUploadSize: this.fb.nonNullable.control<boolean>(false),
     defaultQrPrintText: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_NAME_LENGTH)]),
     defaultQrPrintTextDown: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_NAME_LENGTH)]),
-    qrCardListViewMode: this.fb.nonNullable.control<ViewMode>('list'),
-    templateListViewMode: this.fb.nonNullable.control<ViewMode>('list'),
+    cardsViewMode: this.fb.nonNullable.control<ViewMode>('list'),
+    templatesViewMode: this.fb.nonNullable.control<ViewMode>('list'),
     templateAttrsEditViewMode: this.fb.nonNullable.control<ViewMode>('table'),
-    fileListViewMode: this.fb.nonNullable.control<ViewMode>('list'),
+    filesViewMode: this.fb.nonNullable.control<ViewMode>('list'),
   });
 
   public readonly formHasUnsavedChanges = toSignal(
@@ -153,10 +153,10 @@ export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanCo
         checkUploadSize: settingsState.settings.checkUploadSize,
         defaultQrPrintText: settingsState.settings.defaultQrPrintText,
         defaultQrPrintTextDown: settingsState.settings.defaultQrPrintTextDown,
-        qrCardListViewMode: viewModeSettings.qrCardListViewMode,
-        templateListViewMode: viewModeSettings.templateListViewMode,
+        cardsViewMode: viewModeSettings.cardsViewMode,
+        templatesViewMode: viewModeSettings.templatesViewMode,
         templateAttrsEditViewMode: viewModeSettings.templateAttrsEditViewMode,
-        fileListViewMode: viewModeSettings.fileListViewMode,
+        filesViewMode: viewModeSettings.filesViewMode,
       },
       { emitEvent: false },
     );
@@ -219,14 +219,13 @@ export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanCo
       return;
     }
 
-    const { qrCardListViewMode, templateListViewMode, templateAttrsEditViewMode, fileListViewMode } =
-      this.form.getRawValue();
+    const { cardsViewMode, templatesViewMode, templateAttrsEditViewMode, filesViewMode } = this.form.getRawValue();
 
     this.actions.patchViewModeSettings({
-      qrCardListViewMode,
-      templateListViewMode,
+      cardsViewMode,
+      templatesViewMode,
       templateAttrsEditViewMode,
-      fileListViewMode,
+      filesViewMode,
     });
     this.actions.patchSettings(this.form.getRawValue());
   }

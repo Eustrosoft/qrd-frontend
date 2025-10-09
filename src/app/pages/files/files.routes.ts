@@ -24,7 +24,7 @@ export const filesRoutes: Routes = [
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: viewModeRedirect('fileListViewMode'),
+            redirectTo: viewModeRedirect('filesViewMode'),
           },
           {
             path: AppRoutes.list,

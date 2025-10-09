@@ -35,8 +35,8 @@ export const DEFAULT_SETTINGS: SettingsDto['settings'] = {
 };
 
 export const DEFAULT_VIEW_MODE_SETTINGS: ViewModeSettings = {
-  qrCardListViewMode: 'list',
-  templateListViewMode: 'list',
+  cardsViewMode: 'list',
+  templatesViewMode: 'list',
   templateAttrsEditViewMode: 'table',
-  fileListViewMode: 'list',
+  filesViewMode: 'list',
 };

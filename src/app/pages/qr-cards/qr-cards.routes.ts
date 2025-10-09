@@ -25,7 +25,7 @@ export const qrCardsRoutes: Routes = [
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: viewModeRedirect('qrCardListViewMode'),
+            redirectTo: viewModeRedirect('cardsViewMode'),
           },
           {
             path: AppRoutes.list,

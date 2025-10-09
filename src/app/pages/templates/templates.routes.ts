@@ -26,7 +26,7 @@ export const templatesRoutes: Routes = [
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: viewModeRedirect('templateListViewMode'),
+            redirectTo: viewModeRedirect('templatesViewMode'),
           },
           {
             path: AppRoutes.list,

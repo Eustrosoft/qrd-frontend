@@ -221,11 +221,11 @@ export class AppState {
     setState(
       patch({
         viewModeSettings: patch({
-          qrCardListViewMode: parsedValue?.qrCardListViewMode ?? DEFAULT_VIEW_MODE_SETTINGS.qrCardListViewMode,
-          templateListViewMode: parsedValue?.templateListViewMode ?? DEFAULT_VIEW_MODE_SETTINGS.templateListViewMode,
+          cardsViewMode: parsedValue?.cardsViewMode ?? DEFAULT_VIEW_MODE_SETTINGS.cardsViewMode,
+          templatesViewMode: parsedValue?.templatesViewMode ?? DEFAULT_VIEW_MODE_SETTINGS.templatesViewMode,
           templateAttrsEditViewMode:
             parsedValue?.templateAttrsEditViewMode ?? DEFAULT_VIEW_MODE_SETTINGS.templateAttrsEditViewMode,
-          fileListViewMode: parsedValue?.fileListViewMode ?? DEFAULT_VIEW_MODE_SETTINGS.fileListViewMode,
+          filesViewMode: parsedValue?.filesViewMode ?? DEFAULT_VIEW_MODE_SETTINGS.filesViewMode,
         }),
       }),
     );
