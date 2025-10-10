@@ -1,4 +1,5 @@
 @use 'styles/mixins' as mixins;
+@use '@angular/material' as mat;
 
 :host {
   gap: mixins.rem(16);
@@ -16,5 +17,42 @@
     bottom: mixins.rem(96);
     z-index: 2;
     position: fixed !important;
+  }
+
+  mat-tab-nav-panel {
+    overflow: auto;
+    padding-top: mixins.rem(4);
+    border-radius: mixins.rem(12);
+  }
+
+  table {
+    @include mat.table-overrides(
+      (
+        row-item-container-height: 148px,
+      )
+    );
+
+    overflow: auto;
+    border-radius: mixins.rem(12);
+  }
+
+  .no-data-row {
+    @include mat.table-overrides(
+      (
+        row-item-container-height: 64px,
+      )
+    );
+  }
+
+  .w-88 {
+    width: mixins.rem(88);
+  }
+
+  .w-156 {
+    width: mixins.rem(156);
+  }
+
+  .w-320 {
+    width: mixins.rem(320);
   }
 }

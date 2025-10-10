@@ -6,6 +6,7 @@ import {
   DestroyRef,
   effect,
   inject,
+  linkedSignal,
   OnDestroy,
   OnInit,
   signal,
@@ -41,7 +42,7 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 import { MatIcon } from '@angular/material/icon';
 import { FetchDictionaryByName } from '@shared/state/dictionary-registry.actions';
 import { DictionaryRegistryState } from '@shared/state/dictionary-registry.state';
-import { DictionaryItem } from '@shared/shared.models';
+import { DictionaryItem, Option } from '@shared/shared.models';
 import { MatSelect } from '@angular/material/select';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
@@ -67,6 +68,26 @@ import { IndicatorComponent } from '@shared/components/indicator/indicator.compo
 import { MobileToolbarComponent } from '@shared/components/mobile-toolbar/mobile-toolbar.component';
 import { UiBottomMenuService } from '@ui/ui-bottom-menu/ui-bottom-menu.service';
 import { Title } from '@angular/platform-browser';
+import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
+import { ViewMode } from '@app/pages/settings/settings.models';
+import { AppState } from '@app/state/app.state';
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatFooterCell,
+  MatFooterCellDef,
+  MatFooterRow,
+  MatFooterRowDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatNoDataRow,
+  MatRow,
+  MatRowDef,
+  MatTable,
+} from '@angular/material/table';
 
 @Component({
   selector: 'template-edit',
@@ -101,6 +122,24 @@ import { Title } from '@angular/platform-browser';
     FileAttachmentModeComponent,
     IndicatorComponent,
     MobileToolbarComponent,
+    MatTabNavPanel,
+    MatTabNav,
+    MatTabLink,
+    MatTable,
+    MatRowDef,
+    MatHeaderRow,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatHeaderRowDef,
+    MatRow,
+    MatFooterRow,
+    MatFooterCell,
+    MatFooterCellDef,
+    MatFooterRowDef,
+    MatNoDataRow,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './template-edit.component.html',
@@ -121,6 +160,7 @@ export class TemplateEditComponent implements OnInit, AfterContentInit, OnDestro
     this.activatedRoute.data.pipe(map((data) => data['templateForm'])),
     { requireSync: true },
   );
+  private readonly table = viewChild.required(MatTable);
 
   public readonly formHasUnsavedChanges = toSignal(
     merge(
@@ -139,6 +179,7 @@ export class TemplateEditComponent implements OnInit, AfterContentInit, OnDestro
   );
 
   protected readonly selectors = createSelectMap({
+    viewModeSettings: AppState.getSlices.viewModeSettings,
     isTemplateLoading: TemplatesState.isTemplateLoading$,
     isTemplateLoadErr: TemplatesState.isTemplateLoadErr$,
     isSaveInProgress: TemplatesState.isSaveInProgress$,
@@ -185,6 +226,14 @@ export class TemplateEditComponent implements OnInit, AfterContentInit, OnDestro
     }
     return 'repeat(2, 1fr)';
   });
+
+  protected readonly viewModeOptions = signal<Option<ViewMode>[]>([
+    { value: 'list', viewValue: SharedLocalization.list },
+    { value: 'table', viewValue: SharedLocalization.table },
+  ]);
+  protected readonly selectedViewMode = linkedSignal(() => this.selectors.viewModeSettings().templateAttrsEditViewMode);
+
+  protected readonly displayedColumns = signal(['fieldType', 'caption', 'isStatic', 'fieldOrder', 'name', 'delete']);
 
   protected readonly templateEff = effect(() => {
     const template = this.selectors.template();
@@ -233,9 +282,19 @@ export class TemplateEditComponent implements OnInit, AfterContentInit, OnDestro
     this.templateFormFactoryService.addField();
   }
 
+  protected addFieldAndRenderTable(): void {
+    this.templateFormFactoryService.addField();
+    this.table().renderRows();
+  }
+
   protected deleteField(index: number): void {
     this.expandedFieldIndex.set(null);
     this.templateFormFactoryService.deleteField(index);
+  }
+
+  protected deleteFieldAndRenderTable(index: number): void {
+    this.templateFormFactoryService.deleteField(index);
+    this.table().renderRows();
   }
 
   protected unlinkFile(index: number): void {
