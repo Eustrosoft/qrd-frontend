@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/Eustrosoft/qrd-frontend/compare/v2.0.0...v2.1.0) (2025-10-10)
+
+
+### Features
+
+* **template-edit:** добавлено табличное представление ([27d4420](https://github.com/Eustrosoft/qrd-frontend/commit/27d44203fad119a9987e2a514684e32d7017de95))
+* **view-mode:** добавлена возможность сохранять предпочтительный режим отображения ([40a7b04](https://github.com/Eustrosoft/qrd-frontend/commit/40a7b0470758ec3bb3405929d31d36b2d771e217))
+
 ## [2.0.0](https://github.com/Eustrosoft/qrd-frontend/compare/v1.18.1...v2.0.0) (2025-10-07)
 
 
