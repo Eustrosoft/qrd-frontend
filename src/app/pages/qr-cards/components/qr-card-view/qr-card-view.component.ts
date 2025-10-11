@@ -29,11 +29,11 @@ import { ErrorsLocalization } from '@modules/error/error.constants';
 import { Title } from '@angular/platform-browser';
 import { MatMenuItem } from '@angular/material/menu';
 import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.component';
-import { AppState } from '@app/state/app.state';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
 import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
 import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'qr-card-view',
@@ -68,7 +68,7 @@ export class QrCardViewComponent implements OnInit {
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
 
   protected readonly selectors = createSelectMap({
-    configState: AppState.getConfigState$,
+    configState: AppSelectors.getConfigState$,
     isQrCardLoading: QrCardsState.isQrCardLoading$,
     isQrCardLoadErr: QrCardsState.isQrCardLoadErr$,
     qrCard: QrCardsState.getQrCard$,

@@ -3,9 +3,9 @@ import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { concat, filter, first, interval, switchMap } from 'rxjs';
 import { SnackbarService } from '@shared/service/snackbar.service';
 import { select } from '@ngxs/store';
-import { AppState } from '@app/state/app.state';
 import { DefaultConfig } from '@shared/shared.constants';
 import { NotificationSnackbarLocalization } from '@modules/error/error.constants';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class UpdateService {
   private readonly swUpdate = inject(SwUpdate);
   private readonly snackbarService = inject(SnackbarService);
   private readonly document = inject(DOCUMENT);
-  private readonly configState = select(AppState.getConfigState$);
+  private readonly configState = select(AppSelectors.getConfigState$);
 
   constructor() {
     const appIsStable$ = this.appRef.isStable.pipe(first((isStable) => isStable && !isDevMode()));

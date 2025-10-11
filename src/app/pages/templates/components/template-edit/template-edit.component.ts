@@ -70,7 +70,6 @@ import { UiBottomMenuService } from '@ui/ui-bottom-menu/ui-bottom-menu.service';
 import { Title } from '@angular/platform-browser';
 import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
 import { ViewMode } from '@app/pages/settings/settings.models';
-import { AppState } from '@app/state/app.state';
 import {
   MatCell,
   MatCellDef,
@@ -88,6 +87,7 @@ import {
   MatRowDef,
   MatTable,
 } from '@angular/material/table';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'template-edit',
@@ -179,7 +179,7 @@ export class TemplateEditComponent implements OnInit, AfterContentInit, OnDestro
   );
 
   protected readonly selectors = createSelectMap({
-    viewModeSettings: AppState.getSlices.viewModeSettings,
+    viewModeSettings: AppSelectors.getSlices.viewModeSettings,
     isTemplateLoading: TemplatesState.isTemplateLoading$,
     isTemplateLoadErr: TemplatesState.isTemplateLoadErr$,
     isSaveInProgress: TemplatesState.isSaveInProgress$,

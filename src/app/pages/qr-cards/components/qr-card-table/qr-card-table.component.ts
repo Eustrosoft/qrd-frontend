@@ -39,8 +39,8 @@ import { MatIcon } from '@angular/material/icon';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
-import { AppState } from '@app/state/app.state';
 import { QrTableCellComponent } from '@app/pages/qr-cards/components/qr-table-cell/qr-table-cell.component';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'qr-card-table',
@@ -90,14 +90,14 @@ export class QrCardTableComponent implements OnInit, AfterViewInit {
   protected readonly AppRoutes = AppRoutes;
 
   protected readonly selectors = createSelectMap({
-    configState: AppState.getConfigState$,
+    configState: AppSelectors.getConfigState$,
     isQrCardListLoading: QrCardsState.isQrCardListLoading$,
     isQrCardListLoadErr: QrCardsState.isQrCardListLoadErr$,
     qrCardList: QrCardsState.getQrCardList$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
-    enabledQrTableColumns: AppState.getEnabledQrTableColumns$,
-    qrTableColumns: AppState.getQrTableColumns$,
-    allQrCols: AppState.getAllQrCols$,
+    enabledQrTableColumns: AppSelectors.getEnabledQrTableColumns$,
+    qrTableColumns: AppSelectors.getQrTableColumns$,
+    allQrCols: AppSelectors.getAllQrCols$,
   });
   protected readonly actions = createDispatchMap({
     fetchQrCardList: FetchQrCardList,

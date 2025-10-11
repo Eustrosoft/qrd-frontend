@@ -9,7 +9,7 @@ import { MatIcon } from '@angular/material/icon';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { RouterLink } from '@angular/router';
 import { AppRoutes } from '@app/app.constants';
-import { AppState } from '@app/state/app.state';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'profile-info-overlay',
@@ -24,7 +24,7 @@ export class ProfileInfoOverlayComponent {
   protected readonly AppRoutes = AppRoutes;
 
   protected readonly logout = dispatch(Logout);
-  protected readonly configState = select(AppState.getConfigState$);
+  protected readonly configState = select(AppSelectors.getConfigState$);
 
   public readonly username = input<string>('');
   public readonly email = input<string>('');

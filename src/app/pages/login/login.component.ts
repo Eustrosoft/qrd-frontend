@@ -15,7 +15,7 @@ import { Login } from '@modules/auth/state/auth.actions';
 import { MatIcon } from '@angular/material/icon';
 import { AuthState } from '@modules/auth/state/auth.state';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
-import { AppState } from '@app/state/app.state';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'login',
@@ -45,7 +45,7 @@ export class LoginComponent {
 
   protected readonly selectors = createSelectMap({
     isAuthInfoLoading: AuthState.isAuthInfoLoading$,
-    configState: AppState.getConfigState$,
+    configState: AppSelectors.getConfigState$,
   });
 
   protected readonly RouteTitles = RouteTitles;

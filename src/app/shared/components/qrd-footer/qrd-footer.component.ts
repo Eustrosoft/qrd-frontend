@@ -5,7 +5,6 @@ import { MatFormField, MatLabel } from '@angular/material/input';
 import { MatOption, MatSelect, MatSelectChange } from '@angular/material/select';
 import { Locale } from '@app/app.models';
 import { createSelectMap, dispatch } from '@ngxs/store';
-import { AppState } from '@app/state/app.state';
 import { FormsModule } from '@angular/forms';
 import { SetLocale } from '@app/state/app.actions';
 import { FooterLocalization } from '@shared/components/qrd-footer/qrd-footer.constants';
@@ -20,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 import { first, tap } from 'rxjs';
 import { VERSION } from '@cdk/tokens/version.token';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'qrd-footer',
@@ -46,9 +46,9 @@ export class QrdFooterComponent {
   private readonly isXSmall = inject(IS_XSMALL);
   private readonly isSmall = inject(IS_SMALL);
   protected readonly selectors = createSelectMap({
-    locale: AppState.getSlices.locale,
-    configState: AppState.getConfigState$,
-    layoutConfigState: AppState.getLayoutConfigState$,
+    locale: AppSelectors.getSlices.locale,
+    configState: AppSelectors.getConfigState$,
+    layoutConfigState: AppSelectors.getLayoutConfigState$,
   });
   protected readonly setLocale = dispatch(SetLocale);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);

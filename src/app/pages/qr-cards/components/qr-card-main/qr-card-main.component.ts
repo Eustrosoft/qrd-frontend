@@ -24,9 +24,9 @@ import { CollapsibleListDirective } from '@shared/directives/collapsible-list.di
 import { AttrListItemComponent } from '@shared/components/attr-list-item/attr-list-item.component';
 import { FileDto } from '@api/files/files-api.models';
 import { Option } from '@shared/shared.models';
-import { AppState } from '@app/state/app.state';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { CopyButtonComponent } from '@shared/components/copy-button/copy-button.component';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'qr-card-main',
@@ -64,7 +64,7 @@ export class QrCardMainComponent {
   protected readonly AppRoutes = AppRoutes;
 
   protected readonly selectors = createSelectMap({
-    configState: AppState.getConfigState$,
+    configState: AppSelectors.getConfigState$,
     qrCard: QrCardsState.getQrCard$,
     qrCardPreviewUrl: QrCardsState.getQrCardPreviewUrl$,
   });

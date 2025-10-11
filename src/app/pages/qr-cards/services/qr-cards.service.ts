@@ -8,11 +8,11 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { WINDOW } from '@cdk/tokens/window.token';
 import { select } from '@ngxs/store';
-import { AppState } from '@app/state/app.state';
 import { SUPPRESS_HTTP_ERROR_INTERCEPTOR } from '@modules/error/error.constants';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { SnackbarService } from '@shared/service/snackbar.service';
 import { SharedLocalization } from '@shared/shared.constants';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class QrCardsService {
   private readonly window = inject(WINDOW);
   private readonly clipboard = inject(Clipboard);
   private readonly snackbarService = inject(SnackbarService);
-  private readonly settingsState = select(AppState.getSettingsState$);
+  private readonly settingsState = select(AppSelectors.getSettingsState$);
 
   public getQrCardList(): Observable<QRDto[]> {
     return this.http.get<QRDto[]>('/qrCodeDemo/v1/api/secured/qrs', {

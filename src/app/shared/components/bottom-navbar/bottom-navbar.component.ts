@@ -3,9 +3,9 @@ import { MatListItem, MatNavList } from '@angular/material/list';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { MatIcon } from '@angular/material/icon';
-import { AppState } from '@app/state/app.state';
 import { select } from '@ngxs/store';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'bottom-navbar',
@@ -15,5 +15,5 @@ import { FallbackPipe } from '@shared/pipe/fallback.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BottomNavbarComponent {
-  protected readonly layoutConfigState = select(AppState.getLayoutConfigState$);
+  protected readonly layoutConfigState = select(AppSelectors.getLayoutConfigState$);
 }

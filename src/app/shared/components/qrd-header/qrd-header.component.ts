@@ -16,9 +16,9 @@ import { MiniProfileInfoComponent } from '@modules/auth/components/mini-profile-
 import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overlay/create-menu-overlay.component';
 import { MatIcon } from '@angular/material/icon';
 import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
-import { AppState } from '@app/state/app.state';
 import { LeftSidenavComponent } from '@shared/components/left-sidenav/left-sidenav.component';
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'qrd-header',
@@ -54,7 +54,7 @@ export class QrdHeaderComponent {
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly selectors = createSelectMap({
     isAuthenticated: select(AuthState.isAuthenticated$),
-    layoutConfigState: select(AppState.getLayoutConfigState$),
+    layoutConfigState: select(AppSelectors.getLayoutConfigState$),
   });
 
   protected readonly HeaderLocalization = HeaderLocalization;

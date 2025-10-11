@@ -5,7 +5,6 @@ import { SetTheme } from '@app/state/app.actions';
 import { UiSidenavComponent } from '@ui/ui-sidenav/ui-sidenav.component';
 import { QrdHeaderComponent } from '@shared/components/qrd-header/qrd-header.component';
 import { QrdFooterComponent } from '@shared/components/qrd-footer/qrd-footer.component';
-import { AppState } from '@app/state/app.state';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { HideNgVersionDirective } from '@shared/directives/hide-ng-version.directive';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
@@ -15,6 +14,7 @@ import { UpdateService } from '@shared/service/update.service';
 import { NetworkStatusBannerComponent } from '@shared/components/network-status-banner/network-status-banner.component';
 import { IS_OFFLINE } from '@cdk/tokens/is-offline.token';
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'app-root',
@@ -44,7 +44,7 @@ export class AppComponent implements AfterViewInit {
   private readonly prefersDark = inject(PREFERS_DARK_TOKEN);
   private readonly uiBottomMenuService = inject(UiBottomMenuService);
 
-  private readonly theme = select(AppState.getSlices.theme);
+  private readonly theme = select(AppSelectors.getSlices.theme);
   private readonly setTheme = dispatch(SetTheme);
 
   private readonly colorSchemeEffect = effect(() => {

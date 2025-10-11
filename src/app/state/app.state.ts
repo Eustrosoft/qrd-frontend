@@ -1,14 +1,5 @@
 import { DOCUMENT, inject, Injectable } from '@angular/core';
-import {
-  Action,
-  createPickSelector,
-  createPropertySelectors,
-  createSelector,
-  Selector,
-  State,
-  StateContext,
-  StateToken,
-} from '@ngxs/store';
+import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { HtmlRendererService } from '@shared/service/html-renderer.service';
 import { LocalStorageService } from '@shared/service/local-storage.service';
 import { AppConfig, AppLayoutConfig, Locale, Theme, ThemeContrast } from '@app/app.models';
@@ -29,12 +20,11 @@ import { DEFAULT_LOCALE, LOCALE_KEY, THEME_CONTRAST_KEY, THEME_KEY, VIEW_MODE_SE
 import { WINDOW } from '@cdk/tokens/window.token';
 import { PREFERS_DARK_TOKEN } from '@cdk/tokens/prefers-dark.token';
 import { PREFERS_CONTRAST_TOKEN } from '@cdk/tokens/prefers-contrast.token';
-import { Column, QrTableColumnFieldName, SettingsDto } from '@api/settings/settings-api.models';
+import { Column, SettingsDto } from '@api/settings/settings-api.models';
 import { SettingsService } from '@shared/service/settings.service';
 import { catchError, EMPTY, Observable, of, switchMap, tap } from 'rxjs';
 import { BaseQrTableCols } from '@app/pages/qr-cards/qr-cards.constants';
 import { DEFAULT_SETTINGS, DEFAULT_VIEW_MODE_SETTINGS } from '@app/pages/settings/settings.constants';
-import { uniq } from '@shared/utils/functions/uniq.function';
 import { ConfigService } from '@shared/service/config.service';
 import { ViewModeSettings } from '@app/pages/settings/settings.models';
 
@@ -86,61 +76,6 @@ export class AppState {
   private readonly document = inject(DOCUMENT);
   private readonly prefersDark = inject(PREFERS_DARK_TOKEN);
   private readonly prefersContrast = inject(PREFERS_CONTRAST_TOKEN);
-
-  private static readonly getFullState = createSelector([AppState], (state: AppStateModel) => state);
-
-  public static getSlices = createPropertySelectors<AppStateModel>(AppState);
-
-  public static getSettingsState$ = createPickSelector(AppState.getFullState, [
-    'isLoadingSettings',
-    'isSavingSettings',
-    'settings',
-  ]);
-
-  public static getConfigState$ = createPickSelector(AppState.getFullState, ['isLoadingConfig', 'config']);
-
-  public static getLayoutConfigState$ = createPickSelector(AppState.getFullState, [
-    'isLoadingLayoutConfig',
-    'layoutConfig',
-  ]);
-
-  @Selector()
-  public static getAllQrCols$({ settings, qrFieldColumns }: AppStateModel): Column[] {
-    const columns = settings.qrTableColumns;
-
-    return uniq([...columns, ...qrFieldColumns, ...BaseQrTableCols], 'name');
-  }
-
-  public static getQrTableColumns$ = createSelector(
-    [AppState.getSlices.settings],
-    (settings) => settings.qrTableColumns,
-  );
-
-  @Selector()
-  public static getEnabledQrTableColumns$({ settings }: AppStateModel): string[] {
-    const columns = settings.qrTableColumns;
-
-    return columns.reduce<string[]>((acc, col) => {
-      if (col.enable && BaseQrTableCols.some((column) => column.fieldName === col.fieldName)) {
-        acc.push(col.fieldName);
-      }
-      return acc;
-    }, []);
-  }
-
-  @Selector()
-  public static qrTableColumnVisibility$({ settings }: AppStateModel): Record<QrTableColumnFieldName, boolean> {
-    const columns = settings.qrTableColumns;
-
-    return {
-      code_picture: columns.some((col) => col.fieldName === 'code_picture'),
-      code: columns.some((col) => col.fieldName === 'code'),
-      name: columns.some((col) => col.fieldName === 'name'),
-      description: columns.some((col) => col.fieldName === 'description'),
-      created: columns.some((col) => col.fieldName === 'created'),
-      updated: columns.some((col) => col.fieldName === 'updated'),
-    };
-  }
 
   @Action(SetTheme)
   public setTheme({ getState, setState }: StateContext<AppStateModel>, payload: SetTheme): void {

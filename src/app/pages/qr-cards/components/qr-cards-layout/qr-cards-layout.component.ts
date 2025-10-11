@@ -17,13 +17,13 @@ import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
 import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
-import { AppState } from '@app/state/app.state';
 import { PatchSettings } from '@app/state/app.actions';
 import { ColumnConfigOverlayComponent } from '@shared/components/column-config-overlay/column-config-overlay.component';
 import { SharedLocalization } from '@shared/shared.constants';
 import { RouterOutlet } from '@angular/router';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { OverlayContainerComponent } from '@shared/components/overlay-container/overlay-container.component';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'qr-cards-layout',
@@ -55,10 +55,10 @@ export class QrCardsLayoutComponent {
 
   protected readonly selectors = createSelectMap({
     searchValue: QrCardsState.getSearchValue$,
-    settingsState: AppState.getSettingsState$,
+    settingsState: AppSelectors.getSettingsState$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
     isDeleteInProgress: QrCardsState.isDeleteInProgress$,
-    allQrCols: AppState.getAllQrCols$,
+    allQrCols: AppSelectors.getAllQrCols$,
   });
   protected readonly actions = createDispatchMap({
     fetchQrCards: FetchQrCardList,

@@ -3,10 +3,10 @@ import { ImgLoadStateDirective } from '@shared/directives/img-load-state.directi
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
 import { HttpParams } from '@angular/common/http';
-import { AppState } from '@app/state/app.state';
 import { select } from '@ngxs/store';
 import { DefaultConfig } from '@shared/shared.constants';
 import { NgOptimizedImage } from '@angular/common';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'qr-renderer',
@@ -30,7 +30,7 @@ export class QrRendererComponent {
   protected readonly remWidth = computed(() => this.pxToRemPipe.transform(this.width().toString()));
   protected readonly remHeight = computed(() => this.pxToRemPipe.transform(this.height().toString()));
 
-  private readonly configState = select(AppState.getConfigState$);
+  private readonly configState = select(AppSelectors.getConfigState$);
 
   protected readonly srcUrl = computed(() => {
     const params = new HttpParams({

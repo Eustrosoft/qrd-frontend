@@ -30,6 +30,7 @@ import { Iso8601DateFormatPipe } from '@shared/pipe/iso8601-date-format.pipe';
 import { provideBaseHref } from '@core/providers/base-href.provider';
 import { provideServiceWorker } from '@angular/service-worker';
 import { UpdateService } from '@shared/service/update.service';
+import { AppSelectors } from '@app/state/app.selectors';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -57,7 +58,7 @@ export const appConfig: ApplicationConfig = {
     provideMaterialConfig(),
     {
       provide: LOCALE_ID,
-      useFactory: (store: Store): string => store.selectSnapshot(AppState.getSlices.locale),
+      useFactory: (store: Store): string => store.selectSnapshot(AppSelectors.getSlices.locale),
       deps: [Store],
     },
     provideNativeDateAdapter(),

@@ -17,7 +17,6 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
-import { AppState } from '@app/state/app.state';
 import { RangeSelectorService } from '@shared/service/range-selector.service';
 import { QRDto } from '@api/qr-cards/qrs-api.models';
 import { AppRoutes } from '@app/app.constants';
@@ -28,6 +27,7 @@ import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
 import { MatButton } from '@angular/material/button';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'qr-card-list',
@@ -65,14 +65,14 @@ export class QrCardListComponent implements OnInit {
   protected readonly AppRoutes = AppRoutes;
 
   protected readonly selectors = createSelectMap({
-    configState: AppState.getConfigState$,
+    configState: AppSelectors.getConfigState$,
     isQrCardListLoading: QrCardsState.isQrCardListLoading$,
     isQrCardListLoadErr: QrCardsState.isQrCardListLoadErr$,
     qrCardListSkeletonLoaders: QrCardsState.getQrCardListSkeletonLoaders$,
     qrCardList: QrCardsState.getQrCardList$,
     selectedQrCardList: QrCardsState.getSelectedQrCardList$,
-    qrTableColumnVisibility: AppState.qrTableColumnVisibility$,
-    settingsState: AppState.getSettingsState$,
+    qrTableColumnVisibility: AppSelectors.qrTableColumnVisibility$,
+    settingsState: AppSelectors.getSettingsState$,
   });
 
   protected readonly actions = createDispatchMap({

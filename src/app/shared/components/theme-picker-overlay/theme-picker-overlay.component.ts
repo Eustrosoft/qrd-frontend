@@ -3,7 +3,6 @@ import { MatIconButton } from '@angular/material/button';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { Theme, ThemeContrast } from '@app/app.models';
 import { createSelectMap, dispatch } from '@ngxs/store';
-import { AppState } from '@app/state/app.state';
 import { FormsModule } from '@angular/forms';
 import { SetTheme } from '@app/state/app.actions';
 import { ThemePickerOverlayLocalization } from '@shared/components/theme-picker-overlay/theme-picker-overlay.constants';
@@ -13,6 +12,7 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { combineLatest, skip, tap } from 'rxjs';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { MatIcon } from '@angular/material/icon';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'theme-picker-overlay',
@@ -24,8 +24,8 @@ import { MatIcon } from '@angular/material/icon';
 export class ThemePickerOverlayComponent implements OnInit {
   public readonly closeClick = output<void>();
   protected readonly selectors = createSelectMap({
-    theme: AppState.getSlices.theme,
-    contrast: AppState.getSlices.contrast,
+    theme: AppSelectors.getSlices.theme,
+    contrast: AppSelectors.getSlices.contrast,
     availableThemes: DictionaryRegistryState.getDictionary$<Option<string>>('themes'),
     availableContrast: DictionaryRegistryState.getDictionary$<Option<string>>('contrast'),
   });

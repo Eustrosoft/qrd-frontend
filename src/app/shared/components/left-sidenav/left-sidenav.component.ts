@@ -8,7 +8,7 @@ import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { createSelectMap, select } from '@ngxs/store';
 import { AuthState } from '@modules/auth/state/auth.state';
-import { AppState } from '@app/state/app.state';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'left-sidenav',
@@ -31,7 +31,7 @@ export class LeftSidenavComponent {
 
   protected readonly selectors = createSelectMap({
     isAuthenticated: select(AuthState.isAuthenticated$),
-    layoutConfigState: select(AppState.getLayoutConfigState$),
+    layoutConfigState: select(AppSelectors.getLayoutConfigState$),
   });
 
   protected closeSidenavMenu(): void {
