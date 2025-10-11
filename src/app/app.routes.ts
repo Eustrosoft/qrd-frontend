@@ -9,19 +9,19 @@ import { authGuard } from '@modules/auth/auth.guard';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { timer } from 'rxjs';
 import { provideStates, select } from '@ngxs/store';
-import { AuthState } from '@modules/auth/state/auth.state';
 import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { FilesState } from '@app/pages/files/state/files.state';
 import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { queryRedirectResolver } from '@shared/resolvers/query-redirect.resolver';
 import { loginGuard } from '@modules/auth/login.guard';
+import { AuthSelectors } from '@modules/auth/state/auth.selectors';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
     redirectTo: (): string => {
-      const isAuthenticated = select(AuthState.isAuthenticated$);
+      const isAuthenticated = select(AuthSelectors.getSlices.isAuthenticated);
       if (isAuthenticated()) {
         return AppRoutes.qrCards;
       }

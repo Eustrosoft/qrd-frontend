@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
+import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { ChangePassword, FetchAuthInfo, Login, Logout, ResetAuthState, RestoreAuth } from './auth.actions';
 import { AuthService } from '@modules/auth/auth.service';
 import { catchError, Observable, switchMap, tap, throwError } from 'rxjs';
@@ -39,26 +39,6 @@ export class AuthState {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly snackbarService = inject(SnackbarService);
-
-  @Selector()
-  public static isAuthenticated$({ isAuthenticated }: AuthStateModel): boolean {
-    return isAuthenticated;
-  }
-
-  @Selector()
-  public static isAuthInfoLoading$({ isAuthInfoLoading }: AuthStateModel): boolean {
-    return isAuthInfoLoading;
-  }
-
-  @Selector()
-  public static getAuthInfo$({ authInfo }: AuthStateModel): ParticipantDto | null {
-    return authInfo;
-  }
-
-  @Selector()
-  public static isSavingPassword$({ isSavingPassword }: AuthStateModel): boolean {
-    return isSavingPassword;
-  }
 
   @Action(Login)
   public login({ setState, dispatch }: StateContext<AuthStateModel>, { payload }: Login): Observable<void> {

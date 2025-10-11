@@ -18,7 +18,6 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, map, merge, Observable, of, pairwise, startWith } from 'rxjs';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
 import { PatchSettings, PatchViewModeSettings } from '@app/state/app.actions';
-import { AuthState } from '@modules/auth/state/auth.state';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
@@ -50,6 +49,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { Option } from '@shared/shared.models';
 import { AppSelectors } from '@app/state/app.selectors';
+import { AuthSelectors } from '@modules/auth/state/auth.selectors';
 
 @Component({
   selector: 'settings-edit',
@@ -138,7 +138,7 @@ export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanCo
     settingsState: AppSelectors.getSettingsState$,
     viewModeSettings: AppSelectors.getSlices.viewModeSettings,
     allQrCols: AppSelectors.getAllQrCols$,
-    authInfo: AuthState.getAuthInfo$,
+    authInfo: AuthSelectors.getSlices.authInfo,
   });
   protected readonly actions = createDispatchMap({
     patchSettings: PatchSettings,

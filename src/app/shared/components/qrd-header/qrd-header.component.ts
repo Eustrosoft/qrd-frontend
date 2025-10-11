@@ -8,9 +8,8 @@ import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition, Overlay } fro
 import { ThemePickerOverlayComponent } from '@shared/components/theme-picker-overlay/theme-picker-overlay.component';
 import { QrdLogoComponent } from '@shared/components/qrd-logo/qrd-logo.component';
 import { MatListItem, MatNavList } from '@angular/material/list';
-import { createSelectMap, select } from '@ngxs/store';
+import { createSelectMap } from '@ngxs/store';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
-import { AuthState } from '@modules/auth/state/auth.state';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { MiniProfileInfoComponent } from '@modules/auth/components/mini-profile-info/mini-profile-info.component';
 import { CreateMenuOverlayComponent } from '@shared/components/create-menu-overlay/create-menu-overlay.component';
@@ -19,6 +18,7 @@ import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.
 import { LeftSidenavComponent } from '@shared/components/left-sidenav/left-sidenav.component';
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
 import { AppSelectors } from '@app/state/app.selectors';
+import { AuthSelectors } from '@modules/auth/state/auth.selectors';
 
 @Component({
   selector: 'qrd-header',
@@ -53,8 +53,8 @@ export class QrdHeaderComponent {
   private readonly uiSidenavService = inject(UiSidenavService);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly selectors = createSelectMap({
-    isAuthenticated: select(AuthState.isAuthenticated$),
-    layoutConfigState: select(AppSelectors.getLayoutConfigState$),
+    isAuthenticated: AuthSelectors.getSlices.isAuthenticated,
+    layoutConfigState: AppSelectors.getLayoutConfigState$,
   });
 
   protected readonly HeaderLocalization = HeaderLocalization;

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { TextAvatarComponent } from '@shared/components/text-avatar/text-avatar.component';
-import { createSelectMap, select } from '@ngxs/store';
-import { AuthState } from '@modules/auth/state/auth.state';
+import { createSelectMap } from '@ngxs/store';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { MatIconButton } from '@angular/material/button';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
@@ -12,6 +11,7 @@ import { MatIcon } from '@angular/material/icon';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { OverlayAnimationDirective } from '@shared/directives/overlay-animation.directive';
 import { HeaderLocalization } from '@shared/components/qrd-header/qrd-header.constants';
+import { AuthSelectors } from '@modules/auth/state/auth.selectors';
 
 @Component({
   selector: 'mini-profile-info',
@@ -35,8 +35,8 @@ export class MiniProfileInfoComponent {
   protected readonly overlay = inject(Overlay);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly selectors = createSelectMap({
-    isAuthInfoLoading: select(AuthState.isAuthInfoLoading$),
-    authInfo: select(AuthState.getAuthInfo$),
+    isAuthInfoLoading: AuthSelectors.getSlices.isAuthenticated,
+    authInfo: AuthSelectors.getSlices.authInfo,
   });
 
   protected readonly HeaderLocalization = HeaderLocalization;

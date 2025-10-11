@@ -6,9 +6,9 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 import { MatIcon } from '@angular/material/icon';
 import { UiSidenavService } from '@ui/ui-sidenav/ui-sidenav.service';
 import { MatListItem, MatNavList } from '@angular/material/list';
-import { createSelectMap, select } from '@ngxs/store';
-import { AuthState } from '@modules/auth/state/auth.state';
+import { createSelectMap } from '@ngxs/store';
 import { AppSelectors } from '@app/state/app.selectors';
+import { AuthSelectors } from '@modules/auth/state/auth.selectors';
 
 @Component({
   selector: 'left-sidenav',
@@ -30,8 +30,8 @@ export class LeftSidenavComponent {
   private readonly uiSidenavService = inject(UiSidenavService);
 
   protected readonly selectors = createSelectMap({
-    isAuthenticated: select(AuthState.isAuthenticated$),
-    layoutConfigState: select(AppSelectors.getLayoutConfigState$),
+    isAuthenticated: AuthSelectors.getSlices.isAuthenticated,
+    layoutConfigState: AppSelectors.getLayoutConfigState$,
   });
 
   protected closeSidenavMenu(): void {

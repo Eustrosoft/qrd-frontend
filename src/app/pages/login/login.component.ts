@@ -13,9 +13,9 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 import { createSelectMap, dispatch } from '@ngxs/store';
 import { Login } from '@modules/auth/state/auth.actions';
 import { MatIcon } from '@angular/material/icon';
-import { AuthState } from '@modules/auth/state/auth.state';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { AppSelectors } from '@app/state/app.selectors';
+import { AuthSelectors } from '@modules/auth/state/auth.selectors';
 
 @Component({
   selector: 'login',
@@ -44,7 +44,7 @@ export class LoginComponent {
   private readonly login = dispatch(Login);
 
   protected readonly selectors = createSelectMap({
-    isAuthInfoLoading: AuthState.isAuthInfoLoading$,
+    isAuthInfoLoading: AuthSelectors.getSlices.isAuthInfoLoading,
     configState: AppSelectors.getConfigState$,
   });
 

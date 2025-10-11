@@ -1,12 +1,12 @@
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { inject } from '@angular/core';
 import { select } from '@ngxs/store';
-import { AuthState } from '@modules/auth/state/auth.state';
+import { AuthSelectors } from '@modules/auth/state/auth.selectors';
 
 export const loginGuard: CanActivateFn = (): boolean | UrlTree => {
   const router = inject(Router);
 
-  if (!select(AuthState.isAuthenticated$)()) {
+  if (!select(AuthSelectors.getSlices.isAuthenticated)()) {
     return true;
   }
 

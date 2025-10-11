@@ -6,7 +6,6 @@ import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionS
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
-import { AuthState } from '@modules/auth/state/auth.state';
 import { PasswordChangeForm } from '@app/pages/settings/settings.models';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { SettingsLocalization } from '@app/pages/settings/settings.constants';
@@ -24,6 +23,7 @@ import { MatIcon } from '@angular/material/icon';
 import { passwordMatchValidator } from '@shared/validators/password-match.validator';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { AuthSelectors } from '@modules/auth/state/auth.selectors';
 
 @Component({
   selector: 'password-change',
@@ -91,7 +91,7 @@ export class PasswordChangeComponent implements CanComponentDeactivate {
   );
 
   protected readonly selectors = createSelectMap({
-    isSavingPassword: AuthState.isSavingPassword$,
+    isSavingPassword: AuthSelectors.getSlices.isSavingPassword,
   });
   protected readonly actions = createDispatchMap({
     changePassword: ChangePassword,
