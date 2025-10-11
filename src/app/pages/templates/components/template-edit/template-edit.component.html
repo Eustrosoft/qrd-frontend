@@ -193,11 +193,11 @@
                 <th mat-header-cell *matHeaderCellDef>{{ SharedLocalization.name }}</th>
                 <td mat-cell *matCellDef="let element">
                   <ui-grid-block gridTemplateColumns="1fr" rowGapSize="8">
-                    <mat-form-field class="form-field-lg w-320">
+                    <mat-form-field class="form-field-lg w-300">
                       <mat-label> {{ SharedLocalization.name }} </mat-label>
                       <input [formControl]="element.controls.caption" matInput />
                     </mat-form-field>
-                    <mat-form-field class="form-field-lg w-320">
+                    <mat-form-field class="form-field-lg w-300">
                       <mat-label> {{ SharedLocalization.placeholder }} </mat-label>
                       <input [formControl]="element.controls.placeholder" matInput />
                     </mat-form-field>
@@ -211,15 +211,19 @@
                 </th>
                 <td mat-cell *matCellDef="let element">
                   <ui-grid-block gridTemplateColumns="1fr" rowGapSize="8">
-                    <mat-slide-toggle [formControl]="element.controls.isStatic" class="slide-toggle"></mat-slide-toggle>
-                    <mat-slide-toggle [formControl]="element.controls.isPublic" class="slide-toggle"></mat-slide-toggle>
+                    <mat-slide-toggle [formControl]="element.controls.isStatic" class="slide-toggle">
+                      {{ SharedLocalization.isStatic }}
+                    </mat-slide-toggle>
+                    <mat-slide-toggle [formControl]="element.controls.isPublic" class="slide-toggle">
+                      {{ SharedLocalization.isPublic }}
+                    </mat-slide-toggle>
                   </ui-grid-block>
                 </td>
               </ng-container>
               <ng-container matColumnDef="fieldOrder">
                 <th mat-header-cell *matHeaderCellDef>{{ TemplatesLocalization.position }}</th>
                 <td mat-cell *matCellDef="let element">
-                  <mat-form-field class="form-field-lg w-88">
+                  <mat-form-field class="form-field-lg w-64">
                     <input [formControl]="element.controls.fieldOrder" matInput />
                   </mat-form-field>
                 </td>
@@ -227,7 +231,7 @@
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>FN</th>
                 <td mat-cell *matCellDef="let element">
-                  <mat-form-field class="form-field-lg w-88">
+                  <mat-form-field class="form-field-lg w-128">
                     <input [formControl]="element.controls.name" matInput />
                   </mat-form-field>
                 </td>
