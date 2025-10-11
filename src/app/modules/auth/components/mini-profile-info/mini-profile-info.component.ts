@@ -35,7 +35,7 @@ export class MiniProfileInfoComponent {
   protected readonly overlay = inject(Overlay);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly selectors = createSelectMap({
-    isAuthInfoLoading: AuthSelectors.getSlices.isAuthenticated,
+    isAuthInfoLoading: AuthSelectors.getSlices.isAuthInfoLoading,
     authInfo: AuthSelectors.getSlices.authInfo,
   });
 

@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, DestroyRef, effect, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  computed,
+  DestroyRef,
+  effect,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { DeleteQrCards, FetchQrCardList, SetSelectedQrCards } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { ViewListItemComponent } from '@shared/components/view-list-item/view-list-item.component';
@@ -54,6 +63,7 @@ export class QrCardListComponent implements OnInit {
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly window = inject(WINDOW);
+  protected readonly cdRef = inject(ChangeDetectorRef);
   protected readonly uiSidenavService = inject(UiSidenavService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly destroyRef = inject(DestroyRef);
@@ -71,7 +81,7 @@ export class QrCardListComponent implements OnInit {
     qrCardListSkeletonLoaders: QrCardsSelectors.getQrCardListSkeletonLoaders$,
     qrCardList: QrCardsSelectors.getQrCardList$,
     selectedQrCardList: QrCardsSelectors.getSlices.selectedQrCardList,
-    qrTableColumnVisibility: AppSelectors.qrTableColumnVisibility$,
+    qrTableColumnVisibility: AppSelectors.getTableColumnVisibility,
     settingsState: AppSelectors.getSettingsState$,
   });
 
@@ -88,7 +98,7 @@ export class QrCardListComponent implements OnInit {
   public readonly selectionChanged = toSignal(
     this.selectionModel.changed.asObservable().pipe(
       map(() => this.selectionModel.selected),
-      startWith<number[]>([]),
+      startWith<number[]>(this.selectionModel.selected),
     ),
     { requireSync: true },
   );
@@ -96,6 +106,7 @@ export class QrCardListComponent implements OnInit {
   private readonly selChangeEff = effect(() => {
     const selection = this.selectionChanged();
     this.actions.setSelectedQrCards(selection);
+    this.cdRef.detectChanges();
   });
 
   private readonly selEff = effect(() => {

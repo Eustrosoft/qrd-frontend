@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Action, State, StateContext, StateToken } from '@ngxs/store';
+import { Action, select, State, StateContext, StateToken } from '@ngxs/store';
 import { ChangePassword, FetchAuthInfo, Login, Logout, ResetAuthState, RestoreAuth } from './auth.actions';
 import { AuthService } from '@modules/auth/auth.service';
 import { catchError, Observable, switchMap, tap, throwError } from 'rxjs';
@@ -8,9 +8,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { patch } from '@ngxs/store/operators';
 import { LocalStorageService } from '@shared/service/local-storage.service';
 import { ParticipantDto } from '@api/api.models';
-import { FetchSettings, ResetAppState } from '@app/state/app.actions';
+import { FetchLayoutConfig, FetchSettings, FetchViewModeSettings, ResetAppState } from '@app/state/app.actions';
 import { SnackbarService } from '@shared/service/snackbar.service';
 import { SettingsLocalization } from '@app/pages/settings/settings.constants';
+import { AppSelectors } from '@app/state/app.selectors';
 
 export interface AuthStateModel {
   isAuthenticated: boolean;
@@ -39,6 +40,7 @@ export class AuthState {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly snackbarService = inject(SnackbarService);
+  private readonly locale = select(AppSelectors.getSlices.locale);
 
   @Action(Login)
   public login({ setState, dispatch }: StateContext<AuthStateModel>, { payload }: Login): Observable<void> {
@@ -52,8 +54,8 @@ export class AuthState {
           this.router.navigateByUrl(deeplink ?? `/${AppRoutes.qrCards}`);
         },
       }),
-      switchMap(() => dispatch(FetchAuthInfo)),
-      switchMap(() => dispatch(FetchSettings)),
+      switchMap(() => dispatch([FetchAuthInfo, FetchSettings, FetchViewModeSettings])),
+      switchMap(() => dispatch(new FetchLayoutConfig(this.locale()))),
       catchError((err) => {
         setState(patch({ isAuthInfoLoading: false }));
         return throwError(() => err);

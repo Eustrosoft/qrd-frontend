@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { ViewListItemComponent } from '@shared/components/view-list-item/view-list-item.component';
@@ -47,6 +55,7 @@ import { FilesSelectors } from '@app/pages/files/state/files.selectors';
   providers: [RangeSelectorService],
 })
 export class FileListComponent implements OnInit {
+  protected readonly cdRef = inject(ChangeDetectorRef);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly rangeSelectorService = inject(RangeSelectorService);
   protected readonly activatedRoute = inject(ActivatedRoute);
@@ -68,7 +77,7 @@ export class FileListComponent implements OnInit {
   public readonly selectionChanged = toSignal(
     this.selectionModel.changed.asObservable().pipe(
       map(() => this.selectionModel.selected),
-      startWith<number[]>([]),
+      startWith<number[]>(this.selectionModel.selected),
     ),
     { requireSync: true },
   );
@@ -76,6 +85,7 @@ export class FileListComponent implements OnInit {
   private readonly selChangeEff = effect(() => {
     const selection = this.selectionChanged();
     this.actions.setSelectedFiles(selection);
+    this.cdRef.detectChanges();
   });
 
   private readonly selEff = effect(() => {

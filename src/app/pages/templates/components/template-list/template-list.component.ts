@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { MatMenuItem } from '@angular/material/menu';
@@ -41,6 +49,7 @@ import { TemplatesSelectors } from '@app/pages/templates/state/templates.selecto
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TemplateListComponent implements OnInit {
+  protected readonly cdRef = inject(ChangeDetectorRef);
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly rangeSelectorService = inject(RangeSelectorService);
   protected readonly activatedRoute = inject(ActivatedRoute);
@@ -61,7 +70,7 @@ export class TemplateListComponent implements OnInit {
   public readonly selectionChanged = toSignal(
     this.selectionModel.changed.asObservable().pipe(
       map(() => this.selectionModel.selected),
-      startWith<number[]>([]),
+      startWith<number[]>(this.selectionModel.selected),
     ),
     { requireSync: true },
   );
@@ -69,6 +78,7 @@ export class TemplateListComponent implements OnInit {
   private readonly selChangeEff = effect(() => {
     const selection = this.selectionChanged();
     this.actions.setSelectedTemplates(selection);
+    this.cdRef.detectChanges();
   });
 
   private readonly selEff = effect(() => {

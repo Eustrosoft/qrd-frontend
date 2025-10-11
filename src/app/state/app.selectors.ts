@@ -47,7 +47,7 @@ export class AppSelectors {
   }
 
   @Selector([AppState])
-  public static qrTableColumnVisibility$({ settings }: AppStateModel): Record<QrTableColumnFieldName, boolean> {
+  public static getTableColumnVisibility({ settings }: AppStateModel): Record<QrTableColumnFieldName, boolean> {
     const columns = settings.qrTableColumns;
 
     return {
