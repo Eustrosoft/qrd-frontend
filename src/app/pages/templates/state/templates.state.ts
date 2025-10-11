@@ -1,5 +1,5 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
+import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { catchError, concatMap, EMPTY, from, map, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
 import { patch } from '@ngxs/store/operators';
 import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, SKELETON_TIMER } from '@app/app.constants';
@@ -93,94 +93,6 @@ export class TemplatesState {
   private readonly snackbarService = inject(SnackbarService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly templateFormFactoryService = inject(TemplateFormFactoryService);
-
-  @Selector()
-  public static getSearchValue$({ searchValue }: TemplatesStateModel): string {
-    return searchValue;
-  }
-
-  @Selector()
-  public static isTemplateListLoading$({ isTemplateListLoading }: TemplatesStateModel): boolean {
-    return isTemplateListLoading;
-  }
-
-  @Selector()
-  public static isTemplateListLoadErr$({ isTemplateListLoadErr }: TemplatesStateModel): boolean {
-    return isTemplateListLoadErr;
-  }
-
-  @Selector()
-  public static getTemplateListSkeletonLoaders$({ templateListSkeletonLoaders }: TemplatesStateModel): number[] {
-    return Array.from({ length: templateListSkeletonLoaders }, (_, i) => i);
-  }
-
-  @Selector()
-  public static getTemplateList$({ templateList, searchValue }: TemplatesStateModel): TemplateDto[] {
-    return templateList.filter(
-      (template) =>
-        template.name.toLowerCase().includes(searchValue) || template.description.toLowerCase().includes(searchValue),
-    );
-  }
-
-  @Selector()
-  public static isTemplateLoading$({ isTemplateLoading }: TemplatesStateModel): boolean {
-    return isTemplateLoading;
-  }
-
-  @Selector()
-  public static isTemplateLoadErr$({ isTemplateLoadErr }: TemplatesStateModel): boolean {
-    return isTemplateLoadErr;
-  }
-
-  @Selector()
-  public static isDeleteInProgress$({ isDeleteInProgress }: TemplatesStateModel): boolean {
-    return isDeleteInProgress;
-  }
-
-  @Selector()
-  public static isSaveInProgress$({ isSaveInProgress }: TemplatesStateModel): boolean {
-    return isSaveInProgress;
-  }
-
-  @Selector()
-  public static isTemplateFilesLoading$({ isTemplateFilesLoading }: TemplatesStateModel): boolean {
-    return isTemplateFilesLoading;
-  }
-
-  @Selector()
-  public static isFileListLoading$({ isFileListLoading }: TemplatesStateModel): boolean {
-    return isFileListLoading;
-  }
-
-  @Selector()
-  public static getTemplate$({ template }: TemplatesStateModel): TemplateDto | null {
-    return template;
-  }
-
-  @Selector()
-  public static getTemplateUsagesState$({
-    isTemplateUsagesLoading,
-    qrTemplateUsages,
-  }: TemplatesStateModel): Pick<TemplatesStateModel, 'isTemplateUsagesLoading' | 'qrTemplateUsages'> {
-    return {
-      isTemplateUsagesLoading,
-      qrTemplateUsages,
-    };
-  }
-
-  @Selector()
-  public static getSelectedTemplateList$({ selectedTemplateList }: TemplatesStateModel): number[] {
-    return selectedTemplateList;
-  }
-
-  @Selector()
-  public static getFilesState$({
-    fileList,
-    isFileListLoading,
-    isFileListLoadErr,
-  }: TemplatesStateModel): Pick<TemplatesStateModel, 'fileList' | 'isFileListLoading' | 'isFileListLoadErr'> {
-    return { fileList, isFileListLoading, isFileListLoadErr };
-  }
 
   @Action(FetchTemplateList)
   public fetchTemplateList(

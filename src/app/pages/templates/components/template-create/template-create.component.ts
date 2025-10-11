@@ -10,13 +10,13 @@ import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { TemplatesLocalization } from '@app/pages/templates/templates.constants';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { MatError } from '@angular/material/form-field';
-import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { CreateTemplate } from '@app/pages/templates/state/templates.actions';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
+import { TemplatesSelectors } from '@app/pages/templates/state/templates.selectors';
 
 @Component({
   selector: 'template-create',
@@ -46,7 +46,7 @@ export class TemplateCreateComponent {
   protected readonly TemplatesLocalization = TemplatesLocalization;
 
   protected readonly selectors = createSelectMap({
-    isSaveInProgress: TemplatesState.isSaveInProgress$,
+    isSaveInProgress: TemplatesSelectors.getSlices.isSaveInProgress,
   });
   protected readonly actions = createDispatchMap({
     createTemplate: CreateTemplate,

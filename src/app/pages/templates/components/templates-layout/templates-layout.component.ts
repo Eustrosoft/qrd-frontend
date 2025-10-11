@@ -6,7 +6,6 @@ import { DataViewComponent } from '@shared/components/data-view/data-view.compon
 import { MatButton, MatMiniFabButton } from '@angular/material/button';
 import { SelectionBarComponent } from '@shared/components/selection-bar/selection-bar.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
-import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import {
   DeleteTemplates,
   FetchTemplateList,
@@ -17,6 +16,7 @@ import {
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
 import { SharedLocalization } from '@shared/shared.constants';
 import { RouterOutlet } from '@angular/router';
+import { TemplatesSelectors } from '@app/pages/templates/state/templates.selectors';
 
 @Component({
   selector: 'templates-layout',
@@ -40,9 +40,9 @@ export class TemplatesLayoutComponent {
   protected readonly SharedLocalization = SharedLocalization;
 
   protected readonly selectors = createSelectMap({
-    searchValue: TemplatesState.getSearchValue$,
-    selectedTemplateList: TemplatesState.getSelectedTemplateList$,
-    isDeleteInProgress: TemplatesState.isDeleteInProgress$,
+    searchValue: TemplatesSelectors.getSlices.searchValue,
+    selectedTemplateList: TemplatesSelectors.getSlices.selectedTemplateList,
+    isDeleteInProgress: TemplatesSelectors.getSlices.isDeleteInProgress,
   });
   protected readonly actions = createDispatchMap({
     fetchTemplateList: FetchTemplateList,

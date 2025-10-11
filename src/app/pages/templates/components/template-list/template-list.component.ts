@@ -10,7 +10,6 @@ import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { SelectionModel } from '@angular/cdk/collections';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, startWith } from 'rxjs';
-import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { AppRoutes } from '@app/app.constants';
 import { SharedLocalization } from '@shared/shared.constants';
 import { DeleteTemplates, FetchTemplateList, SetSelectedTemplates } from '@app/pages/templates/state/templates.actions';
@@ -20,6 +19,7 @@ import { MatButton } from '@angular/material/button';
 import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
+import { TemplatesSelectors } from '@app/pages/templates/state/templates.selectors';
 
 @Component({
   selector: 'template-list',
@@ -45,11 +45,11 @@ export class TemplateListComponent implements OnInit {
   protected readonly rangeSelectorService = inject(RangeSelectorService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly selectors = createSelectMap({
-    isTemplateListLoading: TemplatesState.isTemplateListLoading$,
-    isTemplateListLoadErr: TemplatesState.isTemplateListLoadErr$,
-    templateListSkeletonLoaders: TemplatesState.getTemplateListSkeletonLoaders$,
-    templateList: TemplatesState.getTemplateList$,
-    selectedTemplateList: TemplatesState.getSelectedTemplateList$,
+    isTemplateListLoading: TemplatesSelectors.getSlices.isTemplateListLoading,
+    isTemplateListLoadErr: TemplatesSelectors.getSlices.isTemplateListLoadErr,
+    templateListSkeletonLoaders: TemplatesSelectors.getTemplateListSkeletonLoaders$,
+    templateList: TemplatesSelectors.getSlices.templateList,
+    selectedTemplateList: TemplatesSelectors.getSlices.selectedTemplateList,
   });
   protected readonly actions = createDispatchMap({
     fetchTemplateList: FetchTemplateList,

@@ -9,11 +9,11 @@ import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component'
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { createSelectMap } from '@ngxs/store';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
-import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { AttrListItemComponent } from '@shared/components/attr-list-item/attr-list-item.component';
 import { CollapsibleContainerComponent } from '@shared/components/collapsible-container/collapsible-container.component';
 import { CollapsibleListDirective } from '@shared/directives/collapsible-list.directive';
 import { CollapsibleListItemDirective } from '@shared/directives/collapsible-list-item.directive';
+import { TemplatesSelectors } from '@app/pages/templates/state/templates.selectors';
 
 @Component({
   selector: 'template-main',
@@ -38,7 +38,7 @@ export class TemplateMainComponent {
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly selectors = createSelectMap({
-    template: TemplatesState.getTemplate$,
+    template: TemplatesSelectors.getSlices.template,
   });
 
   protected readonly SharedLocalization = SharedLocalization;

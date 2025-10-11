@@ -18,7 +18,6 @@ import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionS
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
-import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import {
   AddFileToTemplate,
   ClearTemplate,
@@ -88,6 +87,7 @@ import {
   MatTable,
 } from '@angular/material/table';
 import { AppSelectors } from '@app/state/app.selectors';
+import { TemplatesSelectors } from '@app/pages/templates/state/templates.selectors';
 
 @Component({
   selector: 'template-edit',
@@ -180,13 +180,13 @@ export class TemplateEditComponent implements OnInit, AfterContentInit, OnDestro
 
   protected readonly selectors = createSelectMap({
     viewModeSettings: AppSelectors.getSlices.viewModeSettings,
-    isTemplateLoading: TemplatesState.isTemplateLoading$,
-    isTemplateLoadErr: TemplatesState.isTemplateLoadErr$,
-    isSaveInProgress: TemplatesState.isSaveInProgress$,
-    isTemplateFilesLoading: TemplatesState.isTemplateFilesLoading$,
-    template: TemplatesState.getTemplate$,
+    isTemplateLoading: TemplatesSelectors.getSlices.isTemplateLoading,
+    isTemplateLoadErr: TemplatesSelectors.getSlices.isTemplateLoadErr,
+    isSaveInProgress: TemplatesSelectors.getSlices.isSaveInProgress,
+    isTemplateFilesLoading: TemplatesSelectors.getSlices.isTemplateFilesLoading,
+    template: TemplatesSelectors.getSlices.template,
     inputType: DictionaryRegistryState.getDictionary$<DictionaryItem>('INPUT_TYPE'),
-    filesState: TemplatesState.getFilesState$,
+    filesState: TemplatesSelectors.getFilesState$,
     fileAttachmentMode: FileUploadState.getFileAttachmentMode$,
   });
 

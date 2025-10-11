@@ -13,7 +13,6 @@ import { TabLink } from '@shared/shared.models';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { AppRoutes } from '@app/app.constants';
 import { DeleteTemplates, FetchTemplate, FetchTemplateUsages } from '@app/pages/templates/state/templates.actions';
-import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { Title } from '@angular/platform-browser';
@@ -22,6 +21,7 @@ import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.compon
 import { MatIcon } from '@angular/material/icon';
 import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { TemplatesSelectors } from '@app/pages/templates/state/templates.selectors';
 
 @Component({
   selector: 'template-view',
@@ -58,11 +58,11 @@ export class TemplateViewComponent implements OnInit {
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
 
   protected readonly selectors = createSelectMap({
-    isTemplateLoading: TemplatesState.isTemplateLoading$,
-    isTemplateLoadErr: TemplatesState.isTemplateLoadErr$,
-    template: TemplatesState.getTemplate$,
-    templateUsagesState: TemplatesState.getTemplateUsagesState$,
-    isDeleteInProgress: TemplatesState.isDeleteInProgress$,
+    isTemplateLoading: TemplatesSelectors.getSlices.isTemplateLoading,
+    isTemplateLoadErr: TemplatesSelectors.getSlices.isTemplateLoadErr,
+    template: TemplatesSelectors.getSlices.template,
+    templateUsagesState: TemplatesSelectors.getTemplateUsagesState$,
+    isDeleteInProgress: TemplatesSelectors.getSlices.isDeleteInProgress,
   });
 
   protected readonly actions = createDispatchMap({

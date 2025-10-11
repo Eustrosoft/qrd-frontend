@@ -25,7 +25,6 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 import { TemplateDto } from '@api/templates/templates-api.models';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
-import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { DeleteTemplates, FetchTemplateList, SetSelectedTemplates } from '@app/pages/templates/state/templates.actions';
 import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -38,6 +37,7 @@ import { TABLE_CONTEXT, TableContext } from '@cdk/tokens/table.tokens';
 import { DatePipe } from '@angular/common';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { MatButton } from '@angular/material/button';
+import { TemplatesSelectors } from '@app/pages/templates/state/templates.selectors';
 
 @Component({
   selector: 'template-table',
@@ -85,10 +85,10 @@ export class TemplateTableComponent implements OnInit, AfterViewInit {
   protected readonly AppRoutes = AppRoutes;
 
   protected readonly selectors = createSelectMap({
-    isTemplateListLoading: TemplatesState.isTemplateListLoading$,
-    isTemplateListLoadErr: TemplatesState.isTemplateListLoadErr$,
-    templateList: TemplatesState.getTemplateList$,
-    selectedTemplateList: TemplatesState.getSelectedTemplateList$,
+    isTemplateListLoading: TemplatesSelectors.getSlices.isTemplateListLoading,
+    isTemplateListLoadErr: TemplatesSelectors.getSlices.isTemplateListLoadErr,
+    templateList: TemplatesSelectors.getSlices.templateList,
+    selectedTemplateList: TemplatesSelectors.getSlices.selectedTemplateList,
   });
   protected readonly actions = createDispatchMap({
     fetchTemplateList: FetchTemplateList,
