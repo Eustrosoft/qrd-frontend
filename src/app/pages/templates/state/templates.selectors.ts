@@ -11,6 +11,15 @@ export class TemplatesSelectors {
     (length) => Array.from({ length }, (_, i) => i),
   );
 
+  public static getTemplateList$ = createSelector(
+    [TemplatesSelectors.getSlices.templateList, TemplatesSelectors.getSlices.searchValue],
+    (templateList, searchValue) =>
+      templateList.filter(
+        (template) =>
+          template.name.toLowerCase().includes(searchValue) || template.description.toLowerCase().includes(searchValue),
+      ),
+  );
+
   public static getTemplateUsagesState$ = createPickSelector(TemplatesSelectors.getFullState, [
     'isTemplateUsagesLoading',
     'qrTemplateUsages',

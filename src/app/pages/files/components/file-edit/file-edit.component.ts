@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, OnInit, viewChild } from '@angular/core';
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
 import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
-import { FilesState } from '@app/pages/files/state/files.state';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FetchFile } from '@app/pages/files/state/files.actions';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
@@ -24,6 +23,7 @@ import { BannerComponent } from '@shared/components/banner/banner.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { Title } from '@angular/platform-browser';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
+import { FilesSelectors } from '@app/pages/files/state/files.selectors';
 
 @Component({
   selector: 'file-edit',
@@ -73,10 +73,10 @@ export class FileEditComponent implements OnInit, CanComponentDeactivate {
     fileAttachmentMode: FileUploadState.getFileAttachmentMode$,
     isLoading: FileUploadState.isLoading$,
     uploadState: FileUploadState.getUploadState$,
-    isFileLoading: FilesState.isFileLoading$,
-    isFileLoadErr: FilesState.isFileLoadErr$,
-    file: FilesState.getFile$,
-    isFileDownloading: FilesState.isFileDownloading$,
+    isFileLoading: FilesSelectors.getSlices.isFileLoading,
+    isFileLoadErr: FilesSelectors.getSlices.isFileLoadErr,
+    file: FilesSelectors.getSlices.file,
+    isFileDownloading: FilesSelectors.getSlices.isFileDownloading,
   });
 
   protected readonly actions = createDispatchMap({

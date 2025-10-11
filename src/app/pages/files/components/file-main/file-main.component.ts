@@ -5,13 +5,13 @@ import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component'
 import { FileStorageTypeMap, RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { IS_SMALL_SCREEN } from '@cdk/tokens/breakpoint.tokens';
 import { createSelectMap } from '@ngxs/store';
-import { FilesState } from '@app/pages/files/state/files.state';
 import { BoolToTextPipe } from '@shared/pipe/bool-to-text.pipe';
 import { DatePipe } from '@angular/common';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { FilesSelectors } from '@app/pages/files/state/files.selectors';
 
 @Component({
   selector: 'file-main',
@@ -33,7 +33,7 @@ import { MatIcon } from '@angular/material/icon';
 export class FileMainComponent {
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
   protected readonly selectors = createSelectMap({
-    file: FilesState.getFile$,
+    file: FilesSelectors.getSlices.file,
   });
 
   protected readonly SharedLocalization = SharedLocalization;

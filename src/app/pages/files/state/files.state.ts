@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
+import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { FileDto } from '@api/files/files-api.models';
 import {
   catchError,
@@ -91,76 +91,6 @@ export class FilesState {
   private readonly matDialog = inject(MatDialog);
   private readonly snackbarService = inject(SnackbarService);
   private readonly window = inject(WINDOW);
-
-  @Selector()
-  public static getSearchValue$({ searchValue }: FilesStateModel): string {
-    return searchValue;
-  }
-
-  @Selector()
-  public static isFileListLoading$({ isFileListLoading }: FilesStateModel): boolean {
-    return isFileListLoading;
-  }
-
-  @Selector()
-  public static isFileListLoadErr$({ isFileListLoadErr }: FilesStateModel): boolean {
-    return isFileListLoadErr;
-  }
-
-  @Selector()
-  public static getFileListSkeletonLoaders$({ fileListSkeletonLoaders }: FilesStateModel): number[] {
-    return Array.from({ length: fileListSkeletonLoaders }, (_, i) => i);
-  }
-
-  @Selector()
-  public static getFileList$({ fileList, searchValue }: FilesStateModel): FileDto[] {
-    return fileList.filter(
-      (file) => file.name.toLowerCase().includes(searchValue) || file.description.toLowerCase().includes(searchValue),
-    );
-  }
-
-  @Selector()
-  public static isFileLoading$({ isFileLoading }: FilesStateModel): boolean {
-    return isFileLoading;
-  }
-
-  @Selector()
-  public static isFileLoadErr$({ isFileLoadErr }: FilesStateModel): boolean {
-    return isFileLoadErr;
-  }
-
-  @Selector()
-  public static isFileDownloading$({ isFileDownloading }: FilesStateModel): boolean {
-    return isFileDownloading;
-  }
-
-  @Selector()
-  public static isDeleteInProgress$({ isDeleteInProgress }: FilesStateModel): boolean {
-    return isDeleteInProgress;
-  }
-
-  @Selector()
-  public static getFile$({ file }: FilesStateModel): FileDto | null {
-    return file;
-  }
-
-  @Selector()
-  public static getFileUsagesState$({
-    isFileUsagesLoading,
-    qrFileUsages,
-    templateFileUsages,
-  }: FilesStateModel): Pick<FilesStateModel, 'isFileUsagesLoading' | 'qrFileUsages' | 'templateFileUsages'> {
-    return {
-      isFileUsagesLoading,
-      qrFileUsages,
-      templateFileUsages,
-    };
-  }
-
-  @Selector()
-  public static getSelectedFileList$({ selectedFileList }: FilesStateModel): number[] {
-    return selectedFileList;
-  }
 
   @Action(FetchFileList)
   public fetchFileList(

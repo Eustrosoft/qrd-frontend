@@ -11,7 +11,6 @@ import { MatIcon } from '@angular/material/icon';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, startWith } from 'rxjs';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { FilesState } from '@app/pages/files/state/files.state';
 import { DeleteFiles, FetchFileList, SetSelectedFiles } from '@app/pages/files/state/files.actions';
 import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
@@ -23,6 +22,7 @@ import { RangeSelectorService } from '@shared/service/range-selector.service';
 import { MatButton } from '@angular/material/button';
 import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
+import { FilesSelectors } from '@app/pages/files/state/files.selectors';
 
 @Component({
   selector: 'file-list',
@@ -51,11 +51,11 @@ export class FileListComponent implements OnInit {
   protected readonly rangeSelectorService = inject(RangeSelectorService);
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly selectors = createSelectMap({
-    isFileListLoading: FilesState.isFileListLoading$,
-    isFileListLoadErr: FilesState.isFileListLoadErr$,
-    fileListSkeletonLoaders: FilesState.getFileListSkeletonLoaders$,
-    fileList: FilesState.getFileList$,
-    selectedFileList: FilesState.getSelectedFileList$,
+    isFileListLoading: FilesSelectors.getSlices.isFileListLoading,
+    isFileListLoadErr: FilesSelectors.getSlices.isFileListLoadErr,
+    fileListSkeletonLoaders: FilesSelectors.getFileListSkeletonLoaders$,
+    fileList: FilesSelectors.getFileList$,
+    selectedFileList: FilesSelectors.getSlices.selectedFileList,
   });
   protected readonly actions = createDispatchMap({
     fetchFileList: FetchFileList,

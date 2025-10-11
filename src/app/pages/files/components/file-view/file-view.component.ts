@@ -9,7 +9,6 @@ import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { TabLink } from '@shared/shared.models';
 import { AppRoutes } from '@app/app.constants';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
-import { FilesState } from '@app/pages/files/state/files.state';
 import { DeleteFiles, DownloadFile, FetchFile, FetchFileUsages } from '@app/pages/files/state/files.actions';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
@@ -22,6 +21,7 @@ import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.compon
 import { MatIcon } from '@angular/material/icon';
 import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
+import { FilesSelectors } from '@app/pages/files/state/files.selectors';
 
 @Component({
   selector: 'file-view',
@@ -56,12 +56,12 @@ export class FileViewComponent implements OnInit {
   protected readonly routeParams = toSignal(this.activatedRoute.params, { requireSync: true });
 
   protected readonly selectors = createSelectMap({
-    isFileLoading: FilesState.isFileLoading$,
-    isFileLoadErr: FilesState.isFileLoadErr$,
-    file: FilesState.getFile$,
-    fileUsagesState: FilesState.getFileUsagesState$,
-    isFileDownloading: FilesState.isFileDownloading$,
-    isDeleteInProgress: FilesState.isDeleteInProgress$,
+    isFileLoading: FilesSelectors.getSlices.isFileLoading,
+    isFileLoadErr: FilesSelectors.getSlices.isFileLoadErr,
+    file: FilesSelectors.getSlices.file,
+    fileUsagesState: FilesSelectors.getFileUsagesState$,
+    isFileDownloading: FilesSelectors.getSlices.isFileDownloading,
+    isDeleteInProgress: FilesSelectors.getSlices.isDeleteInProgress,
   });
 
   protected readonly actions = createDispatchMap({

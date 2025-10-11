@@ -30,7 +30,6 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 import { SharedLocalization } from '@shared/shared.constants';
 import { AppRoutes } from '@app/app.constants';
-import { FilesState } from '@app/pages/files/state/files.state';
 import { DeleteFiles, FetchFileList, SetSelectedFiles } from '@app/pages/files/state/files.actions';
 import { DatePipe } from '@angular/common';
 import { MatButton } from '@angular/material/button';
@@ -41,6 +40,7 @@ import { MatIcon } from '@angular/material/icon';
 import { FilesLocalization } from '@app/pages/files/files.constants';
 import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 import { BoolToTextPipe } from '@shared/pipe/bool-to-text.pipe';
+import { FilesSelectors } from '@app/pages/files/state/files.selectors';
 
 @Component({
   selector: 'file-table',
@@ -91,10 +91,10 @@ export class FileTableComponent implements OnInit, AfterViewInit {
   protected readonly AppRoutes = AppRoutes;
 
   protected readonly selectors = createSelectMap({
-    isFileListLoading: FilesState.isFileListLoading$,
-    isFileListLoadErr: FilesState.isFileListLoadErr$,
-    fileList: FilesState.getFileList$,
-    selectedFileList: FilesState.getSelectedFileList$,
+    isFileListLoading: FilesSelectors.getSlices.isFileListLoading,
+    isFileListLoadErr: FilesSelectors.getSlices.isFileListLoadErr,
+    fileList: FilesSelectors.getFileList$,
+    selectedFileList: FilesSelectors.getSlices.selectedFileList,
   });
   protected readonly actions = createDispatchMap({
     fetchFileList: FetchFileList,

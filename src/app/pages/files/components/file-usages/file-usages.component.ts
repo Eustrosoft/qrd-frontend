@@ -3,12 +3,12 @@ import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { createSelectMap } from '@ngxs/store';
-import { FilesState } from '@app/pages/files/state/files.state';
 import { UiBadgeComponent } from '@ui/ui-badge/ui-badge.component';
 import { RouterLink } from '@angular/router';
 import { AppRoutes } from '@app/app.constants';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
+import { FilesSelectors } from '@app/pages/files/state/files.selectors';
 
 @Component({
   selector: 'file-usages',
@@ -30,6 +30,6 @@ export class FileUsagesComponent {
   protected readonly SharedLocalization = SharedLocalization;
 
   protected readonly selectors = createSelectMap({
-    fileUsagesState: FilesState.getFileUsagesState$,
+    fileUsagesState: FilesSelectors.getFileUsagesState$,
   });
 }

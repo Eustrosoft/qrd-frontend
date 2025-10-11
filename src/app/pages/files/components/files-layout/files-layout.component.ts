@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, DOCUMENT, inject } from '@angular/core';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
-import { FilesState } from '@app/pages/files/state/files.state';
 import {
   DeleteFiles,
   FetchFileList,
@@ -17,6 +16,7 @@ import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
 import { SharedLocalization } from '@shared/shared.constants';
 import { RouterOutlet } from '@angular/router';
+import { FilesSelectors } from '@app/pages/files/state/files.selectors';
 
 @Component({
   selector: 'files-layout',
@@ -40,9 +40,9 @@ export class FilesLayoutComponent {
   protected readonly SharedLocalization = SharedLocalization;
 
   protected readonly selectors = createSelectMap({
-    searchValue: FilesState.getSearchValue$,
-    selectedFileList: FilesState.getSelectedFileList$,
-    isDeleteInProgress: FilesState.isDeleteInProgress$,
+    searchValue: FilesSelectors.getSlices.searchValue,
+    selectedFileList: FilesSelectors.getSlices.selectedFileList,
+    isDeleteInProgress: FilesSelectors.getSlices.isDeleteInProgress,
   });
   protected readonly actions = createDispatchMap({
     fetchFileList: FetchFileList,

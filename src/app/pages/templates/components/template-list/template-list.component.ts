@@ -48,7 +48,7 @@ export class TemplateListComponent implements OnInit {
     isTemplateListLoading: TemplatesSelectors.getSlices.isTemplateListLoading,
     isTemplateListLoadErr: TemplatesSelectors.getSlices.isTemplateListLoadErr,
     templateListSkeletonLoaders: TemplatesSelectors.getTemplateListSkeletonLoaders$,
-    templateList: TemplatesSelectors.getSlices.templateList,
+    templateList: TemplatesSelectors.getTemplateList$,
     selectedTemplateList: TemplatesSelectors.getSlices.selectedTemplateList,
   });
   protected readonly actions = createDispatchMap({
