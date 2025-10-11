@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, DestroyRef, effect, inject, OnInit } from '@angular/core';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
-import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { DeleteQrCards, FetchQrCardList, SetSelectedQrCards } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { ViewListItemComponent } from '@shared/components/view-list-item/view-list-item.component';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -28,6 +27,7 @@ import { MatButton } from '@angular/material/button';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { AppSelectors } from '@app/state/app.selectors';
+import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
 
 @Component({
   selector: 'qr-card-list',
@@ -66,11 +66,11 @@ export class QrCardListComponent implements OnInit {
 
   protected readonly selectors = createSelectMap({
     configState: AppSelectors.getConfigState$,
-    isQrCardListLoading: QrCardsState.isQrCardListLoading$,
-    isQrCardListLoadErr: QrCardsState.isQrCardListLoadErr$,
-    qrCardListSkeletonLoaders: QrCardsState.getQrCardListSkeletonLoaders$,
-    qrCardList: QrCardsState.getQrCardList$,
-    selectedQrCardList: QrCardsState.getSelectedQrCardList$,
+    isQrCardListLoading: QrCardsSelectors.getSlices.isQrCardListLoading,
+    isQrCardListLoadErr: QrCardsSelectors.getSlices.isQrCardListLoadErr,
+    qrCardListSkeletonLoaders: QrCardsSelectors.getQrCardListSkeletonLoaders$,
+    qrCardList: QrCardsSelectors.getQrCardList$,
+    selectedQrCardList: QrCardsSelectors.getSlices.selectedQrCardList,
     qrTableColumnVisibility: AppSelectors.qrTableColumnVisibility$,
     settingsState: AppSelectors.getSettingsState$,
   });

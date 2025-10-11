@@ -15,7 +15,6 @@ import { MatButton } from '@angular/material/button';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { DeleteQrCards, FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { MatIcon } from '@angular/material/icon';
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
@@ -34,6 +33,7 @@ import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
 import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { AppSelectors } from '@app/state/app.selectors';
+import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
 
 @Component({
   selector: 'qr-card-view',
@@ -69,11 +69,11 @@ export class QrCardViewComponent implements OnInit {
 
   protected readonly selectors = createSelectMap({
     configState: AppSelectors.getConfigState$,
-    isQrCardLoading: QrCardsState.isQrCardLoading$,
-    isQrCardLoadErr: QrCardsState.isQrCardLoadErr$,
-    qrCard: QrCardsState.getQrCard$,
-    qrCardPreviewUrl: QrCardsState.getQrCardPreviewUrl$,
-    isDeleteInProgress: QrCardsState.isDeleteInProgress$,
+    isQrCardLoading: QrCardsSelectors.getSlices.isQrCardLoading,
+    isQrCardLoadErr: QrCardsSelectors.getSlices.isQrCardLoadErr,
+    qrCard: QrCardsSelectors.getSlices.qrCard,
+    qrCardPreviewUrl: QrCardsSelectors.getSlices.qrCardPreviewUrl,
+    isDeleteInProgress: QrCardsSelectors.getSlices.isDeleteInProgress,
   });
 
   protected readonly actions = createDispatchMap({

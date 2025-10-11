@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, inputBinding } from '@angular/core';
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
 import { createSelectMap } from '@ngxs/store';
-import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { CardFieldComponent } from '@shared/components/card-field/card-field.component';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
@@ -27,6 +26,7 @@ import { Option } from '@shared/shared.models';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { CopyButtonComponent } from '@shared/components/copy-button/copy-button.component';
 import { AppSelectors } from '@app/state/app.selectors';
+import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
 
 @Component({
   selector: 'qr-card-main',
@@ -65,8 +65,8 @@ export class QrCardMainComponent {
 
   protected readonly selectors = createSelectMap({
     configState: AppSelectors.getConfigState$,
-    qrCard: QrCardsState.getQrCard$,
-    qrCardPreviewUrl: QrCardsState.getQrCardPreviewUrl$,
+    qrCard: QrCardsSelectors.getSlices.qrCard,
+    qrCardPreviewUrl: QrCardsSelectors.getSlices.qrCardPreviewUrl,
   });
 
   protected readonly qrCardLink = computed<string>(

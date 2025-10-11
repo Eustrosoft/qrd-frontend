@@ -10,7 +10,6 @@ import { FilesLocalization, MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
-import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { CreateQrCard, FetchQrRangeList, FetchTemplateList } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { QrCardCreationForm } from '@app/pages/qr-cards/qr-cards.models';
@@ -26,6 +25,7 @@ import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { QrRangePipe } from '@shared/pipe/qr-range.pipe';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
 
 @Component({
   selector: 'qr-card-create',
@@ -65,9 +65,9 @@ export class QrCardCreateComponent implements OnInit {
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
 
   protected readonly selectors = createSelectMap({
-    isSaveInProgress: QrCardsState.isSaveInProgress$,
-    qrRangesState: QrCardsState.getQrRangesState$,
-    templatesState: QrCardsState.getTemplatesState$,
+    isSaveInProgress: QrCardsSelectors.getSlices.isSaveInProgress,
+    qrRangesState: QrCardsSelectors.getQrRangesState$,
+    templatesState: QrCardsSelectors.getTemplatesState$,
   });
 
   protected readonly actions = createDispatchMap({

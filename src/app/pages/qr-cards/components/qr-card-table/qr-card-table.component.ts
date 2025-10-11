@@ -30,7 +30,6 @@ import {
 import { SelectionModel } from '@angular/cdk/collections';
 import { SharedLocalization } from '@shared/shared.constants';
 import { AppRoutes } from '@app/app.constants';
-import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { DeleteQrCards, FetchQrCardList, SetSelectedQrCards } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { MatMenuItem } from '@angular/material/menu';
 import { TableContainerComponent } from '@shared/components/table-container/table-container.component';
@@ -41,6 +40,7 @@ import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
 import { QrTableCellComponent } from '@app/pages/qr-cards/components/qr-table-cell/qr-table-cell.component';
 import { AppSelectors } from '@app/state/app.selectors';
+import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
 
 @Component({
   selector: 'qr-card-table',
@@ -91,10 +91,10 @@ export class QrCardTableComponent implements OnInit, AfterViewInit {
 
   protected readonly selectors = createSelectMap({
     configState: AppSelectors.getConfigState$,
-    isQrCardListLoading: QrCardsState.isQrCardListLoading$,
-    isQrCardListLoadErr: QrCardsState.isQrCardListLoadErr$,
-    qrCardList: QrCardsState.getQrCardList$,
-    selectedQrCardList: QrCardsState.getSelectedQrCardList$,
+    isQrCardListLoading: QrCardsSelectors.getSlices.isQrCardListLoading,
+    isQrCardListLoadErr: QrCardsSelectors.getSlices.isQrCardListLoadErr,
+    qrCardList: QrCardsSelectors.getQrCardList$,
+    selectedQrCardList: QrCardsSelectors.getSlices.selectedQrCardList,
     enabledQrTableColumns: AppSelectors.getEnabledQrTableColumns$,
     qrTableColumns: AppSelectors.getQrTableColumns$,
     allQrCols: AppSelectors.getAllQrCols$,

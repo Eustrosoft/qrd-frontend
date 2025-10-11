@@ -26,7 +26,6 @@ import { FileEditableMetadata } from '@api/files/files-api.models';
 import { UploadState } from '@app/pages/files/files.models';
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
 import { QrCardFormGroup } from '@app/pages/qr-cards/qr-cards.models';
-import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import {
   FilesLocalization,
@@ -86,6 +85,7 @@ import { TextareaAutoresizeDirective } from '@shared/directives/textarea-autores
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { Title } from '@angular/platform-browser';
+import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
 
 @Component({
   selector: 'qr-card-edit',
@@ -167,14 +167,14 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
 
   protected readonly selectors = createSelectMap({
     qrCardActions: DictionaryRegistryState.getDictionary$<DictionaryItem>('qrCardActions'),
-    isQrCardLoading: QrCardsState.isQrCardLoading$,
-    isQrCardLoadErr: QrCardsState.isQrCardLoadErr$,
-    isSaveInProgress: QrCardsState.isSaveInProgress$,
-    isQrCardFilesLoading: QrCardsState.isQrCardFilesLoading$,
-    qrCard: QrCardsState.getQrCard$,
-    qrCardPreviewUrl: QrCardsState.getQrCardPreviewUrl$,
-    templatesState: QrCardsState.getTemplatesState$,
-    filesState: QrCardsState.getFilesState$,
+    isQrCardLoading: QrCardsSelectors.getSlices.isQrCardLoading,
+    isQrCardLoadErr: QrCardsSelectors.getSlices.isQrCardLoadErr,
+    isSaveInProgress: QrCardsSelectors.getSlices.isSaveInProgress,
+    isQrCardFilesLoading: QrCardsSelectors.getSlices.isQrCardFilesLoading,
+    qrCard: QrCardsSelectors.getSlices.qrCard,
+    qrCardPreviewUrl: QrCardsSelectors.getSlices.qrCardPreviewUrl,
+    templatesState: QrCardsSelectors.getTemplatesState$,
+    filesState: QrCardsSelectors.getFilesState$,
     fileAttachmentMode: FileUploadState.getFileAttachmentMode$,
   });
 

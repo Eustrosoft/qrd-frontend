@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
+import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import {
   AddFilesToQrCard,
   ClearQrCard,
@@ -107,103 +107,6 @@ export class QrCardsState {
   private readonly matDialog = inject(MatDialog);
   private readonly snackbarService = inject(SnackbarService);
   private readonly qrCardFormFactoryService = inject(QrCardFormFactoryService);
-
-  @Selector()
-  public static getSearchValue$({ searchValue }: QrCardsStateModel): string {
-    return searchValue;
-  }
-
-  @Selector()
-  public static isQrCardListLoading$({ isQrCardListLoading }: QrCardsStateModel): boolean {
-    return isQrCardListLoading;
-  }
-
-  @Selector()
-  public static isQrCardListLoadErr$({ isQrCardListLoadErr }: QrCardsStateModel): boolean {
-    return isQrCardListLoadErr;
-  }
-
-  @Selector()
-  public static getQrCardListSkeletonLoaders$({ qrCardListSkeletonLoaders }: QrCardsStateModel): number[] {
-    return Array.from({ length: qrCardListSkeletonLoaders }, (_, i) => i);
-  }
-
-  @Selector()
-  public static getQrCardList$({ qrCardList, searchValue }: QrCardsStateModel): QRDto[] {
-    return qrCardList.filter(
-      (qrCard) =>
-        qrCard.name.toLowerCase().includes(searchValue) ||
-        qrCard.description.toLowerCase().includes(searchValue) ||
-        qrCard.code.toString().includes(searchValue),
-    );
-  }
-
-  @Selector()
-  public static isQrCardLoading$({ isQrCardLoading }: QrCardsStateModel): boolean {
-    return isQrCardLoading;
-  }
-
-  @Selector()
-  public static isQrCardLoadErr$({ isQrCardLoadErr }: QrCardsStateModel): boolean {
-    return isQrCardLoadErr;
-  }
-
-  @Selector()
-  public static getQrCard$({ qrCard }: QrCardsStateModel): QRDto | null {
-    return qrCard;
-  }
-
-  @Selector()
-  public static getQrCardPreviewUrl$({ qrCardPreviewUrl }: QrCardsStateModel): string {
-    return qrCardPreviewUrl;
-  }
-
-  @Selector()
-  public static getSelectedQrCardList$({ selectedQrCardList }: QrCardsStateModel): number[] {
-    return selectedQrCardList;
-  }
-
-  @Selector()
-  public static isDeleteInProgress$({ isDeleteInProgress }: QrCardsStateModel): boolean {
-    return isDeleteInProgress;
-  }
-
-  @Selector()
-  public static isSaveInProgress$({ isSaveInProgress }: QrCardsStateModel): boolean {
-    return isSaveInProgress;
-  }
-
-  @Selector()
-  public static getTemplatesState$({
-    templateList,
-    isTemplateListLoading,
-    isTemplateListLoadErr,
-  }: QrCardsStateModel): Pick<QrCardsStateModel, 'templateList' | 'isTemplateListLoading' | 'isTemplateListLoadErr'> {
-    return { templateList, isTemplateListLoading, isTemplateListLoadErr };
-  }
-
-  @Selector()
-  public static getQrRangesState$({
-    qrRangeList,
-    isQrRangeListLoading,
-    isQrRangeListLoadErr,
-  }: QrCardsStateModel): Pick<QrCardsStateModel, 'qrRangeList' | 'isQrRangeListLoading' | 'isQrRangeListLoadErr'> {
-    return { qrRangeList, isQrRangeListLoading, isQrRangeListLoadErr };
-  }
-
-  @Selector()
-  public static isQrCardFilesLoading$({ isQrCardFilesLoading }: QrCardsStateModel): boolean {
-    return isQrCardFilesLoading;
-  }
-
-  @Selector()
-  public static getFilesState$({
-    fileList,
-    isFileListLoading,
-    isFileListLoadErr,
-  }: QrCardsStateModel): Pick<QrCardsStateModel, 'fileList' | 'isFileListLoading' | 'isFileListLoadErr'> {
-    return { fileList, isFileListLoading, isFileListLoadErr };
-  }
 
   @Action(FetchQrCardList)
   public fetchQrCardList({ setState }: StateContext<QrCardsStateModel>): Observable<QRDto[]> {

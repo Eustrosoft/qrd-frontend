@@ -4,9 +4,9 @@ import { inject } from '@angular/core';
 import { map, merge, Observable } from 'rxjs';
 import { QrCardFormFactoryService } from '@app/pages/qr-cards/services/qr-card-form-factory.service';
 import { QrCardFormGroup } from '@app/pages/qr-cards/qr-cards.models';
-import { QrCardsState } from '@app/pages/qr-cards/state/qr-cards.state';
 import { FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { AppRoutes, DEFAULT_EMPTY_ID } from '@app/app.constants';
+import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
 
 export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup | RedirectCommand>> => {
   return (route) => {
@@ -15,7 +15,7 @@ export const qrCardFormResolver = (): ResolveFn<Observable<QrCardFormGroup | Red
     const qrCardFormFactoryService = inject(QrCardFormFactoryService);
 
     const id = route.paramMap.get('id')!;
-    const qrCard = select(QrCardsState.getQrCard$);
+    const qrCard = select(QrCardsSelectors.getSlices.qrCard);
 
     qrCardFormFactoryService.reset();
 
