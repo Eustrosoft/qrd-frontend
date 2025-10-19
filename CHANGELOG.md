@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.2](https://github.com/Eustrosoft/qrd-frontend/compare/v2.1.1...v2.1.2) (2025-10-19)
+
+
+### Bug Fixes
+
+* **template-edit:** исправлено дублирование кнопки добавления атрибута ([419fc51](https://github.com/Eustrosoft/qrd-frontend/commit/419fc517c012cb6eaade0ba6a89c5ff5fba3227a))
+
 ### [2.1.1](https://github.com/Eustrosoft/qrd-frontend/compare/v2.1.0...v2.1.1) (2025-10-12)
 
 ## [2.1.0](https://github.com/Eustrosoft/qrd-frontend/compare/v2.0.0...v2.1.0) (2025-10-10)
