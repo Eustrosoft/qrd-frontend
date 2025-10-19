@@ -257,15 +257,6 @@
               <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
               <tr mat-footer-row *matFooterRowDef="['add']"></tr>
-              <tr *matNoDataRow class="no-data-row">
-                <td colspan="100%">
-                  <ui-grid-block gridTemplateColumns="1fr">
-                    <button (click)="addFieldAndRenderTable()" class="button-lg button-secondary" mat-flat-button>
-                      {{ SharedLocalization.add }}
-                    </button>
-                  </ui-grid-block>
-                </td>
-              </tr>
             </table>
           }
         </mat-tab-nav-panel>
