@@ -13,10 +13,12 @@ export class FilesSelectors {
 
   public static getFileList$ = createSelector(
     [FilesSelectors.getSlices.fileList, FilesSelectors.getSlices.searchValue],
-    (fileList, searchValue) =>
-      fileList.filter(
-        (file) => file.name.toLowerCase().includes(searchValue) || file.description.toLowerCase().includes(searchValue),
-      ),
+    (fileList, searchValue) => {
+      const search = searchValue.toLowerCase();
+      return fileList.filter(
+        (file) => file.name.toLowerCase().includes(search) || file.description.toLowerCase().includes(search),
+      );
+    },
   );
 
   public static getFileUsagesState$ = createPickSelector(FilesSelectors.getFullState, [

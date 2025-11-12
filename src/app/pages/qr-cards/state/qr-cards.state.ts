@@ -120,6 +120,7 @@ export class QrCardsState {
               qrCardList: qrCardList.map((qrCard) => ({
                 ...qrCard,
                 qrCardPreviewUrl: `${QR_API_URL}${this.toHexPipe.transform(qrCard.code)}`,
+                hexCode: this.toHexPipe.transform(qrCard.code),
               })),
               isQrCardListLoading: false,
             }),
@@ -138,7 +139,7 @@ export class QrCardsState {
     { setState }: StateContext<QrCardsStateModel>,
     { searchValue }: SetQrCardListSearchValue,
   ): void {
-    setState(patch({ searchValue: searchValue.trim().toLowerCase(), selectedQrCardList: [] }));
+    setState(patch({ searchValue: searchValue.trim(), selectedQrCardList: [] }));
   }
 
   @Action(FetchQrCard)

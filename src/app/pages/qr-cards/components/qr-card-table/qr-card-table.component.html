@@ -18,7 +18,6 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>{{ SharedLocalization.actions }}</th>
     <td mat-cell *matCellDef="let element">
-      @let code = element.code | toHex;
       <more-menu>
         <a [routerLink]="`../${element.id}`" [relativeTo]="activatedRoute" mat-menu-item>
           <mat-icon>outbound</mat-icon>
@@ -29,7 +28,7 @@
           {{ QrCardsLocalization.previewCard }}
         </button>
         <a
-          [href]="`${selectors.configState().config.qrdConf?.qrUri}?q=${code}`"
+          [href]="`${selectors.configState().config.qrdConf?.qrUri}?q=${element.hexCode}`"
           target="_blank"
           rel="noopener noreferrer"
           mat-menu-item
@@ -38,13 +37,13 @@
           {{ QrCardsLocalization.viewCard }}
         </a>
         <button
-          (click)="qrCardsService.copyToClipboard(`${selectors.configState().config.qrdConf?.qrUri}?q=${code}`)"
+          (click)="qrCardsService.copyToClipboard(`${selectors.configState().config.qrdConf?.qrUri}?q=${element.hexCode}`)"
           mat-menu-item
         >
           <mat-icon>share</mat-icon>
           {{ SharedLocalization.share }}
         </button>
-        <button (click)="qrCardsService.openPrint(code)" mat-menu-item>
+        <button (click)="qrCardsService.openPrint(element.hexCode)" mat-menu-item>
           <mat-icon>print</mat-icon>
           {{ SharedLocalization.print }}
         </button>

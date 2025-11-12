@@ -1,8 +1,7 @@
 @if (!selectors.isQrCardListLoading()) {
   @for (qrCard of selectors.qrCardList(); track qrCard.id) {
-    @let code = qrCard.code | toHex;
     <view-list-item
-      [title]="code"
+      [title]="qrCard.hexCode"
       [navigateTo]="`../${qrCard.id}`"
       [isPreviewShown]="true"
       [isSelected]="selectionModel.isSelected(qrCard.id)"
@@ -10,7 +9,7 @@
     >
       <ng-container preview>
         @if (selectors.qrTableColumnVisibility().code_picture) {
-          <qr-renderer [code]="code" [priority]="$index < 10" style="flex: 0 0 128px" />
+          <qr-renderer [code]="qrCard.hexCode" [priority]="$index < 10" style="flex: 0 0 128px" />
         }
       </ng-container>
       <ng-container content>
@@ -30,12 +29,12 @@
           <mat-icon>outbound</mat-icon>
           {{ SharedLocalization.open }}
         </a>
-        <button (click)="qrCardsService.openCardPreview(qrCard.qrCardPreviewUrl)" mat-menu-item>
+        <button (click)="qrCardsService.openCardPreview(qrCard.previewUrl)" mat-menu-item>
           <mat-icon>eye_tracking</mat-icon>
           {{ QrCardsLocalization.previewCard }}
         </button>
         <a
-          [href]="`${selectors.configState().config.qrdConf?.qrUri}?q=${code}`"
+          [href]="`${selectors.configState().config.qrdConf?.qrUri}?q=${qrCard.hexCode}`"
           target="_blank"
           rel="noopener noreferrer"
           mat-menu-item
@@ -44,13 +43,13 @@
           {{ QrCardsLocalization.viewCard }}
         </a>
         <button
-          (click)="qrCardsService.copyToClipboard(`${selectors.configState().config.qrdConf?.qrUri}?q=${code}`)"
+          (click)="qrCardsService.copyToClipboard(`${selectors.configState().config.qrdConf?.qrUri}?q=${qrCard.hexCode}`)"
           mat-menu-item
         >
           <mat-icon>share</mat-icon>
           {{ SharedLocalization.share }}
         </button>
-        <button (click)="qrCardsService.openPrint(code)" mat-menu-item>
+        <button (click)="qrCardsService.openPrint(qrCard.hexCode)" mat-menu-item>
           <mat-icon>print</mat-icon>
           {{ SharedLocalization.print }}
         </button>

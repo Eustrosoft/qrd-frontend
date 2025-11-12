@@ -120,7 +120,7 @@ export class TemplatesState {
     { setState }: StateContext<TemplatesStateModel>,
     { searchValue }: SetTemplateListSearchValue,
   ): void {
-    setState(patch({ searchValue: searchValue.trim().toLowerCase(), selectedTemplateList: [] }));
+    setState(patch({ searchValue: searchValue.trim(), selectedTemplateList: [] }));
   }
 
   @Action(FetchTemplate)

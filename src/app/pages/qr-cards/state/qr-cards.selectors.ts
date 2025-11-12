@@ -13,13 +13,15 @@ export class QrCardsSelectors {
 
   public static getQrCardList$ = createSelector(
     [QrCardsSelectors.getSlices.qrCardList, QrCardsSelectors.getSlices.searchValue],
-    (qrCardList, searchValue) =>
-      qrCardList.filter(
+    (qrCardList, searchValue) => {
+      const search = searchValue.toLowerCase();
+      return qrCardList.filter(
         (qrCard) =>
-          qrCard.name.toLowerCase().includes(searchValue) ||
-          qrCard.description.toLowerCase().includes(searchValue) ||
-          qrCard.code.toString().includes(searchValue),
-      ),
+          qrCard.name.toLowerCase().includes(search) ||
+          qrCard.description.toLowerCase().includes(search) ||
+          qrCard.hexCode.toLowerCase().includes(search),
+      );
+    },
   );
 
   public static getTemplatesState$ = createPickSelector(QrCardsSelectors.getFullState, [

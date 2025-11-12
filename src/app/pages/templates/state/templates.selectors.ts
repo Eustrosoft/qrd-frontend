@@ -13,11 +13,13 @@ export class TemplatesSelectors {
 
   public static getTemplateList$ = createSelector(
     [TemplatesSelectors.getSlices.templateList, TemplatesSelectors.getSlices.searchValue],
-    (templateList, searchValue) =>
-      templateList.filter(
+    (templateList, searchValue) => {
+      const search = searchValue.toLowerCase();
+      return templateList.filter(
         (template) =>
-          template.name.toLowerCase().includes(searchValue) || template.description.toLowerCase().includes(searchValue),
-      ),
+          template.name.toLowerCase().includes(search) || template.description.toLowerCase().includes(search),
+      );
+    },
   );
 
   public static getTemplateUsagesState$ = createPickSelector(TemplatesSelectors.getFullState, [

@@ -118,7 +118,7 @@ export class FilesState {
     { setState }: StateContext<FilesStateModel>,
     { searchValue }: SetFileListSearchValue,
   ): void {
-    setState(patch({ searchValue: searchValue.trim().toLowerCase(), selectedFileList: [] }));
+    setState(patch({ searchValue: searchValue.trim(), selectedFileList: [] }));
   }
 
   @Action(FetchFile)
