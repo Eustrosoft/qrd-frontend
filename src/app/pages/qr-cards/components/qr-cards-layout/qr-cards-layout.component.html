@@ -48,5 +48,23 @@
       <ui-skeleton width="40" height="40" borderRadius="50%" />
     }
   </selection-bar>
-  <router-outlet style="display: contents" />
+  <ui-grid-block gridTemplateColumns="1fr" rowGapSize="16">
+    @if (selectors.ranges().length) {
+      <mat-chip-listbox
+        [selectable]="true"
+        [multiple]="true"
+        [attr.aria-label]="SharedLocalization.ranges"
+        role="list"
+        (change)="actions.fetchQrCards(destroyRef, $event.value)"
+      >
+        @for (range of selectors.ranges(); track range.id) {
+          <mat-chip-option [value]="range.id">
+            {{ range.name | fallback: SharedLocalization.emptyName }} {{ range.from | qrRange: range.to }}
+          </mat-chip-option>
+        }
+      </mat-chip-listbox>
+    }
+
+    <router-outlet style="display: contents" />
+  </ui-grid-block>
 </data-view>

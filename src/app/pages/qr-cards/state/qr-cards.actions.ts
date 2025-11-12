@@ -4,7 +4,10 @@ import { QrCardsStateModel } from '@app/pages/qr-cards/state/qr-cards.state';
 
 export class FetchQrCardList {
   public static readonly type = '[Qr Cards] Fetch Qr Card List';
-  constructor(readonly destroyRef: DestroyRef) {}
+  constructor(
+    readonly destroyRef: DestroyRef,
+    readonly rangeIds: number[] = [],
+  ) {}
 }
 
 export class SetQrCardListSearchValue {

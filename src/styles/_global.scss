@@ -3,20 +3,18 @@
 @use 'sass:map';
 
 :root {
-  --main-padding-vertical: 1.5rem;
+  --main-padding-vertical: 1rem;
   --main-padding-horizontal: 4rem;
 }
 
 @media #{map.get(bp.$breakpoints, xsmall)} {
   :root {
-    --main-padding-vertical: 0.75rem;
     --main-padding-horizontal: 0.5rem;
   }
 }
 
 @media #{map.get(bp.$breakpoints, small)} {
   :root {
-    --main-padding-vertical: 0.75rem;
     --main-padding-horizontal: 1rem;
   }
 }

@@ -109,10 +109,13 @@ export class QrCardsState {
   private readonly qrCardFormFactoryService = inject(QrCardFormFactoryService);
 
   @Action(FetchQrCardList)
-  public fetchQrCardList({ setState }: StateContext<QrCardsStateModel>): Observable<QRDto[]> {
+  public fetchQrCardList(
+    { setState }: StateContext<QrCardsStateModel>,
+    { destroyRef, rangeIds }: FetchQrCardList,
+  ): Observable<QRDto[]> {
     setState(patch({ isQrCardListLoading: true, isQrCardListLoadErr: false }));
     return timer(SKELETON_TIMER).pipe(
-      switchMap(() => this.qrCardsService.getQrCardList()),
+      switchMap(() => this.qrCardsService.getQrCardList(rangeIds)),
       tap({
         next: (qrCardList) => {
           setState(
@@ -127,6 +130,7 @@ export class QrCardsState {
           );
         },
       }),
+      takeUntilDestroyed(destroyRef),
       catchError((err) => {
         setState(patch({ isQrCardListLoading: false, isQrCardListLoadErr: true, qrCardList: [] }));
         return throwError(() => err);

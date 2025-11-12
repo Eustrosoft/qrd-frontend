@@ -26,8 +26,9 @@ export class QrCardsService {
   private readonly snackbarService = inject(SnackbarService);
   private readonly settingsState = select(AppSelectors.getSettingsState$);
 
-  public getQrCardList(): Observable<QRDto[]> {
+  public getQrCardList(rangeIds: number[] = []): Observable<QRDto[]> {
     return this.http.get<QRDto[]>('/qrCodeDemo/v1/api/secured/qrs', {
+      params: new HttpParams({ fromObject: { rangeId: rangeIds } }),
       context: new HttpContext().set(SUPPRESS_HTTP_ERROR_INTERCEPTOR, true),
     });
   }

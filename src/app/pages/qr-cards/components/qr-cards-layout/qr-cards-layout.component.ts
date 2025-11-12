@@ -24,6 +24,11 @@ import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { OverlayContainerComponent } from '@shared/components/overlay-container/overlay-container.component';
 import { AppSelectors } from '@app/state/app.selectors';
 import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
+import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
+import { MatChipListbox, MatChipOption } from '@angular/material/chips';
+import { AuthSelectors } from '@modules/auth/state/auth.selectors';
+import { QrRangePipe } from '@shared/pipe/qr-range.pipe';
+import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 
 @Component({
   selector: 'qr-cards-layout',
@@ -40,6 +45,11 @@ import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
     CdkOverlayOrigin,
     MatFabButton,
     OverlayContainerComponent,
+    UiGridBlockComponent,
+    QrRangePipe,
+    FallbackPipe,
+    MatChipListbox,
+    MatChipOption,
   ],
   templateUrl: './qr-cards-layout.component.html',
   styleUrl: './qr-cards-layout.component.scss',
@@ -59,6 +69,7 @@ export class QrCardsLayoutComponent {
     selectedQrCardList: QrCardsSelectors.getSlices.selectedQrCardList,
     isDeleteInProgress: QrCardsSelectors.getSlices.isDeleteInProgress,
     allQrCols: AppSelectors.getAllQrCols$,
+    ranges: AuthSelectors.getRanges$,
   });
   protected readonly actions = createDispatchMap({
     fetchQrCards: FetchQrCardList,
