@@ -13,7 +13,7 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 import { SharedLocalization } from '@shared/shared.constants';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { ErrorsLocalization } from '@modules/error/error.constants';
-import { MatOptgroup, MatOption, MatSelect } from '@angular/material/select';
+import { MatOptgroup, MatOption, MatSelect, MatSuffix } from '@angular/material/select';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
@@ -25,7 +25,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { CustomValidationErrors } from '@shared/validators/validators.constants';
 import { StopMaterialEventsDirective } from '@shared/directives/stop-material-events.directive';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { startWith } from 'rxjs';
+import { animationFrameScheduler, first, of, scheduled, startWith } from 'rxjs';
 
 @Component({
   selector: 'file-selector',
@@ -45,6 +45,7 @@ import { startWith } from 'rxjs';
     StopMaterialEventsDirective,
     MatInput,
     MatOptgroup,
+    MatSuffix,
   ],
   providers: [{ provide: DUPLICATE_ERROR_HANDLER_CMP, useExisting: forwardRef(() => FileSelectorComponent) }],
   templateUrl: './file-selector.component.html',
@@ -64,6 +65,7 @@ export class FileSelectorComponent implements DuplicateErrorHandler {
   public readonly selectedFilesChange = output<FileDto[]>();
 
   protected readonly control = this.fb.nonNullable.control<FileDto[]>([]);
+  protected readonly controlValue = toSignal(this.control.valueChanges.pipe(startWith([])), { requireSync: true });
 
   protected readonly searchControl = this.fb.nonNullable.control('');
   protected readonly searchValue = toSignal(this.searchControl.valueChanges.pipe(startWith('')), { requireSync: true });
@@ -78,10 +80,12 @@ export class FileSelectorComponent implements DuplicateErrorHandler {
     }));
   });
 
-  protected readonly isAllItemsHidden = computed<boolean>(() => {
+  protected readonly isAllHidden = computed<boolean>(() => {
     const filteredList = this.filteredList();
     return filteredList.every((item) => item.hidden);
   });
+
+  protected readonly hasSelectedValues = computed<boolean>(() => !!this.controlValue().length);
 
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly ErrorsLocalization = ErrorsLocalization;
@@ -95,7 +99,13 @@ export class FileSelectorComponent implements DuplicateErrorHandler {
   }
 
   protected selectOpened(): void {
-    this.searchInput().nativeElement.focus();
+    scheduled(of(null), animationFrameScheduler)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          !this.hasSelectedValues() && this.searchInput().nativeElement.focus();
+        },
+      });
   }
 
   protected selectClosed(): void {

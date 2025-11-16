@@ -20,6 +20,11 @@
       }
     </mat-label>
   }
+  @if (hasSelectedValues()) {
+    <button (click)="$event.stopPropagation(); control.reset()" class="icon-button-sm" mat-icon-button matSuffix>
+      <mat-icon class="icon-primary">close</mat-icon>
+    </button>
+  }
   <mat-select
     [formControl]="control"
     (selectionChange)="selectedFilesChange.emit($event.value)"
@@ -27,25 +32,29 @@
     (closed)="selectClosed()"
     multiple
   >
-    <mat-form-field class="form-field-md search-field" [style.display]="showSearch() ? 'block' : 'none'">
-      <input
-        [formControl]="searchControl"
-        [placeholder]="SharedLocalization.search"
-        #searchInput
-        cdkStopMaterialEvents
-        matInput
-      />
-    </mat-form-field>
+    @if (showSearch()) {
+      <ui-flex-block>
+        <mat-form-field class="form-field-md select-search-field">
+          <input
+            [formControl]="searchControl"
+            [placeholder]="SharedLocalization.search"
+            #searchInput
+            cdkStopMaterialEvents
+            matInput
+          />
+        </mat-form-field>
+      </ui-flex-block>
+    }
     <!-- TODO добавить кнопку сброса -->
     @for (file of filteredList(); track file.id) {
       <mat-option class="option-lg" [style.display]="file.hidden ? 'none' : 'flex'" [value]="file">
         {{ file.name }}
       </mat-option>
     } @empty {
-      {{ SharedLocalization.emptyList }}
+      <mat-optgroup class="optgroup-md">{{ SharedLocalization.emptyList }}</mat-optgroup>
     }
-    @if (isAllItemsHidden()) {
-      <mat-optgroup>{{ SharedLocalization.emptyList }}</mat-optgroup>
+    @if (isAllHidden()) {
+      <mat-optgroup class="optgroup-md">{{ SharedLocalization.emptyList }}</mat-optgroup>
     }
   </mat-select>
   @if (control.touched && control.hasError(CustomValidationErrors.DuplicatedFiles)) {

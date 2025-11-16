@@ -1,32 +1,7 @@
 @use '@angular/material' as mat;
 @use 'styles/mixins' as mixins;
 
-.option-sm {
-  @include mat.option-overrides(
-    (
-      label-text-line-height: 40px,
-    )
-  );
-
-  min-height: mixins.rem(40, true);
-}
-
-.option-md {
-  @include mat.option-overrides(
-    (
-      label-text-line-height: 48px,
-    )
-  );
-
-  min-height: mixins.rem(48, true);
-}
-
-.option-lg {
-  @include mat.option-overrides(
-    (
-      label-text-line-height: 56px,
-    )
-  );
-
-  min-height: mixins.rem(56, true);
+.select-search-field {
+  flex: auto;
+  padding: 0 mixins.rem(16) mixins.rem(8) mixins.rem(16);
 }
