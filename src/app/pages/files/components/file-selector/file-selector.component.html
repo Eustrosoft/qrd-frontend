@@ -20,11 +20,32 @@
       }
     </mat-label>
   }
-  <mat-select [formControl]="control" (selectionChange)="selectedFilesChange.emit($event.value)" multiple>
-    @for (file of fileList(); track file.id) {
-      <mat-option class="option-lg" [value]="file.id">{{ file.name }}</mat-option>
+  <mat-select
+    [formControl]="control"
+    (selectionChange)="selectedFilesChange.emit($event.value)"
+    (opened)="selectOpened()"
+    (closed)="selectClosed()"
+    multiple
+  >
+    <mat-form-field class="form-field-md search-field" [style.display]="showSearch() ? 'block' : 'none'">
+      <input
+        [formControl]="searchControl"
+        [placeholder]="SharedLocalization.search"
+        #searchInput
+        cdkStopMaterialEvents
+        matInput
+      />
+    </mat-form-field>
+    <!-- TODO добавить кнопку сброса -->
+    @for (file of filteredList(); track file.id) {
+      <mat-option class="option-lg" [style.display]="file.hidden ? 'none' : 'flex'" [value]="file">
+        {{ file.name }}
+      </mat-option>
     } @empty {
       {{ SharedLocalization.emptyList }}
+    }
+    @if (isAllItemsHidden()) {
+      <mat-optgroup>{{ SharedLocalization.emptyList }}</mat-optgroup>
     }
   </mat-select>
   @if (control.touched && control.hasError(CustomValidationErrors.DuplicatedFiles)) {

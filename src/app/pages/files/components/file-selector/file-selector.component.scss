@@ -3,4 +3,8 @@
 :host {
   gap: mixins.rem(16) mixins.rem(16);
   display: grid;
+
+  .search-field {
+    padding: 0 mixins.rem(16) mixins.rem(8) mixins.rem(16);
+  }
 }

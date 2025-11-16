@@ -1,6 +1,7 @@
 import { components } from '@api/schema';
 
 export type FileDto = components['schemas']['FileDto'];
+export type HidableFileDto = FileDto & { hidden: boolean };
 export type FileStorageType = components['schemas']['FileDto']['fileStorageType'];
 export type FileBlobUploadRequest = {
   chunk: Blob;

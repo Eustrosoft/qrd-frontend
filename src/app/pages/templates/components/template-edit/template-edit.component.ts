@@ -55,7 +55,7 @@ import { TemplateFormFactoryService } from '@app/pages/templates/services/templa
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { TemplateFormGroup } from '@app/pages/templates/templates.models';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
-import { FileEditableMetadata } from '@api/files/files-api.models';
+import { FileDto, FileEditableMetadata } from '@api/files/files-api.models';
 import { MatTooltip } from '@angular/material/tooltip';
 import { BannerComponent } from '@shared/components/banner/banner.component';
 import { FileAsUrlComponent } from '@app/pages/files/components/file-upload/file-as-url/file-as-url.component';
@@ -378,10 +378,10 @@ export class TemplateEditComponent implements OnInit, AfterContentInit, OnDestro
     }
   }
 
-  protected addExistingFilesToTemplate(fileIdList: number[]): void {
+  protected addExistingFilesToTemplate(fileList: FileDto[]): void {
     this.isFileSelectorVisible.set(false);
-    for (const fileId of fileIdList) {
-      this.actions.addFileToTemplate(this.routeParams()['id'], fileId, this.destroyRef);
+    for (const file of fileList) {
+      this.actions.addFileToTemplate(this.routeParams()['id'], file.id, this.destroyRef);
     }
   }
 }

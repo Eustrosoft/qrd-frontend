@@ -263,7 +263,11 @@
           @if (isUploadVisible()) {
             <file-attachment-mode />
             @if (selectors.fileAttachmentMode() === 'upload') {
-              <file-upload-blob (uploadCompleted)="addFileToQrCard($event)" />
+              <file-upload-blob
+                fileDuplicates
+                [existingFiles]="allFiles()"
+                (uploadCompleted)="addFileToQrCard($event)"
+              />
             }
             @if (selectors.fileAttachmentMode() === 'fileUrl') {
               <file-as-url (uploadCompleted)="addFileToQrCard($event)" />
@@ -271,6 +275,8 @@
           }
           @if (isFileSelectorVisible()) {
             <file-selector
+              fileDuplicates
+              [existingFiles]="allFiles()"
               [isFileListLoading]="selectors.filesState().isFileListLoading"
               [isFileListLoadErr]="selectors.filesState().isFileListLoadErr"
               [fileList]="selectors.filesState().fileList"

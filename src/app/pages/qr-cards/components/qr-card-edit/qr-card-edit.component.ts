@@ -19,10 +19,10 @@ import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionS
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { distinctUntilChanged, EMPTY, map, merge, Observable, of, pairwise, startWith, switchMap } from 'rxjs';
-import { DictionaryItem, Option } from '@shared/shared.models';
+import { DictionaryItem, FileFormGroupArray, Option } from '@shared/shared.models';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
 import { FileUploadState } from '@app/pages/files/components/file-upload/state/file-upload.state';
-import { FileEditableMetadata } from '@api/files/files-api.models';
+import { FileDto, FileEditableMetadata } from '@api/files/files-api.models';
 import { UploadState } from '@app/pages/files/files.models';
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
 import { QrCardFormGroup } from '@app/pages/qr-cards/qr-cards.models';
@@ -82,6 +82,7 @@ import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { Title } from '@angular/platform-browser';
 import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
 import { FileSelectorComponent } from '@app/pages/files/components/file-selector/file-selector.component';
+import { FileDuplicatesDirective } from '@shared/directives/file-duplicates.directive';
 
 @Component({
   selector: 'qr-card-edit',
@@ -123,6 +124,7 @@ import { FileSelectorComponent } from '@app/pages/files/components/file-selector
     TextareaAutoresizeDirective,
     FallbackPipe,
     FileSelectorComponent,
+    FileDuplicatesDirective,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './qr-card-edit.component.html',
@@ -161,6 +163,23 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     ).pipe(distinctUntilChanged(), takeUntilDestroyed()),
     { initialValue: false },
   );
+
+  public readonly formFiles = toSignal<ReturnType<FileFormGroupArray['getRawValue']>>(
+    merge(
+      this.form().valueChanges.pipe(startWith(null)),
+      this.actions$.pipe(ofActionSuccessful(AddFilesToQrCard)),
+    ).pipe(
+      map(() => this.form().controls.files.getRawValue()),
+      startWith([]),
+    ),
+    { requireSync: true },
+  );
+
+  public readonly allFiles = computed(() => [
+    ...this.formFiles(),
+    // eslint-disable-next-line
+    ...(this.selectors.qrCard()?.form.files ?? []),
+  ]);
 
   protected readonly selectors = createSelectMap({
     qrCardActions: DictionaryRegistryState.getDictionary$<DictionaryItem>('qrCardActions'),
@@ -395,12 +414,12 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     }
   }
 
-  protected addExistingFilesToQrCard(fileIdList: number[]): void {
+  protected addExistingFilesToQrCard(fileList: FileDto[]): void {
     this.isFileSelectorVisible.set(false);
     this.actions.addFileToQrCard(
       this.selectors.qrCard()!.id,
       this.toHexPipe.transform(this.selectors.qrCard()!.code.toString()),
-      fileIdList,
+      fileList.map((file) => file.id),
       this.destroyRef,
     );
   }

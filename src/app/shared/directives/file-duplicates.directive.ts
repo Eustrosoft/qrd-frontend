@@ -14,29 +14,26 @@ export class FileDuplicatesDirective<T extends Pick<FileDto, 'id' | 'name'>> {
   private readonly duplicateCheckService = inject(DuplicateCheckService);
 
   @HostListener('selectedFilesChange', ['$event'])
-  protected selectorEventHandler(ids: number[]): void {
-    const existingFiles = this.existingFiles();
-    const fileMap = new Map(existingFiles.map((file) => [file.id, file]));
-
-    const hasDupes: number[] = this.duplicateCheckService.findCommon(
-      existingFiles.map((file) => file.id),
-      ids,
+  protected selectorEventHandler(fileList: FileDto[]): void {
+    const dupes = this.duplicateCheckService.findCommon(
+      this.existingFiles().map((file) => file.name),
+      fileList.map((file) => file.name),
     );
 
-    if (hasDupes.length) {
-      const fileNames = hasDupes.map((id) => fileMap.get(id)?.name).filter((name): name is string => Boolean(name));
-      this.hostCmp?.handleDuplicateError(`${FilesLocalization.duplicatedFiles}: ${fileNames.toString()}`);
+    if (dupes.length) {
+      this.hostCmp?.handleDuplicateError(`${FilesLocalization.duplicatedFiles}: ${dupes.toString()}`);
     }
   }
 
   @HostListener('fileSelected', ['$event'])
   protected uploadBlobEventHandler(file: File): void {
-    const hasDupes = this.duplicateCheckService.findCommon(
+    const dupes = this.duplicateCheckService.findCommon(
       this.existingFiles().map((file) => file.name),
       [file.name],
     );
-    if (hasDupes.length) {
-      this.hostCmp?.handleDuplicateError(`${FilesLocalization.duplicatedFiles}: ${hasDupes.toString()}`);
+
+    if (dupes.length) {
+      this.hostCmp?.handleDuplicateError(`${FilesLocalization.duplicatedFiles}: ${dupes.toString()}`);
     }
   }
 }

@@ -21,5 +21,5 @@ export const FilesLocalization = {
   uploaded: $localize`:@@files.uploaded:Uploaded`,
   fileRequired: $localize`:@@files.fileRequired:File is required`,
   fileSize: $localize`:@@files.fileSize:File size`,
-  duplicatedFiles: $localize`:@@files.duplicatedFiles:File with this name already exists`,
+  duplicatedFiles: $localize`:@@files.duplicatedFiles:Files with those names already exists`,
 };
