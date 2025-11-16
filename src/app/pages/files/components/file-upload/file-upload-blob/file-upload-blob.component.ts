@@ -5,9 +5,11 @@ import {
   DestroyRef,
   effect,
   ElementRef,
+  forwardRef,
   inject,
   input,
   OnDestroy,
+  output,
   viewChild,
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -22,10 +24,10 @@ import {
 } from '@app/pages/files/components/file-upload/state/file-upload.actions';
 import { FileEditableMetadata } from '@api/files/files-api.models';
 import { SharedLocalization } from '@shared/shared.constants';
-import { FilesLocalization, MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
+import { FilesLocalization, MaxDescriptionLength, MaxNameLength } from '@app/pages/files/files.constants';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { MatButton, MatIconButton } from '@angular/material/button';
-import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
@@ -37,10 +39,13 @@ import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-match
 import { outputFromObservable } from '@angular/core/rxjs-interop';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { FileUploadFormFactoryService } from '@app/pages/files/components/file-upload/service/file-upload-form-factory.service';
-import { FileUploadFormGroup } from '@app/pages/files/files.models';
+import { DuplicateErrorHandler, FileUploadFormGroup } from '@app/pages/files/files.models';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { IndicatorComponent } from '@shared/components/indicator/indicator.component';
+import { MatError } from '@angular/material/form-field';
+import { CustomValidationErrors } from '@shared/validators/validators.constants';
+import { DUPLICATE_ERROR_HANDLER_CMP } from '@cdk/tokens/custom-validator.token';
 
 @Component({
   selector: 'file-upload-blob',
@@ -65,12 +70,16 @@ import { IndicatorComponent } from '@shared/components/indicator/indicator.compo
     UiGridBlockComponent,
     IndicatorComponent,
   ],
-  providers: [FileUploadFormFactoryService, { provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
+  providers: [
+    FileUploadFormFactoryService,
+    { provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher },
+    { provide: DUPLICATE_ERROR_HANDLER_CMP, useExisting: forwardRef(() => FileUploadBlobComponent) },
+  ],
   templateUrl: './file-upload-blob.component.html',
   styleUrl: './file-upload-blob.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FileUploadBlobComponent implements OnDestroy {
+export class FileUploadBlobComponent implements OnDestroy, DuplicateErrorHandler {
   private readonly destroyRef = inject(DestroyRef);
   private readonly actions$ = inject(Actions);
   private readonly fileUploadFormFactoryService = inject(FileUploadFormFactoryService);
@@ -112,6 +121,7 @@ export class FileUploadBlobComponent implements OnDestroy {
       map(() => undefined),
     ),
   );
+  public fileSelected = output<File>();
 
   protected readonly isLoadingEffect = effect(() => {
     if (this.selectors.uploadState()?.isLoading || this.selectors.isLoading()) {
@@ -144,8 +154,9 @@ export class FileUploadBlobComponent implements OnDestroy {
   protected readonly FilesLocalization = FilesLocalization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly ErrorsLocalization = ErrorsLocalization;
-  protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
-  protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
+  protected readonly MaxNameLength = MaxNameLength;
+  protected readonly MaxDescriptionLength = MaxDescriptionLength;
+  protected readonly CustomValidationErrors = CustomValidationErrors;
 
   protected fileChanged(): void {
     const fileList = Array.from(this.fileInput().nativeElement.files ?? []);
@@ -157,6 +168,7 @@ export class FileUploadBlobComponent implements OnDestroy {
       name: file.name,
       file,
     });
+    this.fileSelected.emit(file);
   }
 
   protected uploadFile(): void {
@@ -188,6 +200,15 @@ export class FileUploadBlobComponent implements OnDestroy {
 
   public getRawValue(): ReturnType<FileUploadFormGroup['getRawValue']> {
     return this.form.getRawValue();
+  }
+
+  public handleDuplicateError(errorText: string): void {
+    this.clearInput();
+    this.fileUploadFormFactoryService.resetFileUploadForm();
+    this.form.controls.name.setErrors({
+      [CustomValidationErrors.DuplicatedFiles]: errorText,
+    });
+    this.form.markAllAsTouched();
   }
 
   public ngOnDestroy(): void {

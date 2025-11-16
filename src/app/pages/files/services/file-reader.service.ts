@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { DEFAULT_CHUNK_SIZE } from '@app/pages/files/files.constants';
+import { DefaultChunkSize } from '@app/pages/files/files.constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileReaderService {
-  public splitBinary(file: File, chunkSize: number = DEFAULT_CHUNK_SIZE): Observable<readonly Blob[]> {
+  public splitBinary(file: File, chunkSize: number = DefaultChunkSize): Observable<readonly Blob[]> {
     if (!(file instanceof Blob)) {
       return throwError(() => new Error('Input must be a File or Blob object'));
     }

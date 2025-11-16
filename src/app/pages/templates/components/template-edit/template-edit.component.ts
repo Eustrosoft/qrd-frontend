@@ -33,7 +33,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { TemplatesLocalization } from '@app/pages/templates/templates.constants';
-import { FilesLocalization, MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
+import { FilesLocalization, MaxDescriptionLength, MaxNameLength } from '@app/pages/files/files.constants';
 import { ErrorStateMatcher, MatOption } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { MatError } from '@angular/material/form-field';
@@ -48,7 +48,6 @@ import { BytesToSizePipe } from '@shared/pipe/bytes-to-size.pipe';
 import { DatePipe } from '@angular/common';
 import { FileListItemComponent } from '@shared/components/file-list-item/file-list-item.component';
 import { UploadState } from '@app/pages/files/files.models';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
 import { distinctUntilChanged, map, merge, Observable, of, pairwise, startWith } from 'rxjs';
 import { ErrorsLocalization } from '@modules/error/error.constants';
@@ -87,6 +86,8 @@ import {
 } from '@angular/material/table';
 import { AppSelectors } from '@app/state/app.selectors';
 import { TemplatesSelectors } from '@app/pages/templates/state/templates.selectors';
+import { FileSelectorComponent } from '@app/pages/files/components/file-selector/file-selector.component';
+import { FileDuplicatesDirective } from '@shared/directives/file-duplicates.directive';
 
 @Component({
   selector: 'template-edit',
@@ -111,7 +112,6 @@ import { TemplatesSelectors } from '@app/pages/templates/state/templates.selecto
     BytesToSizePipe,
     DatePipe,
     FileListItemComponent,
-    MatProgressSpinner,
     MatSuffix,
     MatTooltip,
     MatMiniFabButton,
@@ -138,6 +138,8 @@ import { TemplatesSelectors } from '@app/pages/templates/state/templates.selecto
     MatFooterCell,
     MatFooterCellDef,
     MatFooterRowDef,
+    FileSelectorComponent,
+    FileDuplicatesDirective,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './template-edit.component.html',
@@ -260,8 +262,8 @@ export class TemplateEditComponent implements OnInit, AfterContentInit, OnDestro
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly FilesLocalization = FilesLocalization;
   protected readonly ErrorsLocalization = ErrorsLocalization;
-  protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
-  protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
+  protected readonly MaxNameLength = MaxNameLength;
+  protected readonly MaxDescriptionLength = MaxDescriptionLength;
 
   public ngOnInit(): void {
     this.actions.fetchDictionaryByName('INPUT_TYPE', this.destroyRef);

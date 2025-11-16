@@ -1,15 +1,15 @@
 import { FileUploadStateModel } from '@app/pages/files/components/file-upload/state/file-upload.state';
 
-export const DEFAULT_FILE_UPLOAD_STATE: FileUploadStateModel = {
+export const DefaultFileUploadState: FileUploadStateModel = {
   isLoading: false,
   uploadState: null,
   fileAttachmentMode: 'upload',
 };
 
-export const DEFAULT_CHUNK_SIZE = 1048576; // 1 MB
-export const MAX_NAME_LENGTH = 127;
-export const MAX_DESCRIPTION_LENGTH = 511;
-export const MAX_URL_LENGTH = 2048;
+export const DefaultChunkSize = 1048576; // 1 MB
+export const MaxNameLength = 127;
+export const MaxDescriptionLength = 511;
+export const MaxUrlLength = 2048;
 
 export const FilesLocalization = {
   selectFile: $localize`:@@files.selectFile:Select file`,
@@ -21,4 +21,5 @@ export const FilesLocalization = {
   uploaded: $localize`:@@files.uploaded:Uploaded`,
   fileRequired: $localize`:@@files.fileRequired:File is required`,
   fileSize: $localize`:@@files.fileSize:File size`,
+  duplicatedFiles: $localize`:@@files.duplicatedFiles:File with this name already exists`,
 };

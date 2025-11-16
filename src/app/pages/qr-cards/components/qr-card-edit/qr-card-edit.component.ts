@@ -27,12 +27,7 @@ import { UploadState } from '@app/pages/files/files.models';
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
 import { QrCardFormGroup } from '@app/pages/qr-cards/qr-cards.models';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
-import {
-  FilesLocalization,
-  MAX_DESCRIPTION_LENGTH,
-  MAX_NAME_LENGTH,
-  MAX_URL_LENGTH,
-} from '@app/pages/files/files.constants';
+import { FilesLocalization, MaxDescriptionLength, MaxNameLength, MaxUrlLength } from '@app/pages/files/files.constants';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import {
   AddFilesToQrCard,
@@ -86,6 +81,7 @@ import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { Title } from '@angular/platform-browser';
 import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
+import { FileSelectorComponent } from '@app/pages/files/components/file-selector/file-selector.component';
 
 @Component({
   selector: 'qr-card-edit',
@@ -126,6 +122,7 @@ import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
     MatMiniFabButton,
     TextareaAutoresizeDirective,
     FallbackPipe,
+    FileSelectorComponent,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './qr-card-edit.component.html',
@@ -245,9 +242,9 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly FilesLocalization = FilesLocalization;
   protected readonly ErrorsLocalization = ErrorsLocalization;
-  protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
-  protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
-  protected readonly MAX_URL_LENGTH = MAX_URL_LENGTH;
+  protected readonly MAX_NAME_LENGTH = MaxNameLength;
+  protected readonly MAX_DESCRIPTION_LENGTH = MaxDescriptionLength;
+  protected readonly MAX_URL_LENGTH = MaxUrlLength;
   protected readonly DEFAULT_EMPTY_ID = DEFAULT_EMPTY_ID;
 
   public ngOnInit(): void {

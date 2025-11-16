@@ -12,7 +12,6 @@ import { createDispatchMap, createSelectMap } from '@ngxs/store';
 import { DeleteQrCards, FetchQrCardList, SetSelectedQrCards } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { ViewListItemComponent } from '@shared/components/view-list-item/view-list-item.component';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { EllipsisDirective } from '@shared/directives/ellipsis.directive';
 import { MatMenuItem } from '@angular/material/menu';
 import { SharedLocalization } from '@shared/shared.constants';
@@ -42,7 +41,6 @@ import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
   selector: 'qr-card-list',
   imports: [
     ViewListItemComponent,
-    ToHexPipe,
     EllipsisDirective,
     MatMenuItem,
     UiSkeletonComponent,

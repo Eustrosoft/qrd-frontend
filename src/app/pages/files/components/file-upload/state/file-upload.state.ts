@@ -8,7 +8,7 @@ import {
   UpdateFileMetadata,
   UploadBlobByChunks,
 } from './file-upload.actions';
-import { DEFAULT_FILE_UPLOAD_STATE } from '@app/pages/files/files.constants';
+import { DefaultFileUploadState } from '@app/pages/files/files.constants';
 import { FileAttachmentMode, UploadState } from '@app/pages/files/files.models';
 import { FileReaderService } from '@app/pages/files/services/file-reader.service';
 import { SharedLocalization } from '@shared/shared.constants';
@@ -44,7 +44,7 @@ export interface FileUploadStateModel {
 
 @State<FileUploadStateModel>({
   name: 'fileUpload',
-  defaults: DEFAULT_FILE_UPLOAD_STATE,
+  defaults: DefaultFileUploadState,
 })
 @Injectable()
 export class FileUploadState {
@@ -277,6 +277,6 @@ export class FileUploadState {
 
   @Action(ResetFileUploadState)
   public resetFileUploadState({ setState }: StateContext<FileUploadStateModel>): void {
-    setState(DEFAULT_FILE_UPLOAD_STATE);
+    setState(DefaultFileUploadState);
   }
 }

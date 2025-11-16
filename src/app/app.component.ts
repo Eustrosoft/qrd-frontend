@@ -10,7 +10,6 @@ import { HideNgVersionDirective } from '@shared/directives/hide-ng-version.direc
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { UiBottomMenuComponent } from '@ui/ui-bottom-menu/ui-bottom-menu.component';
 import { UiBottomMenuService } from '@ui/ui-bottom-menu/ui-bottom-menu.service';
-import { UpdateService } from '@shared/service/update.service';
 import { NetworkStatusBannerComponent } from '@shared/components/network-status-banner/network-status-banner.component';
 import { IS_OFFLINE } from '@cdk/tokens/is-offline.token';
 import { AnimatedIfDirective } from '@shared/directives/animated-if.directive';
@@ -37,8 +36,6 @@ import { AppSelectors } from '@app/state/app.selectors';
   },
 })
 export class AppComponent implements AfterViewInit {
-  constructor(private readonly updateService: UpdateService) {}
-
   protected readonly isOffline = inject(IS_OFFLINE);
 
   private readonly prefersDark = inject(PREFERS_DARK_TOKEN);

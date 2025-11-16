@@ -30,3 +30,6 @@ export type FileAsUrlForm = {
   isPublic: FormControl<boolean>;
   storagePath: FormControl<string>;
 };
+export interface DuplicateErrorHandler {
+  handleDuplicateError(errorText: string): void;
+}

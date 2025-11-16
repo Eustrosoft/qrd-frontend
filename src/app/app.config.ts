@@ -1,4 +1,11 @@
-import { ApplicationConfig, isDevMode, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  inject,
+  isDevMode,
+  LOCALE_ID,
+  provideEnvironmentInitializer,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import {
   PreloadAllModules,
   provideRouter,
@@ -70,7 +77,9 @@ export const appConfig: ApplicationConfig = {
     { provide: TitleStrategy, useClass: RouteTitleStrategy },
     provideBaseHref(),
     { provide: LocationStrategy, useClass: CustomLocationStrategy },
-    UpdateService,
+    provideEnvironmentInitializer(() => {
+      inject(UpdateService);
+    }),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',

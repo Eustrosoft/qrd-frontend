@@ -6,7 +6,7 @@ import { FormBuilder } from '@angular/forms';
 @Injectable({
   providedIn: 'root',
 })
-export class SharedFormFactoryService {
+export class SharedFileFormFactoryService {
   private readonly fb = inject(FormBuilder);
 
   public makeFileFormGroupArray(

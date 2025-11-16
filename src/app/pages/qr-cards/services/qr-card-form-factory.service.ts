@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { QrCardAction, QrCardDataFormRecord, QrCardForm, QrCardFormGroup } from '@app/pages/qr-cards/qr-cards.models';
-import { MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH, MAX_URL_LENGTH } from '@app/pages/files/files.constants';
-import { SharedFormFactoryService } from '@shared/service/shared-form-factory.service';
+import { MaxDescriptionLength, MaxNameLength, MaxUrlLength } from '@app/pages/files/files.constants';
+import { SharedFileFormFactoryService } from '@shared/service/shared-file-form-factory.service';
 import { FileFormGroup } from '@shared/shared.models';
 import { TemplateField } from '@api/templates/templates-api.models';
 import { WebRegExp } from '@shared/shared.constants';
@@ -12,7 +12,7 @@ import { WebRegExp } from '@shared/shared.constants';
 })
 export class QrCardFormFactoryService {
   private readonly fb = inject(FormBuilder);
-  private readonly sharedFormFactoryService = inject(SharedFormFactoryService);
+  private readonly sharedFormFactoryService = inject(SharedFileFormFactoryService);
 
   private _form: QrCardFormGroup | null = null;
   private _isInitialized = false;
@@ -74,13 +74,13 @@ export class QrCardFormFactoryService {
       id: this.fb.nonNullable.control<number>(initialData?.id ?? -1),
       code: this.fb.nonNullable.control<number>(initialData?.code ?? -1),
       formId: this.fb.nonNullable.control<number>(initialData?.formId ?? -1),
-      name: this.fb.nonNullable.control<string>(initialData?.name ?? '', [Validators.maxLength(MAX_NAME_LENGTH)]),
+      name: this.fb.nonNullable.control<string>(initialData?.name ?? '', [Validators.maxLength(MaxNameLength)]),
       description: this.fb.nonNullable.control<string>(initialData?.description ?? '', [
-        Validators.maxLength(MAX_DESCRIPTION_LENGTH),
+        Validators.maxLength(MaxDescriptionLength),
       ]),
       action: this.fb.nonNullable.control<QrCardAction>('STD'),
       redirect: this.fb.nonNullable.control<string>('', [
-        Validators.maxLength(MAX_URL_LENGTH),
+        Validators.maxLength(MaxUrlLength),
         Validators.pattern(WebRegExp),
       ]),
       data: this.makeDataFormRecord(fieldList ?? []),

@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { FileAsUrlForm, FileAsUrlFormGroup, FileUploadForm, FileUploadFormGroup } from '@app/pages/files/files.models';
 import { WebRegExp } from '@shared/shared.constants';
-import { MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH, MAX_URL_LENGTH } from '@app/pages/files/files.constants';
+import { MaxDescriptionLength, MaxNameLength, MaxUrlLength } from '@app/pages/files/files.constants';
 import { distinctUntilChanged, map, pairwise, startWith, Subject, takeUntil } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
@@ -51,8 +51,8 @@ export class FileUploadFormFactoryService {
 
   private makeFileUploadForm(): FileUploadFormGroup {
     return this.fb.group<FileUploadForm>({
-      name: this.fb.nonNullable.control<string>('', [Validators.required, Validators.maxLength(MAX_NAME_LENGTH)]),
-      description: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_DESCRIPTION_LENGTH)]),
+      name: this.fb.nonNullable.control<string>('', [Validators.required, Validators.maxLength(MaxNameLength)]),
+      description: this.fb.nonNullable.control<string>('', [Validators.maxLength(MaxDescriptionLength)]),
       isActive: this.fb.nonNullable.control<boolean>(true),
       isPublic: this.fb.nonNullable.control<boolean>(true),
       file: this.fb.control<File | null>(null, [Validators.required]),
@@ -61,13 +61,13 @@ export class FileUploadFormFactoryService {
 
   private makeFileAsUrlForm(): FileAsUrlFormGroup {
     return this.fb.group<FileAsUrlForm>({
-      name: this.fb.nonNullable.control<string>('', [Validators.required, Validators.maxLength(MAX_NAME_LENGTH)]),
-      description: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_DESCRIPTION_LENGTH)]),
+      name: this.fb.nonNullable.control<string>('', [Validators.required, Validators.maxLength(MaxNameLength)]),
+      description: this.fb.nonNullable.control<string>('', [Validators.maxLength(MaxDescriptionLength)]),
       isActive: this.fb.nonNullable.control<boolean>(true),
       isPublic: this.fb.nonNullable.control<boolean>(true),
       storagePath: this.fb.nonNullable.control<string>('', [
         Validators.required,
-        Validators.maxLength(MAX_URL_LENGTH),
+        Validators.maxLength(MaxUrlLength),
         Validators.pattern(WebRegExp),
       ]),
     });

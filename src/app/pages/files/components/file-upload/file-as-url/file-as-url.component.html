@@ -5,7 +5,7 @@
     <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
   }
   @if (form.controls.name.touched && form.controls.name.hasError('maxlength')) {
-    <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_NAME_LENGTH }}</mat-error>
+    <mat-error>{{ SharedLocalization.maxLength }} {{ MaxNameLength }}</mat-error>
   }
 </mat-form-field>
 <mat-form-field class="form-field-lg">
@@ -15,7 +15,7 @@
     <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
   }
   @if (form.controls.description.touched && form.controls.description.hasError('maxlength')) {
-    <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_DESCRIPTION_LENGTH }}</mat-error>
+    <mat-error>{{ SharedLocalization.maxLength }} {{ MaxDescriptionLength }}</mat-error>
   }
 </mat-form-field>
 <mat-form-field class="form-field-lg">
@@ -25,7 +25,7 @@
     <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
   }
   @if (form.controls.storagePath.touched && form.controls.storagePath.hasError('maxlength')) {
-    <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_URL_LENGTH }}</mat-error>
+    <mat-error>{{ SharedLocalization.maxLength }} {{ MaxUrlLength }}</mat-error>
   }
   @if (form.controls.storagePath.touched && form.controls.storagePath.hasError('pattern')) {
     <mat-error>{{ SharedLocalization.mustBeUrl }}</mat-error>

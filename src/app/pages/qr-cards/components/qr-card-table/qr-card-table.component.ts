@@ -35,7 +35,6 @@ import { MatMenuItem } from '@angular/material/menu';
 import { TableContainerComponent } from '@shared/components/table-container/table-container.component';
 import { MoreMenuComponent } from '@shared/components/more-menu/more-menu.component';
 import { MatIcon } from '@angular/material/icon';
-import { ToHexPipe } from '@shared/pipe/to-hex.pipe';
 import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
 import { QrTableCellComponent } from '@app/pages/qr-cards/components/qr-table-cell/qr-table-cell.component';
@@ -61,7 +60,6 @@ import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
     MatRowDef,
     MoreMenuComponent,
     MatRow,
-    ToHexPipe,
     QrTableCellComponent,
   ],
   providers: [

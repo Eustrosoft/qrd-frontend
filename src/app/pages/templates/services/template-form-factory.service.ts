@@ -9,15 +9,15 @@ import {
 } from '@app/pages/templates/templates.models';
 import { FileFormGroup } from '@shared/shared.models';
 import { FieldType } from '@api/templates/templates-api.models';
-import { MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
-import { SharedFormFactoryService } from '@shared/service/shared-form-factory.service';
+import { MaxDescriptionLength, MaxNameLength } from '@app/pages/files/files.constants';
+import { SharedFileFormFactoryService } from '@shared/service/shared-file-form-factory.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TemplateFormFactoryService {
   private readonly fb = inject(FormBuilder);
-  private readonly sharedFormFactoryService = inject(SharedFormFactoryService);
+  private readonly sharedFormFactoryService = inject(SharedFileFormFactoryService);
 
   private _form: TemplateFormGroup | null = null;
   private _isInitialized = false;
@@ -84,10 +84,10 @@ export class TemplateFormFactoryService {
     return this.fb.group<TemplateForm>({
       name: this.fb.nonNullable.control<string>(initialData?.name ?? '', [
         Validators.required,
-        Validators.maxLength(MAX_NAME_LENGTH),
+        Validators.maxLength(MaxNameLength),
       ]),
       description: this.fb.nonNullable.control<string>(initialData?.description ?? '', [
-        Validators.maxLength(MAX_DESCRIPTION_LENGTH),
+        Validators.maxLength(MaxDescriptionLength),
       ]),
       fields: this.makeFieldFormGroupArray(initialData?.fields ?? []),
       files: this.sharedFormFactoryService.makeFileFormGroupArray(initialData?.files ?? []),

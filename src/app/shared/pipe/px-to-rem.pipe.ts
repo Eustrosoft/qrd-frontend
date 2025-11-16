@@ -1,6 +1,6 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
 import { DOCUMENT_FONT_SIZE } from '@cdk/tokens/document-font-size.token';
-import { NO_LEADING_ZERO_INTEGER_REGEXP } from '@shared/validators/validators.constants';
+import { NoLeadingZeroRegExp } from '@shared/validators/validators.constants';
 
 /**
  * Конвертирует px в rem
@@ -18,7 +18,7 @@ export class PxToRemPipe implements PipeTransform {
   private readonly documentFontSize: number = inject(DOCUMENT_FONT_SIZE);
 
   public transform(value: string): string {
-    if (!NO_LEADING_ZERO_INTEGER_REGEXP.test(value)) {
+    if (!NoLeadingZeroRegExp.test(value)) {
       return value;
     }
 

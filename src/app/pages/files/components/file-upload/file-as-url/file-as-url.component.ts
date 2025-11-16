@@ -20,12 +20,7 @@ import { AddFileUrl, UpdateFileMetadata } from '@app/pages/files/components/file
 import { FileEditableMetadata } from '@api/files/files-api.models';
 import { SharedLocalization } from '@shared/shared.constants';
 import { MatError } from '@angular/material/form-field';
-import {
-  FilesLocalization,
-  MAX_DESCRIPTION_LENGTH,
-  MAX_NAME_LENGTH,
-  MAX_URL_LENGTH,
-} from '@app/pages/files/files.constants';
+import { FilesLocalization, MaxDescriptionLength, MaxNameLength, MaxUrlLength } from '@app/pages/files/files.constants';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { outputFromObservable } from '@angular/core/rxjs-interop';
@@ -127,9 +122,9 @@ export class FileAsUrlComponent implements OnDestroy {
 
   protected readonly FilesLocalization = FilesLocalization;
   protected readonly SharedLocalization = SharedLocalization;
-  protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
-  protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
-  protected readonly MAX_URL_LENGTH = MAX_URL_LENGTH;
+  protected readonly MaxNameLength = MaxNameLength;
+  protected readonly MaxDescriptionLength = MaxDescriptionLength;
+  protected readonly MaxUrlLength = MaxUrlLength;
 
   protected addFileUrl(): void {
     this.form.markAllAsTouched();

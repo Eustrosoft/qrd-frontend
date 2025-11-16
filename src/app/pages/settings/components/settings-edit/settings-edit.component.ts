@@ -22,7 +22,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { SettingsLocalization } from '@app/pages/settings/settings.constants';
-import { MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
+import { MaxNameLength } from '@app/pages/files/files.constants';
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { IndicatorComponent } from '@shared/components/indicator/indicator.component';
@@ -98,7 +98,7 @@ export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanCo
 
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly SettingsLocalization = SettingsLocalization;
-  protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
+  protected readonly MAX_NAME_LENGTH = MaxNameLength;
   protected readonly RouteTitles = RouteTitles;
   protected readonly AppRoutes = AppRoutes;
   protected readonly displayTypeList: Option<ViewMode>[] = [
@@ -110,8 +110,8 @@ export class SettingsEditComponent implements AfterContentInit, OnDestroy, CanCo
 
   protected readonly form = this.fb.group<SettingsForm>({
     checkUploadSize: this.fb.nonNullable.control<boolean>(false),
-    defaultQrPrintText: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_NAME_LENGTH)]),
-    defaultQrPrintTextDown: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_NAME_LENGTH)]),
+    defaultQrPrintText: this.fb.nonNullable.control<string>('', [Validators.maxLength(MaxNameLength)]),
+    defaultQrPrintTextDown: this.fb.nonNullable.control<string>('', [Validators.maxLength(MaxNameLength)]),
     cardsViewMode: this.fb.nonNullable.control<ViewMode>('list'),
     templatesViewMode: this.fb.nonNullable.control<ViewMode>('list'),
     templateAttrsEditViewMode: this.fb.nonNullable.control<ViewMode>('table'),

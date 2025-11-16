@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
-import { MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
+import { MaxDescriptionLength, MaxNameLength } from '@app/pages/files/files.constants';
 import { TemplateCreationForm } from '@app/pages/templates/templates.models';
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
 import { MatButton } from '@angular/material/button';
@@ -44,6 +44,10 @@ export class TemplateCreateComponent {
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
 
   protected readonly TemplatesLocalization = TemplatesLocalization;
+  protected readonly SharedLocalization = SharedLocalization;
+  protected readonly RouteTitles = RouteTitles;
+  protected readonly MaxNameLength = MaxNameLength;
+  protected readonly MaxDescriptionLength = MaxDescriptionLength;
 
   protected readonly selectors = createSelectMap({
     isSaveInProgress: TemplatesSelectors.getSlices.isSaveInProgress,
@@ -53,8 +57,8 @@ export class TemplateCreateComponent {
   });
 
   protected readonly form = this.fb.group<TemplateCreationForm>({
-    name: this.fb.nonNullable.control<string>('', [Validators.required, Validators.maxLength(MAX_NAME_LENGTH)]),
-    description: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_DESCRIPTION_LENGTH)]),
+    name: this.fb.nonNullable.control<string>('', [Validators.required, Validators.maxLength(MaxNameLength)]),
+    description: this.fb.nonNullable.control<string>('', [Validators.maxLength(MaxDescriptionLength)]),
   });
 
   protected createQrCard(): void {
@@ -66,9 +70,4 @@ export class TemplateCreateComponent {
 
     this.actions.createTemplate(this.form.getRawValue(), this.destroyRef);
   }
-
-  protected readonly SharedLocalization = SharedLocalization;
-  protected readonly RouteTitles = RouteTitles;
-  protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
-  protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
 }

@@ -6,7 +6,7 @@ import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { QrCardsLocalization } from '@app/pages/qr-cards/qr-cards.constants';
-import { FilesLocalization, MAX_DESCRIPTION_LENGTH, MAX_NAME_LENGTH } from '@app/pages/files/files.constants';
+import { FilesLocalization, MaxDescriptionLength, MaxNameLength } from '@app/pages/files/files.constants';
 import { ErrorsLocalization } from '@modules/error/error.constants';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
@@ -91,8 +91,8 @@ export class QrCardCreateComponent implements OnInit {
   });
 
   protected readonly form = this.fb.group<QrCardCreationForm>({
-    name: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_NAME_LENGTH)]),
-    description: this.fb.nonNullable.control<string>('', [Validators.maxLength(MAX_DESCRIPTION_LENGTH)]),
+    name: this.fb.nonNullable.control<string>('', [Validators.maxLength(MaxNameLength)]),
+    description: this.fb.nonNullable.control<string>('', [Validators.maxLength(MaxDescriptionLength)]),
     formId: this.fb.nonNullable.control<number | null>(null),
     rangeId: this.fb.nonNullable.control<number | null>(null, [Validators.required]),
   });
@@ -102,8 +102,8 @@ export class QrCardCreateComponent implements OnInit {
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly FilesLocalization = FilesLocalization;
   protected readonly ErrorsLocalization = ErrorsLocalization;
-  protected readonly MAX_NAME_LENGTH = MAX_NAME_LENGTH;
-  protected readonly MAX_DESCRIPTION_LENGTH = MAX_DESCRIPTION_LENGTH;
+  protected readonly MaxNameLength = MaxNameLength;
+  protected readonly MaxDescriptionLength = MaxDescriptionLength;
 
   public ngOnInit(): void {
     this.actions.fetchTemplateList(this.destroyRef);

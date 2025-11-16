@@ -38,7 +38,7 @@
               <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
             }
             @if (form().controls.name.touched && form().controls.name.hasError('maxlength')) {
-              <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_NAME_LENGTH }}</mat-error>
+              <mat-error>{{ SharedLocalization.maxLength }} {{ MaxNameLength }}</mat-error>
             }
           </mat-form-field>
           <mat-form-field class="form-field-lg">
@@ -48,7 +48,7 @@
               <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
             }
             @if (form().controls.description.touched && form().controls.description.hasError('maxlength')) {
-              <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_DESCRIPTION_LENGTH }}</mat-error>
+              <mat-error>{{ SharedLocalization.maxLength }} {{ MaxDescriptionLength }}</mat-error>
             }
           </mat-form-field>
         </ui-grid-block>
@@ -325,52 +325,26 @@
           @if (isUploadVisible()) {
             <file-attachment-mode />
             @if (selectors.fileAttachmentMode() === 'upload') {
-              <file-upload-blob (uploadCompleted)="addFileToTemplate($event)" />
+              <file-upload-blob
+                fileDuplicates
+                [existingFiles]="form().controls.files.getRawValue()"
+                (uploadCompleted)="addFileToTemplate($event)"
+              />
             }
             @if (selectors.fileAttachmentMode() === 'fileUrl') {
               <file-as-url (uploadCompleted)="addFileToTemplate($event)" />
             }
           }
           @if (isFileSelectorVisible()) {
-            <ui-grid-block gridTemplateColumns="repeat(1, 1fr)">
-              <mat-form-field class="form-field-lg">
-                @if (selectors.filesState().isFileListLoading) {
-                  <mat-label>
-                    <ui-flex-block>
-                      <p>{{ SharedLocalization.loading }}</p>
-                      <mat-spinner diameter="24"></mat-spinner>
-                    </ui-flex-block>
-                  </mat-label>
-                } @else {
-                  <mat-label>
-                    @if (selectors.filesState().isFileListLoadErr) {
-                      <ui-flex-block flexAlignItems="center">
-                        <p class="error-color">{{ ErrorsLocalization.errorFetchingFileList }}</p>
-                        <button (click)="actions.fetchFileList(destroyRef)" class="icon-button-sm" mat-icon-button>
-                          <mat-icon class="icon-primary">refresh</mat-icon>
-                        </button>
-                      </ui-flex-block>
-                    } @else {
-                      {{ SharedLocalization.pickAFile }}
-                    }
-                  </mat-label>
-                }
-                <mat-select #select multiple>
-                  @for (file of selectors.filesState().fileList; track file.id) {
-                    <mat-option class="option-lg" [value]="file.id">{{ file.name }}</mat-option>
-                  } @empty {
-                    {{ SharedLocalization.emptyList }}
-                  }
-                </mat-select>
-              </mat-form-field>
-              <button
-                (click)="addExistingFilesToTemplate(select.value ?? [])"
-                class="button-lg button-secondary"
-                mat-flat-button
-              >
-                {{ SharedLocalization.attach }}
-              </button>
-            </ui-grid-block>
+            <file-selector
+              fileDuplicates
+              [existingFiles]="form().controls.files.getRawValue()"
+              [isFileListLoading]="selectors.filesState().isFileListLoading"
+              [isFileListLoadErr]="selectors.filesState().isFileListLoadErr"
+              [fileList]="selectors.filesState().fileList"
+              (refreshClick)="actions.fetchFileList(destroyRef)"
+              (attachClick)="addExistingFilesToTemplate($event)"
+            />
           }
         } @else {
           <ui-skeleton height="312" />
