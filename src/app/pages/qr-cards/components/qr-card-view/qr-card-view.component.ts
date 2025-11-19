@@ -8,7 +8,7 @@ import {
   inputBinding,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AppRoutes } from '@app/app.constants';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { MatButton } from '@angular/material/button';
@@ -34,6 +34,9 @@ import { UiAlertComponent } from '@ui/ui-alert/ui-alert.component';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { AppSelectors } from '@app/state/app.selectors';
 import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
+import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
+import { TabLink } from '@shared/shared.models';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'qr-card-view',
@@ -51,6 +54,11 @@ import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
     MoreMenuComponent,
     UiAlertComponent,
     UiFlexBlockComponent,
+    MatTabLink,
+    MatTabNavPanel,
+    MatTabNav,
+    RouterLinkActive,
+    UpperCasePipe,
   ],
   templateUrl: './qr-card-view.component.html',
   styleUrl: './qr-card-view.component.scss',
@@ -88,6 +96,11 @@ export class QrCardViewComponent implements OnInit {
       `${SharedLocalization.defaultTitle} | ${RouteTitles.card} ${this.selectors.qrCard()?.name ?? ''}`,
     );
   });
+
+  protected readonly tabLinks: TabLink[] = [
+    { link: AppRoutes.qrCard, title: RouteTitles.card },
+    { link: AppRoutes.marking, title: RouteTitles.marking },
+  ];
 
   protected readonly AppRoutes = AppRoutes;
   protected readonly QrCardsLocalization = QrCardsLocalization;

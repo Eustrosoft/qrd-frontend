@@ -15,6 +15,7 @@ import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { queryRedirectResolver } from '@shared/resolvers/query-redirect.resolver';
 import { loginGuard } from '@modules/auth/login.guard';
 import { AuthSelectors } from '@modules/auth/state/auth.selectors';
+import { MarkingsState } from '@app/pages/markings/state/markings.state';
 
 export const routes: Routes = [
   {
@@ -62,6 +63,13 @@ export const routes: Routes = [
     loadChildren: () => import('@app/pages/docs/docs.routes').then((m) => m.docsRoutes),
   },
   {
+    path: AppRoutes.markings,
+    title: RouteTitles.markings,
+    canActivate: [authGuard],
+    loadChildren: () => import('@app/pages/markings/markings.routes').then((m) => m.markingsRoutes),
+    providers: [provideStates([MarkingsState])],
+  },
+  {
     path: AppRoutes.settings,
     title: RouteTitles.settings,
     canActivate: [authGuard],
@@ -86,7 +94,17 @@ export const routes: Routes = [
             title: ErrorsLocalization.pageNotFound,
             message: ErrorsLocalization.pageNotFoundDescription,
             icon: 'not-found',
-            buttonList: [{ buttonText: SharedLocalization.mainPage, buttonAction: () => router.navigate(['/']) }],
+            buttonList: [
+              {
+                buttonText: SharedLocalization.goBack,
+                buttonAction: (): void => {
+                  router.navigateByUrl(
+                    router.lastSuccessfulNavigation?.previousNavigation?.extractedUrl ?? router.createUrlTree(['/']),
+                  );
+                },
+              },
+              { buttonText: SharedLocalization.mainPage, buttonAction: () => router.navigate(['/']) },
+            ],
           }),
         deps: [Router],
       },

@@ -1,0 +1,134 @@
+@if (!selectors.isGs1LoadErr()) {
+  @if (!selectors.isGs1Loading()) {
+    <card-container [hideHeading]="true">
+      <ng-container content>
+        <toolbar [navigateTo]="['../']">
+          @if (!isSmallScreen()) {
+            <ng-container heading>
+              <h1>{{ isNew() ? MarkingsLocalization.creation : MarkingsLocalization.editing }}</h1>
+            </ng-container>
+          }
+          <ng-container action-buttons>
+            @if (!selectors.isSaveInProgress()) {
+              <button (click)="saveData()" class="button-md" mat-flat-button>
+                <ui-flex-block gapSize="4">
+                  {{ SharedLocalization.save }}
+                  @if (formHasUnsavedChanges()) {
+                    <indicator />
+                  }
+                </ui-flex-block>
+              </button>
+            } @else {
+              <ui-skeleton height="40" width="128" />
+            }
+          </ng-container>
+        </toolbar>
+      </ng-container>
+    </card-container>
+    <card-container>
+      <ng-container heading>
+        <h1>{{ SharedLocalization.data }}</h1>
+      </ng-container>
+      <ng-container content>
+        <ui-grid-block gridAlignItems="start" [gridTemplateColumns]="gridTemplateColumns()">
+          <mat-form-field class="form-field-lg">
+            @if (selectors.getQrCardsState().isQrCardListLoading) {
+              <mat-label>
+                <ui-flex-block>
+                  <p>{{ SharedLocalization.loading }}</p>
+                  <mat-spinner diameter="24"></mat-spinner>
+                </ui-flex-block>
+              </mat-label>
+            } @else {
+              <mat-label>
+                @if (selectors.getQrCardsState().isQrCardListLoadErr) {
+                  <ui-flex-block flexAlignItems="center">
+                    <p class="error-color">{{ ErrorsLocalization.errorFetchingCardList }}</p>
+                    <button (click)="actions.fetchQrCardList(destroyRef)" class="icon-button-sm" mat-icon-button>
+                      <mat-icon class="icon-primary">refresh</mat-icon>
+                    </button>
+                  </ui-flex-block>
+                } @else {
+                  {{ SharedLocalization.card }}
+                }
+              </mat-label>
+            }
+            @if (form().controls.qrId.value !== DEFAULT_EMPTY_ID) {
+              <mat-hint>
+                <a
+                  [routerLink]="`/qr-cards/${form().controls.qrId.value}`"
+                  class="button-anchor-sm"
+                  mat-button
+                  interactionEffect
+                >
+                  <small class="bold">{{ SharedLocalization.openCard }}</small>
+                </a>
+              </mat-hint>
+            }
+            @if (form().controls.qrId.value !== DEFAULT_EMPTY_ID) {
+              <button
+                (click)="$event.stopPropagation(); form().controls.qrId.reset(-1)"
+                class="icon-button-sm"
+                mat-icon-button
+                matSuffix
+              >
+                <mat-icon class="icon-primary">close</mat-icon>
+              </button>
+            }
+            <mat-select [formControl]="form().controls.qrId">
+              @for (qrCard of selectors.getQrCardsState().qrCardList; track qrCard.id) {
+                <mat-option class="option-lg" [value]="qrCard.id">{{ qrCard.name }}</mat-option>
+              } @empty {
+                <mat-option class="option-lg" disabled> {{ SharedLocalization.emptyList }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ SharedLocalization.type }} </mat-label>
+            <mat-select [formControl]="form().controls.rtype">
+              @for (rtype of rtypeList(); track rtype.value) {
+                <mat-option class="option-lg" [value]="rtype.value">{{ rtype.viewValue }}</mat-option>
+              } @empty {
+                <mat-option class="option-lg" disabled> {{ SharedLocalization.emptyList }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ MarkingsLocalization.gtin }} </mat-label>
+            <input [formControl]="form().controls.gtin" matInput />
+            <!--            @if (form().controls.gtin.touched && form().controls.gtin.hasError('required')) {-->
+            <!--              <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>-->
+            <!--            }-->
+            <!--            @if (form().controls.gtin.touched && form().controls.gtin.hasError('maxlength')) {-->
+            <!--              <mat-error>{{ SharedLocalization.maxLength }} {{ MAX_NAME_LENGTH }}</mat-error>-->
+            <!--            }-->
+          </mat-form-field>
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ MarkingsLocalization.key }} </mat-label>
+            <input [formControl]="form().controls.key" matInput />
+          </mat-form-field>
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ MarkingsLocalization.value }} </mat-label>
+            <input [formControl]="form().controls.value" matInput />
+          </mat-form-field>
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ MarkingsLocalization.tail }} </mat-label>
+            <input [formControl]="form().controls.tail" matInput />
+          </mat-form-field>
+        </ui-grid-block>
+        <ui-grid-block gridAlignItems="start" gridTemplateColumns="1fr">
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ MarkingsLocalization.comment }} </mat-label>
+            <textarea [formControl]="form().controls.comment" matInput></textarea>
+          </mat-form-field>
+        </ui-grid-block>
+      </ng-container>
+    </card-container>
+  } @else {
+    <ui-skeleton height="176" />
+    <ui-skeleton height="262" />
+    <ui-skeleton height="512" />
+  }
+} @else {
+  <banner [title]="ErrorsLocalization.errorFetchingGs1" />
+}

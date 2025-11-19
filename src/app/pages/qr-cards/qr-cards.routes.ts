@@ -12,6 +12,7 @@ import { QrCardCreateComponent } from '@app/pages/qr-cards/components/qr-card-cr
 import { QrCardListComponent } from '@app/pages/qr-cards/components/qr-card-list/qr-card-list.component';
 import { QrCardTableComponent } from '@app/pages/qr-cards/components/qr-card-table/qr-card-table.component';
 import { viewModeRedirect } from '@shared/utils/functions/view-mode-redirect.function';
+import { QrCardMarkingComponent } from '@app/pages/qr-cards/components/qr-card-marking/qr-card-marking.component';
 
 export const qrCardsRoutes: Routes = [
   {
@@ -56,6 +57,10 @@ export const qrCardsRoutes: Routes = [
             path: AppRoutes.qrCard,
             component: QrCardMainComponent,
           },
+          {
+            path: AppRoutes.marking,
+            component: QrCardMarkingComponent,
+          },
         ],
       },
       {
@@ -64,7 +69,6 @@ export const qrCardsRoutes: Routes = [
         title: RouteTitles.card,
         canDeactivate: [unsavedDataGuard<QrCardEditComponent>()],
         resolve: { qrCardForm: qrCardFormResolver() },
-        data: { mode: 'edit' },
       },
     ],
   },

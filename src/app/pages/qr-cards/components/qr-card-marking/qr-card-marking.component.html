@@ -1,0 +1,37 @@
+<card-container>
+  <ng-container heading>
+    <h1>{{ RouteTitles.gs1 }}</h1>
+  </ng-container>
+  <ng-container action-buttons>
+    <a
+      [routerLink]="`/${AppRoutes.markings}/${AppRoutes.new}/${AppRoutes.gs1}`"
+      [queryParams]="{ qrId: selectors.qrCard()?.id }"
+      class="button-md"
+      mat-flat-button
+    >
+      {{ MarkingsLocalization.creation }}
+    </a>
+  </ng-container>
+  <ng-container content>
+    <ui-grid-block gridTemplateColumns="1fr">
+      @for (gs1 of selectors.gs1ListState().gs1List; track $index) {
+        <!-- TODO routerLink на редактирование GS1 -->
+        <a [routerLink]="`/${AppRoutes.markings}/${AppRoutes.new}/${AppRoutes.gs1}`" title="Some GS1" ellipsis>
+          <ui-badge
+            padding="8px 16px"
+            color="var(--mat-sys-on-tertiary-container)"
+            background="var(--mat-sys-tertiary-container)"
+            cursor="pointer"
+          >
+            <p ellipsis>
+              {{ 'Some GS1' | fallback: SharedLocalization.noName }}
+              {{ gs1 | json }}
+            </p>
+          </ui-badge>
+        </a>
+      } @empty {
+        <p>{{ SharedLocalization.noUsages }}</p>
+      }
+    </ui-grid-block>
+  </ng-container>
+</card-container>

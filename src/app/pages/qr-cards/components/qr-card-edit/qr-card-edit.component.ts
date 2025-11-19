@@ -148,7 +148,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     { requireSync: true },
   );
 
-  public readonly formHasUnsavedChanges = toSignal(
+  protected readonly formHasUnsavedChanges = toSignal(
     merge(
       this.form().valueChanges.pipe(
         startWith(this.form().getRawValue()),
@@ -164,7 +164,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     { initialValue: false },
   );
 
-  public readonly formFiles = toSignal<ReturnType<FileFormGroupArray['getRawValue']>>(
+  protected readonly formFiles = toSignal<ReturnType<FileFormGroupArray['getRawValue']>>(
     merge(
       this.form().valueChanges.pipe(startWith(null)),
       this.actions$.pipe(ofActionSuccessful(AddFilesToQrCard)),
@@ -175,7 +175,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
     { requireSync: true },
   );
 
-  public readonly allFiles = computed(() => [
+  protected readonly allFiles = computed(() => [
     ...this.formFiles(),
     // eslint-disable-next-line
     ...(this.selectors.qrCard()?.form.files ?? []),
