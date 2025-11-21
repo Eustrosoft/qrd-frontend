@@ -35,12 +35,14 @@ import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component'
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
 import { DEFAULT_EMPTY_ID } from '@app/app.constants';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
+import { MatError, MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MaxDescriptionLength, MaxNameLength } from '@app/pages/files/files.constants';
 import { Option } from '@shared/shared.models';
+import { gtinValidator } from '@shared/validators/gtin-length.validator';
+import { gs1KeyValueValidator } from '@shared/validators/gs1-key-value.validator';
 
 @Component({
   selector: 'gs1-edit',
@@ -66,6 +68,7 @@ import { Option } from '@shared/shared.models';
     RouterLink,
     ReactiveFormsModule,
     MatInput,
+    MatError,
   ],
   providers: [{ provide: ErrorStateMatcher, useClass: TouchedErrorStateMatcher }],
   templateUrl: './gs1-edit.component.html',
@@ -80,9 +83,37 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
 
+  protected readonly MarkingsLocalization = MarkingsLocalization;
+  protected readonly SharedLocalization = SharedLocalization;
+  protected readonly ErrorsLocalization = ErrorsLocalization;
+
   protected readonly form = toSignal<Gs1FormGroup>(this.activatedRoute.data.pipe(map((data) => data['gs1Form'])), {
     requireSync: true,
   });
+
+  protected readonly gtinSoftErrors = toSignal(
+    this.form().controls.gtin.events.pipe(
+      map(() => gtinValidator()(this.form().controls.gtin)),
+      startWith(null),
+    ),
+    { requireSync: true },
+  );
+
+  protected readonly keySoftErrors = toSignal(
+    this.form().controls.key.events.pipe(
+      map(() => gs1KeyValueValidator()(this.form().controls.key)),
+      startWith(null),
+    ),
+    { requireSync: true },
+  );
+
+  protected readonly valueSoftErrors = toSignal(
+    this.form().controls.value.events.pipe(
+      map(() => gs1KeyValueValidator()(this.form().controls.value)),
+      startWith(null),
+    ),
+    { requireSync: true },
+  );
 
   protected readonly isNew = computed<boolean>(() => !this.form().controls.id.getRawValue());
 
@@ -128,10 +159,6 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
     fetchQrCardList: FetchQrCardList,
   });
 
-  protected readonly MarkingsLocalization = MarkingsLocalization;
-  protected readonly SharedLocalization = SharedLocalization;
-  protected readonly ErrorsLocalization = ErrorsLocalization;
-
   public ngOnInit(): void {
     this.actions.fetchQrCardList(this.destroyRef);
     this.form().valueChanges.pipe(startWith(this.form().getRawValue())).subscribe(console.log);
@@ -142,10 +169,9 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
   }
 
   protected saveData(): void {
+    this.form().markAllAsTouched();
     console.log(this.form().getRawValue());
-    // this.form().markAllAsTouched();
     // if (this.form().invalid) {
-    //   return;
     // }
     // this.actions.saveQrCard(this.form().getRawValue(), this.destroyRef);
   }

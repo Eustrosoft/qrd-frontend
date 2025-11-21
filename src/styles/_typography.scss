@@ -41,6 +41,14 @@ p {
 small {
   font: var(--mat-sys-body-small);
 
+  &.primary-color {
+    color: var(--mat-sys-primary);
+  }
+
+  &.warning-color {
+    color: var(--mat-extended-warning-color);
+  }
+
   &.bold {
     font-weight: 700;
   }
@@ -49,7 +57,7 @@ small {
 a {
   cursor: pointer;
 
-  &.primary {
+  &.primary-color {
     color: var(--mat-sys-primary);
   }
 }

@@ -95,3 +95,11 @@
     )
   );
 }
+
+.icon-warning {
+  @include mat.icon-overrides(
+    (
+      color: var(--mat-extended-warning-color),
+    )
+  );
+}

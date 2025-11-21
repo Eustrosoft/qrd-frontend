@@ -1,6 +1,6 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export const GtinLength = [8, 12, 13, 14];
+export const ValidGtinLengths = [8, 12, 13, 14];
 
 function computeGtinCheckDigit(withoutCheckDigit: string): number {
   const digits = withoutCheckDigit
@@ -29,7 +29,7 @@ export function gtinValidator(): ValidatorFn {
       return { nonNumericGtin: true };
     }
 
-    if (!GtinLength.includes(normalized.length)) {
+    if (!ValidGtinLengths.includes(normalized.length)) {
       return { invalidGtinLength: true };
     }
 

@@ -25,7 +25,7 @@
         <b>{{ block.title }}</b>
       </p>
       @for (link of block.links; track link) {
-        <a class="primary" [href]="link.uri" target="_blank" rel="noopener noreferrer" interactionEffect>
+        <a class="primary-color" [href]="link.uri" target="_blank" rel="noopener noreferrer" interactionEffect>
           {{ link.title }}
         </a>
       }
@@ -38,7 +38,7 @@
     <small>
       © {{ currentYear }}
       <a
-        class="primary"
+        class="primary-color"
         [href]="selectors.layoutConfigState().layoutConfig.footer?.copyright?.uri"
         target="_blank"
         rel="noopener noreferrer"
