@@ -2,11 +2,11 @@ import { RedirectCommand, ResolveFn, Router } from '@angular/router';
 import { Actions, dispatch, ofActionErrored, ofActionSuccessful, select } from '@ngxs/store';
 import { inject } from '@angular/core';
 import { map, merge, Observable, of } from 'rxjs';
-import { Gs1FormGroup } from '@app/pages/markings/markings.models';
-import { Gs1FormFactoryService } from '@app/pages/markings/services/gs1-form-factory.service';
+import { Gs1FormGroup } from '@app/pages/gs1/gs1.models';
+import { Gs1FormFactoryService } from '@app/pages/gs1/services/gs1-form-factory.service';
 import { AppRoutes, DEFAULT_EMPTY_ID } from '@app/app.constants';
-import { MarkingsSelectors } from '@app/pages/markings/state/markings.selectors';
-import { FetchMarking } from '@app/pages/markings/state/markings.actions';
+import { Gs1Selectors } from '@app/pages/gs1/state/gs1.selectors';
+import { FetchGs1 } from '@app/pages/gs1/state/gs1.actions';
 
 export const gs1FormResolver = (): ResolveFn<Observable<Gs1FormGroup | RedirectCommand>> => {
   return (route) => {
@@ -16,7 +16,8 @@ export const gs1FormResolver = (): ResolveFn<Observable<Gs1FormGroup | RedirectC
 
     const id = route.paramMap.get('id');
     const qrIdParam = route.queryParamMap.get('qrId');
-    const gs1 = select(MarkingsSelectors.getSlices.gs1);
+    const qrId = qrIdParam ? +qrIdParam || null : null;
+    const gs1 = select(Gs1Selectors.getSlices.gs1);
 
     gs1FormFactoryService.reset();
 
@@ -26,13 +27,13 @@ export const gs1FormResolver = (): ResolveFn<Observable<Gs1FormGroup | RedirectC
     };
 
     if (!id) {
-      return of(initializeForm({ qrId: +(qrIdParam ?? DEFAULT_EMPTY_ID), rtype: 1 }));
+      return of(initializeForm({ qrId: qrId, rtype: 'gtin' }));
     }
 
-    dispatch(FetchMarking)(+id);
+    dispatch(FetchGs1)(+id);
     return merge(
       actions$.pipe(
-        ofActionSuccessful(FetchMarking),
+        ofActionSuccessful(FetchGs1),
         map(() =>
           // TODO заполнение данными из gs1()
           initializeForm({
@@ -47,7 +48,7 @@ export const gs1FormResolver = (): ResolveFn<Observable<Gs1FormGroup | RedirectC
         ),
       ),
       actions$.pipe(
-        ofActionErrored(FetchMarking),
+        ofActionErrored(FetchGs1),
         map(
           () =>
             new RedirectCommand(

@@ -12,7 +12,7 @@ import { QrCardCreateComponent } from '@app/pages/qr-cards/components/qr-card-cr
 import { QrCardListComponent } from '@app/pages/qr-cards/components/qr-card-list/qr-card-list.component';
 import { QrCardTableComponent } from '@app/pages/qr-cards/components/qr-card-table/qr-card-table.component';
 import { viewModeRedirect } from '@shared/utils/functions/view-mode-redirect.function';
-import { QrCardMarkingComponent } from '@app/pages/qr-cards/components/qr-card-marking/qr-card-marking.component';
+import { QrCardGs1Component } from '@app/pages/qr-cards/components/qr-card-gs1/qr-card-gs1.component';
 
 export const qrCardsRoutes: Routes = [
   {
@@ -58,8 +58,8 @@ export const qrCardsRoutes: Routes = [
             component: QrCardMainComponent,
           },
           {
-            path: AppRoutes.marking,
-            component: QrCardMarkingComponent,
+            path: AppRoutes.gs1,
+            component: QrCardGs1Component,
           },
         ],
       },

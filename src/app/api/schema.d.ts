@@ -40,6 +40,44 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/api/secured/p-codes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Find all pCodes for current user */
+        get: operations["findAll"];
+        /** Update pCode */
+        put: operations["update_1"];
+        /** Create new pCode */
+        post: operations["create_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/api/secured/gs-labels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Find all GSLabel for current user */
+        get: operations["findAll_1"];
+        /** Update GSLabel */
+        put: operations["update_2"];
+        /** Create new GSLabel */
+        post: operations["create_2"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/api/secured/forms/{id}": {
         parameters: {
             query?: never;
@@ -48,12 +86,12 @@ export interface paths {
             cookie?: never;
         };
         /** Find form by ID */
-        get: operations["findById_2"];
+        get: operations["findById_4"];
         /** Update form metadata by ID */
-        put: operations["update_1"];
+        put: operations["update_3"];
         post?: never;
         /** Delete form by ID */
-        delete: operations["delete_1"];
+        delete: operations["delete_3"];
         options?: never;
         head?: never;
         patch?: never;
@@ -84,9 +122,9 @@ export interface paths {
             cookie?: never;
         };
         /** Get file by ID */
-        get: operations["findById_3"];
+        get: operations["findById_5"];
         /** Update file metadata by ID */
-        put: operations["update_2"];
+        put: operations["update_4"];
         post?: never;
         /** Delete file by ID */
         delete: operations["deleteFile_2"];
@@ -103,7 +141,7 @@ export interface paths {
             cookie?: never;
         };
         /** Find participant by ID */
-        get: operations["findById_4"];
+        get: operations["findById_6"];
         /** Update participant data */
         put: operations["updateParticipant"];
         post?: never;
@@ -142,6 +180,25 @@ export interface paths {
         /** Change participant password */
         put: operations["changeParticipantPassword"];
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/api/admin/m-ranges": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Find all MRange for current user */
+        get: operations["findAll_5"];
+        /** Update MRange */
+        put: operations["update_5"];
+        /** Create new MRange */
+        post: operations["create_3"];
         delete?: never;
         options?: never;
         head?: never;
@@ -241,7 +298,7 @@ export interface paths {
             cookie?: never;
         };
         /** Find all forms for current user */
-        get: operations["findAll"];
+        get: operations["findAll_2"];
         put?: never;
         /** Create new form */
         post: operations["createForm"];
@@ -446,7 +503,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get list of participants */
-        get: operations["findAll_2"];
+        get: operations["findAll_4"];
         put?: never;
         /** Add new participant */
         post: operations["addParticipant"];
@@ -748,6 +805,42 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/api/secured/p-codes/{docId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get pCode by docId */
+        get: operations["findById_2"];
+        put?: never;
+        post?: never;
+        /** Delete pCode by docId */
+        delete: operations["delete_1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/api/secured/gs-labels/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get GSLabel by id */
+        get: operations["findById_3"];
+        put?: never;
+        post?: never;
+        /** Delete GSLabel by id */
+        delete: operations["delete_2"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/api/secured/forms/{id}/related": {
         parameters: {
             query?: never;
@@ -790,7 +883,7 @@ export interface paths {
             cookie?: never;
         };
         /** Find all files for current user */
-        get: operations["findAll_1"];
+        get: operations["findAll_3"];
         put?: never;
         post?: never;
         delete?: never;
@@ -969,6 +1062,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/api/admin/m-ranges/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get MRange by id */
+        get: operations["findById_7"];
+        put?: never;
+        post?: never;
+        /** Delete MRange by id */
+        delete: operations["delete_4"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/api/admin/panel/participants/{id}/qrs": {
         parameters: {
             query?: never;
@@ -1101,6 +1212,43 @@ export interface components {
             name: string;
             description: string;
             type: string;
+        };
+        PCode: {
+            /** Format: int64 */
+            docId: number;
+            /** Format: int64 */
+            rowId: number;
+            /** Format: int64 */
+            participantId: number;
+            p: string;
+            p2: string;
+            p2Mode: string;
+            p2Prompt: string;
+            comment: string;
+            hfields: string;
+            hfiles: string;
+        };
+        GSLabel: {
+            /** Format: int64 */
+            id: number;
+            type: string;
+            name: string;
+            description: string;
+            /** Format: int64 */
+            participantId: number;
+            /** Format: date-time */
+            created: string;
+            /** Format: date-time */
+            updated: string;
+            /** Format: int64 */
+            qrId: number;
+            /** Format: int64 */
+            gtin: number;
+            key: string;
+            value: string;
+            tail: string;
+            comment: string;
+            rtype: string;
         };
         File: {
             /** Format: int64 */
@@ -1346,6 +1494,34 @@ export interface components {
             password: string;
             confirmPassword: string;
         };
+        MRange: {
+            /** Format: int64 */
+            id: number;
+            type: string;
+            name: string;
+            description: string;
+            /** Format: int64 */
+            participantId: number;
+            /** Format: date-time */
+            created: string;
+            /** Format: date-time */
+            updated: string;
+            status: string;
+            action: string;
+            redirect: string;
+            /** Format: date-time */
+            alloc: string;
+            /** Format: int64 */
+            memberId: number;
+            /** Format: int64 */
+            docId: number;
+            rtype: string;
+            /** Format: int64 */
+            rbitl: number;
+            owiki: string;
+            /** Format: int64 */
+            rstart: number;
+        };
         RegistrationRequestCreationDto: {
             /** Format: int64 */
             id?: number;
@@ -1449,9 +1625,9 @@ export interface components {
             storagePath: string;
             /** Format: int64 */
             fileSize: number;
-            description: string;
             name: string;
             type: string;
+            description: string;
             /** Format: int64 */
             participantId: number;
             /** Format: int64 */
@@ -1604,9 +1780,9 @@ export interface components {
             settings: string;
         };
         RegistrationRequestDetails: {
+            username: string;
             /** @enum {string} */
             status: "PENDING" | "IN_WORK" | "ACCEPTED" | "REJECTED";
-            username: string;
             statusMsg: string;
         };
         VersionDto: {
@@ -1616,9 +1792,16 @@ export interface components {
             content: string;
         };
         QRRequestFilter: {
-            /** Format: int64 */
-            rangeId: number;
+            rangeId: number[];
             emptyFilters: boolean;
+        };
+        PCodeRequest: {
+            /** Format: int64 */
+            docId: number;
+        };
+        GSLabelsRequest: {
+            /** Format: int64 */
+            qrId: number;
         };
         Dictionary: {
             name: string;
@@ -1627,8 +1810,8 @@ export interface components {
             description: string;
         };
         ParticipantAdminSimpleProjection: {
-            roles: components["schemas"]["Role"][];
             address: string;
+            roles: components["schemas"]["Role"][];
             username: string;
             active: boolean;
             email: string;
@@ -1637,9 +1820,9 @@ export interface components {
             website: string;
             banned: boolean;
             ranges: components["schemas"]["QRRange"][];
-            description: string;
             name: string;
             type: string;
+            description: string;
             /** Format: int64 */
             participantId: number;
             /** Format: int64 */
@@ -1854,7 +2037,309 @@ export interface operations {
             };
         };
     };
-    findById_2: {
+    findAll: {
+        parameters: {
+            query: {
+                request: components["schemas"]["PCodeRequest"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"][];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"][];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"][];
+                };
+            };
+        };
+    };
+    update_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PCode"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"];
+                };
+            };
+        };
+    };
+    create_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PCode"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"];
+                };
+            };
+        };
+    };
+    findAll_1: {
+        parameters: {
+            query: {
+                request: components["schemas"]["GSLabelsRequest"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"][];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"][];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"][];
+                };
+            };
+        };
+    };
+    update_2: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GSLabel"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"];
+                };
+            };
+        };
+    };
+    create_2: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GSLabel"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"];
+                };
+            };
+        };
+    };
+    findById_4: {
         parameters: {
             query?: never;
             header?: never;
@@ -1903,7 +2388,7 @@ export interface operations {
             };
         };
     };
-    update_1: {
+    update_3: {
         parameters: {
             query?: never;
             header?: never;
@@ -1954,7 +2439,7 @@ export interface operations {
             };
         };
     };
-    delete_1: {
+    delete_3: {
         parameters: {
             query?: never;
             header?: never;
@@ -2040,7 +2525,7 @@ export interface operations {
             };
         };
     };
-    findById_3: {
+    findById_5: {
         parameters: {
             query?: never;
             header?: never;
@@ -2089,7 +2574,7 @@ export interface operations {
             };
         };
     };
-    update_2: {
+    update_4: {
         parameters: {
             query?: never;
             header?: never;
@@ -2183,7 +2668,7 @@ export interface operations {
             };
         };
     };
-    findById_4: {
+    findById_6: {
         parameters: {
             query?: never;
             header?: never;
@@ -2420,6 +2905,155 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    findAll_5: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"][];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"][];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"][];
+                };
+            };
+        };
+    };
+    update_5: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MRange"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"];
+                };
+            };
+        };
+    };
+    create_3: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MRange"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"];
+                };
             };
         };
     };
@@ -2665,7 +3299,7 @@ export interface operations {
             };
         };
     };
-    findAll: {
+    findAll_2: {
         parameters: {
             query?: never;
             header?: never;
@@ -3301,7 +3935,7 @@ export interface operations {
             };
         };
     };
-    findAll_2: {
+    findAll_4: {
         parameters: {
             query?: never;
             header?: never;
@@ -4357,6 +4991,186 @@ export interface operations {
             };
         };
     };
+    findById_2: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                docId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PCode"];
+                };
+            };
+        };
+    };
+    delete_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                docId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    findById_3: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["GSLabel"];
+                };
+            };
+        };
+    };
+    delete_2: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     findRelated: {
         parameters: {
             query?: never;
@@ -4453,7 +5267,7 @@ export interface operations {
             };
         };
     };
-    findAll_1: {
+    findAll_3: {
         parameters: {
             query?: never;
             header?: never;
@@ -4974,6 +5788,96 @@ export interface operations {
                 content: {
                     "*/*": components["schemas"]["QRRangeDto"][];
                 };
+            };
+        };
+    };
+    findById_7: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"];
+                };
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"];
+                };
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["MRange"];
+                };
+            };
+        };
+    };
+    delete_4: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unallowed to use this endpoint */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Error on server */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

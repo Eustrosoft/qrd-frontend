@@ -11,8 +11,6 @@ export const AppRoutes = {
   file: 'file',
   docs: 'docs',
   doc: 'doc',
-  markings: 'markings',
-  marking: 'marking',
   gs1: 'gs1',
   usages: 'usages',
   list: 'list',

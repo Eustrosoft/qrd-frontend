@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'markings',
+  selector: 'gs1',
   imports: [RouterOutlet],
-  templateUrl: './markings.component.html',
-  styleUrl: './markings.component.scss',
+  templateUrl: './gs1.component.html',
+  styleUrl: './gs1.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MarkingsComponent {}
+export class Gs1Component {}

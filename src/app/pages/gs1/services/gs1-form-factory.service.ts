@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Gs1Form, Gs1FormGroup } from '@app/pages/markings/markings.models';
+import { Gs1Form, Gs1FormGroup } from '@app/pages/gs1/gs1.models';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +35,7 @@ export class Gs1FormFactoryService {
     return this.fb.group<Gs1Form>({
       id: this.fb.control<number | null>(initialData?.id ?? null),
       qrId: this.fb.control<number | null>(initialData?.qrId ?? null, [Validators.required]),
-      rtype: this.fb.nonNullable.control<number>(initialData?.rtype ?? -1),
+      rtype: this.fb.nonNullable.control<string>(initialData?.rtype ?? 'gtin'),
       gtin: this.fb.control<number | null>(initialData?.gtin ?? null, [Validators.required]),
       key: this.fb.nonNullable.control<string>(initialData?.key ?? '', [Validators.required]),
       value: this.fb.nonNullable.control<string>(initialData?.value ?? '', [Validators.required]),

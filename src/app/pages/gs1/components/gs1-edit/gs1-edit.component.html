@@ -5,14 +5,14 @@
         <toolbar [navigateTo]="['../']">
           @if (!isSmallScreen()) {
             <ng-container heading>
-              <h1>{{ isNew() ? MarkingsLocalization.creation : MarkingsLocalization.editing }}</h1>
+              <h1>{{ isNew() ? Gs1Localization.creation : Gs1Localization.editing }}</h1>
             </ng-container>
           }
           <ng-container action-buttons>
             @if (!selectors.isSaveInProgress()) {
               <button (click)="saveData()" class="button-md" mat-flat-button>
                 <ui-flex-block gapSize="4">
-                  {{ SharedLocalization.save }}
+                  {{ isNew() ? SharedLocalization.create : SharedLocalization.save }}
                   @if (formHasUnsavedChanges()) {
                     <indicator />
                   }
@@ -32,7 +32,7 @@
       <ng-container content>
         <ui-grid-block gridAlignItems="start" [gridTemplateColumns]="gridTemplateColumns()">
           <mat-form-field class="form-field-lg">
-            @if (selectors.getQrCardsState().isQrCardListLoading) {
+            @if (selectors.qrCardsState().isQrCardListLoading) {
               <mat-label>
                 <ui-flex-block>
                   <p>{{ SharedLocalization.loading }}</p>
@@ -41,7 +41,7 @@
               </mat-label>
             } @else {
               <mat-label>
-                @if (selectors.getQrCardsState().isQrCardListLoadErr) {
+                @if (selectors.qrCardsState().isQrCardListLoadErr) {
                   <ui-flex-block flexAlignItems="center">
                     <p class="error-color">{{ ErrorsLocalization.errorFetchingCardList }}</p>
                     <button (click)="actions.fetchQrCardList(destroyRef)" class="icon-button-sm" mat-icon-button>
@@ -76,7 +76,7 @@
               </button>
             }
             <mat-select [formControl]="form().controls.qrId">
-              @for (qrCard of selectors.getQrCardsState().qrCardList; track qrCard.id) {
+              @for (qrCard of selectors.qrCardsState().qrCardList; track qrCard.id) {
                 <mat-option class="option-lg" [value]="qrCard.id">{{ qrCard.name }}</mat-option>
               } @empty {
                 <mat-option class="option-lg" disabled> {{ SharedLocalization.emptyList }}</mat-option>
@@ -97,8 +97,8 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field class="form-field-lg">
-            <mat-label> {{ MarkingsLocalization.gtin }} </mat-label>
-            <input [formControl]="form().controls.gtin" matInput />
+            <mat-label> {{ Gs1Localization.gtin }} </mat-label>
+            <input [formControl]="form().controls.gtin" type="number" matInput />
             @if (form().controls.gtin.touched && form().controls.gtin.hasError('required')) {
               <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
             }
@@ -108,13 +108,13 @@
                   <mat-icon class="icon-warning">warning</mat-icon>
                   <small class="warning-color">
                     @if (gtinSoftErrors()?.['nonNumericGtin']) {
-                      {{ MarkingsLocalization.nonNumericGtin }}
+                      {{ Gs1Localization.nonNumericGtin }}
                     }
                     @if (gtinSoftErrors()?.['invalidGtinLength']) {
-                      {{ MarkingsLocalization.invalidGtinLength }}
+                      {{ Gs1Localization.invalidGtinLength }}
                     }
                     @if (gtinSoftErrors()?.['invalidGtinChecksum']) {
-                      {{ MarkingsLocalization.invalidGtinChecksum }}
+                      {{ Gs1Localization.invalidGtinChecksum }}
                     }
                   </small>
                 </ui-flex-block>
@@ -122,7 +122,7 @@
             }
           </mat-form-field>
           <mat-form-field class="form-field-lg">
-            <mat-label> {{ MarkingsLocalization.key }} </mat-label>
+            <mat-label> {{ Gs1Localization.key }} </mat-label>
             <input [formControl]="form().controls.key" matInput />
             @if (form().controls.key.touched && form().controls.key.hasError('required')) {
               <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
@@ -133,7 +133,7 @@
                   <mat-icon class="icon-warning">warning</mat-icon>
                   <small class="warning-color">
                     @if (keySoftErrors()?.['invalid']) {
-                      {{ MarkingsLocalization.invalidKey }}
+                      {{ Gs1Localization.invalidKey }}
                     }
                   </small>
                 </ui-flex-block>
@@ -141,7 +141,7 @@
             }
           </mat-form-field>
           <mat-form-field class="form-field-lg">
-            <mat-label> {{ MarkingsLocalization.value }} </mat-label>
+            <mat-label> {{ Gs1Localization.value }} </mat-label>
             <input [formControl]="form().controls.value" matInput />
             @if (form().controls.value.touched && form().controls.value.hasError('required')) {
               <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
@@ -152,7 +152,7 @@
                   <mat-icon class="icon-warning">warning</mat-icon>
                   <small class="warning-color">
                     @if (valueSoftErrors()?.['invalid']) {
-                      {{ MarkingsLocalization.invalidValue }}
+                      {{ Gs1Localization.invalidValue }}
                     }
                   </small>
                 </ui-flex-block>
@@ -160,13 +160,13 @@
             }
           </mat-form-field>
           <mat-form-field class="form-field-lg">
-            <mat-label> {{ MarkingsLocalization.tail }} </mat-label>
+            <mat-label> {{ Gs1Localization.tail }} </mat-label>
             <input [formControl]="form().controls.tail" matInput />
           </mat-form-field>
         </ui-grid-block>
         <ui-grid-block gridAlignItems="start" gridTemplateColumns="1fr">
           <mat-form-field class="form-field-lg">
-            <mat-label> {{ MarkingsLocalization.comment }} </mat-label>
+            <mat-label> {{ Gs1Localization.comment }} </mat-label>
             <textarea [formControl]="form().controls.comment" matInput></textarea>
           </mat-form-field>
         </ui-grid-block>

@@ -15,7 +15,7 @@ import { TemplatesState } from '@app/pages/templates/state/templates.state';
 import { queryRedirectResolver } from '@shared/resolvers/query-redirect.resolver';
 import { loginGuard } from '@modules/auth/login.guard';
 import { AuthSelectors } from '@modules/auth/state/auth.selectors';
-import { MarkingsState } from '@app/pages/markings/state/markings.state';
+import { Gs1State } from '@app/pages/gs1/state/gs1.state';
 
 export const routes: Routes = [
   {
@@ -63,11 +63,11 @@ export const routes: Routes = [
     loadChildren: () => import('@app/pages/docs/docs.routes').then((m) => m.docsRoutes),
   },
   {
-    path: AppRoutes.markings,
-    title: RouteTitles.markings,
+    path: AppRoutes.gs1,
+    title: RouteTitles.gs1,
     canActivate: [authGuard],
-    loadChildren: () => import('@app/pages/markings/markings.routes').then((m) => m.markingsRoutes),
-    providers: [provideStates([MarkingsState])],
+    loadChildren: () => import('@app/pages/gs1/gs1.routes').then((m) => m.gs1Routes),
+    providers: [provideStates([Gs1State])],
   },
   {
     path: AppRoutes.settings,

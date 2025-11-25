@@ -4,19 +4,18 @@
   </ng-container>
   <ng-container action-buttons>
     <a
-      [routerLink]="`/${AppRoutes.markings}/${AppRoutes.new}/${AppRoutes.gs1}`"
+      [routerLink]="`/${AppRoutes.gs1}/${AppRoutes.new}/${AppRoutes.gs1}`"
       [queryParams]="{ qrId: selectors.qrCard()?.id }"
       class="button-md"
       mat-flat-button
     >
-      {{ MarkingsLocalization.creation }}
+      {{ Gs1Localization.creation }}
     </a>
   </ng-container>
   <ng-container content>
     <ui-grid-block gridTemplateColumns="1fr">
-      @for (gs1 of selectors.gs1ListState().gs1List; track $index) {
-        <!-- TODO routerLink на редактирование GS1 -->
-        <a [routerLink]="`/${AppRoutes.markings}/${AppRoutes.new}/${AppRoutes.gs1}`" title="Some GS1" ellipsis>
+      @for (gs1 of selectors.gs1LabelsState().gs1LabelList; track gs1.id) {
+        <a [routerLink]="`/${AppRoutes.gs1}/${gs1.id}/${AppRoutes.edit}`" href="#" ellipsis>
           <ui-badge
             padding="8px 16px"
             color="var(--mat-sys-on-tertiary-container)"
@@ -24,13 +23,18 @@
             cursor="pointer"
           >
             <p ellipsis>
-              {{ 'Some GS1' | fallback: SharedLocalization.noName }}
-              {{ gs1 | json }}
+              {{ gs1.gtin | fallback: SharedLocalization.noName }}
+              @if (gs1.comment?.length) {
+                ({{ gs1.comment }})
+              }
             </p>
+            @if (currentlyNavigatingGs1Id() === gs1.id) {
+              <mat-spinner diameter="16" />
+            }
           </ui-badge>
         </a>
       } @empty {
-        <p>{{ SharedLocalization.noUsages }}</p>
+        <p>{{ SharedLocalization.noGs1 }}</p>
       }
     </ui-grid-block>
   </ng-container>

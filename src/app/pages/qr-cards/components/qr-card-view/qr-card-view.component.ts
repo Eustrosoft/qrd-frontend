@@ -13,7 +13,7 @@ import { AppRoutes } from '@app/app.constants';
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { MatButton } from '@angular/material/button';
 import { createDispatchMap, createSelectMap } from '@ngxs/store';
-import { DeleteQrCards, FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
+import { DeleteQrCards, FetchGs1LabelList, FetchQrCard } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { MatIcon } from '@angular/material/icon';
@@ -81,11 +81,13 @@ export class QrCardViewComponent implements OnInit {
     isQrCardLoadErr: QrCardsSelectors.getSlices.isQrCardLoadErr,
     qrCard: QrCardsSelectors.getSlices.qrCard,
     qrCardPreviewUrl: QrCardsSelectors.getSlices.qrCardPreviewUrl,
+    gs1LabelsState: QrCardsSelectors.getGs1LabelsState$,
     isDeleteInProgress: QrCardsSelectors.getSlices.isDeleteInProgress,
   });
 
   protected readonly actions = createDispatchMap({
     fetchQrCard: FetchQrCard,
+    fetchGs1LabelList: FetchGs1LabelList,
     deleteQrCards: DeleteQrCards,
   });
 
@@ -99,7 +101,7 @@ export class QrCardViewComponent implements OnInit {
 
   protected readonly tabLinks: TabLink[] = [
     { link: AppRoutes.qrCard, title: RouteTitles.card },
-    { link: AppRoutes.marking, title: RouteTitles.marking },
+    { link: AppRoutes.gs1, title: RouteTitles.gs1 },
   ];
 
   protected readonly AppRoutes = AppRoutes;
@@ -109,6 +111,7 @@ export class QrCardViewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.actions.fetchQrCard(this.routeParams()['id'], this.routeParams()['code'], this.destroyRef);
+    this.actions.fetchGs1LabelList(this.destroyRef, this.routeParams()['id']);
   }
 
   protected openCardPreview(): void {

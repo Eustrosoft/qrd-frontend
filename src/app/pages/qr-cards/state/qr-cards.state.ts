@@ -5,6 +5,7 @@ import {
   ClearQrCard,
   CreateQrCard,
   DeleteQrCards,
+  FetchGs1LabelList,
   FetchQrCard,
   FetchQrCardList,
   FetchQrRangeList,
@@ -39,6 +40,8 @@ import { TemplateDto } from '@api/templates/templates-api.models';
 import { TemplatesService } from '@app/pages/templates/services/templates.service';
 import { QRRangeDto } from '@api/ranges/ranges-api.models';
 import { QrCardFormFactoryService } from '@app/pages/qr-cards/services/qr-card-form-factory.service';
+import { Gs1Dto } from '@api/gs/gs-api.models';
+import { Gs1Service } from '@app/pages/gs1/services/gs1.service';
 
 export interface QrCardsStateModel {
   searchValue: string;
@@ -51,6 +54,8 @@ export interface QrCardsStateModel {
   isQrCardLoadErr: boolean;
   qrCard: QRDto | null;
   qrCardPreviewUrl: string;
+  isGs1LabelListLoading: boolean;
+  gs1LabelList: Gs1Dto[];
   isDeleteInProgress: boolean;
   isSaveInProgress: boolean;
   isTemplateListLoading: boolean;
@@ -76,6 +81,8 @@ const defaults: QrCardsStateModel = {
   isQrCardLoadErr: false,
   qrCard: null,
   qrCardPreviewUrl: '',
+  isGs1LabelListLoading: false,
+  gs1LabelList: [],
   isDeleteInProgress: false,
   isSaveInProgress: false,
   isTemplateListLoading: false,
@@ -101,6 +108,7 @@ export class QrCardsState {
   private readonly qrCardsService = inject(QrCardsService);
   private readonly templatesService = inject(TemplatesService);
   private readonly filesService = inject(FilesService);
+  private readonly gs1Service = inject(Gs1Service);
   private readonly router = inject(Router);
   private readonly toHexPipe = inject(ToHexPipe);
   private readonly pxToRemPipe = inject(PxToRemPipe);
@@ -175,6 +183,32 @@ export class QrCardsState {
         return throwError(() => err);
       }),
       takeUntilDestroyed(destroyRef),
+    );
+  }
+
+  @Action(FetchGs1LabelList)
+  public fetchGs1LabelList(
+    { setState }: StateContext<QrCardsStateModel>,
+    { destroyRef, qrId }: FetchGs1LabelList,
+  ): Observable<Gs1Dto[]> {
+    setState(patch({ isGs1LabelListLoading: true, isQrCardLoadErr: false }));
+    return timer(SKELETON_TIMER).pipe(
+      switchMap(() => this.gs1Service.getGs1List(qrId)),
+      tap({
+        next: (gs1LabelList) => {
+          setState(
+            patch({
+              gs1LabelList,
+              isGs1LabelListLoading: false,
+            }),
+          );
+        },
+      }),
+      takeUntilDestroyed(destroyRef),
+      catchError((err) => {
+        setState(patch({ isGs1LabelListLoading: false, isQrCardLoadErr: true, gs1LabelList: [] }));
+        return throwError(() => err);
+      }),
     );
   }
 

@@ -12,12 +12,12 @@ import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
 import { distinctUntilChanged, map, merge, Observable, of, pairwise, startWith } from 'rxjs';
 import { ErrorStateMatcher, MatOption } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
-import { Gs1FormFactoryService } from '@app/pages/markings/services/gs1-form-factory.service';
+import { Gs1FormFactoryService } from '@app/pages/gs1/services/gs1-form-factory.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Gs1FormGroup } from '@app/pages/markings/markings.models';
+import { Gs1FormGroup } from '@app/pages/gs1/gs1.models';
 import { Actions, createDispatchMap, createSelectMap, ofActionSuccessful } from '@ngxs/store';
-import { MarkingsSelectors } from '@app/pages/markings/state/markings.selectors';
+import { Gs1Selectors } from '@app/pages/gs1/state/gs1.selectors';
 import { BannerComponent } from '@shared/components/banner/banner.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { ErrorsLocalization } from '@modules/error/error.constants';
@@ -29,20 +29,21 @@ import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component'
 import { RouteTitles, SharedLocalization } from '@shared/shared.constants';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
-import { FetchQrCardList, SaveMarking } from '@app/pages/markings/state/markings.actions';
-import { MarkingsLocalization } from '@app/pages/markings/markings.constants';
+import { CreateGs1, SaveGs1 } from '@app/pages/gs1/state/gs1.actions';
+import { Gs1Localization } from '@app/pages/gs1/gs1.constants';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
-import { DEFAULT_EMPTY_ID } from '@app/app.constants';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatError, MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MaxDescriptionLength, MaxNameLength } from '@app/pages/files/files.constants';
+import { MaxDescriptionLength } from '@app/pages/files/files.constants';
 import { Option } from '@shared/shared.models';
 import { gtinValidator } from '@shared/validators/gtin-length.validator';
 import { gs1KeyValueValidator } from '@shared/validators/gs1-key-value.validator';
+import { FetchQrCardList } from '@app/pages/qr-cards/state/qr-cards.actions';
+import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
 
 @Component({
   selector: 'gs1-edit',
@@ -83,9 +84,11 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
 
-  protected readonly MarkingsLocalization = MarkingsLocalization;
+  protected readonly Gs1Localization = Gs1Localization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly ErrorsLocalization = ErrorsLocalization;
+  protected readonly RouteTitles = RouteTitles;
+  protected readonly MaxDescriptionLength = MaxDescriptionLength;
 
   protected readonly form = toSignal<Gs1FormGroup>(this.activatedRoute.data.pipe(map((data) => data['gs1Form'])), {
     requireSync: true,
@@ -124,9 +127,9 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
     return 'repeat(3, 1fr)';
   });
 
-  protected readonly rtypeList = signal<Option<number>[]>([
+  protected readonly rtypeList = signal<Option<string>[]>([
     {
-      value: 1,
+      value: 'gtin',
       viewValue: 'GTIN',
     },
   ]);
@@ -140,7 +143,7 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
         map(([prev, current]) => prev !== current),
       ),
       this.actions$.pipe(
-        ofActionSuccessful(SaveMarking),
+        ofActionSuccessful(SaveGs1),
         map(() => false),
       ),
     ).pipe(distinctUntilChanged(), takeUntilDestroyed()),
@@ -148,15 +151,16 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
   );
 
   protected readonly selectors = createSelectMap({
-    isGs1Loading: MarkingsSelectors.getSlices.isGs1Loading,
-    isGs1LoadErr: MarkingsSelectors.getSlices.isGs1LoadErr,
-    isSaveInProgress: MarkingsSelectors.getSlices.isSaveInProgress,
-    gs1: MarkingsSelectors.getSlices.gs1,
-    getQrCardsState: MarkingsSelectors.getQrCardsState$,
+    isGs1Loading: Gs1Selectors.getSlices.isGs1Loading,
+    isGs1LoadErr: Gs1Selectors.getSlices.isGs1LoadErr,
+    isSaveInProgress: Gs1Selectors.getSlices.isSaveInProgress,
+    gs1: Gs1Selectors.getSlices.gs1,
+    qrCardsState: QrCardsSelectors.getQrCardsState$,
   });
 
   protected readonly actions = createDispatchMap({
     fetchQrCardList: FetchQrCardList,
+    createGs1: CreateGs1,
   });
 
   public ngOnInit(): void {
@@ -170,10 +174,12 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
 
   protected saveData(): void {
     this.form().markAllAsTouched();
-    console.log(this.form().getRawValue());
-    // if (this.form().invalid) {
-    // }
-    // this.actions.saveQrCard(this.form().getRawValue(), this.destroyRef);
+    if (this.form().invalid) {
+      return;
+    }
+    if (this.isNew()) {
+      this.actions.createGs1(this.form().getRawValue(), this.destroyRef);
+    }
   }
 
   public canDeactivate(isConfirmed: boolean | undefined): Observable<boolean> {
@@ -183,9 +189,4 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
   public isDataSaved(): boolean {
     return !this.formHasUnsavedChanges();
   }
-
-  protected readonly RouteTitles = RouteTitles;
-  protected readonly DEFAULT_EMPTY_ID = DEFAULT_EMPTY_ID;
-  protected readonly MAX_NAME_LENGTH = MaxNameLength;
-  protected readonly MaxDescriptionLength = MaxDescriptionLength;
 }

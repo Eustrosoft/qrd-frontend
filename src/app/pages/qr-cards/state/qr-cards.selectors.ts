@@ -24,6 +24,17 @@ export class QrCardsSelectors {
     },
   );
 
+  public static getQrCardsState$ = createPickSelector(QrCardsSelectors.getFullState, [
+    'qrCardList',
+    'isQrCardListLoading',
+    'isQrCardListLoadErr',
+  ]);
+
+  public static getGs1LabelsState$ = createPickSelector(QrCardsSelectors.getFullState, [
+    'gs1LabelList',
+    'isGs1LabelListLoading',
+  ]);
+
   public static getTemplatesState$ = createPickSelector(QrCardsSelectors.getFullState, [
     'templateList',
     'isTemplateListLoading',

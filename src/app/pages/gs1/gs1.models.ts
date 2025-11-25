@@ -4,7 +4,7 @@ export type Gs1FormGroup = FormGroup<Gs1Form>;
 export type Gs1Form = {
   id: FormControl<number | null>;
   qrId: FormControl<number | null>;
-  rtype: FormControl<number>;
+  rtype: FormControl<string>;
   gtin: FormControl<number | null>;
   key: FormControl<string>;
   value: FormControl<string>;

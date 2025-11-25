@@ -29,6 +29,14 @@ export class FetchQrCard {
   ) {}
 }
 
+export class FetchGs1LabelList {
+  public static readonly type = '[Qr Cards] Fetch Gs1 Label List';
+  constructor(
+    readonly destroyRef: DestroyRef,
+    readonly qrId?: number,
+  ) {}
+}
+
 export class ClearQrCard {
   public static readonly type = '[Qr Cards] Clear Qr Card';
 }
