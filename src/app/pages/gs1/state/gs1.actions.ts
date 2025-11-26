@@ -27,7 +27,10 @@ export class CreateGs1 {
 
 export class SaveGs1 {
   public static readonly type = '[Gs1] Save Gs1';
-  constructor() {}
+  constructor(
+    readonly payload: ReturnType<Gs1FormGroup['getRawValue']>,
+    readonly destroyRef: DestroyRef,
+  ) {}
 }
 
 export class DeleteGs1 {

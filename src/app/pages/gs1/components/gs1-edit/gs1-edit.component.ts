@@ -16,7 +16,7 @@ import { Gs1FormFactoryService } from '@app/pages/gs1/services/gs1-form-factory.
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Gs1FormGroup } from '@app/pages/gs1/gs1.models';
-import { Actions, createDispatchMap, createSelectMap, ofActionSuccessful } from '@ngxs/store';
+import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
 import { Gs1Selectors } from '@app/pages/gs1/state/gs1.selectors';
 import { BannerComponent } from '@shared/components/banner/banner.component';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
@@ -44,6 +44,7 @@ import { gtinValidator } from '@shared/validators/gtin-length.validator';
 import { gs1KeyValueValidator } from '@shared/validators/gs1-key-value.validator';
 import { FetchQrCardList } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
+import { AppRoutes } from '@app/app.constants';
 
 @Component({
   selector: 'gs1-edit',
@@ -87,11 +88,22 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
   protected readonly Gs1Localization = Gs1Localization;
   protected readonly SharedLocalization = SharedLocalization;
   protected readonly ErrorsLocalization = ErrorsLocalization;
+  protected readonly AppRoutes = AppRoutes;
   protected readonly RouteTitles = RouteTitles;
   protected readonly MaxDescriptionLength = MaxDescriptionLength;
 
   protected readonly form = toSignal<Gs1FormGroup>(this.activatedRoute.data.pipe(map((data) => data['gs1Form'])), {
     requireSync: true,
+  });
+
+  protected readonly qrId = toSignal(this.activatedRoute.queryParamMap.pipe(map((params) => params.get('qrId'))));
+
+  protected readonly backNav = computed<string[]>(() => {
+    const qrId = this.qrId();
+    if (qrId) {
+      return ['/', AppRoutes.qrCards, qrId, AppRoutes.gs1];
+    }
+    return ['/', AppRoutes.qrCards];
   });
 
   protected readonly gtinSoftErrors = toSignal(
@@ -161,11 +173,11 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
   protected readonly actions = createDispatchMap({
     fetchQrCardList: FetchQrCardList,
     createGs1: CreateGs1,
+    saveGs1: SaveGs1,
   });
 
   public ngOnInit(): void {
     this.actions.fetchQrCardList(this.destroyRef);
-    this.form().valueChanges.pipe(startWith(this.form().getRawValue())).subscribe(console.log);
   }
 
   public ngOnDestroy(): void {
@@ -179,10 +191,30 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
     }
     if (this.isNew()) {
       this.actions.createGs1(this.form().getRawValue(), this.destroyRef);
+      return;
     }
+    this.actions.saveGs1(this.form().getRawValue(), this.destroyRef);
   }
 
   public canDeactivate(isConfirmed: boolean | undefined): Observable<boolean> {
+    if (isConfirmed === undefined) {
+      return of(false);
+    }
+
+    if (isConfirmed) {
+      this.actions.saveGs1(this.form().getRawValue(), this.destroyRef);
+      return merge(
+        this.actions$.pipe(
+          ofActionSuccessful(SaveGs1),
+          map(() => true),
+        ),
+        this.actions$.pipe(
+          ofActionErrored(SaveGs1),
+          map(() => false),
+        ),
+      );
+    }
+
     return of(true);
   }
 

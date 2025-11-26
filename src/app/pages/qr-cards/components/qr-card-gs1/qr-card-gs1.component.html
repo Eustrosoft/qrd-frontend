@@ -13,26 +13,42 @@
     </a>
   </ng-container>
   <ng-container content>
-    <ui-grid-block gridTemplateColumns="1fr">
+    <ui-grid-block [gridTemplateColumns]="gridTemplateColumns()">
       @for (gs1 of selectors.gs1LabelsState().gs1LabelList; track gs1.id) {
-        <a [routerLink]="`/${AppRoutes.gs1}/${gs1.id}/${AppRoutes.edit}`" href="#" ellipsis>
-          <ui-badge
-            padding="8px 16px"
-            color="var(--mat-sys-on-tertiary-container)"
-            background="var(--mat-sys-tertiary-container)"
-            cursor="pointer"
-          >
-            <p ellipsis>
-              {{ gs1.gtin | fallback: SharedLocalization.noName }}
-              @if (gs1.comment?.length) {
-                ({{ gs1.comment }})
-              }
-            </p>
-            @if (currentlyNavigatingGs1Id() === gs1.id) {
-              <mat-spinner diameter="16" />
-            }
-          </ui-badge>
-        </a>
+        <card-container [hideHeading]="true">
+          <ng-container content>
+            <ui-grid-block rowGapSize="8" gridTemplateColumns="1fr">
+              <ui-grid-block rowGapSize="4" [gridTemplateColumns]="gridTemplateColumns()">
+                <card-field caption="GTIN:">
+                  {{ gs1.gtin | fallback: SharedLocalization.noName }}
+                </card-field>
+                @if (gs1.comment) {
+                  <card-field [caption]="`${SharedLocalization.description}:`">
+                    {{ gs1.comment }}
+                  </card-field>
+                }
+              </ui-grid-block>
+              <ui-flex-block flexAlignItems="center">
+                <a
+                  [routerLink]="`/${AppRoutes.gs1}/${gs1.id}/${AppRoutes.edit}`"
+                  [queryParams]="{ qrId: selectors.qrCard()?.id }"
+                  class="icon-button-sm"
+                  mat-icon-button
+                >
+                  <mat-icon class="icon-primary">edit</mat-icon>
+                </a>
+                <a class="icon-button-sm" mat-icon-button>
+                  <mat-icon class="icon-primary">delete</mat-icon>
+                </a>
+                @if (currentlyNavigatingGs1Id() === gs1.id) {
+                  <a class="icon-button-sm" mat-icon-button>
+                    <mat-spinner diameter="24" />
+                  </a>
+                }
+              </ui-flex-block>
+            </ui-grid-block>
+          </ng-container>
+        </card-container>
       } @empty {
         <p>{{ SharedLocalization.noGs1 }}</p>
       }

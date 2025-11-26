@@ -31,7 +31,6 @@ export class Gs1FormFactoryService {
   }
 
   private makeGs1Form(initialData: Partial<ReturnType<Gs1FormGroup['getRawValue']>> = {}): Gs1FormGroup {
-    console.log(initialData);
     return this.fb.group<Gs1Form>({
       id: this.fb.control<number | null>(initialData?.id ?? null),
       qrId: this.fb.control<number | null>(initialData?.qrId ?? null, [Validators.required]),

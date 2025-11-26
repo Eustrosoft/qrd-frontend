@@ -2,7 +2,7 @@
   @if (!selectors.isGs1Loading()) {
     <card-container [hideHeading]="true">
       <ng-container content>
-        <toolbar [navigateTo]="['../']">
+        <toolbar [navigateTo]="backNav()">
           @if (!isSmallScreen()) {
             <ng-container heading>
               <h1>{{ isNew() ? Gs1Localization.creation : Gs1Localization.editing }}</h1>
