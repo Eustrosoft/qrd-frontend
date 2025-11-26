@@ -6,7 +6,7 @@ export const Gs1Localization = {
   gtin: $localize`:@@gs1.gtin:GTIN`,
   key: $localize`:@@gs1.key:Key`,
   value: $localize`:@@gs1.value:Value`,
-  tail: $localize`:@@gs1.value:Tail`,
+  tail: $localize`:@@gs1.tail:Tail`,
   comment: $localize`:@@gs1.comment:Comment`,
   nonNumericGtin: $localize`:@@gs1.nonNumericGtin:GTIN should contain only numbers`,
   invalidGtinLength: $localize`:@@gs1.invalidGtinLength:GTIN length should be ${ValidGtinLengths} symbols`,
