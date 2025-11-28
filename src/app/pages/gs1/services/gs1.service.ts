@@ -10,9 +10,9 @@ export class Gs1Service {
   private readonly http = inject(HttpClient);
 
   public getGs1List(qrId?: number): Observable<Gs1Dto[]> {
-    const params = new HttpParams();
+    let params = new HttpParams();
     if (qrId) {
-      params.set('qrId', qrId);
+      params = params.append('qrId', qrId);
     }
     return this.http.get<Gs1Dto[]>('/qrCodeDemo/v1/api/secured/gs-labels', { params });
   }
