@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.1](https://github.com/Eustrosoft/qrd-frontend/compare/v2.3.0...v2.3.1) (2025-11-28)
+
+
+### Bug Fixes
+
+* **gs1:** исправлено добавление query параметра ([d40b652](https://github.com/Eustrosoft/qrd-frontend/commit/d40b652ea088349781adc0221537d79523c5dafc))
+
 ## [2.3.0](https://github.com/Eustrosoft/qrd-frontend/compare/v2.2.0...v2.3.0) (2025-11-28)
 
 

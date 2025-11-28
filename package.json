@@ -1,6 +1,6 @@
 {
   "name": "qrd-frontend",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "scripts": {
     "start": "npx eslint ./src && ng serve --configuration=development",
     "start:http-server": "npm run build:preproduction && http-server -p 8080 -c-1 dist -P https://qrdemo.dev40.qxyz.ru -b",
