@@ -33,11 +33,6 @@ export class SaveGs1 {
   ) {}
 }
 
-export class DeleteGs1 {
-  public static readonly type = '[Gs1] Delete Gs1';
-  constructor(readonly id: number) {}
-}
-
 export class ResetGs1State {
   public static readonly type = '[Gs1] Reset Gs1 State';
 }

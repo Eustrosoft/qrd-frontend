@@ -37,6 +37,15 @@ export class FetchGs1LabelList {
   ) {}
 }
 
+export class UnbindGs1 {
+  public static readonly type = '[Qr Cards] Unbind Gs1';
+  constructor(
+    readonly id: number,
+    readonly qrId: number,
+    readonly destroyRef: DestroyRef,
+  ) {}
+}
+
 export class ClearQrCard {
   public static readonly type = '[Qr Cards] Clear Qr Card';
 }

@@ -16,6 +16,7 @@ import {
   SelectAllQrCards,
   SetQrCardListSearchValue,
   SetSelectedQrCards,
+  UnbindGs1,
 } from './qr-cards.actions';
 import { patch } from '@ngxs/store/operators';
 import { QRChangeDto, QRDto } from '@api/qr-cards/qrs-api.models';
@@ -42,6 +43,8 @@ import { QRRangeDto } from '@api/ranges/ranges-api.models';
 import { QrCardFormFactoryService } from '@app/pages/qr-cards/services/qr-card-form-factory.service';
 import { Gs1Dto } from '@api/gs/gs-api.models';
 import { Gs1Service } from '@app/pages/gs1/services/gs1.service';
+import { FetchGs1List } from '@app/pages/gs1/state/gs1.actions';
+import { removeRecordKey, setRecordKey } from '@app/state/app.operators';
 
 export interface QrCardsStateModel {
   searchValue: string;
@@ -56,6 +59,7 @@ export interface QrCardsStateModel {
   qrCardPreviewUrl: string;
   isGs1LabelListLoading: boolean;
   gs1LabelList: Gs1Dto[];
+  gs1DeleteInProgressMap: Record<number, boolean>;
   isDeleteInProgress: boolean;
   isSaveInProgress: boolean;
   isTemplateListLoading: boolean;
@@ -83,6 +87,7 @@ const defaults: QrCardsStateModel = {
   qrCardPreviewUrl: '',
   isGs1LabelListLoading: false,
   gs1LabelList: [],
+  gs1DeleteInProgressMap: {},
   isDeleteInProgress: false,
   isSaveInProgress: false,
   isTemplateListLoading: false,
@@ -207,6 +212,45 @@ export class QrCardsState {
       takeUntilDestroyed(destroyRef),
       catchError((err) => {
         setState(patch({ isGs1LabelListLoading: false, isQrCardLoadErr: true, gs1LabelList: [] }));
+        return throwError(() => err);
+      }),
+    );
+  }
+
+  @Action(UnbindGs1)
+  public unbindGs1(
+    { getState, setState, dispatch }: StateContext<QrCardsStateModel>,
+    { id, qrId, destroyRef }: UnbindGs1,
+  ): Observable<void> {
+    setState(patch({ gs1DeleteInProgressMap: setRecordKey(id, true) }));
+    const { gs1DeleteInProgressMap } = getState();
+
+    const matDialogRef = this.matDialog.open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(
+      ConfirmationDialogComponent,
+      {
+        data: DeletionDialogData,
+        width: this.pxToRemPipe.transform('600'),
+      },
+    );
+    return matDialogRef.afterClosed().pipe(
+      switchMap((result) => {
+        if (!result) {
+          setState(patch({ gs1DeleteInProgressMap: removeRecordKey(id) }));
+          return EMPTY;
+        }
+        return this.gs1Service.deleteGs1(id).pipe(
+          tap(() => {
+            this.snackbarService.success(NotificationSnackbarLocalization.deleted);
+            setState(patch({ gs1DeleteInProgressMap: removeRecordKey(id) }));
+            dispatch(new FetchGs1List(destroyRef, qrId));
+          }),
+        );
+      }),
+      takeUntilDestroyed(destroyRef),
+      catchError((err) => {
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnDelete);
+        setState(patch({ gs1DeleteInProgressMap: patch({ ...gs1DeleteInProgressMap, [id]: undefined }) }));
+        dispatch(new SetSelectedQrCards([]));
         return throwError(() => err);
       }),
     );

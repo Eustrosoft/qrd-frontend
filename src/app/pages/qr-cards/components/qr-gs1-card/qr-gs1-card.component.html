@@ -1,0 +1,40 @@
+<card-container [hideHeading]="true">
+  <ng-container content>
+    <ui-grid-block rowGapSize="8" gridTemplateColumns="1fr">
+      <ui-grid-block rowGapSize="4" [gridTemplateColumns]="gridTemplateColumns()">
+        <card-field caption="GTIN:">
+          {{ gs1().gtin | fallback: SharedLocalization.noName }}
+        </card-field>
+        @if (gs1().comment) {
+          <card-field [caption]="`${SharedLocalization.description}:`">
+            {{ gs1().comment }}
+          </card-field>
+        }
+      </ui-grid-block>
+      <ui-flex-block flexAlignItems="center">
+        <a
+          [routerLink]="`/${AppRoutes.gs1}/${gs1().id}/${AppRoutes.edit}`"
+          [queryParams]="{ qrId: gs1().qrId }"
+          class="icon-button-sm"
+          mat-icon-button
+        >
+          <mat-icon class="icon-primary">edit</mat-icon>
+        </a>
+        @if (!isDeleting()) {
+          <button (click)="onRemove.emit()" class="icon-button-sm" mat-icon-button>
+            <mat-icon class="icon-primary">delete</mat-icon>
+          </button>
+        } @else {
+          <button class="icon-button-sm" mat-icon-button>
+            <mat-spinner diameter="24" />
+          </button>
+        }
+        @if (isNavigating()) {
+          <a class="icon-button-sm" mat-icon-button>
+            <mat-spinner diameter="24" />
+          </a>
+        }
+      </ui-flex-block>
+    </ui-grid-block>
+  </ng-container>
+</card-container>
