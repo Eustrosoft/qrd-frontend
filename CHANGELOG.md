@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/Eustrosoft/qrd-frontend/compare/v2.2.0...v2.3.0) (2025-11-28)
+
+
+### Features
+
+* **file:** доработан file-selector ([8267dcf](https://github.com/Eustrosoft/qrd-frontend/commit/8267dcfd28c181ad76bb45bcb256fd3961bef424))
+* **gs1:** добавлена возможность удаления gs1 ([55f2ee5](https://github.com/Eustrosoft/qrd-frontend/commit/55f2ee54212a08e8fd2a561d7af0969f349063ca))
+* **gs1:** добавление формы редактирования GS1 ([44ff19d](https://github.com/Eustrosoft/qrd-frontend/commit/44ff19da45d5253149b8e922d1d88f0d1002433c))
+* **gs1:** доработка валидации формы редактирования GS1 ([e94670b](https://github.com/Eustrosoft/qrd-frontend/commit/e94670bd0614f93e948b56a7c0f12317fbabc600))
+* **gs1:** доработка форм и представлений GS1 ([6b741e5](https://github.com/Eustrosoft/qrd-frontend/commit/6b741e5fe134e0563c360f90edad60007bba0f22))
+* **gs1:** доработка форм и представлений GS1 ([ad0ef07](https://github.com/Eustrosoft/qrd-frontend/commit/ad0ef077d1f2362dbf10995a00ca5d53edf24767))
+* **range:** добавлена возможность фильтрации по диапазонам ([f802078](https://github.com/Eustrosoft/qrd-frontend/commit/f802078dcbfdaaa96a7874a7f488642891d2b3ee))
+* **search:** доработан поиск по основным сущностям ([fd76021](https://github.com/Eustrosoft/qrd-frontend/commit/fd76021faa97fba05a6c5c67cb563c30ce3f541e))
+* **validation:** добавлена проверка наличия дубликатов файлов по имени ([9c84b2a](https://github.com/Eustrosoft/qrd-frontend/commit/9c84b2a865f2f539a9951e38a6caed57ef5e7cf7))
+* **validation:** доработана проверка наличия дубликатов файлов по имени ([83fdd04](https://github.com/Eustrosoft/qrd-frontend/commit/83fdd046104fdb32a2d657d757a49c2901ec7c19))
+
 ## [2.2.0](https://github.com/Eustrosoft/qrd-frontend/compare/v2.1.2...v2.2.0) (2025-10-19)
 
 
