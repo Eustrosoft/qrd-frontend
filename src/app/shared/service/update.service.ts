@@ -20,7 +20,7 @@ export class UpdateService {
   constructor() {
     const appIsStable$ = this.appRef.isStable.pipe(first((isStable) => isStable && !isDevMode()));
     const pollInterval$ = interval(
-      this.configState().config.qrdConf?.pollInterval ?? DefaultConfig.qrdConf?.pollInterval,
+      this.configState().config.qrdConf?.pollInterval ?? DefaultConfig.qrdConf.pollInterval,
     );
     const everySixHoursOnceAppIsStable$ = concat(appIsStable$, pollInterval$);
     everySixHoursOnceAppIsStable$.subscribe(async () => {

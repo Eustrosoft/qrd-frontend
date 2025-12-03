@@ -5,13 +5,20 @@ import { FallbackPipe } from '@shared/pipe/fallback.pipe';
 import { MatIconButton } from '@angular/material/button';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
-import { SharedLocalization } from '@shared/shared.constants';
+import { DefaultConfig, SharedLocalization } from '@shared/shared.constants';
 import { AppRoutes } from '@app/app.constants';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Gs1Dto } from '@api/gs/gs-api.models';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { RouterLink } from '@angular/router';
+import { CopyButtonComponent } from '@shared/components/copy-button/copy-button.component';
+import { InteractionEffect } from '@shared/directives/text-interaction-effect.directive';
+import { Gs1GtinLinkPipe } from '@shared/pipe/gs1-gtin-link.pipe';
+import { MatTooltip } from '@angular/material/tooltip';
+import { HttpParams } from '@angular/common/http';
+import { select } from '@ngxs/store';
+import { AppSelectors } from '@app/state/app.selectors';
 
 @Component({
   selector: 'qr-gs1-card',
@@ -25,12 +32,19 @@ import { RouterLink } from '@angular/router';
     UiFlexBlockComponent,
     UiGridBlockComponent,
     RouterLink,
+    CopyButtonComponent,
+    InteractionEffect,
+    Gs1GtinLinkPipe,
+    MatTooltip,
   ],
   templateUrl: './qr-gs1-card.component.html',
   styleUrl: './qr-gs1-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QrGs1CardComponent {
+  private readonly configState = select(AppSelectors.getConfigState$);
+  private readonly gs1GtinLinkPipe = inject(Gs1GtinLinkPipe);
+
   protected readonly isXSmall = inject(IS_XSMALL);
 
   public readonly gs1 = input.required<Gs1Dto>();
@@ -39,6 +53,9 @@ export class QrGs1CardComponent {
 
   public readonly onRemove = output<void>();
 
+  protected readonly AppRoutes = AppRoutes;
+  protected readonly SharedLocalization = SharedLocalization;
+
   protected readonly gridTemplateColumns = computed<string>(() => {
     if (this.isXSmall()) {
       return 'repeat(1, 1fr)';
@@ -46,6 +63,22 @@ export class QrGs1CardComponent {
     return 'repeat(2, 1fr)';
   });
 
-  protected readonly SharedLocalization = SharedLocalization;
-  protected readonly AppRoutes = AppRoutes;
+  protected readonly printUrl = computed<string>(() => {
+    const gs1 = this.gs1();
+    const qrgenUri = this.configState().config.qrdConf?.qrgenUri ?? DefaultConfig.qrdConf.qrgenUri;
+    const url = this.gs1GtinLinkPipe.transform(gs1.gtin, gs1.key, gs1.value, gs1.tail);
+    const params = new HttpParams({
+      fromObject: {
+        url: url,
+        type: 'URL',
+        PARAM_WIDTH: 300,
+        PARAM_BACKGROUND: '#ffffff',
+        PARAM_COLOR: '#000000',
+        PARAM_CORRECTION_LEVEL: 'M',
+        PARAM_FILE_TYPE: 'SVG',
+        ACTION_GENERATE: 'y',
+      },
+    });
+    return `${qrgenUri}?${params.toString()}`;
+  });
 }

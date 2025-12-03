@@ -11,17 +11,32 @@
           </card-field>
         }
       </ui-grid-block>
+      <card-field [caption]="`${SharedLocalization.cardPreview}:`">
+        <ui-flex-block gapSize="2" flexAlignItems="center">
+          @let digitalLink = gs1().gtin | gs1GtinLink: gs1().key : gs1().value : gs1().tail;
+          <a [href]="digitalLink" target="_blank" rel="noopener noreferrer" class="primary-color" interactionEffect>
+            {{ digitalLink }}
+          </a>
+          <copy-button [copyValue]="digitalLink" />
+        </ui-flex-block>
+      </card-field>
       <ui-flex-block flexAlignItems="center">
         <a
           [routerLink]="`/${AppRoutes.gs1}/${gs1().id}/${AppRoutes.edit}`"
           [queryParams]="{ qrId: gs1().qrId }"
+          [matTooltip]="SharedLocalization.edit"
           class="icon-button-sm"
           mat-icon-button
         >
           <mat-icon class="icon-primary">edit</mat-icon>
         </a>
         @if (!isDeleting()) {
-          <button (click)="onRemove.emit()" class="icon-button-sm" mat-icon-button>
+          <button
+            (click)="onRemove.emit()"
+            [matTooltip]="SharedLocalization.delete"
+            class="icon-button-sm"
+            mat-icon-button
+          >
             <mat-icon class="icon-primary">delete</mat-icon>
           </button>
         } @else {
@@ -29,6 +44,16 @@
             <mat-spinner diameter="24" />
           </button>
         }
+        <a
+          [href]="printUrl()"
+          target="_blank"
+          rel="noopener noreferrer"
+          [matTooltip]="SharedLocalization.print"
+          class="icon-button-sm"
+          mat-icon-button
+        >
+          <mat-icon class="icon-primary">print</mat-icon>
+        </a>
         @if (isNavigating()) {
           <a class="icon-button-sm" mat-icon-button>
             <mat-spinner diameter="24" />

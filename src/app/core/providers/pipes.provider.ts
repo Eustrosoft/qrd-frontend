@@ -8,6 +8,7 @@ import { ContentDispositionHeaderParsePipe } from '@shared/pipe/content-disposit
 import { RuDateAdapterParsePipe } from '@shared/pipe/ru-adapter-parse.pipe';
 import { QrRangePipe } from '@shared/pipe/qr-range.pipe';
 import { Iso8601DateFormatPipe } from '@shared/pipe/iso8601-date-format.pipe';
+import { Gs1GtinLinkPipe } from '@shared/pipe/gs1-gtin-link.pipe';
 
 export function providePipes(): Provider[] {
   return [
@@ -20,5 +21,6 @@ export function providePipes(): Provider[] {
     ContentDispositionHeaderParsePipe,
     RuDateAdapterParsePipe,
     Iso8601DateFormatPipe,
+    Gs1GtinLinkPipe,
   ];
 }

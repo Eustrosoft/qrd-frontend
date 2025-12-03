@@ -18,7 +18,7 @@
         <qr-gs1-card
           [gs1]="gs1"
           [isNavigating]="currentlyNavigatingGs1Id() === gs1.id"
-          [isDeleting]="!!selectors.gs1DeleteInProgressMap()?.[gs1.id]"
+          [isDeleting]="!!selectors.gs1DeleteInProgressMap()[gs1.id]"
           (onRemove)="actions.unbindGs1(gs1.id, gs1.qrId, destroyRef)"
         />
       } @empty {

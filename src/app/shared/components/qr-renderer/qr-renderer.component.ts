@@ -43,6 +43,6 @@ export class QrRendererComponent {
         correctionLevel: 'L',
       },
     });
-    return `${this.configState().config.qrdConf?.qrgenUri ?? DefaultConfig.qrdConf?.qrgenUri}?${params.toString()}`;
+    return `${this.configState().config.qrdConf?.qrgenUri ?? DefaultConfig.qrdConf.qrgenUri}?${params.toString()}`;
   });
 }
