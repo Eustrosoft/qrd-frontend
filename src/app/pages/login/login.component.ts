@@ -16,6 +16,7 @@ import { MatIcon } from '@angular/material/icon';
 import { UiSkeletonComponent } from '@ui/ui-skeleton/ui-skeleton.component';
 import { AppSelectors } from '@app/state/app.selectors';
 import { AuthSelectors } from '@modules/auth/state/auth.selectors';
+import { ProfileInfoOverlayLocalization } from '@modules/auth/components/profile-info-overlay/profile-info-overlay.constants';
 
 @Component({
   selector: 'login',
@@ -50,6 +51,7 @@ export class LoginComponent {
 
   protected readonly RouteTitles = RouteTitles;
   protected readonly SignUpLocalization = SignUpLocalization;
+  protected readonly ProfileInfoOverlayLocalization = ProfileInfoOverlayLocalization;
   protected readonly SharedLocalization = SharedLocalization;
 
   protected readonly isPwdVisible = signal<boolean>(false);

@@ -63,6 +63,16 @@
         {{ SignUpLocalization.forgotPwd }}
       </a>
     }
+    <a
+      [href]="selectors.configState().config.qrdConf?.oldAppUri?.uri"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="button-anchor-md"
+      mat-button
+      textInteractionEffect
+    >
+      {{ ProfileInfoOverlayLocalization.oldApp }}
+    </a>
     @if (!selectors.isAuthInfoLoading()) {
       <button (click)="submitForm()" class="button-lg" mat-flat-button>{{ SharedLocalization.login }}</button>
     } @else {

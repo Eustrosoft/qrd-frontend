@@ -124,9 +124,6 @@
           <mat-form-field class="form-field-lg">
             <mat-label> {{ Gs1Localization.key }} </mat-label>
             <input [formControl]="form().controls.key" matInput />
-            @if (form().controls.key.touched && form().controls.key.hasError('required')) {
-              <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
-            }
             @if (form().controls.key.touched && keySoftErrors()) {
               <mat-hint>
                 <ui-flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center">
@@ -143,9 +140,6 @@
           <mat-form-field class="form-field-lg">
             <mat-label> {{ Gs1Localization.value }} </mat-label>
             <input [formControl]="form().controls.value" matInput />
-            @if (form().controls.value.touched && form().controls.value.hasError('required')) {
-              <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
-            }
             @if (form().controls.value.touched && valueSoftErrors()) {
               <mat-hint>
                 <ui-flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center">
