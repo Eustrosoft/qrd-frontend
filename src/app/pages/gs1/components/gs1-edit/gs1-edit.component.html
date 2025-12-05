@@ -98,7 +98,7 @@
           </mat-form-field>
           <mat-form-field class="form-field-lg">
             <mat-label> {{ Gs1Localization.gtin }} </mat-label>
-            <input [formControl]="form().controls.gtin" type="number" matInput />
+            <input [formControl]="form().controls.gtin" maxlength="14" matInput />
             @if (form().controls.gtin.touched && form().controls.gtin.hasError('required')) {
               <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
             }
@@ -164,6 +164,21 @@
             <textarea [formControl]="form().controls.comment" matInput></textarea>
           </mat-form-field>
         </ui-grid-block>
+        @if (digitalLink()) {
+          <ui-grid-block rowGapSize="4" gridTemplateColumns="1fr">
+            <p>{{ Gs1Localization.digitalLinkPreview }}:</p>
+            <a
+              [href]="digitalLink()"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="primary-color"
+              style="word-break: break-word"
+              interactionEffect
+            >
+              {{ digitalLink() }}
+            </a>
+          </ui-grid-block>
+        }
       </ng-container>
     </card-container>
   } @else {

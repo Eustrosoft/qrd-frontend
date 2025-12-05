@@ -19,6 +19,8 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { HttpParams } from '@angular/common/http';
 import { select } from '@ngxs/store';
 import { AppSelectors } from '@app/state/app.selectors';
+import { Gs1Localization } from '@app/pages/gs1/gs1.constants';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'qr-gs1-card',
@@ -34,8 +36,8 @@ import { AppSelectors } from '@app/state/app.selectors';
     RouterLink,
     CopyButtonComponent,
     InteractionEffect,
-    Gs1GtinLinkPipe,
     MatTooltip,
+    UpperCasePipe,
   ],
   templateUrl: './qr-gs1-card.component.html',
   styleUrl: './qr-gs1-card.component.scss',
@@ -55,6 +57,7 @@ export class QrGs1CardComponent {
 
   protected readonly AppRoutes = AppRoutes;
   protected readonly SharedLocalization = SharedLocalization;
+  protected readonly Gs1Localization = Gs1Localization;
 
   protected readonly gridTemplateColumns = computed<string>(() => {
     if (this.isXSmall()) {
@@ -63,10 +66,14 @@ export class QrGs1CardComponent {
     return 'repeat(2, 1fr)';
   });
 
+  protected readonly digitalLink = computed<string>(() =>
+    this.gs1GtinLinkPipe.transform(this.gs1().gtin?.toString(), this.gs1().key, this.gs1().value, this.gs1().tail),
+  );
+
   protected readonly printUrl = computed<string>(() => {
     const gs1 = this.gs1();
     const qrgenUri = this.configState().config.qrdConf?.qrgenUri ?? DefaultConfig.qrdConf.qrgenUri;
-    const url = this.gs1GtinLinkPipe.transform(gs1.gtin, gs1.key, gs1.value, gs1.tail);
+    const url = this.gs1GtinLinkPipe.transform(gs1.gtin?.toString(), gs1.key, gs1.value, gs1.tail);
     const params = new HttpParams({
       fromObject: {
         url: url,

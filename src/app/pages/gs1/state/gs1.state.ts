@@ -103,7 +103,7 @@ export class Gs1State {
         this.gs1Service.createGs1({
           qrId: payload.qrId!,
           rtype: payload.rtype,
-          gtin: payload.gtin!,
+          gtin: +payload.gtin!,
           key: payload.key,
           value: payload.value,
           tail: payload.tail,
@@ -139,7 +139,7 @@ export class Gs1State {
           id: payload.id!,
           qrId: payload.qrId!,
           rtype: payload.rtype,
-          gtin: payload.gtin!,
+          gtin: +payload.gtin!,
           key: payload.key,
           value: payload.value,
           tail: payload.tail,

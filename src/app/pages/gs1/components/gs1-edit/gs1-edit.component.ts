@@ -9,12 +9,12 @@ import {
   signal,
 } from '@angular/core';
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
-import { distinctUntilChanged, map, merge, Observable, of, pairwise, startWith } from 'rxjs';
+import { distinctUntilChanged, map, merge, Observable, of, pairwise, startWith, switchMap } from 'rxjs';
 import { ErrorStateMatcher, MatOption } from '@angular/material/core';
 import { TouchedErrorStateMatcher } from '@cdk/classes/touched-error-state-matcher.class';
 import { Gs1FormFactoryService } from '@app/pages/gs1/services/gs1-form-factory.service';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Data, RouterLink } from '@angular/router';
 import { Gs1FormGroup } from '@app/pages/gs1/gs1.models';
 import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
 import { Gs1Selectors } from '@app/pages/gs1/state/gs1.selectors';
@@ -45,6 +45,7 @@ import { gs1KeyValueValidator } from '@shared/validators/gs1-key-value.validator
 import { FetchQrCardList } from '@app/pages/qr-cards/state/qr-cards.actions';
 import { QrCardsSelectors } from '@app/pages/qr-cards/state/qr-cards.selectors';
 import { AppRoutes } from '@app/app.constants';
+import { Gs1GtinLinkPipe } from '@shared/pipe/gs1-gtin-link.pipe';
 
 @Component({
   selector: 'gs1-edit',
@@ -81,6 +82,8 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
   private readonly gs1FormFactoryService = inject(Gs1FormFactoryService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly actions$ = inject(Actions);
+  private readonly gs1GtinLinkPipe = inject(Gs1GtinLinkPipe);
+
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
@@ -92,9 +95,27 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
   protected readonly RouteTitles = RouteTitles;
   protected readonly MaxDescriptionLength = MaxDescriptionLength;
 
-  protected readonly form = toSignal<Gs1FormGroup>(this.activatedRoute.data.pipe(map((data) => data['gs1Form'])), {
-    requireSync: true,
-  });
+  protected readonly form = toSignal<Gs1FormGroup>(
+    this.activatedRoute.data.pipe(map<Data, Gs1FormGroup>((data) => data['gs1Form'])),
+    {
+      requireSync: true,
+    },
+  );
+
+  protected readonly formValue = toSignal<ReturnType<Gs1FormGroup['getRawValue']>>(
+    this.activatedRoute.data.pipe(
+      map<Data, Gs1FormGroup>((data) => data['gs1Form']),
+      switchMap((form) =>
+        form.events.pipe(
+          map(() => form.getRawValue()),
+          startWith(form.getRawValue()),
+        ),
+      ),
+    ),
+    {
+      requireSync: true,
+    },
+  );
 
   protected readonly qrId = toSignal(this.activatedRoute.queryParamMap.pipe(map((params) => params.get('qrId'))));
 
@@ -144,7 +165,16 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
       value: 'gtin',
       viewValue: 'GTIN',
     },
+    {
+      value: 'pn',
+      viewValue: 'PN',
+    },
   ]);
+
+  protected readonly digitalLink = computed<string>(() => {
+    const formValue = this.formValue();
+    return this.gs1GtinLinkPipe.transform(formValue.gtin, formValue.key, formValue.value, formValue.tail);
+  });
 
   protected readonly formHasUnsavedChanges = toSignal(
     merge(

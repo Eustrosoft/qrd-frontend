@@ -35,7 +35,7 @@ export class Gs1FormFactoryService {
       id: this.fb.control<number | null>(initialData?.id ?? null),
       qrId: this.fb.control<number | null>(initialData?.qrId ?? null, [Validators.required]),
       rtype: this.fb.nonNullable.control<string>(initialData?.rtype ?? 'gtin'),
-      gtin: this.fb.control<number | null>(initialData?.gtin ?? null, [Validators.required]),
+      gtin: this.fb.control<string | null>(initialData?.gtin ?? null, [Validators.required]),
       key: this.fb.nonNullable.control<string>(initialData?.key ?? ''),
       value: this.fb.nonNullable.control<string>(initialData?.value ?? ''),
       tail: this.fb.nonNullable.control<string>(initialData?.tail ?? ''),

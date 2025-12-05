@@ -2,8 +2,8 @@
   <ng-container content>
     <ui-grid-block rowGapSize="8" gridTemplateColumns="1fr">
       <ui-grid-block rowGapSize="4" [gridTemplateColumns]="gridTemplateColumns()">
-        <card-field caption="GTIN:">
-          {{ gs1().gtin | fallback: SharedLocalization.noName }}
+        <card-field [caption]="`${gs1().rtype | uppercase}:`">
+          {{ gs1().gtin | fallback: Gs1Localization.noGtin }}
         </card-field>
         @if (gs1().comment) {
           <card-field [caption]="`${SharedLocalization.description}:`">
@@ -11,15 +11,16 @@
           </card-field>
         }
       </ui-grid-block>
-      <card-field [caption]="`${SharedLocalization.cardPreview}:`">
-        <ui-flex-block gapSize="2" flexAlignItems="center">
-          @let digitalLink = gs1().gtin | gs1GtinLink: gs1().key : gs1().value : gs1().tail;
-          <a [href]="digitalLink" target="_blank" rel="noopener noreferrer" class="primary-color" interactionEffect>
-            {{ digitalLink }}
-          </a>
-          <copy-button [copyValue]="digitalLink" />
-        </ui-flex-block>
-      </card-field>
+      @if (digitalLink()) {
+        <card-field [caption]="`${SharedLocalization.cardPreview}:`">
+          <ui-flex-block gapSize="2" flexAlignItems="center">
+            <a [href]="digitalLink()" target="_blank" rel="noopener noreferrer" class="primary-color" interactionEffect>
+              {{ digitalLink() }}
+            </a>
+            <copy-button [copyValue]="digitalLink()" />
+          </ui-flex-block>
+        </card-field>
+      }
       <ui-flex-block flexAlignItems="center">
         <a
           [routerLink]="`/${AppRoutes.gs1}/${gs1().id}/${AppRoutes.edit}`"

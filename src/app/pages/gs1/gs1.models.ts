@@ -5,7 +5,7 @@ export type Gs1Form = {
   id: FormControl<number | null>;
   qrId: FormControl<number | null>;
   rtype: FormControl<string>;
-  gtin: FormControl<number | null>;
+  gtin: FormControl<string | null>;
   key: FormControl<string>;
   value: FormControl<string>;
   tail: FormControl<string>;
