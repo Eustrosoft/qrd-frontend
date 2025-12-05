@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/Eustrosoft/qrd-frontend/compare/v2.3.1...v2.4.0) (2025-12-05)
+
+
+### Features
+
+* **gs1:** добавлены ссылки и печать gtin ([b973621](https://github.com/Eustrosoft/qrd-frontend/commit/b9736211d6e97185808c9eed89fb286c229edd2f))
+* **gs1:** модифицировано представление ссылки ([deb28df](https://github.com/Eustrosoft/qrd-frontend/commit/deb28df84238bc6b31fa7aab3c12ccfb3df2bafd))
+
+
+### Bug Fixes
+
+* **gs1:** изменена валидация в форме GS1 ([4e0f7ab](https://github.com/Eustrosoft/qrd-frontend/commit/4e0f7ab14e0818574acb2a8339046b158d923893))
+
 ### [2.3.1](https://github.com/Eustrosoft/qrd-frontend/compare/v2.3.0...v2.3.1) (2025-11-28)
 
 
