@@ -16,6 +16,7 @@ import { queryRedirectResolver } from '@shared/resolvers/query-redirect.resolver
 import { loginGuard } from '@modules/auth/login.guard';
 import { AuthSelectors } from '@modules/auth/state/auth.selectors';
 import { Gs1State } from '@app/pages/gs1/state/gs1.state';
+import { PCodesState } from '@app/pages/p-codes/state/p-codes.state';
 
 export const routes: Routes = [
   {
@@ -68,6 +69,13 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadChildren: () => import('@app/pages/gs1/gs1.routes').then((m) => m.gs1Routes),
     providers: [provideStates([Gs1State])],
+  },
+  {
+    path: AppRoutes.pCodes,
+    title: RouteTitles.pCodes,
+    canActivate: [authGuard],
+    loadChildren: () => import('@app/pages/p-codes/p-codes.routes').then((m) => m.pCodesRoutes),
+    providers: [provideStates([PCodesState])],
   },
   {
     path: AppRoutes.settings,

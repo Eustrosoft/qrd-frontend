@@ -13,6 +13,7 @@ import { QrCardListComponent } from '@app/pages/qr-cards/components/qr-card-list
 import { QrCardTableComponent } from '@app/pages/qr-cards/components/qr-card-table/qr-card-table.component';
 import { viewModeRedirect } from '@shared/utils/functions/view-mode-redirect.function';
 import { QrCardGs1Component } from '@app/pages/qr-cards/components/qr-card-gs1/qr-card-gs1.component';
+import { QrCardPCodesComponent } from '@app/pages/qr-cards/components/qr-card-p-codes/qr-card-p-codes.component';
 
 export const qrCardsRoutes: Routes = [
   {
@@ -60,6 +61,10 @@ export const qrCardsRoutes: Routes = [
           {
             path: AppRoutes.gs1,
             component: QrCardGs1Component,
+          },
+          {
+            path: AppRoutes.pCodes,
+            component: QrCardPCodesComponent,
           },
         ],
       },

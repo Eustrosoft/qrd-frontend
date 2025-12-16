@@ -1,0 +1,79 @@
+@if (!selectors.isPCodeLoadErr()) {
+  @if (!selectors.isPCodeLoading()) {
+    <card-container [hideHeading]="true">
+      <ng-container content>
+        <toolbar [navigateTo]="backNav()">
+          @if (!isSmallScreen()) {
+            <ng-container heading>
+              <h1>{{ isNew() ? PCodesLocalization.creation : PCodesLocalization.editing }}</h1>
+            </ng-container>
+          }
+          <ng-container action-buttons>
+            @if (!selectors.isSaveInProgress()) {
+              <button (click)="saveData()" class="button-md" mat-flat-button>
+                <ui-flex-block gapSize="4">
+                  {{ isNew() ? SharedLocalization.create : SharedLocalization.save }}
+                  @if (formHasUnsavedChanges()) {
+                    <indicator />
+                  }
+                </ui-flex-block>
+              </button>
+            } @else {
+              <ui-skeleton height="40" width="128" />
+            }
+          </ng-container>
+        </toolbar>
+      </ng-container>
+    </card-container>
+    <card-container>
+      <ng-container heading>
+        <h1>{{ SharedLocalization.data }}</h1>
+      </ng-container>
+      <ng-container content>
+        <ui-grid-block gridAlignItems="center" [gridTemplateColumns]="gridTemplateColumns()">
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ PCodesLocalization.pin }} </mat-label>
+            <input [formControl]="form().controls.p" matInput />
+          </mat-form-field>
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ PCodesLocalization.p2Mode }} </mat-label>
+            <mat-select [formControl]="form().controls.p2Mode">
+              @for (mode of p2ModeList; track mode.value) {
+                <mat-option class="option-lg" [value]="mode.value">{{ mode.viewValue }}</mat-option>
+              } @empty {
+                <mat-option class="option-lg" disabled> {{ SharedLocalization.emptyList }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ PCodesLocalization.pin }}2 </mat-label>
+            <input [formControl]="form().controls.p2" matInput />
+          </mat-form-field>
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ PCodesLocalization.pin2Prompt }} </mat-label>
+            <input [formControl]="form().controls.p2Prompt" matInput />
+          </mat-form-field>
+          <mat-slide-toggle [formControl]="form().controls.hfields" class="slide-toggle">
+            {{ PCodesLocalization.showHiddenFields }}
+          </mat-slide-toggle>
+          <mat-slide-toggle [formControl]="form().controls.hfiles" class="slide-toggle">
+            {{ PCodesLocalization.showHiddenFiles }}
+          </mat-slide-toggle>
+        </ui-grid-block>
+
+        <ui-grid-block gridAlignItems="start" gridTemplateColumns="1fr">
+          <mat-form-field class="form-field-lg">
+            <mat-label> {{ SharedLocalization.comment }} </mat-label>
+            <textarea [formControl]="form().controls.comment" matInput></textarea>
+          </mat-form-field>
+        </ui-grid-block>
+      </ng-container>
+    </card-container>
+  } @else {
+    <ui-skeleton height="176" />
+    <ui-skeleton height="262" />
+    <ui-skeleton height="512" />
+  }
+} @else {
+  <banner [title]="ErrorsLocalization.errorFetchingPCode" />
+}

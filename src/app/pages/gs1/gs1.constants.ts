@@ -8,7 +8,6 @@ export const Gs1Localization = {
   key: $localize`:@@gs1.key:Key`,
   value: $localize`:@@gs1.value:Value`,
   tail: $localize`:@@gs1.tail:Tail`,
-  comment: $localize`:@@gs1.comment:Comment`,
   digitalLinkPreview: $localize`:@@gs1.digitalLinkPreview:How link would look like`,
   nonNumericGtin: $localize`:@@gs1.nonNumericGtin:GTIN should contain only numbers`,
   invalidGtinLength: $localize`:@@gs1.invalidGtinLength:GTIN length should be ${ValidGtinLengths} symbols`,

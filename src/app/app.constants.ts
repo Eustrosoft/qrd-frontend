@@ -12,6 +12,8 @@ export const AppRoutes = {
   docs: 'docs',
   doc: 'doc',
   gs1: 'gs1',
+  pCodes: 'pin-codes',
+  pCode: 'pin-code',
   usages: 'usages',
   list: 'list',
   table: 'table',

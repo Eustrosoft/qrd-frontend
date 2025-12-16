@@ -20,6 +20,7 @@ export type AppConfig = {
     forgotPassUri: ConfigUri;
     oldAppUri: ConfigUri;
     qrgenUri: string;
+    qrgenLabelUri: string;
     qrUri: string;
     pollInterval: number;
     langList: ConfigLocaleItem[];

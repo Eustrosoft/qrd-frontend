@@ -46,6 +46,23 @@ export class UnbindGs1 {
   ) {}
 }
 
+export class FetchPCodeList {
+  public static readonly type = '[Qr Cards] Fetch PCode List';
+  constructor(
+    readonly docId: number,
+    readonly destroyRef: DestroyRef,
+  ) {}
+}
+
+export class UnbindPCode {
+  public static readonly type = '[Qr Cards] Unbind PCode';
+  constructor(
+    readonly docId: number,
+    readonly rowId: number,
+    readonly destroyRef: DestroyRef,
+  ) {}
+}
+
 export class ClearQrCard {
   public static readonly type = '[Qr Cards] Clear Qr Card';
 }

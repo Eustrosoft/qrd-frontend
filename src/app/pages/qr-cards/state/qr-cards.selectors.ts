@@ -35,6 +35,11 @@ export class QrCardsSelectors {
     'isGs1LabelListLoading',
   ]);
 
+  public static getPCodesState$ = createPickSelector(QrCardsSelectors.getFullState, [
+    'pCodeList',
+    'isPCodeListLoading',
+  ]);
+
   public static getTemplatesState$ = createPickSelector(QrCardsSelectors.getFullState, [
     'templateList',
     'isTemplateListLoading',

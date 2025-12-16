@@ -1,0 +1,29 @@
+<card-container>
+  <ng-container heading>
+    <h1>{{ RouteTitles.pCodes }}</h1>
+  </ng-container>
+  <ng-container action-buttons>
+    <a
+      [routerLink]="`/${AppRoutes.pCodes}/${AppRoutes.new}/${AppRoutes.pCode}`"
+      [queryParams]="{ docId: selectors.qrCard()?.id }"
+      class="button-md"
+      mat-flat-button
+    >
+      {{ PCodesLocalization.creation }}
+    </a>
+  </ng-container>
+  <ng-container content>
+    <ui-grid-block [gridTemplateColumns]="gridTemplateColumns()">
+      @for (pCode of selectors.pCodesState().pCodeList; track $index) {
+        <qr-p-code-card
+          [pCode]="pCode"
+          [isNavigating]="currentlyNavigatingPCodeId() === pCode.rowId"
+          [isDeleting]="!!selectors.pCodeDeleteInProgressMap()[pCode.rowId]"
+          (onRemove)="actions.unbindPCode(pCode.docId, pCode.rowId, destroyRef)"
+        />
+      } @empty {
+        <p>{{ SharedLocalization.noGs1 }}</p>
+      }
+    </ui-grid-block>
+  </ng-container>
+</card-container>

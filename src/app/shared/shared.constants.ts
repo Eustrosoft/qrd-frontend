@@ -28,6 +28,8 @@ export const SharedLocalization = {
   noOriginalName: $localize`:@@shared.noOriginalName:No original name`,
   description: $localize`:@@shared.description:Description`,
   noDescription: $localize`:@@shared.noDescription:No description`,
+  comment: $localize`:@@shared.comment:Comment`,
+  noComment: $localize`:@@shared.noComment:No comment`,
   action: $localize`:@@shared.action:Action`,
   ranges: $localize`:@@shared.ranges:Ranges`,
   range: $localize`:@@shared.range:Range`,
@@ -134,7 +136,10 @@ export const RouteTitles = {
   file: $localize`:@@routes.file:File`,
   newFile: $localize`:@@routes.newFile:New file`,
   gs1: $localize`:@@routes.gs1:GS1`,
+  pCodes: $localize`:@@routes.pCodes:Pin codes`,
+  pCode: $localize`:@@routes.pCode:Pin code`,
   newGs1: $localize`:@@routes.newGs1:New GS1`,
+  newPCode: $localize`:@@routes.newPCode:New PCode`,
   edit: $localize`:@@routes.edit:Edit`,
   docs: $localize`:@@routes.docs:Docs`,
   gs1List: $localize`:@@routes.gs1List:GS1 list`,
@@ -159,6 +164,7 @@ export const DefaultConfig: AppConfig = {
     forgotPassUri: { uri: '#', disabled: true },
     oldAppUri: { uri: '/lk/', disabled: false },
     qrgenUri: 'https://qrgen.qxyz.ru/generate',
+    qrgenLabelUri: 'https://qrgen.qxyz.ru',
     qrUri: 'https://qr.qxyz.ru',
     pollInterval: 21600000, // every 6 hours
     langList: [

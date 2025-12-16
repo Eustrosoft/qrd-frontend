@@ -25,6 +25,7 @@ export const ErrorsLocalization = {
   errorFetchingRangeList: $localize`:@@errors.errorFetchingRangeList:Error while fetching range list`,
   errorUpdatingFileMetadata: $localize`:@@errors.errorUpdatingFileMetadata:Error while updating file metadata`,
   errorFetchingGs1: $localize`:@@errors.errorFetchingGs1:Error while fetching GS1`,
+  errorFetchingPCode: $localize`:@@errors.errorFetchingPCode:Error while fetching PIN code`,
 } as const;
 
 export const NotificationSnackbarLocalization = {

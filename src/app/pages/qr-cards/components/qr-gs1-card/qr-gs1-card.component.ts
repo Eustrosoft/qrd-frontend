@@ -9,7 +9,7 @@ import { DefaultConfig, SharedLocalization } from '@shared/shared.constants';
 import { AppRoutes } from '@app/app.constants';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { Gs1Dto } from '@api/gs/gs-api.models';
+import { Gs1Dto } from '@api/gs1/gs1-api.models';
 import { IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
 import { RouterLink } from '@angular/router';
 import { CopyButtonComponent } from '@shared/components/copy-button/copy-button.component';
@@ -72,7 +72,7 @@ export class QrGs1CardComponent {
 
   protected readonly printUrl = computed<string>(() => {
     const gs1 = this.gs1();
-    const qrgenUri = this.configState().config.qrdConf?.qrgenUri ?? DefaultConfig.qrdConf.qrgenUri;
+    const qrgenUri = this.configState().config.qrdConf?.qrgenLabelUri ?? DefaultConfig.qrdConf.qrgenLabelUri;
     const url = this.gs1GtinLinkPipe.transform(gs1.gtin?.toString(), gs1.key, gs1.value, gs1.tail);
     const params = new HttpParams({
       fromObject: {

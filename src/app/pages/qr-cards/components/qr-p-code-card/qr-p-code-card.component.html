@@ -1,0 +1,64 @@
+<card-container [hideHeading]="true">
+  <ng-container content>
+    <ui-grid-block rowGapSize="8" gridTemplateColumns="1fr">
+      <ui-grid-block rowGapSize="4" [gridTemplateColumns]="gridTemplateColumns()">
+        <card-field [caption]="PCodesLocalization.pin">
+          <ui-flex-block gapSize="4" flexAlignItems="center">
+            <p>{{ pCode().p | masked: isPShown() | fallback: PCodesLocalization.noPin }}</p>
+            @if (pCode().p) {
+              <button (click)="isPShown.set(!isPShown())" class="icon-button-sm" mat-icon-button>
+                <mat-icon class="icon-primary">{{ isPShown() ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            }
+          </ui-flex-block>
+        </card-field>
+        <card-field [caption]="`${PCodesLocalization.pin}2`">
+          <ui-flex-block gapSize="4" flexAlignItems="center">
+            <p>{{ pCode().p2 | masked: isP2Shown() | fallback: PCodesLocalization.noPin }}</p>
+            @if (pCode().p2) {
+              <button (click)="isP2Shown.set(!isP2Shown())" class="icon-button-sm" mat-icon-button>
+                <mat-icon class="icon-primary">{{ isP2Shown() ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            }
+          </ui-flex-block>
+        </card-field>
+        <card-field [caption]="`${PCodesLocalization.pin2Prompt}:`">
+          {{ pCode().p2Prompt | fallback: PCodesLocalization.noPin2Prompt }}
+        </card-field>
+        <card-field [caption]="`${SharedLocalization.description}:`">
+          {{ pCode().comment | fallback: SharedLocalization.noDescription }}
+        </card-field>
+      </ui-grid-block>
+      <ui-flex-block flexAlignItems="center">
+        <a
+          [routerLink]="`/${AppRoutes.pCodes}/${pCode().rowId}/${AppRoutes.edit}`"
+          [queryParams]="{ docId: pCode().docId }"
+          [matTooltip]="SharedLocalization.edit"
+          class="icon-button-sm"
+          mat-icon-button
+        >
+          <mat-icon class="icon-primary">edit</mat-icon>
+        </a>
+        @if (!isDeleting()) {
+          <button
+            (click)="onRemove.emit()"
+            [matTooltip]="SharedLocalization.delete"
+            class="icon-button-sm"
+            mat-icon-button
+          >
+            <mat-icon class="icon-primary">delete</mat-icon>
+          </button>
+        } @else {
+          <button class="icon-button-sm" mat-icon-button>
+            <mat-spinner diameter="24" />
+          </button>
+        }
+        @if (isNavigating()) {
+          <a class="icon-button-sm" mat-icon-button>
+            <mat-spinner diameter="24" />
+          </a>
+        }
+      </ui-flex-block>
+    </ui-grid-block>
+  </ng-container>
+</card-container>

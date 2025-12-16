@@ -4,6 +4,7 @@
     "forgotPassUri": { "uri": "#", "disabled": true },
     "oldAppUri": { "uri": "/lk/", "disabled": false },
     "qrgenUri": "https://qrgen.qxyz.ru/generate",
+    "qrgenLabelUri": "https://qrgen.qxyz.ru",
     "qrUri": "https://qr.qxyz.ru",
     "pollInterval": 21600000,
     "langList": [

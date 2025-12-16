@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Gs1ChangeDto, Gs1CreationDto, Gs1Dto } from '@api/gs/gs-api.models';
+import { Gs1ChangeDto, Gs1CreationDto, Gs1Dto } from '@api/gs1/gs1-api.models';
 
 @Injectable({
   providedIn: 'root',

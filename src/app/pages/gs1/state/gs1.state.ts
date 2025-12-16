@@ -6,7 +6,7 @@ import { AppRoutes, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CreateGs1, FetchGs1, FetchGs1List, ResetGs1State, SaveGs1 } from '@app/pages/gs1/state/gs1.actions';
 import { Gs1Service } from '@app/pages/gs1/services/gs1.service';
-import { Gs1ChangeDto, Gs1CreationDto, Gs1Dto } from '@api/gs/gs-api.models';
+import { Gs1ChangeDto, Gs1CreationDto, Gs1Dto } from '@api/gs1/gs1-api.models';
 import { NotificationSnackbarLocalization } from '@modules/error/error.constants';
 import { Router } from '@angular/router';
 import { SnackbarService } from '@shared/service/snackbar.service';
@@ -44,7 +44,7 @@ export class Gs1State {
   private readonly snackbarService = inject(SnackbarService);
 
   @Action(FetchGs1List)
-  public fetchQrCardList(
+  public fetchGs1List(
     { setState }: StateContext<Gs1StateModel>,
     { destroyRef, qrId }: FetchGs1List,
   ): Observable<Gs1Dto[]> {
