@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/Eustrosoft/qrd-frontend/compare/v2.4.0...v3.0.0) (2025-12-17)
+
+
+### Features
+
+* **pin,gs1:** доработана валидация gtin ([fea9b5a](https://github.com/Eustrosoft/qrd-frontend/commit/fea9b5a256d9071be3b14aaff5448770e817f4f7))
+* **pin:** добавлена форма редактирования PIN ([8818a28](https://github.com/Eustrosoft/qrd-frontend/commit/8818a28c990a4e19faba59ffd51c871c09f60b08))
+* **pin:** добавлено предупреждение при изменении MD5 ([ae6c8f1](https://github.com/Eustrosoft/qrd-frontend/commit/ae6c8f1f7c5adf8f4480fb3febddfe12511aee04))
+* **pin:** доработана форма редактирования PIN ([1613e15](https://github.com/Eustrosoft/qrd-frontend/commit/1613e150ecfc4ed28de2d4c57922d198f0d180d7))
+
 ## [2.4.0](https://github.com/Eustrosoft/qrd-frontend/compare/v2.3.1...v2.4.0) (2025-12-05)
 
 
