@@ -11,6 +11,7 @@ export const ConfirmationDialogLocalization = {
   areYouSure: $localize`:@@confirmDialog.areYouSure:Are you sure?`,
   sure: $localize`:@@confirmDialog.sure:Yes, I am sure`,
   saveBeforeExit: $localize`:@@confirmDialog.saveBeforeExit:Looks like form contains unsaved changes. Save data before exit?`,
+  md5HasChanged: $localize`:@@confirmDialog.md5HasChanged:It looks like the MD5 hash has changed. Are you sure you want to proceed?`,
 };
 
 export const ChangeTemplateDialogData: ConfirmationDialogData = {
@@ -41,4 +42,11 @@ export const UnsavedFormDialogData: ConfirmationDialogData = {
   textSubContent: ConfirmationDialogLocalization.saveBeforeExit,
   cancelButtonText: SharedLocalization.no,
   confirmButtonText: SharedLocalization.yes,
+};
+
+export const NotifyAboutMD5ChangesDialogData: ConfirmationDialogData = {
+  textContent: ConfirmationDialogLocalization.confirmation,
+  textSubContent: ConfirmationDialogLocalization.md5HasChanged,
+  cancelButtonText: SharedLocalization.cancel,
+  confirmButtonText: SharedLocalization.continue,
 };

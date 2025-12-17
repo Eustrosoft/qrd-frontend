@@ -87,6 +87,7 @@ export const SharedLocalization = {
   save: $localize`:@@shared.save:Save`,
   close: $localize`:@@shared.close:Close`,
   cancel: $localize`:@@shared.cancel:Cancel`,
+  continue: $localize`:@@shared.continue:Continue`,
   add: $localize`:@@shared.add:Add`,
   ok: $localize`:@@shared.ok:OK`,
   value: $localize`:@@shared.value:Value`,

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnDestroy, signal } from '@angular/core';
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
-import { distinctUntilChanged, map, merge, Observable, of, pairwise, startWith } from 'rxjs';
+import { combineLatest, distinctUntilChanged, map, merge, Observable, of, pairwise, startWith } from 'rxjs';
 import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
 import { PCodesSelectors } from '@app/pages/p-codes/state/p-codes.selectors';
 import { CreatePCode, SavePCode } from '@app/pages/p-codes/state/p-codes.actions';
@@ -130,6 +130,23 @@ export class PCodeEditComponent implements OnDestroy, CanComponentDeactivate {
     { initialValue: false },
   );
 
+  protected readonly isMd5Changed = toSignal(
+    combineLatest([
+      this.form().controls.p2.valueChanges.pipe(
+        map(() => true),
+        startWith(false),
+      ),
+      this.form().controls.p2Mode.valueChanges.pipe(
+        map((value) => value === 'MD5'),
+        startWith(false),
+      ),
+    ]).pipe(
+      map(([p2Changed, isMd5Selected]) => p2Changed && isMd5Selected),
+      startWith(false),
+    ),
+    { requireSync: true },
+  );
+
   protected readonly gridTemplateColumns = computed<string>(() => {
     if (this.isSmallScreen()) {
       return 'repeat(1, 1fr)';
@@ -174,7 +191,7 @@ export class PCodeEditComponent implements OnDestroy, CanComponentDeactivate {
       this.actions.createPCode(this.form().getRawValue(), this.destroyRef);
       return;
     }
-    this.actions.savePCode(this.form().getRawValue(), this.destroyRef);
+    this.actions.savePCode(this.form().getRawValue(), this.isMd5Changed(), this.destroyRef);
   }
 
   public canDeactivate(isConfirmed: boolean | undefined): Observable<boolean> {
@@ -183,7 +200,7 @@ export class PCodeEditComponent implements OnDestroy, CanComponentDeactivate {
     }
 
     if (isConfirmed) {
-      this.actions.savePCode(this.form().getRawValue(), this.destroyRef);
+      this.actions.savePCode(this.form().getRawValue(), this.isMd5Changed(), this.destroyRef);
       return merge(
         this.actions$.pipe(
           ofActionSuccessful(SavePCode),

@@ -30,6 +30,7 @@ export class SavePCode {
   public static readonly type = '[PCodes] Save PCode';
   constructor(
     readonly payload: ReturnType<PCodeFormGroup['getRawValue']>,
+    readonly isMd5HasChanged: boolean,
     readonly destroyRef: DestroyRef,
   ) {}
 }

@@ -1,17 +1,40 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { patch } from '@ngxs/store/operators';
-import { catchError, filter, map, Observable, switchMap, tap, throwError, throwIfEmpty, timer } from 'rxjs';
+import {
+  catchError,
+  filter,
+  finalize,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+  throwError,
+  throwIfEmpty,
+  timer,
+} from 'rxjs';
 import { AppRoutes, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ResetGs1State } from '@app/pages/gs1/state/gs1.actions';
 import { NotificationSnackbarLocalization } from '@modules/error/error.constants';
 import { Router } from '@angular/router';
 import { SnackbarService } from '@shared/service/snackbar.service';
 import { MappedPCodeDto } from '@api/p-codes/p-codes-api.models';
 import { PCodesService } from '@app/pages/p-codes/services/p-codes.service';
-import { CreatePCode, FetchPCode, FetchPCodeList, SavePCode } from '@app/pages/p-codes/state/p-codes.actions';
+import {
+  CreatePCode,
+  FetchPCode,
+  FetchPCodeList,
+  ResetPCodeState,
+  SavePCode,
+} from '@app/pages/p-codes/state/p-codes.actions';
 import { PCodesUtilsService } from '@app/pages/p-codes/services/p-codes-utils.service';
+import { PxToRemPipe } from '@shared/pipe/px-to-rem.pipe';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '@shared/components/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.models';
+import { NotifyAboutMD5ChangesDialogData } from '@shared/components/confirmation-dialog/confirmation-dialog.constants';
+import { UserAbortError } from '@core/errors/user-abort.error';
 
 export interface PCodesStateModel {
   isPCodeListLoading: boolean;
@@ -45,6 +68,8 @@ export class PCodesState {
   private readonly router = inject(Router);
   private readonly snackbarService = inject(SnackbarService);
   private readonly pCodesUtilsService = inject(PCodesUtilsService);
+  private readonly pxToRemPipe = inject(PxToRemPipe);
+  private readonly matDialog = inject(MatDialog);
 
   @Action(FetchPCodeList)
   public fetchPCodeList(
@@ -144,10 +169,24 @@ export class PCodesState {
   @Action(SavePCode)
   public savePCode(
     { setState }: StateContext<PCodesStateModel>,
-    { payload, destroyRef }: SavePCode,
+    { payload, isMd5HasChanged, destroyRef }: SavePCode,
   ): Observable<unknown> {
     setState(patch({ isSaveInProgress: true }));
     return timer(SKELETON_TIMER).pipe(
+      switchMap(() => {
+        if (!isMd5HasChanged) {
+          return of(true);
+        }
+
+        return this.matDialog
+          .open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(ConfirmationDialogComponent, {
+            data: NotifyAboutMD5ChangesDialogData,
+            width: this.pxToRemPipe.transform('600'),
+          })
+          .afterClosed();
+      }),
+      filter(Boolean),
+      throwIfEmpty(() => new UserAbortError(SavePCode.name)),
       switchMap(() =>
         this.pCodesService.savePCode({
           docId: payload.docId!,
@@ -171,16 +210,22 @@ export class PCodesState {
         },
       }),
       catchError((err) => {
-        this.snackbarService.danger(NotificationSnackbarLocalization.errOnSave);
         setState(patch({ isSaveInProgress: false }));
+        if (err instanceof UserAbortError) {
+          return throwError(() => err);
+        }
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnSave);
         return throwError(() => err);
+      }),
+      finalize(() => {
+        setState(patch({ isSaveInProgress: false }));
       }),
       takeUntilDestroyed(destroyRef),
     );
   }
 
-  @Action(ResetGs1State)
-  public resetGs1State({ setState }: StateContext<PCodesStateModel>): void {
+  @Action(ResetPCodeState)
+  public resetPCodeState({ setState }: StateContext<PCodesStateModel>): void {
     setState(defaults);
   }
 }
