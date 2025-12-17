@@ -87,6 +87,7 @@ export class QrCardViewComponent implements OnInit {
     qrCard: QrCardsSelectors.getSlices.qrCard,
     qrCardPreviewUrl: QrCardsSelectors.getSlices.qrCardPreviewUrl,
     gs1LabelsState: QrCardsSelectors.getGs1LabelsState$,
+    pCodesState: QrCardsSelectors.getPCodesState$,
     isDeleteInProgress: QrCardsSelectors.getSlices.isDeleteInProgress,
   });
 

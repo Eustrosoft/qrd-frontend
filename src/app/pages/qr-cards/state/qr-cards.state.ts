@@ -22,7 +22,21 @@ import {
 } from './qr-cards.actions';
 import { patch } from '@ngxs/store/operators';
 import { QRChangeDto, QRDto } from '@api/qr-cards/qrs-api.models';
-import { catchError, concatMap, EMPTY, from, map, Observable, switchMap, tap, throwError, timer, toArray } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  EMPTY,
+  filter,
+  from,
+  map,
+  Observable,
+  switchMap,
+  tap,
+  throwError,
+  throwIfEmpty,
+  timer,
+  toArray,
+} from 'rxjs';
 import { QrCardsService } from '@app/pages/qr-cards/services/qr-cards.service';
 import { AppRoutes, DEFAULT_ITEMS_PER_PAGE, QR_API_URL, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -45,10 +59,10 @@ import { QRRangeDto } from '@api/ranges/ranges-api.models';
 import { QrCardFormFactoryService } from '@app/pages/qr-cards/services/qr-card-form-factory.service';
 import { Gs1Dto } from '@api/gs1/gs1-api.models';
 import { Gs1Service } from '@app/pages/gs1/services/gs1.service';
-import { FetchGs1List } from '@app/pages/gs1/state/gs1.actions';
 import { removeRecordKey, setRecordKey } from '@app/state/app.operators';
 import { MappedPCodeDto } from '@api/p-codes/p-codes-api.models';
 import { PCodesService } from '@app/pages/p-codes/services/p-codes.service';
+import { UserAbortError } from '@core/errors/user-abort.error';
 
 export interface QrCardsStateModel {
   searchValue: string;
@@ -235,39 +249,37 @@ export class QrCardsState {
   ): Observable<void> {
     setState(patch({ gs1DeleteInProgressMap: setRecordKey(id, true) }));
 
-    const matDialogRef = this.matDialog.open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(
-      ConfirmationDialogComponent,
-      {
+    return this.matDialog
+      .open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(ConfirmationDialogComponent, {
         data: DeletionDialogData,
         width: this.pxToRemPipe.transform('600'),
-      },
-    );
-    return matDialogRef.afterClosed().pipe(
-      switchMap((result) => {
-        if (!result) {
-          setState(patch({ gs1DeleteInProgressMap: removeRecordKey(id) }));
-          return EMPTY;
-        }
-        return this.gs1Service.deleteGs1(id).pipe(
-          tap(() => {
+      })
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        throwIfEmpty(() => new UserAbortError(UnbindGs1.name)),
+        switchMap(() => this.gs1Service.deleteGs1(id)),
+        tap({
+          next: () => {
             this.snackbarService.success(NotificationSnackbarLocalization.deleted);
             setState(patch({ gs1DeleteInProgressMap: removeRecordKey(id) }));
-            dispatch(new FetchGs1List(destroyRef, qrId));
-          }),
-        );
-      }),
-      takeUntilDestroyed(destroyRef),
-      catchError((err) => {
-        this.snackbarService.danger(NotificationSnackbarLocalization.errOnDelete);
-        setState(patch({ gs1DeleteInProgressMap: removeRecordKey(id) }));
-        dispatch(new SetSelectedQrCards([]));
-        return throwError(() => err);
-      }),
-    );
+            dispatch(new FetchGs1LabelList(undefined, qrId));
+          },
+        }),
+        takeUntilDestroyed(destroyRef),
+        catchError((err) => {
+          setState(patch({ gs1DeleteInProgressMap: removeRecordKey(id) }));
+          if (err instanceof UserAbortError) {
+            return throwError(() => err);
+          }
+          this.snackbarService.danger(NotificationSnackbarLocalization.errOnDelete);
+          return throwError(() => err);
+        }),
+      );
   }
 
   @Action(FetchPCodeList)
-  public fetchPCodeLabelList(
+  public fetchPCodeList(
     { setState }: StateContext<QrCardsStateModel>,
     { docId, destroyRef }: FetchPCodeList,
   ): Observable<MappedPCodeDto[]> {
@@ -299,35 +311,31 @@ export class QrCardsState {
   ): Observable<void> {
     setState(patch({ pCodeDeleteInProgressMap: setRecordKey(rowId, true) }));
 
-    const matDialogRef = this.matDialog.open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(
-      ConfirmationDialogComponent,
-      {
+    return this.matDialog
+      .open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(ConfirmationDialogComponent, {
         data: DeletionDialogData,
         width: this.pxToRemPipe.transform('600'),
-      },
-    );
-    return matDialogRef.afterClosed().pipe(
-      switchMap((result) => {
-        if (!result) {
+      })
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        throwIfEmpty(() => new UserAbortError(UnbindPCode.name)),
+        switchMap(() => this.pCodesService.deletePCode(docId, rowId)),
+        tap(() => {
+          this.snackbarService.success(NotificationSnackbarLocalization.deleted);
           setState(patch({ pCodeDeleteInProgressMap: removeRecordKey(rowId) }));
-          return EMPTY;
-        }
-        return this.pCodesService.deletePCode(docId, rowId).pipe(
-          tap(() => {
-            this.snackbarService.success(NotificationSnackbarLocalization.deleted);
-            setState(patch({ pCodeDeleteInProgressMap: removeRecordKey(rowId) }));
-            dispatch(new FetchPCodeList(docId, destroyRef));
-          }),
-        );
-      }),
-      takeUntilDestroyed(destroyRef),
-      catchError((err) => {
-        this.snackbarService.danger(NotificationSnackbarLocalization.errOnDelete);
-        setState(patch({ pCodeDeleteInProgressMap: removeRecordKey(rowId) }));
-        dispatch(new SetSelectedQrCards([]));
-        return throwError(() => err);
-      }),
-    );
+          dispatch(new FetchPCodeList(docId));
+        }),
+        takeUntilDestroyed(destroyRef),
+        catchError((err) => {
+          setState(patch({ pCodeDeleteInProgressMap: removeRecordKey(rowId) }));
+          if (err instanceof UserAbortError) {
+            return throwError(() => err);
+          }
+          this.snackbarService.danger(NotificationSnackbarLocalization.errOnDelete);
+          return throwError(() => err);
+        }),
+      );
   }
 
   @Action(ClearQrCard)

@@ -99,9 +99,6 @@
           <mat-form-field class="form-field-lg">
             <mat-label> {{ Gs1Localization.gtin }} </mat-label>
             <input [formControl]="form().controls.gtin" maxlength="14" matInput />
-            @if (form().controls.gtin.touched && form().controls.gtin.hasError('required')) {
-              <mat-error>{{ SharedLocalization.fieldRequired }}</mat-error>
-            }
             @if (form().controls.gtin.touched && gtinSoftErrors()) {
               <mat-hint>
                 <ui-flex-block flexDisplay="inline-flex" gapSize="4" flexAlignItems="center">

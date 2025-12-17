@@ -15,22 +15,24 @@ export class Gs1GtinLinkPipe implements PipeTransform {
     value?: string | null,
     tail?: string | null,
   ): string {
-    const gtinStr = gtin?.toString()?.trim();
-
-    if (!gtinStr?.length) {
-      return '';
-    }
-
     const qrUri = this.configState().config.qrdConf?.qrUri ?? DefaultConfig.qrdConf.qrUri;
 
-    let url = `${qrUri}/01/${encodeURIComponent(gtinStr)}`;
+    let url = `${qrUri}/01`;
 
-    if (key && value) {
-      url += `/${encodeURIComponent(key.trim())}/${encodeURIComponent(value.trim())}`;
+    if (gtin) {
+      url += `/${encodeURIComponent(gtin?.toString()?.trim().trim())}`;
+    }
+
+    if (key) {
+      url += `/${encodeURIComponent(key.trim())}`;
+    }
+
+    if (value) {
+      url += `/${encodeURIComponent(value.trim())}`;
     }
 
     if (tail) {
-      url += `/${encodeURIComponent(tail.trim())}`;
+      url += `/${tail.trim()}`;
     }
 
     return url;

@@ -44,7 +44,7 @@ export class QrCardPCodesComponent {
     this.router.events.pipe(
       filter((event) => event instanceof NavigationStart),
       map((event) => {
-        const match = event.url.match(/\/p-codes\/(\d+)(?:\/|$)/);
+        const match = event.url.match(/\/pins\/(\d+)(?:\/|$)/);
         return match ? Number(match[1]) : null;
       }),
     ),

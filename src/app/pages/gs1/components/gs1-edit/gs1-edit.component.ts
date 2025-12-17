@@ -220,10 +220,10 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
       return;
     }
     if (this.isNew()) {
-      this.actions.createGs1(this.form().getRawValue(), this.destroyRef);
+      this.actions.createGs1(this.form().getRawValue(), !this.gtinSoftErrors(), this.destroyRef);
       return;
     }
-    this.actions.saveGs1(this.form().getRawValue(), this.destroyRef);
+    this.actions.saveGs1(this.form().getRawValue(), !this.gtinSoftErrors(), this.destroyRef);
   }
 
   public canDeactivate(isConfirmed: boolean | undefined): Observable<boolean> {
@@ -232,7 +232,7 @@ export class Gs1EditComponent implements OnInit, CanComponentDeactivate, OnDestr
     }
 
     if (isConfirmed) {
-      this.actions.saveGs1(this.form().getRawValue(), this.destroyRef);
+      this.actions.saveGs1(this.form().getRawValue(), !this.gtinSoftErrors(), this.destroyRef);
       return merge(
         this.actions$.pipe(
           ofActionSuccessful(SaveGs1),

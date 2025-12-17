@@ -21,6 +21,7 @@ export class CreateGs1 {
   public static readonly type = '[Gs1] Create Gs1';
   constructor(
     readonly payload: ReturnType<Gs1FormGroup['getRawValue']>,
+    readonly isGtinValid: boolean,
     readonly destroyRef: DestroyRef,
   ) {}
 }
@@ -29,6 +30,7 @@ export class SaveGs1 {
   public static readonly type = '[Gs1] Save Gs1';
   constructor(
     readonly payload: ReturnType<Gs1FormGroup['getRawValue']>,
+    readonly isGtinValid: boolean,
     readonly destroyRef: DestroyRef,
   ) {}
 }

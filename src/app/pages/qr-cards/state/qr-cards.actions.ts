@@ -32,7 +32,7 @@ export class FetchQrCard {
 export class FetchGs1LabelList {
   public static readonly type = '[Qr Cards] Fetch Gs1 Label List';
   constructor(
-    readonly destroyRef: DestroyRef,
+    readonly destroyRef?: DestroyRef,
     readonly qrId?: number,
   ) {}
 }
@@ -50,7 +50,7 @@ export class FetchPCodeList {
   public static readonly type = '[Qr Cards] Fetch PCode List';
   constructor(
     readonly docId: number,
-    readonly destroyRef: DestroyRef,
+    readonly destroyRef?: DestroyRef,
   ) {}
 }
 

@@ -12,6 +12,7 @@ export const ConfirmationDialogLocalization = {
   sure: $localize`:@@confirmDialog.sure:Yes, I am sure`,
   saveBeforeExit: $localize`:@@confirmDialog.saveBeforeExit:Looks like form contains unsaved changes. Save data before exit?`,
   md5HasChanged: $localize`:@@confirmDialog.md5HasChanged:It looks like the MD5 hash has changed. Are you sure you want to proceed?`,
+  invalidGtin: $localize`:@@confirmDialog.invalidGtin:It looks like the GTIN value is invalid. Are you sure you want to proceed?`,
 };
 
 export const ChangeTemplateDialogData: ConfirmationDialogData = {
@@ -47,6 +48,13 @@ export const UnsavedFormDialogData: ConfirmationDialogData = {
 export const NotifyAboutMD5ChangesDialogData: ConfirmationDialogData = {
   textContent: ConfirmationDialogLocalization.confirmation,
   textSubContent: ConfirmationDialogLocalization.md5HasChanged,
+  cancelButtonText: SharedLocalization.cancel,
+  confirmButtonText: SharedLocalization.continue,
+};
+
+export const NotifyAboutInvalidGtinDialogData: ConfirmationDialogData = {
+  textContent: ConfirmationDialogLocalization.confirmation,
+  textSubContent: ConfirmationDialogLocalization.invalidGtin,
   cancelButtonText: SharedLocalization.cancel,
   confirmButtonText: SharedLocalization.continue,
 };

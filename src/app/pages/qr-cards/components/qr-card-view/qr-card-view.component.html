@@ -1,5 +1,9 @@
 @if (!selectors.isQrCardLoadErr()) {
-  @if (!selectors.isQrCardLoading() && !selectors.gs1LabelsState().isGs1LabelListLoading) {
+  @if (
+    !selectors.isQrCardLoading() &&
+    !selectors.gs1LabelsState().isGs1LabelListLoading &&
+    !selectors.pCodesState().isPCodeListLoading
+  ) {
     <toolbar>
       <ng-container heading>
         @if (!isXSmall()) {
