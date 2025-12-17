@@ -10,6 +10,8 @@ export const PCodesLocalization = {
   noPin2Prompt: $localize`:@@pCodes.noPin2Prompt:No PIN2 Prompt`,
   showHiddenFields: $localize`:@@pCodes.showHiddenFields:Show hidden fields`,
   showHiddenFiles: $localize`:@@pCodes.showHiddenFiles:Show hidden files`,
+  generatePin: $localize`:@@pCodes.generatePin:Generate random PIN`,
+  toMD5: $localize`:@@pCodes.toMD5:Convert to MD5`,
 };
 
 export const Pin2Alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' as const;

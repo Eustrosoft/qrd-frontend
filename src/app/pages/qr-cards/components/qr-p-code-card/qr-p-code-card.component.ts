@@ -10,7 +10,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 import { AppRoutes } from '@app/app.constants';
-import { PCodeDto } from '@api/p-codes/p-codes-api.models';
+import { MappedPCodeDto } from '@api/p-codes/p-codes-api.models';
 import { PCodesLocalization } from '@app/pages/p-codes/p-codes.constants';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FallbackPipe } from '@shared/pipe/fallback.pipe';
@@ -38,7 +38,8 @@ import { MaskedPipe } from '@shared/pipe/masked.pipe';
 export class QrPCodeCardComponent {
   protected readonly isXSmall = inject(IS_XSMALL);
 
-  public readonly pCode = input.required<PCodeDto>();
+  public readonly idx = input.required<number>();
+  public readonly pCode = input.required<MappedPCodeDto>();
   public readonly isNavigating = input<boolean>(false);
   public readonly isDeleting = input<boolean>(false);
 

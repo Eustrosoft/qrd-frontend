@@ -47,7 +47,7 @@ import { Gs1Dto } from '@api/gs1/gs1-api.models';
 import { Gs1Service } from '@app/pages/gs1/services/gs1.service';
 import { FetchGs1List } from '@app/pages/gs1/state/gs1.actions';
 import { removeRecordKey, setRecordKey } from '@app/state/app.operators';
-import { PCodeDto } from '@api/p-codes/p-codes-api.models';
+import { MappedPCodeDto } from '@api/p-codes/p-codes-api.models';
 import { PCodesService } from '@app/pages/p-codes/services/p-codes.service';
 
 export interface QrCardsStateModel {
@@ -65,7 +65,7 @@ export interface QrCardsStateModel {
   gs1LabelList: Gs1Dto[];
   gs1DeleteInProgressMap: Record<number, boolean>;
   isPCodeListLoading: boolean;
-  pCodeList: PCodeDto[];
+  pCodeList: MappedPCodeDto[];
   pCodeDeleteInProgressMap: Record<number, boolean>;
   isDeleteInProgress: boolean;
   isSaveInProgress: boolean;
@@ -270,7 +270,7 @@ export class QrCardsState {
   public fetchPCodeLabelList(
     { setState }: StateContext<QrCardsStateModel>,
     { docId, destroyRef }: FetchPCodeList,
-  ): Observable<PCodeDto[]> {
+  ): Observable<MappedPCodeDto[]> {
     setState(patch({ isPCodeListLoading: true, isQrCardLoadErr: false }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.pCodesService.getPCodeList(docId)),
@@ -295,9 +295,9 @@ export class QrCardsState {
   @Action(UnbindPCode)
   public unbindPCode(
     { setState, dispatch }: StateContext<QrCardsStateModel>,
-    { docId, destroyRef }: UnbindPCode,
+    { docId, rowId, destroyRef }: UnbindPCode,
   ): Observable<void> {
-    setState(patch({ pCodeDeleteInProgressMap: setRecordKey(docId, true) }));
+    setState(patch({ pCodeDeleteInProgressMap: setRecordKey(rowId, true) }));
 
     const matDialogRef = this.matDialog.open<ConfirmationDialogComponent, ConfirmationDialogData, boolean>(
       ConfirmationDialogComponent,
@@ -309,13 +309,13 @@ export class QrCardsState {
     return matDialogRef.afterClosed().pipe(
       switchMap((result) => {
         if (!result) {
-          setState(patch({ pCodeDeleteInProgressMap: removeRecordKey(docId) }));
+          setState(patch({ pCodeDeleteInProgressMap: removeRecordKey(rowId) }));
           return EMPTY;
         }
-        return this.pCodesService.deletePCode(docId).pipe(
+        return this.pCodesService.deletePCode(docId, rowId).pipe(
           tap(() => {
             this.snackbarService.success(NotificationSnackbarLocalization.deleted);
-            setState(patch({ pCodeDeleteInProgressMap: removeRecordKey(docId) }));
+            setState(patch({ pCodeDeleteInProgressMap: removeRecordKey(rowId) }));
             dispatch(new FetchPCodeList(docId, destroyRef));
           }),
         );
@@ -323,7 +323,7 @@ export class QrCardsState {
       takeUntilDestroyed(destroyRef),
       catchError((err) => {
         this.snackbarService.danger(NotificationSnackbarLocalization.errOnDelete);
-        setState(patch({ pCodeDeleteInProgressMap: removeRecordKey(docId) }));
+        setState(patch({ pCodeDeleteInProgressMap: removeRecordKey(rowId) }));
         dispatch(new SetSelectedQrCards([]));
         return throwError(() => err);
       }),

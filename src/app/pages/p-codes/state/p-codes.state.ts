@@ -1,25 +1,26 @@
 import { inject, Injectable } from '@angular/core';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { patch } from '@ngxs/store/operators';
-import { catchError, Observable, switchMap, tap, throwError, timer } from 'rxjs';
+import { catchError, filter, map, Observable, switchMap, tap, throwError, throwIfEmpty, timer } from 'rxjs';
 import { AppRoutes, SKELETON_TIMER } from '@app/app.constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ResetGs1State } from '@app/pages/gs1/state/gs1.actions';
 import { NotificationSnackbarLocalization } from '@modules/error/error.constants';
 import { Router } from '@angular/router';
 import { SnackbarService } from '@shared/service/snackbar.service';
-import { PCodeDto } from '@api/p-codes/p-codes-api.models';
+import { MappedPCodeDto } from '@api/p-codes/p-codes-api.models';
 import { PCodesService } from '@app/pages/p-codes/services/p-codes.service';
 import { CreatePCode, FetchPCode, FetchPCodeList, SavePCode } from '@app/pages/p-codes/state/p-codes.actions';
+import { PCodesUtilsService } from '@app/pages/p-codes/services/p-codes-utils.service';
 
 export interface PCodesStateModel {
   isPCodeListLoading: boolean;
   isPCodeListLoadErr: boolean;
-  pCodeList: PCodeDto[];
+  pCodeList: MappedPCodeDto[];
   isPCodeLoading: boolean;
   isPCodeLoadErr: boolean;
   isSaveInProgress: boolean;
-  pCode: PCodeDto | null;
+  pCode: MappedPCodeDto | null;
 }
 
 const defaults: PCodesStateModel = {
@@ -32,10 +33,10 @@ const defaults: PCodesStateModel = {
   pCode: null,
 } as const;
 
-const P_CODE_STATE_TOKEN: StateToken<PCodesStateModel> = new StateToken<PCodesStateModel>('pCode');
+const P_CODES_STATE_TOKEN: StateToken<PCodesStateModel> = new StateToken<PCodesStateModel>('pCodes');
 
 @State<PCodesStateModel>({
-  name: P_CODE_STATE_TOKEN,
+  name: P_CODES_STATE_TOKEN,
   defaults,
 })
 @Injectable()
@@ -43,12 +44,13 @@ export class PCodesState {
   private readonly pCodesService = inject(PCodesService);
   private readonly router = inject(Router);
   private readonly snackbarService = inject(SnackbarService);
+  private readonly pCodesUtilsService = inject(PCodesUtilsService);
 
   @Action(FetchPCodeList)
   public fetchPCodeList(
     { setState }: StateContext<PCodesStateModel>,
     { docId, destroyRef }: FetchPCodeList,
-  ): Observable<PCodeDto[]> {
+  ): Observable<MappedPCodeDto[]> {
     setState(patch({ isPCodeListLoading: true, isPCodeListLoadErr: false }));
     return timer(SKELETON_TIMER).pipe(
       switchMap(() => this.pCodesService.getPCodeList(docId)),
@@ -72,17 +74,22 @@ export class PCodesState {
 
   @Action(FetchPCode)
   public fetchPCode(
-    { setState }: StateContext<PCodesStateModel>,
-    { destroyRef, docId }: FetchPCode,
-  ): Observable<PCodeDto> {
+    { getState, setState, dispatch }: StateContext<PCodesStateModel>,
+    { destroyRef, docId, idx }: FetchPCode,
+  ): Observable<MappedPCodeDto> {
     setState(patch({ isPCodeLoading: true, isPCodeLoadErr: false }));
-    return timer(SKELETON_TIMER).pipe(
-      switchMap(() => this.pCodesService.getPCode(docId)),
+    return dispatch(new FetchPCodeList(docId, destroyRef)).pipe(
+      map(() => {
+        const { pCodeList } = getState();
+        return pCodeList.find((_, index) => index === idx);
+      }),
+      filter((pin) => !!pin),
+      throwIfEmpty(() => new Error('Unavailable pin')),
       tap({
         next: (pCode) => {
           setState(
             patch({
-              pCode,
+              pCode: pCode,
               isPCodeLoading: false,
             }),
           );
@@ -103,21 +110,24 @@ export class PCodesState {
   ): Observable<unknown> {
     setState(patch({ isSaveInProgress: true }));
     return timer(SKELETON_TIMER).pipe(
-      // switchMap(() =>
-      //   this.pCodesService.createPCode({
-      //     qrId: payload.qrId!,
-      //     rtype: payload.rtype,
-      //     gtin: +payload.gtin!,
-      //     key: payload.key,
-      //     value: payload.value,
-      //     tail: payload.tail,
-      //     comment: payload.comment,
-      //   }),
-      // ),
+      switchMap(() =>
+        this.pCodesService.createPCode({
+          docId: payload.docId!,
+          rowId: payload.rowId!,
+          participantId: payload.participantId!,
+          p: payload.p,
+          p2: payload.p2,
+          p2Mode: payload.p2Mode,
+          p2Prompt: payload.p2Prompt,
+          hfields: this.pCodesUtilsService.toYesNo(payload.hfields),
+          hfiles: this.pCodesUtilsService.toYesNo(payload.hfiles),
+          comment: payload.comment,
+        }),
+      ),
       tap({
         next: () => {
           this.snackbarService.success(NotificationSnackbarLocalization.saved);
-          this.router.navigate([AppRoutes.qrCards, payload.docId, AppRoutes.pCodes]).then(() => {
+          this.router.navigate([AppRoutes.qrCards, payload.docId, AppRoutes.pins]).then(() => {
             setState(patch({ isSaveInProgress: false }));
           });
         },
@@ -138,28 +148,30 @@ export class PCodesState {
   ): Observable<unknown> {
     setState(patch({ isSaveInProgress: true }));
     return timer(SKELETON_TIMER).pipe(
-      // switchMap(() =>
-      //   this.pCodesService.savePCode({
-      //     id: payload.id!,
-      //     qrId: payload.qrId!,
-      //     rtype: payload.rtype,
-      //     gtin: +payload.gtin!,
-      //     key: payload.key,
-      //     value: payload.value,
-      //     tail: payload.tail,
-      //     comment: payload.comment,
-      //   }),
-      // ),
+      switchMap(() =>
+        this.pCodesService.savePCode({
+          docId: payload.docId!,
+          rowId: payload.rowId!,
+          participantId: payload.participantId!,
+          p: payload.p,
+          p2: payload.p2,
+          p2Mode: payload.p2Mode,
+          p2Prompt: payload.p2Prompt,
+          hfields: this.pCodesUtilsService.toYesNo(payload.hfields),
+          hfiles: this.pCodesUtilsService.toYesNo(payload.hfiles),
+          comment: payload.comment,
+        }),
+      ),
       tap({
         next: () => {
           this.snackbarService.success(NotificationSnackbarLocalization.saved);
-          this.router.navigate([AppRoutes.qrCards, payload.docId, AppRoutes.pCodes]).then(() => {
+          this.router.navigate([AppRoutes.qrCards, payload.docId, AppRoutes.pins]).then(() => {
             setState(patch({ isSaveInProgress: false }));
           });
         },
       }),
       catchError((err) => {
-        this.snackbarService.danger(NotificationSnackbarLocalization.errOnCreate);
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnSave);
         setState(patch({ isSaveInProgress: false }));
         return throwError(() => err);
       }),

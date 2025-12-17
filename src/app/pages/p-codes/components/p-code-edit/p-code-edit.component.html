@@ -33,7 +33,19 @@
         <ui-grid-block gridAlignItems="center" [gridTemplateColumns]="gridTemplateColumns()">
           <mat-form-field class="form-field-lg">
             <mat-label> {{ PCodesLocalization.pin }} </mat-label>
-            <input [formControl]="form().controls.p" matInput />
+            <input [formControl]="form().controls.p" matInput [type]="isPinVisible() ? 'text' : 'password'" />
+            <button
+              (click)="makeRandomPin()"
+              [matTooltip]="PCodesLocalization.generatePin"
+              matSuffix
+              class="icon-button-sm"
+              mat-icon-button
+            >
+              <mat-icon class="icon-secondary">wand_stars</mat-icon>
+            </button>
+            <button (click)="isPinVisible.set(!isPinVisible())" matSuffix class="icon-button-sm" mat-icon-button>
+              <mat-icon class="icon-secondary">{{ isPinVisible() ? 'visibility' : 'visibility_off' }}</mat-icon>
+            </button>
           </mat-form-field>
           <mat-form-field class="form-field-lg">
             <mat-label> {{ PCodesLocalization.p2Mode }} </mat-label>
@@ -47,7 +59,28 @@
           </mat-form-field>
           <mat-form-field class="form-field-lg">
             <mat-label> {{ PCodesLocalization.pin }}2 </mat-label>
-            <input [formControl]="form().controls.p2" matInput />
+            <input [formControl]="form().controls.p2" matInput [type]="isPin2Visible() ? 'text' : 'password'" />
+            <button
+              (click)="makeMD5Hash()"
+              [matTooltip]="PCodesLocalization.toMD5"
+              matSuffix
+              class="icon-button-sm"
+              mat-icon-button
+            >
+              <mat-icon class="icon-secondary">key</mat-icon>
+            </button>
+            <button
+              (click)="makeRandomPin2()"
+              [matTooltip]="PCodesLocalization.generatePin"
+              matSuffix
+              class="icon-button-sm"
+              mat-icon-button
+            >
+              <mat-icon class="icon-secondary">wand_stars</mat-icon>
+            </button>
+            <button (click)="isPin2Visible.set(!isPin2Visible())" matSuffix class="icon-button-sm" mat-icon-button>
+              <mat-icon class="icon-secondary">{{ isPin2Visible() ? 'visibility' : 'visibility_off' }}</mat-icon>
+            </button>
           </mat-form-field>
           <mat-form-field class="form-field-lg">
             <mat-label> {{ PCodesLocalization.pin2Prompt }} </mat-label>
@@ -60,7 +93,6 @@
             {{ PCodesLocalization.showHiddenFiles }}
           </mat-slide-toggle>
         </ui-grid-block>
-
         <ui-grid-block gridAlignItems="start" gridTemplateColumns="1fr">
           <mat-form-field class="form-field-lg">
             <mat-label> {{ SharedLocalization.comment }} </mat-label>

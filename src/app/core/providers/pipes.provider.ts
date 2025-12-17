@@ -9,6 +9,8 @@ import { RuDateAdapterParsePipe } from '@shared/pipe/ru-adapter-parse.pipe';
 import { QrRangePipe } from '@shared/pipe/qr-range.pipe';
 import { Iso8601DateFormatPipe } from '@shared/pipe/iso8601-date-format.pipe';
 import { Gs1GtinLinkPipe } from '@shared/pipe/gs1-gtin-link.pipe';
+import { UpperCasePipe } from '@angular/common';
+import { MaskedPipe } from '@shared/pipe/masked.pipe';
 
 export function providePipes(): Provider[] {
   return [
@@ -22,5 +24,7 @@ export function providePipes(): Provider[] {
     RuDateAdapterParsePipe,
     Iso8601DateFormatPipe,
     Gs1GtinLinkPipe,
+    UpperCasePipe,
+    MaskedPipe,
   ];
 }

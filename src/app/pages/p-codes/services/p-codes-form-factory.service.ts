@@ -31,10 +31,10 @@ export class PCodesFormFactoryService {
   }
 
   private makePCodeForm(initialData: Partial<ReturnType<PCodeFormGroup['getRawValue']>> = {}): PCodeFormGroup {
-    console.log(initialData);
     return this.fb.group<PCodeForm>({
       docId: this.fb.control<number | null>(initialData?.docId ?? null),
       rowId: this.fb.control<number | null>(initialData?.rowId ?? null),
+      participantId: this.fb.nonNullable.control<number>(initialData?.participantId ?? -1),
       p: this.fb.nonNullable.control<string>(initialData?.p ?? ''),
       p2: this.fb.nonNullable.control<string>(initialData?.p2 ?? ''),
       p2Mode: this.fb.nonNullable.control<string>(initialData?.p2Mode ?? ''),

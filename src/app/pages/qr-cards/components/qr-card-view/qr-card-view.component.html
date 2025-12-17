@@ -71,7 +71,7 @@
     <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="tab-nav-bar">
       @for (link of tabLinks; track link.link) {
         <a [routerLink]="link.link" [active]="rla.isActive" #rla="routerLinkActive" routerLinkActive mat-tab-link>
-          {{ link.title | uppercase }}
+          {{ link.title }}
         </a>
       }
     </nav>

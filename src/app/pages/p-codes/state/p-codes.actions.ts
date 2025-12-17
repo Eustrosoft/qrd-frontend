@@ -12,8 +12,9 @@ export class FetchPCodeList {
 export class FetchPCode {
   public static readonly type = '[PCodes] Fetch PCode';
   constructor(
+    readonly idx: number,
     readonly docId: number,
-    readonly destroyRef?: DestroyRef,
+    readonly destroyRef: DestroyRef,
   ) {}
 }
 

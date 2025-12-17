@@ -4,6 +4,7 @@ export type PCodeFormGroup = FormGroup<PCodeForm>;
 export type PCodeForm = {
   docId: FormControl<number | null>;
   rowId: FormControl<number | null>;
+  participantId: FormControl<number>;
   p: FormControl<string>;
   p2: FormControl<string>;
   p2Mode: FormControl<string>;
@@ -14,3 +15,4 @@ export type PCodeForm = {
 };
 
 export type Pin2Length = 12 | 13 | 14 | 15 | 16;
+export type YesNo = 'Y' | 'N';

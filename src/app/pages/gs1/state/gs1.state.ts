@@ -155,7 +155,7 @@ export class Gs1State {
         },
       }),
       catchError((err) => {
-        this.snackbarService.danger(NotificationSnackbarLocalization.errOnCreate);
+        this.snackbarService.danger(NotificationSnackbarLocalization.errOnSave);
         setState(patch({ isSaveInProgress: false }));
         return throwError(() => err);
       }),

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnDestroy, signal } from '@angular/core';
 import { CanComponentDeactivate } from '@shared/guards/unsaved-data.guard';
 import { distinctUntilChanged, map, merge, Observable, of, pairwise, startWith } from 'rxjs';
 import { Actions, createDispatchMap, createSelectMap, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
@@ -15,7 +15,7 @@ import { ErrorsLocalization } from '@modules/error/error.constants';
 import { PCodesLocalization } from '@app/pages/p-codes/p-codes.constants';
 import { CardContainerComponent } from '@shared/components/card-container/card-container.component';
 import { IndicatorComponent } from '@shared/components/indicator/indicator.component';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { ToolbarComponent } from '@shared/components/toolbar/toolbar.component';
 import { UiFlexBlockComponent } from '@ui/ui-flex-block/ui-flex-block.component';
 import { IS_SMALL_SCREEN, IS_XSMALL } from '@cdk/tokens/breakpoint.tokens';
@@ -23,10 +23,14 @@ import { PCodeFormGroup } from '@app/pages/p-codes/p-codes.models';
 import { easyHash } from '@shared/utils/functions/easy-hash.function';
 import { UiGridBlockComponent } from '@ui/ui-grid-block/ui-grid-block.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { Option } from '@shared/shared.models';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { PCodesUtilsService } from '@app/pages/p-codes/services/p-codes-utils.service';
+import { HashService } from '@shared/service/hash.service';
 
 @Component({
   selector: 'p-code-edit',
@@ -47,6 +51,10 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
     MatOption,
     MatSelect,
     MatSlideToggle,
+    MatIcon,
+    MatIconButton,
+    MatSuffix,
+    MatTooltip,
   ],
   templateUrl: './p-code-edit.component.html',
   styleUrl: './p-code-edit.component.scss',
@@ -56,6 +64,8 @@ export class PCodeEditComponent implements OnDestroy, CanComponentDeactivate {
   private readonly pCodesFormFactoryService = inject(PCodesFormFactoryService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly actions$ = inject(Actions);
+  private readonly pCodesUtilsService = inject(PCodesUtilsService);
+  private readonly hashService = inject(HashService);
 
   protected readonly destroyRef = inject(DestroyRef);
   protected readonly isXSmall = inject(IS_XSMALL);
@@ -82,6 +92,9 @@ export class PCodeEditComponent implements OnDestroy, CanComponentDeactivate {
     },
   ];
 
+  protected readonly isPinVisible = signal<boolean>(false);
+  protected readonly isPin2Visible = signal<boolean>(false);
+
   protected readonly form = toSignal<PCodeFormGroup>(
     this.activatedRoute.data.pipe(map<Data, PCodeFormGroup>((data) => data['pCodeForm'])),
     {
@@ -89,12 +102,12 @@ export class PCodeEditComponent implements OnDestroy, CanComponentDeactivate {
     },
   );
 
-  protected readonly qrId = toSignal(this.activatedRoute.queryParamMap.pipe(map((params) => params.get('docId'))));
+  protected readonly docId = toSignal(this.activatedRoute.queryParamMap.pipe(map((params) => params.get('docId'))));
 
   protected readonly backNav = computed<string[]>(() => {
-    const qrId = this.qrId();
-    if (qrId) {
-      return ['/', AppRoutes.qrCards, qrId, AppRoutes.pCodes];
+    const docId = this.docId();
+    if (docId) {
+      return ['/', AppRoutes.qrCards, docId, AppRoutes.pins];
     }
     return ['/', AppRoutes.qrCards];
   });
@@ -128,7 +141,6 @@ export class PCodeEditComponent implements OnDestroy, CanComponentDeactivate {
     isPCodeLoading: PCodesSelectors.getSlices.isPCodeLoading,
     isPCodeLoadErr: PCodesSelectors.getSlices.isPCodeLoadErr,
     isSaveInProgress: PCodesSelectors.getSlices.isSaveInProgress,
-    pCode: PCodesSelectors.getSlices.pCode,
   });
 
   protected readonly actions = createDispatchMap({
@@ -138,6 +150,19 @@ export class PCodeEditComponent implements OnDestroy, CanComponentDeactivate {
 
   public ngOnDestroy(): void {
     this.pCodesFormFactoryService.reset();
+  }
+
+  protected makeRandomPin(): void {
+    this.form().controls.p.setValue(this.pCodesUtilsService.makeRandomPin());
+  }
+
+  protected makeRandomPin2(): void {
+    this.form().controls.p2.setValue(this.pCodesUtilsService.makeRandomPin());
+  }
+
+  protected makeMD5Hash(): void {
+    const value = this.form().controls.p2.getRawValue();
+    this.form().controls.p2.setValue(this.hashService.md5(value));
   }
 
   protected saveData(): void {

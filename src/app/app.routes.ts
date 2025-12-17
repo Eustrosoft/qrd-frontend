@@ -71,8 +71,8 @@ export const routes: Routes = [
     providers: [provideStates([Gs1State])],
   },
   {
-    path: AppRoutes.pCodes,
-    title: RouteTitles.pCodes,
+    path: AppRoutes.pins,
+    title: RouteTitles.pins,
     canActivate: [authGuard],
     loadChildren: () => import('@app/pages/p-codes/p-codes.routes').then((m) => m.pCodesRoutes),
     providers: [provideStates([PCodesState])],

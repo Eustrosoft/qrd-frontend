@@ -7,7 +7,7 @@
             <p>{{ pCode().p | masked: isPShown() | fallback: PCodesLocalization.noPin }}</p>
             @if (pCode().p) {
               <button (click)="isPShown.set(!isPShown())" class="icon-button-sm" mat-icon-button>
-                <mat-icon class="icon-primary">{{ isPShown() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                <mat-icon class="icon-primary">{{ isPShown() ? 'visibility' : 'visibility_off' }}</mat-icon>
               </button>
             }
           </ui-flex-block>
@@ -17,7 +17,7 @@
             <p>{{ pCode().p2 | masked: isP2Shown() | fallback: PCodesLocalization.noPin }}</p>
             @if (pCode().p2) {
               <button (click)="isP2Shown.set(!isP2Shown())" class="icon-button-sm" mat-icon-button>
-                <mat-icon class="icon-primary">{{ isP2Shown() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                <mat-icon class="icon-primary">{{ isP2Shown() ? 'visibility' : 'visibility_off' }}</mat-icon>
               </button>
             }
           </ui-flex-block>
@@ -31,8 +31,8 @@
       </ui-grid-block>
       <ui-flex-block flexAlignItems="center">
         <a
-          [routerLink]="`/${AppRoutes.pCodes}/${pCode().rowId}/${AppRoutes.edit}`"
-          [queryParams]="{ docId: pCode().docId }"
+          [routerLink]="`/${AppRoutes.pins}/${pCode().rowId}/${AppRoutes.edit}`"
+          [queryParams]="{ docId: pCode().docId, idx: idx() }"
           [matTooltip]="SharedLocalization.edit"
           class="icon-button-sm"
           mat-icon-button

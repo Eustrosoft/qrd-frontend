@@ -63,7 +63,6 @@ import { UpperCasePipe } from '@angular/common';
     MatTabNavPanel,
     MatTabNav,
     RouterLinkActive,
-    UpperCasePipe,
   ],
   templateUrl: './qr-card-view.component.html',
   styleUrl: './qr-card-view.component.scss',
@@ -74,6 +73,7 @@ export class QrCardViewComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly title = inject(Title);
   private readonly toHexPipe = inject(ToHexPipe);
+  private readonly upperCasePipe = inject(UpperCasePipe);
   protected readonly qrCardsService = inject(QrCardsService);
   protected readonly isXSmall = inject(IS_XSMALL);
   protected readonly isSmallScreen = inject(IS_SMALL_SCREEN);
@@ -106,9 +106,9 @@ export class QrCardViewComponent implements OnInit {
   });
 
   protected readonly tabLinks: TabLink[] = [
-    { link: AppRoutes.qrCard, title: RouteTitles.card },
+    { link: AppRoutes.qrCard, title: this.upperCasePipe.transform(RouteTitles.card) },
     { link: AppRoutes.gs1, title: RouteTitles.gs1 },
-    { link: AppRoutes.pCodes, title: RouteTitles.pCodes },
+    { link: AppRoutes.pins, title: RouteTitles.pins },
   ];
 
   protected readonly AppRoutes = AppRoutes;

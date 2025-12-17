@@ -63,7 +63,7 @@ export const qrCardsRoutes: Routes = [
             component: QrCardGs1Component,
           },
           {
-            path: AppRoutes.pCodes,
+            path: AppRoutes.pins,
             component: QrCardPCodesComponent,
           },
         ],
