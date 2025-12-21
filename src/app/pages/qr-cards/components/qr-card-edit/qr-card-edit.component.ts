@@ -178,7 +178,7 @@ export class QrCardEditComponent implements OnInit, AfterContentInit, OnDestroy,
   protected readonly allFiles = computed(() => [
     ...this.formFiles(),
     // eslint-disable-next-line
-    ...(this.selectors.qrCard()?.form.files ?? []),
+    ...(this.selectors.qrCard()?.form?.files ?? []),
   ]);
 
   protected readonly selectors = createSelectMap({
