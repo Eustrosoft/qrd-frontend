@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.2](https://github.com/Eustrosoft/qrd-frontend/compare/v3.0.1...v3.0.2) (2025-12-21)
+
+
+### Bug Fixes
+
+* **qr:** исправлено поведение при отсутствии шаблона ([841e6a6](https://github.com/Eustrosoft/qrd-frontend/commit/841e6a66397306ce54f7c1ea90b9008ccb4956e2))
+
 ### [3.0.1](https://github.com/Eustrosoft/qrd-frontend/compare/v3.0.0...v3.0.1) (2025-12-17)
 
 ## [3.0.0](https://github.com/Eustrosoft/qrd-frontend/compare/v2.4.0...v3.0.0) (2025-12-17)
